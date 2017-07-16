@@ -1,6 +1,6 @@
 import { h, render } from 'preact';
-import AppState from './AppState';
-import App from './App';
+import AppState from './Models/AppState';
+import App from './Components/App';
 
 const appState = new AppState();
 

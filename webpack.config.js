@@ -20,6 +20,7 @@ module.exports = {
             }
         ]
     },
+       
     //sourcemaps
     devtool: 'source-map',
 
