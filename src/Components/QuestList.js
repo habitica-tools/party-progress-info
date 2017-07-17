@@ -13,12 +13,17 @@ class QuestList extends Component {
     store.loadingobjects ?  "LOADING" :
       <ul>
       {store.quests.entries().map(([id, quest]) =>
-        <li>{id} {quest.data.text} {quest.count} </li>
+        <button class={"inventory_quest_scroll_" + id}>
+          <div class="badge badge-info stack-count">
+            {quest.count}
+          </div>
+          </button>
       )}
       </ul>
     );
   }
-
+//{id} {quest.data.text}  
+//filter bosses
   handleShowAll = () => {
 
   }
