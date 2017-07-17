@@ -1,10 +1,12 @@
 import { h, render } from 'preact';
-import AppState from './Models/AppState';
+import AppStore from './Stores/AppStore';
 import App from './Components/App';
+import {useStrict} from 'mobx';
 
-const appState = new AppState();
+useStrict(true);
+const store = new AppStore();
 
 render(
-    <App appState={appState} />,
+    <App store={store} />,
   document.getElementById('root')
 );

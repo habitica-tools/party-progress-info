@@ -7,14 +7,14 @@ require('preact/devtools');
 @observer
 class App extends Component {
 
-  render() {
+  render({store}) {
     return (
       <div>
         <div>
-          <Settings/>
+          <Settings store={store}/>
         </div>
         <div>
-          <QuestList common={this.props.appState.habiticaobjects} loading={this.props.appState.loadingobjects}/>
+          <QuestList store={store}/>
         </div>
       </div>
     );

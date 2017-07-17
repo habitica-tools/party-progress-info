@@ -6,12 +6,13 @@ require('preact/devtools');
 @observer
 class Settings extends Component {
 
-    render() {
+    render({store}) {
         return (
+            store.loadingobjects ? <div></div> :
             <div>
-                <SettingsInput/>
+                <SettingsInput />
                 <ul>
-                    <li></li>
+                    {store.users.map(u => u.loading ? <li>Loading...</li> : <li>{u.data.profile.name}</li> )}
                 </ul>
             </div>
             );

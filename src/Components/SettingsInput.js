@@ -11,14 +11,14 @@ class SettingsInput extends Component {
 			<input
 				className="new-user"
 				placeholder="Give In UserId"
-				autoFocus={true} />
-			<button onClick={this.AddUser} value="Add"/>
+				autoFocus={true} value="" />
+			<button onClick={this.AddUser}>Add</button>
 		</div>
 		);
 	}
 	
 	AddUser = () => {
-        
+        store.addUser(this.newuser);
     }
 }
 

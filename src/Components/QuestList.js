@@ -1,31 +1,28 @@
 import { h, render, Component } from 'preact';
 import { observer } from 'mobx-preact';
 import Quest from './Quest'
+import _ from 'lodash';
 require('preact/devtools');
 
 @observer
 class QuestList extends Component {
 
-  mapObject(object, callback) {
-    return Object.keys(object).map(function (key) {
-      return callback(key, object[key]);
-    });
+  render({store}) {
+
+    return(  
+    store.loadingobjects ?  "LOADING" :
+      <ul>
+      {store.quests.entries().map(([id, quest]) =>
+        <li>{id} {quest.data.text} {quest.count} </li>
+      )}
+      </ul>
+    );
   }
 
-  render({common, loading}) {
-    if(common.quests !== undefined && !loading)
-    {
-      return "HAVE QUESTS"
-    }
-    else{
-      if(loading){
-        return "LOADING"
-      }
-      else{
-        return "ERROR"
-      }
-    }
+  handleShowAll = () => {
+
   }
+
 
 };
 
