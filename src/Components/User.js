@@ -9,9 +9,7 @@ class User extends Component {
         return (
             <li>
                 <button onClick={this.removeUser}>
-                <div class>
-                    {user.data.profile.name} : {user.data.stats.class} @ {user.data.stats.lvl}
-                </div>
+                    {user.data.profile.name} : {user.data.stats.class} @ {user.data.stats.lvl} ({user.id})
                 </button>
             </li>
         );

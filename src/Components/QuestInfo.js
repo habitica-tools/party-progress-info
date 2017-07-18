@@ -5,7 +5,7 @@ require('preact/devtools');
 @observer
 class Quest extends Component {
 
-    render({quest, id}) {
+    render({quest, id, store}) {
         return (
         <div>
             <div class={"inventory_quest_scroll_" + id}>
@@ -15,6 +15,11 @@ class Quest extends Component {
             </div>
             <div>
                 {quest.data.text}
+            </div>
+            <div>
+                <ul>
+                    {quest.users.map(quser => <li>{store.users.filter(user => user.id === quser.userid)[0].data.profile.name} - {quser.number}</li>)}
+                </ul>
             </div>
         </div>
         );

@@ -22,7 +22,7 @@ class QuestList extends Component {
       </menu>
       {this.showAll ? <button onClick={this.handlePartyOnly}>Party Only</button> : <button onClick={this.handleShowAll}>Show All</button>}
       <div>
-        {this.questInfo === null ? <br/> : <QuestInfo quest={this.questInfo}/>  }
+        {this.questInfo === null ? <br/> : <QuestInfo quest={this.questInfo} store={store}/>  }
       </div>
       </div>
     );
