@@ -3,7 +3,6 @@ import { observer } from 'mobx-preact';
 import { observable, action } from 'mobx';
 import Quest from './Quest'
 import QuestInfo from './QuestInfo'
-import _ from 'lodash';
 require('preact/devtools');
 
 @observer

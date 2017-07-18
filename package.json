@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --inline"
+    "start": "webpack-dev-server --inline",
+    "build": "webpack -p"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
@@ -21,7 +22,6 @@
     "webpack-dev-server": "^2.5.1"
   },
   "dependencies": {
-    "lodash": "^4.17.4",
     "mobx": "^3.2.1",
     "mobx-preact": "^0.3.1",
     "preact": "^8.2.1"

@@ -1,4 +1,5 @@
 const path = require('path');
+const isProd = (process.env.NODE_ENV === 'production');
 
 module.exports = {
     
@@ -7,7 +8,7 @@ module.exports = {
 
     //output
     output: {
-        path : path.join(__dirname, 'build/'),
+        path : path.join(__dirname, 'build'),
         filename : 'bundle.js'
     },
 
