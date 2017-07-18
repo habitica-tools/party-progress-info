@@ -13,7 +13,7 @@ class Settings extends Component {
             <div>
                 <SettingsInput store={store} />
                 <ul>
-                    {store.users.map(u => u.loading ? <li>Loading...</li> : <User user={u} /> )}
+                    {store.users.map(u => u.loading ? <li>Loading...</li> : <User user={u} store={store} /> )}
                 </ul>
             </div>
             );

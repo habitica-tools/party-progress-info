@@ -32,6 +32,9 @@ class AppStore {
   @action addUser(userid) {
       this.users.push(new UserState(this, userid));
   }
+  @action removeUser(user) {
+      this.users.remove(user);
+  }
   
 }
 
