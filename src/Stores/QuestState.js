@@ -18,6 +18,7 @@ class QuestState {
   @computed get count(){
     return this.users.length;
   }
+  
 }
 
 export default QuestState;

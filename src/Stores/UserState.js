@@ -14,6 +14,7 @@ class UserState {
 
     @action addUser(userid) {
         this.loading = true;
+        var me = this;
         window.fetch('https://habitica.com/api/v3/members/' + userid)
             .then(res => res.json())
             .then(action(json => {
@@ -22,7 +23,7 @@ class UserState {
                 //go over quests 
                 var quests = new Map(Object.entries(json.data.items.quests));
                 quests.forEach(function(value, key) {
-                    //this.store.quests.get(key).addUser(key, parseInt(value), userid);
+                    me.store.quests.get(key).addUser(key, parseInt(value), userid);
                 });
 
                 this.loading = false;  

@@ -14,7 +14,9 @@ class App extends Component {
           <Settings store={store}/>
         </div>
         <div>
-          <QuestList store={store}/>
+          <QuestList store={store} category="pet"/>
+          <br/>
+          <QuestList store={store} category="unlockable"/>
         </div>
       </div>
     );

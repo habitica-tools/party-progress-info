@@ -5,13 +5,21 @@ require('preact/devtools');
 @observer
 class Quest extends Component {
 
-    render({key, text}) {
+    render({quest, id}) {
         return (
-            <li>
-               {key} - {text}
-            </li>
+        <button class={"inventory_quest_scroll_" + id} id={id} onClick={this.showQuestInfo} >
+          <div class="badge badge-info stack-count">
+            {quest.count}
+          </div>
+        </button>
         );
     }
+    
+    showQuestInfo = (e) => {
+        this.props.questlist.showInfo(this.props.quest);
+    }
+    
+    
 }
 
 

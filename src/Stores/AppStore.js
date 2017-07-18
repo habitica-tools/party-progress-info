@@ -30,7 +30,7 @@ class AppStore {
   }
 
   @action addUser(userid) {
-      this.users.push(new UserState(this,userid));
+      this.users.push(new UserState(this, userid));
   }
   
 }
