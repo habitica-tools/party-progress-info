@@ -2,7 +2,6 @@ import { h, render, Component } from 'preact';
 import { observer } from 'mobx-preact';
 import Settings from './Settings';
 import QuestList from './QuestList';
-require('preact/devtools');
 
 @observer
 class App extends Component {

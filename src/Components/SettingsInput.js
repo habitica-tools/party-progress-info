@@ -1,7 +1,7 @@
 import { h, render, Component } from 'preact';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-preact';
-require('preact/devtools');
+
 
 @observer
 class SettingsInput extends Component {

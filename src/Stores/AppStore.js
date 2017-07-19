@@ -23,7 +23,6 @@ class AppStore {
       });
       this.quests.merge(quests);
       this.loadingobjects = false;
-      console.log(this.quests);
       this.addUser("f600354c-9d34-4a4c-a38d-cae52cf58705");
       this.addUser("0c70156b-4b7e-4fd6-b704-4e832b4580a6");
       this.addUser("c06b7879-feb2-4c5b-a13e-4a5a2878b9e2");

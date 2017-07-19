@@ -2,7 +2,6 @@ import { h, render, Component } from 'preact';
 import { observer } from 'mobx-preact';
 import SettingsInput from './SettingsInput';
 import User from './User';
-require('preact/devtools');
 
 @observer
 class Settings extends Component {

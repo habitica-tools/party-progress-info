@@ -3,7 +3,6 @@ import { observer } from 'mobx-preact';
 import { observable, action } from 'mobx';
 import Quest from './Quest'
 import QuestInfo from './QuestInfo'
-require('preact/devtools');
 
 @observer
 class QuestList extends Component {

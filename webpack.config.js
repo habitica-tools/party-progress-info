@@ -1,5 +1,6 @@
 const path = require('path');
 const isProd = (process.env.NODE_ENV === 'production');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     
@@ -24,6 +25,10 @@ module.exports = {
        
     //sourcemaps
     devtool: 'source-map',
+    
+    plugins: [new HtmlWebpackPlugin({
+        template: './src/index.html'
+    })],
 
     //server
     devServer: {
