@@ -24,7 +24,7 @@ class UserState {
                 var quests = new Map(Object.entries(json.data.items.quests));
                 quests.forEach(function(value, key) {
                     if(value > 0)                   
-                        me.store.quests.get(key).addUser(key, parseInt(value), userid);
+                        me.store.quests.get(key).addUser(userid, parseInt(value));
                 });
 
                 this.loading = false;  

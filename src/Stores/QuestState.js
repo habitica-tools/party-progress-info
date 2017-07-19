@@ -9,9 +9,8 @@ class QuestState {
     this.data = quest;
   }
 
-  @action addUser(quest,number, userid) {
-    console.log("adding " + userid);
-    this.users.push({quest, number, userid});
+  @action addUser(userid, number) {
+    this.users.push({userid,number});
   }
 
   //computeds

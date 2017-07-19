@@ -7,11 +7,13 @@ class User extends Component {
 
     render({user}) {
         return (
-            <li>
-                <button onClick={this.removeUser}>
-                    {user.data.profile.name} : {user.data.stats.class} @ {user.data.stats.lvl} ({user.id})
-                </button>
-            </li>
+            <div class="item">
+                <img class="ui avatar image" src={"https://habitica.com/export/avatar-" + user.id + ".png"}/>
+                <div class="middle aligned content">
+                    <a class="header" onClick={this.removeUser}>{user.data.profile.name}</a>
+                    <div class="description"><b>{user.data.stats.class}</b> @ LVL {user.data.stats.lvl}</div>
+                </div>
+            </div>
         );
     }
 

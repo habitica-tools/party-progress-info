@@ -4,23 +4,39 @@ require('preact/devtools');
 
 @observer
 class Quest extends Component {
-
-    render({quest, id, store}) {
+    //TODO Better userrenderer errorprone
+    render({quest, store}) {
         return (
-        <div>
-            <div class={"inventory_quest_scroll_" + id}>
-                <div class="badge badge-info stack-count">
-                    {quest.count}
-                </div>
+        <div class="ui fluid container">
+            <br/>
+            <div class="ui horizontal divider header">
+              <h4>{quest.data.text}</h4>
             </div>
             <div>
-                {quest.data.text}
+                {quest.data.notes}
             </div>
-            <div>
-                <ul>
-                    {quest.users.map(quser => <li>{store.users.filter(user => user.id === quser.userid)[0].data.profile.name} - {quser.number}</li>)}
-                </ul>
-            </div>
+            <table class="ui very basic collapsing celled table">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Nr of Quests</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {quest.users.map(quser => 
+
+                    <tr>
+                        {store.users.filter(user => user.id === quser.userid)[0] !== undefined ? 
+                            <td>{store.users.filter(user => user.id === quser.userid)[0].data.profile.name}</td> :
+                            <td>{quser.quserid}</td>}
+
+                        <td>{quser.number}</td>
+                    </tr>
+                    
+                    )}
+                    
+                </tbody>
+            </table>
         </div>
         );
     }

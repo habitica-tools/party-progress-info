@@ -32,7 +32,10 @@ class AppStore {
       this.addUser("80d34f3c-8231-4133-9406-391bdf4449a3");
       this.addUser("5ba6203e-570a-49d3-9027-3a1115a73db8");
       this.addUser("372ca806-dcea-4013-83e3-411e63ef92a4");
+      this.addUser("bd28fa68-205a-48f4-a707-2ecc47ac5920");
+      this.addUser("c6dbf416-47ef-428b-a452-3c154049757f");
       this.addUser("d3de6635-37f7-4369-99c3-399d036d0898");      
+      this.addUser("abf7a2d4-caf0-4a98-b053-49313e8fc262");
     }))
   }
 

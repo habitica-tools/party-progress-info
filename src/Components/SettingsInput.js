@@ -9,12 +9,12 @@ class SettingsInput extends Component {
 	 
     render() {
         return (
-		<div>
+		<div class="ui right labeled input">
 			<input
 				className="new-user"
 				placeholder="Give In UserId"
 				autoFocus={true} value={this.input} onChange={this.onChange} />
-			<button onClick={this.AddUser}>Add</button>
+			<button class="ui blue button" onClick={this.AddUser}>Add</button>
 		</div>
 		);
 	}

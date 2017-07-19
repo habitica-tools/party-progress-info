@@ -9,12 +9,12 @@ class Settings extends Component {
 
     render({store}) {
         return (
-            store.loadingobjects ? <div></div> :
+            store.loadingobjects ? <div class="ui active centered inline loader"></div> :
             <div>
                 <SettingsInput store={store} />
-                <ul>
-                    {store.users.map(u => u.loading ? <li>Loading...</li> : <User user={u} store={store} /> )}
-                </ul>
+                <div class="ui massive horizontal list">
+                    {store.users.map(u => u.loading ? <div class="ui active centered inline loader"></div> : <User user={u} store={store} /> )}
+                </div>
             </div>
             );
     }

@@ -9,14 +9,25 @@ class App extends Component {
 
   render({store}) {
     return (
-      <div>
-        <div>
-          <Settings store={store}/>
-        </div>
-        <div>
-          <QuestList store={store} category="pet"/>
+      <div class="ui main container">
+        <h2 class="ui dividing header">
+          Habitica Party Tools
+        </h2>
+        <div class="ui fluid container">
+          <div class="column">
+            <Settings store={store}/>
+          </div>
           <br/>
-          <QuestList store={store} category="unlockable"/>
+          <div class="ui two column stackable grid">
+            <div class="ui horizontal divider header">
+              <h4>Quests</h4>
+            </div>
+            <QuestList store={store} category="pet"/>
+            <br/>
+            <QuestList store={store} category="unlockable"/>
+            <br/>
+            <QuestList store={store} category="gold"/>
+          </div>
         </div>
       </div>
     );
