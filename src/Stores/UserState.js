@@ -19,17 +19,13 @@ class UserState {
             .then(res => res.json())
             .then(action(json => {
                 this.data = json.data;
-                
+                this.loading = false;
                 //go over quests 
                 var quests = new Map(Object.entries(json.data.items.quests));
                 quests.forEach(function(value, key) {
                     if(value > 0)                   
-                        me.store.quests.get(key).addUser(userid, parseInt(value));
-                });
-
-                this.loading = false;  
-                
-                console.log(this.data);            
+                        me.store.quests.get(key).addUser(me);
+                });                    
             }));
 
         }

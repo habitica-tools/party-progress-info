@@ -42,8 +42,13 @@ class AppStore {
   @action addUser(userid) {
       this.users.push(new UserState(this, userid));
   }
+
   @action removeUser(user) {
       this.users.remove(user);
+      //also remove it from quests
+      this.quests.forEach(function(value,key,map){
+        value.removeUser(user);
+      })
   }
   
 }

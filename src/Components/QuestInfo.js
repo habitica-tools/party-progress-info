@@ -24,13 +24,9 @@ class Quest extends Component {
                 </thead>
                 <tbody>
                     {quest.users.map(quser => 
-
                     <tr>
-                        {store.users.filter(user => user.id === quser.userid)[0] !== undefined ? 
-                            <td>{store.users.filter(user => user.id === quser.userid)[0].data.profile.name}</td> :
-                            <td>{quser.quserid}</td>}
-
-                        <td>{quser.number}</td>
+                        <td>{quser.data.profile.name}</td>
+                        <td>{quser.data.items.quests[quest.id]}</td>
                     </tr>
                     
                     )}
