@@ -1,10 +1,11 @@
 {
   "name": "habitica-party-tools",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "scripts": {
     "start": "set NODE_ENV=dev && webpack-dev-server --inline",
-    "build": "set NODE_ENV=production && webpack -p"
+    "build": "set NODE_ENV=production && webpack -p",
+    "deploy": "cd build && surge --domain habiticapartytools.surge.sh"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
