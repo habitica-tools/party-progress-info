@@ -16,10 +16,12 @@ import { observable, action, computed } from 'mobx';
 
 class PetState {
   id = null;
+  store = null;
   @observable users = [];
   
-  constructor(questpet) {
+  constructor(questpet,store) {
     this.id = questpet;
+    this.store = store;
   }
 
   @computed get basetype(){
@@ -31,13 +33,27 @@ class PetState {
       }
   }
 
-  @computed get count(){
+  @computed get needed(){
     var count=0;
     var me = this;
+    count = this.store.users.length * 2;
     this.users.forEach(function(value,index,array){
-      count = count + value.data.items.pets[me.id];
+        if(value.data.items.pets[me.id] == -1){
+            count = count - 1; //Has Mount but no Pet
+        }
+        else
+        {
+            if(!value.data.items.mounts[me.id]){
+                //Has No Mount 
+                count = count - 1;
+            }else{
+                //Has Pet and Mount
+                count = count -2; 
+            }
+        }
+            
     });
-    return count; // this.users.length;
+    return count; 
   }
 
   @action addUser(user) {

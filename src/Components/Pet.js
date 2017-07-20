@@ -7,8 +7,14 @@ class Pet extends Component {
     render({pet, id}) {
         return (
             <div>
-                {id} - {pet.basetype} #{pet.count}
+            <div class={"pet-evolved Pet-" + id}>
+
             </div>
+            <div class="badge badge-info stack-count">
+                {pet.needed}
+            </div>
+            </div>           
+            //{id} - {pet.basetype} Needed In Party {pet.needed}
             /*
         <button class={"inventory_quest_scroll_" + id} id={id} onClick={this.showQuestInfo} >
           <div class="badge badge-info stack-count">

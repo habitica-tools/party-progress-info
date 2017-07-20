@@ -16,6 +16,7 @@ class AppStore {
 
   @action fetchCommonObjects() {
     //https://habitica.com/apidoc/#api-Content-ContentGet
+    var me = this;
     window.fetch('https://habitica.com/api/v3/content')
     .then(res => res.json())
     .then(action(json => {
@@ -28,7 +29,7 @@ class AppStore {
 
       const pets = new Map();
       new Map(Object.entries(json.data.questPets)).forEach(function(value,key){
-        pets.set(key, new PetState(key));
+         pets.set(key, new PetState(key, me));
       });
       this.pets.merge(pets);
 
