@@ -27,7 +27,16 @@ class PetList extends Component {
         var pets = store.pets.entries().map(([id,pet]) =>
             pet
         );
-        var totalneed = pets.reduce((prevVal, pet) =>  prevVal + pet.needed ,0);
+        var totalneed = pets.reduce((prevVal, pet) =>  prevVal + pet.needed , 0);
+        var categories = new Set();
+        for(var pet of pets){
+            categories.add(pet.basetype);
+        }
+        var grouped = 
+            [...categories].map(category => 
+                {category: pets.filter(pet => pet.basetype === category)
+                                .reduce((prevVal,pet) => prevVal + pet.needed,0)
+                });
         return( 
         <div class="column">
             <p>Total Pets Still Needed : {totalneed}</p>
