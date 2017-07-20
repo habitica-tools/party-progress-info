@@ -14,7 +14,7 @@ class SettingsInput extends Component {
 				className="new-user"
 				placeholder="Give In UserId"
 				autoFocus={true} value={this.input} onChange={this.onChange} />
-			<button class="ui blue button" onClick={this.AddUser}>Add</button>
+			<button class="ui blue button" onClick={this.AddUser}><i class="user icon"></i> Add</button>
 		</div>
 		);
 	}

@@ -9,7 +9,7 @@ class User extends Component {
             <div class="item">
                 <img class="ui avatar image" src={"https://habitica.com/export/avatar-" + user.id + ".png"}/>
                 <div class="middle aligned content">
-                    <a class="header" onClick={this.removeUser}>{user.data.profile.name}</a>
+                    <a class="header">{user.data.profile.name}&nbsp;&nbsp;<i onClick={this.removeUser} class="remove user icon"></i></a>
                     <div class="description"><b>{user.data.stats.class}</b> @ LVL {user.data.stats.lvl}</div>
                 </div>
             </div>

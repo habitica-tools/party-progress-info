@@ -24,7 +24,12 @@ class QuestState {
 
   //computeds
   @computed get count(){
-    return this.users.length;
+    var count=0;
+    var me = this;
+    this.users.forEach(function(value,index,array){
+      count = count + value.data.items.quests[me.id];
+    });
+    return count; // this.users.length;
   }
   
 }

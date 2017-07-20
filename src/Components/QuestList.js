@@ -14,6 +14,7 @@ class QuestList extends Component {
     return(  
     store.loadingobjects ?  <div class="ui active centered inline loader"></div> :
     <div class="column">
+      <h4 class="ui header">{category} quests</h4>
       <menu class="pets-menu">
       {store.quests.entries().filter(([id,quest]) => quest.data.category === category).filter(([id,quest]) => this.showAll ? quest : quest.users.length > 0).map(([id, quest]) =>
         <Quest quest={quest} id={id} questlist={this} />
