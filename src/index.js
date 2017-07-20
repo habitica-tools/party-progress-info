@@ -10,3 +10,7 @@ render(
     <App store={store} />,
   document.getElementById('root')
 );
+
+window.onpopstate = function(event) {
+  store.loadQueryString();
+}

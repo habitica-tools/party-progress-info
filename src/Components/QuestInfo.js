@@ -11,9 +11,6 @@ class Quest extends Component {
             <div class="ui horizontal divider header">
               <h4>{quest.data.text}</h4>
             </div>
-            <div>
-                {quest.data.notes}
-            </div>
             <table class="ui very basic collapsing celled table">
                 <thead>
                     <tr>
@@ -27,9 +24,7 @@ class Quest extends Component {
                         <td>{quser.data.profile.name}</td>
                         <td>{quser.data.items.quests[quest.id]}</td>
                     </tr>
-                    
                     )}
-                    
                 </tbody>
             </table>
         </div>
