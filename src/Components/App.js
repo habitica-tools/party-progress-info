@@ -2,6 +2,7 @@ import { h, render, Component } from 'preact';
 import { observer } from 'mobx-preact';
 import Settings from './Settings';
 import QuestList from './QuestList';
+import PetList from './PetList';
 
 @observer
 class App extends Component {
@@ -9,27 +10,33 @@ class App extends Component {
   render({store}) {
     return (
       <div>
-      <div class="ui main container">
-        <h2 class="ui dividing header">
-          Habitica Party Tools
-        </h2>
-        <div class="ui fluid container">
-          <div class="column">
-            <Settings store={store}/>
+        <div class="ui main container">
+          <h2 class="ui dividing header">
+            Habitica Party Tools
+          </h2>
+          <div class="ui fluid container">
+            <div class="column">
+              <Settings store={store}/>
+            </div>
+            <br/>
+            <div class="ui two column stackable grid">
+              <div class="ui horizontal divider header">
+                <h4>Quests</h4>
+              </div>
+              <QuestList store={store} category="pet"/>
+              <br/>
+              <QuestList store={store} category="unlockable"/>
+              <br/>
+              <QuestList store={store} category="gold"/>
+            </div>
           </div>
           <br/>
-          <div class="ui two column stackable grid">
+          <div class="ui fluid container">
             <div class="ui horizontal divider header">
-              <h4>Quests</h4>
-            </div>
-            <QuestList store={store} category="pet"/>
-            <br/>
-            <QuestList store={store} category="unlockable"/>
-            <br/>
-            <QuestList store={store} category="gold"/>
+              <h4>Quest Pets</h4>
+            </div>            
+            <PetList store={store}/>
           </div>
-        </div>
-        <br/>
         </div>
         <div class="ui inverted vertical footer segment">
           <div class="ui container">

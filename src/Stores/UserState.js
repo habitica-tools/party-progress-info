@@ -25,6 +25,14 @@ class UserState {
                 quests.forEach(function(value, key) {
                     if(value > 0)                   
                         me.store.quests.get(key).addUser(me);
+                }); 
+                //go over pets
+                var pets = new Map(Object.entries(json.data.items.pets));
+                pets.forEach(function(value, key) {
+                    if(key !== null && key !== undefined)                   
+                        var pet = me.store.pets.get(key);
+                        if(pet !== undefined)
+                            pet.addUser(me);
                 });                    
             }));
 

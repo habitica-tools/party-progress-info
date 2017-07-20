@@ -1,11 +1,14 @@
 import { observable, action } from 'mobx';
 import UserState from "./UserState";
 import QuestState from "./QuestState";
+import PetState from "./PetState";
 
 class AppStore {
   @observable loadingobjects = true;
   @observable quests = new Map();
+  @observable pets = new Map();
   @observable users = [];
+  
 
   constructor() {
     this.fetchCommonObjects();
@@ -22,7 +25,15 @@ class AppStore {
         quests.set(key,new QuestState(value));
       });
       this.quests.merge(quests);
+
+      const pets = new Map();
+      new Map(Object.entries(json.data.questPets)).forEach(function(value,key){
+        pets.set(key, new PetState(key));
+      });
+      this.pets.merge(pets);
+
       this.loadingobjects = false;
+      //Need to fetch this from querystring
       this.addUser("f600354c-9d34-4a4c-a38d-cae52cf58705");
       this.addUser("0c70156b-4b7e-4fd6-b704-4e832b4580a6");
       this.addUser("c06b7879-feb2-4c5b-a13e-4a5a2878b9e2");
@@ -47,7 +58,11 @@ class AppStore {
       //also remove it from quests
       this.quests.forEach(function(value,key,map){
         value.removeUser(user);
-      })
+      });
+      //also remove it from petts
+      this.pets.forEach(function(value,key,map){
+        value.removeUser(user);
+      })      
   }
   
 }

@@ -1,8 +1,8 @@
 import { h, render, Component } from 'preact';
 import { observer } from 'mobx-preact';
 import { observable, action } from 'mobx';
-import Quest from './Quest'
-import QuestInfo from './QuestInfo'
+import Quest from './Quest';
+import QuestInfo from './QuestInfo';
 
 @observer
 class QuestList extends Component {
@@ -20,7 +20,7 @@ class QuestList extends Component {
         <Quest quest={quest} id={id} questlist={this} />
       )}
       </menu>
-      {this.showAll ? <button class="ui olive button" onClick={this.handlePartyOnly}>Party Only</button> : <button class="ui blue button" onClick={this.handleShowAll}>Show All</button>}
+      {this.showAll ? <button class="ui olive button" onClick={this.handlePartyOnly}><i class="hide icon"></i>Party Only</button> : <button class="ui blue button" onClick={this.handleShowAll}><i class="unhide icon"></i>Show All</button>}
       <div>
         {this.questInfo === null ? <br/> : <QuestInfo quest={this.questInfo} store={store}/>  }
       </div>
