@@ -29,7 +29,7 @@ class QuestState {
     this.users.forEach(function(value,index,array){
       count = count + value.data.items.quests[me.id];
     });
-    return count; // this.users.length;
+    return count;
   }
   
 }

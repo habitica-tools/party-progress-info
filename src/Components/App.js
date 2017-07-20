@@ -10,10 +10,14 @@ class App extends Component {
   render({store}) {
     return (
       <div>
-        <div class="ui main container">
-          <h2 class="ui dividing header">
-            Habitica Party Tools
-          </h2>
+        <div class="ui fixed inverted menu">
+          <div class="ui container">
+            <a href="#" class="header item">
+              Habitica Party Tools
+            </a>
+          </div>
+        </div>
+        <div class="ui main container">        
           <div class="ui fluid container">
             <div class="column">
               <Settings store={store}/>
@@ -21,7 +25,7 @@ class App extends Component {
             <br/>
             <div class="ui two column stackable grid">
               <div class="ui horizontal divider header">
-                <h4>Quests</h4>
+                <h4>Quests Available in the Party</h4>
               </div>
               <QuestList store={store} category="pet"/>
               <br/>
@@ -33,9 +37,10 @@ class App extends Component {
           <br/>
           <div class="ui fluid container">
             <div class="ui horizontal divider header">
-              <h4>Quest Pets</h4>
+              <h4>Wanted Quest Pets</h4>
             </div>            
             <PetList store={store}/>
+            <br/>
           </div>
         </div>
         <div class="ui inverted vertical footer segment">
