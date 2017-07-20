@@ -37,6 +37,7 @@ class AppStore {
       //Need to fetch this from querystring
       var qstringusers = this.getQueryVariable("users");
       if(qstringusers !== false){
+        qstringusers = decodeURIComponent(qstringusers);
         if(qstringusers.indexOf("|") > 1){
           qstringusers.split('|').forEach(function(val,index){
             this.addUser(val);
