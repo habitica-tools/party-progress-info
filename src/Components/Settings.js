@@ -11,7 +11,8 @@ class Settings extends Component {
             store.loadingobjects ? <div class="ui active centered inline loader"></div> :
             <div>
                 <SettingsInput store={store} />
-                <div class="ui massive horizontal list">
+                <div class="ui basic segment"></div>
+                <div class="ui cards">
                     {store.users.map(u => u.loading ? <div class="ui active centered inline loader"></div> : <User user={u} store={store} /> )}
                 </div>
             </div>

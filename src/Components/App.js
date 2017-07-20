@@ -17,12 +17,17 @@ class App extends Component {
             </a>
           </div>
         </div>
-        <div class="ui main container">        
+        <div class="ui main container">
+          <div class="ui yellow message">
+            <h4 class="ui header">Help</h4>
+            <p>With this tool you can see the number of pets still needed for a party/user and which quests are in the inventory.</p>
+            <p>To get started fill in your own + all Partymembers Habitica userid with below form</p>
+            <p>You can find your User ID in Settings > <a href="https://habitica.com/#/options/settings/api">API</a></p>
+            <p>You can find partymembers UserID's by clicking on their avatar in Habitica</p>
+          </div>                  
           <div class="ui fluid container">
-            <div class="column">
-              <Settings store={store}/>
-            </div>
-            <br/>
+            <Settings store={store}/>
+            <div class="ui basic segment"></div>
             <div class="ui two column stackable grid">
               <div class="ui horizontal divider header">
                 <h4>Quests Available in the Party</h4>

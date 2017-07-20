@@ -6,11 +6,14 @@ class User extends Component {
 
     render({user}) {
         return (
-            <div class="item">
-                <img class="ui avatar image" src={"https://habitica.com/export/avatar-" + user.id + ".png"}/>
-                <div class="middle aligned content">
-                    <div class="header">{user.data.profile.name}&nbsp;&nbsp;<div class="ui button" onClick={this.removeUser}><i class="close icon"></i></div></div>
-                    <div class="description"><b>{user.data.stats.class}</b> @ Lvl {user.data.stats.lvl} <i class="dollar icon"></i>{parseInt(user.data.stats.gp)}</div>
+            <div class="card">
+                <div class="content">
+                    <div class=" right floated ui icon button" onClick={this.removeUser}><i class="close icon"></i></div>
+                    <div class="header">{user.data.profile.name}</div>
+                    <div class="meta">
+                        Lvl {user.data.stats.lvl} <span class="label label-info">{user.data.stats.class}</span> 
+                        <span style="color:#b58105"><i class="dollar icon"></i>{parseInt(user.data.stats.gp)}</span>
+                    </div>
                 </div>
             </div>
         );
@@ -24,3 +27,5 @@ class User extends Component {
 
 
 export default User;
+
+//<img class=" right floated mini ui image" src={"https://habitica.com/export/avatar-" + user.id + ".png"}/>
