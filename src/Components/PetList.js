@@ -17,9 +17,9 @@ class PetList extends Component {
         return(
         <div class="ui fluid container">             
         <div class="column">
+            <p>Total Pets Still Needed : <div class="badge badge-warning stack-count">{store.totalNeededPetsParty}</div></p>
+            <p>Total Pets In Party : <div class="badge badge-info stack-count">{store.totalCountPetsParty}</div></p>
             <p>Total Pets : {store.totalCountPets}</p>
-            <p>Total Pets In Party : <div class="badge badge-warning stack-count">{store.totalCountPetsParty}</div></p>
-            <p>Total Pets Still Needed : <div class="badge badge-info stack-count">{store.totalNeededPetsParty}</div></p>
             <div class="ui horizontal list">
             {[...store.petCategories].map(category => 
                     <div class="item">
