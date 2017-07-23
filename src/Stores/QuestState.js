@@ -25,10 +25,9 @@ class QuestState {
   //computeds
   @computed get count(){
     var count=0;
-    var me = this;
     this.users.forEach(function(value,index,array){
-      count = count + value.data.items.quests[me.id];
-    });
+      count = count + value.data.items.quests[this.id];
+    }, this);
     return count;
   }
   

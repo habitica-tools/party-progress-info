@@ -35,15 +35,14 @@ class PetState {
 
   @computed get needed(){
     var count=0;
-    var me = this;
     count = this.store.users.length * 2;
     this.users.forEach(function(value,index,array){
-        if(value.data.items.pets[me.id] == -1){
+        if(value.data.items.pets[this.id] === -1){
             count = count - 1; //Has Mount but no Pet
         }
         else
         {
-            if(!value.data.items.mounts[me.id]){
+            if(!value.data.items.mounts[this.id]){
                 //Has No Mount 
                 count = count - 1;
             }else{
@@ -52,8 +51,26 @@ class PetState {
             }
         }
             
-    });
+    }, this);
     return count; 
+  }
+
+  @computed get count() {
+    var count=0;
+    this.users.forEach(function(value,index,array){
+         if(value.data.items.pets[this.id] === -1){
+             count = count + 1;
+         }
+         else{
+             if(!value.data.items.mounts[this.id]){
+                 count = count + 1;
+             }
+            else{
+                count = count + 2;
+            }
+         }
+    },this);
+    return count;
   }
 
   @action addUser(user) {

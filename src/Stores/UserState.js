@@ -14,7 +14,6 @@ class UserState {
 
     @action addUser(userid) {
         this.loading = true;
-        var me = this;
         window.fetch('https://habitica.com/api/v3/members/' + userid)
             .then(res => res.json())
             .then(action(json => {
@@ -24,16 +23,16 @@ class UserState {
                 var quests = new Map(Object.entries(json.data.items.quests));
                 quests.forEach(function(value, key) {
                     if(value > 0)                   
-                        me.store.quests.get(key).addUser(me);
-                }); 
+                        this.store.quests.get(key).addUser(this);
+                }, this); 
                 //go over pets
                 var pets = new Map(Object.entries(json.data.items.pets));
                 pets.forEach(function(value, key) {
                     if(key !== null && key !== undefined)                   
-                        var pet = me.store.pets.get(key);
+                        var pet = this.store.pets.get(key);
                         if(pet !== undefined)
-                            pet.addUser(me);
-                });                    
+                            pet.addUser(this);
+                },this);                    
             }));
 
         }
