@@ -7,7 +7,7 @@ class Pet extends Component {
     render({pet}) {
         return (
             <div>
-                <div class={"pet-evolved Pet-" + pet.id}>
+                <div class={"Pet-" + pet.id}>
 
                 </div>
                 <div class="badge badge-warning stack-count">

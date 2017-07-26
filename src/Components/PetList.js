@@ -23,7 +23,7 @@ class PetList extends Component {
             <div class="ui horizontal list">
             {[...store.petCategories].map(category => 
                     <div class="item">
-                        <div class={"pet-evolved Pet-" + category + "-Base"} onClick={this.showPetInfo.bind(this, category)}>
+                        <div class={category === this.petInfo ? "selectableInventory Pet-" + category + "-Base " : "Pet-" + category + "-Base "} onClick={this.showPetInfo.bind(this, category)}>
 
                         </div>
                         <div class="badge badge-error stack-count">
