@@ -35,7 +35,7 @@ class PetList extends Component {
                         {[...store.pets].filter(([id,pet]) => pet.basetype === category)
                                         .reduce((prevVal,[id,pet]) => prevVal + pet.count , 0)
                         }
-                        </div>                        
+                        </div>                      
                     </div>
             )}
             </div>
@@ -49,6 +49,13 @@ class PetList extends Component {
         );
         }
     }
+
+                        /*
+                        Not possible since keys between pet and quest don't always match unfortunatley
+                        <div>
+                            {[...store.quests].filter(([id,quest]) => id === category.toLowerCase()).reduce((prevVal,[id,quest]) => prevVal + 1, 0)}
+                        </div> 
+                        */
 
     @action setPetInfo(category){
         this.petInfo = category;
