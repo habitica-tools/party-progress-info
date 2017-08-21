@@ -54,12 +54,13 @@ class App extends Component {
               <h4 class="ui inverted header">About</h4>
               <div class="ui inverted link list">
                 <a href="https://github.com/pietervanh">My Github Profile</a>
+                <a href="https://bitbucket.com/pietervanh">My Bitbucket Profile</a>
               </div>
             </div>            
             <div class="seven wide column">
               <h4 class="ui inverted header">Copyright</h4>
               <p>Some Assets are linked from <a href="https://habitica.com">HabitRPG</a> which are licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC-BY-NC-SA 3.0</a></p>
-              <p>Very much Alpha code here github repo coming soon..</p>
+              <p>Very much Alpha/Messy Code see <a href="https://bitbucket.org/pietervanh/">Git Repo here</a></p>
             </div>
           </div>
         </div>

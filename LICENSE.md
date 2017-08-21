@@ -21,8 +21,11 @@ This Project is licensed under the MIT License.
 > OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 > WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-This project includes code from the following projects, which have their own licenses:
+This project include(s) or refers to code/assets from the following projects, which have their own licenses:
 
 - [HabitRPG](https://github.com/HabitRPG/habitica/blob/develop/LICENSE) 
+- [Semantic UI](https://semantic-ui.mit-license.org/)
+- [MobX](https://github.com/mobxjs/mobx/blob/master/LICENSE)
+- [PReact](https://github.com/developit/preact/blob/master/LICENSE) 
 
 

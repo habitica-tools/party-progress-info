@@ -17,7 +17,7 @@ NodeJs / Yarn Package Manager
 
 ## Deployment
 
-I use the awesome surge.sh 
+I use the awesome [surge.sh](http://surge.sh)
 
 ## Built With
 
@@ -27,7 +27,7 @@ I use the awesome surge.sh
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+Contact me if you want to contribute code or stuff
 
 
 ## Authors
