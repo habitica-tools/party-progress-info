@@ -42,12 +42,18 @@ class PetState {
         }
         else
         {
-            if(!value.data.items.mounts[this.id]){
-                //Has No Mount 
+            if(value.data.items.mounts === undefined){ //No Mounts at all
                 count = count - 1;
-            }else{
-                //Has Pet and Mount
-                count = count -2; 
+            }
+            else
+            {           
+                if(!value.data.items.mounts[this.id]){
+                    //Has No Mount 
+                    count = count - 1;
+                }else{
+                    //Has Pet and Mount
+                    count = count -2; 
+                }
             }
         }
             
@@ -62,11 +68,17 @@ class PetState {
              count = count + 1;
          }
          else{
-             if(!value.data.items.mounts[this.id]){
-                 count = count + 1;
-             }
-            else{
-                count = count + 2;
+            if(value.data.items.mounts === undefined){ //No Mounts at all
+                count = count;
+            }
+            else
+            {                
+                if(!value.data.items.mounts[this.id]){
+                    count = count + 1;
+                }
+                else{
+                    count = count + 2;
+                }
             }
          }
     },this);
