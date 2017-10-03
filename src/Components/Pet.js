@@ -6,16 +6,18 @@ class Pet extends Component {
 
     render({pet}) {
         return (
-            <div>
-                <div class={"Pet-" + pet.id}>
-
-                </div>
-                <div class="badge badge-warning stack-count">
+            <div class="item-wrapper">
+                <div class="item">
+                <span class="badge badge-pill badge-item badge-count2">
                     {pet.needed}
-                </div>
-                <div class="badge badge-info stack-count">
+                </span>
+                <div class="badge badge-pill badge-item badge-count">
                     {pet.count}
-                </div>                
+                </div>  
+                <span class={"item-content Pet Pet-" + pet.id}>
+
+                </span>
+                </div>
             </div>
         );
     }  
