@@ -16,29 +16,35 @@ class PetList extends Component {
     else{
         return(
         <div class="ui fluid container">             
-        <div class="column">
-            <p>Total Pets Still Needed : <div class="badge badge-warning stack-count">{store.totalNeededPetsParty}</div></p>
-            <p>Total Pets In Party : <div class="badge badge-info stack-count">{store.totalCountPetsParty}</div></p>
+        <div class="column stable">
+            <p>Total Pets Still Needed : <div class="badge badge-pill badge-warning">{store.totalNeededPetsParty}</div></p>
+            <p>Total Pets In Party : <div class="badge badge-pill badge-info">{store.totalCountPetsParty}</div></p>
             <p>Total Pets : {store.totalCountPets}</p>
-            <div class="ui horizontal list">
+            <div class="item-rows">
+            <div class ="items">
             {[...store.petCategories].map(category => 
-                    <div class="item">
-                        <div class={category === this.petInfo ? "selectableInventory Pet-" + category + "-Base " : "Pet-" + category + "-Base "} onClick={this.showPetInfo.bind(this, category)}>
+                    <div>
+                    <div class="item-wrapper">
+                        <div class="item">
+                            <span class="badge badge-pill badge-item badge-count2">
+                            {[...store.pets].filter(([id,pet]) => pet.basetype === category)
+                                            .reduce((prevVal,[id,pet]) => prevVal + pet.needed , 0)
+                            }
+                            </span>
+                            <span class="badge badge-pill badge-item badge-info badge-count">
+                            {[...store.pets].filter(([id,pet]) => pet.basetype === category)
+                                            .reduce((prevVal,[id,pet]) => prevVal + pet.count , 0)
+                            }
+                            </span>                          
+                            <span class={category === this.petInfo ? "selectableInventory item-content Pet Pet-" + category + "-Base " : "item-content Pet Pet-" + category + "-Base "} onClick={this.showPetInfo.bind(this, category)}>
 
-                        </div>
-                        <div class="badge badge-error stack-count">
-                        {[...store.pets].filter(([id,pet]) => pet.basetype === category)
-                                        .reduce((prevVal,[id,pet]) => prevVal + pet.needed , 0)
-                        }
-                        </div>
-                        <div class="badge badge-info stack-count">
-                        {[...store.pets].filter(([id,pet]) => pet.basetype === category)
-                                        .reduce((prevVal,[id,pet]) => prevVal + pet.count , 0)
-                        }
+                            </span>
                         </div>                      
+                    </div>
                     </div>
             )}
             </div>
+        </div>
         </div>
         <div class="column">
             {this.petInfo === null ? <br/> :

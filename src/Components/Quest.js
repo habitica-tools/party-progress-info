@@ -6,11 +6,15 @@ class Quest extends Component {
 
     render({quest, id}) {
         return (
-        <button class={"inventory_quest_scroll_" + id} id={id} onClick={this.showQuestInfo} >
-          <div class="badge badge-info stack-count">
+        <div class="item-wrapper">
+        <div class="item">
+          <span class="badge badge-pill badge-item badge-count">
             {quest.count}
-          </div>
-        </button>
+          </span>            
+            <span class={"item-content inventory_quest_scroll_" + id} id={id} onClick={this.showQuestInfo} >
+            </span>
+        </div>
+        </div>
         );
     }
     

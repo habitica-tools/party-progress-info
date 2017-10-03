@@ -15,11 +15,11 @@ class QuestList extends Component {
     store.loadingobjects ?  <div class="ui active centered inline loader"></div> :
     <div class="column">
       <h4 class="ui header">{category} quests</h4>
-      <menu class="pets-menu">
+      <div class="items">
       {store.quests.entries().filter(([id,quest]) => quest.data.category === category).filter(([id,quest]) => this.showAll ? quest : quest.users.length > 0).map(([id, quest]) =>
         <Quest quest={quest} id={id} questlist={this} />
       )}
-      </menu>
+      </div>
       {this.showAll ? <button class="ui olive button" onClick={this.handlePartyOnly}><i class="hide icon"></i>Party Only</button> : <button class="ui blue button" onClick={this.handleShowAll}><i class="unhide icon"></i>Show All</button>}
       <div>
         {this.questInfo === null ? <br/> : <QuestInfo quest={this.questInfo} store={store}/>  }
