@@ -12,7 +12,7 @@ class App extends Component {
       <div>
         <div class="ui fixed inverted menu">
           <div class="ui container">
-            <a href="#" class="header item">
+            <a href="#" class="header">
               Habitica Party Tools
             </a>
           </div>
@@ -54,7 +54,7 @@ class App extends Component {
               <div class="three wide column">
                 <h4 class="ui inverted header">Code</h4>
                 <div class="ui inverted link list">
-                  <a href="https://bitbucket.org/pietervanh/habitica-tools" class="item">Git Repository</a>
+                  <a href="https://bitbucket.org/pietervanh/habitica-tools">Git Repository</a>
                 </div>
               </div>            
               <div class="seven wide column">
