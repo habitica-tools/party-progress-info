@@ -12,7 +12,7 @@ class App extends Component {
       <div>
         <div class="ui fixed inverted menu">
           <div class="ui container">
-            <a href="#" class="header">
+            <a href="#" class="ui inverted header">
               Habitica Party Tools
             </a>
           </div>
