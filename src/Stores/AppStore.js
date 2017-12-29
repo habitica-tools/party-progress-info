@@ -83,6 +83,7 @@ class AppStore {
     }
     return categories;
   }
+
   @computed get totalNeededPetsParty () {
     return [...this.pets].map(([id,pet]) =>  pet)
         .reduce((prevVal, pet) =>  prevVal + pet.needed , 0);
