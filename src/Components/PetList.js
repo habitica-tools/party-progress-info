@@ -71,7 +71,7 @@ class PetList extends Component {
         return(
         <div class="ui fluid container">             
         <div class="column stable">
-        <div class="float-right">
+            <div class="float-right">
                 <span class="dropdown-label">Sort By</span>
                 <select class="ui dropdown" value={this.sortKey} onChange={this.sortPets}>
                     <option value="">Default</option>
@@ -79,10 +79,17 @@ class PetList extends Component {
                     <option value="2">Most</option>
                     <option value="3">A-Z</option>
               </select>        
-            </div>          
+            </div>      
+            <div class="progress-container">
+            <div class="progress">
+                <div class="progress-bar bg-experience" style={"transition-duration: 300ms; width:" + store.totalCountPetsParty / (store.totalCountPets / 100)  + "%;"}></div>
+                <span class="small-text">{parseInt(store.totalCountPetsParty / (store.totalCountPets / 100))}%</span>
+            </div>
+            </div>                
             <p>Total Pets Still Needed : <div class="badge badge-pill badge-count2">{store.totalNeededPetsParty}</div></p>
             <p>Total Pets In Party : <div class="badge badge-pill badge-info badge-count">{store.totalCountPetsParty}</div></p>
-            <p>Total Pets : {store.totalCountPets}</p>
+            <p>Total Pets Available : {store.totalCountPets}</p>
+
               
             <div class="item-rows">
             <div class ="items">
