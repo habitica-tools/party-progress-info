@@ -11,13 +11,14 @@ class Pet extends Component {
                 <span class="badge badge-pill badge-item badge-count2">
                     {pet.needed}
                 </span>
-                <div class="badge badge-pill badge-item badge-count">
+                <div class="badge badge-pill badge-item badge-info badge-count">
                     {pet.count}
                 </div>  
                 <span class={"item-content Pet Pet-" + pet.id}>
-
+                    
                 </span>
                 </div>
+                <span class="pettxt">{pet.id}</span>
             </div>
         );
     }  

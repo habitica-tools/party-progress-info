@@ -16,7 +16,8 @@ class PetList extends Component {
         return petdetail;
     },this);
 
-    if(this.sortKey === "1"){
+    switch(this.sortKey){
+        case "1":
         pets.sort(function(a,b){
             if(a.count < b.count){
                 return -1;
@@ -25,11 +26,34 @@ class PetList extends Component {
                 return 1;
             }
             return 0;
-        })
+        })        
+        break;
+        case "2":
+        pets.sort(function(a,b){
+            if(a.count > b.count){
+                return -1;
+            }
+            if(a.count < b.count) {
+                return 1;
+            }
+            return 0;
+        })        
+        break;
+        case "3":
+        pets.sort(function(a,b){
+            if(a.id < b.id){
+                return -1;
+            }
+            if(a.id > b.id) {
+                return 1;
+            }
+            return 0;
+        })        
+        break;
+        default:
+        break;
     }
-    else{
-
-    }    
+   
     return pets;
   }
 
@@ -52,10 +76,12 @@ class PetList extends Component {
                 <select class="ui dropdown" value={this.sortKey} onChange={this.sortPets}>
                     <option value="">Default</option>
                     <option value="1">Shortage</option>
+                    <option value="2">Most</option>
+                    <option value="3">A-Z</option>
               </select>        
             </div>          
-            <p>Total Pets Still Needed : <div class="badge badge-pill badge-warning">{store.totalNeededPetsParty}</div></p>
-            <p>Total Pets In Party : <div class="badge badge-pill badge-info">{store.totalCountPetsParty}</div></p>
+            <p>Total Pets Still Needed : <div class="badge badge-pill badge-count2">{store.totalNeededPetsParty}</div></p>
+            <p>Total Pets In Party : <div class="badge badge-pill badge-info badge-count">{store.totalCountPetsParty}</div></p>
             <p>Total Pets : {store.totalCountPets}</p>
               
             <div class="item-rows">
@@ -74,6 +100,7 @@ class PetList extends Component {
 
                             </span>
                         </div>                      
+                        <span class="pettxt">{category.id}</span>
                     </div>
                     </div>
             )}
