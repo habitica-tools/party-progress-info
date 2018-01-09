@@ -2,6 +2,7 @@ import { h, render, Component } from 'preact';
 import { observer } from 'mobx-preact';
 import Settings from './Settings';
 import QuestList from './QuestList';
+import QuestEggsList from './QuestEggsList';
 import PetList from './PetList';
 
 @observer
@@ -46,6 +47,12 @@ class App extends Component {
             </div>            
             <PetList store={store}/>
             <br/>
+          </div>
+          <div class="ui fluid container">
+            <div class="ui horizontal divider header">
+              <h4>Non Hatched Quest Eggs (Work In Progress)</h4>
+            </div>
+            <QuestEggsList store={store}/>
           </div>
         </div>
         <div class="ui inverted vertical footer segment">

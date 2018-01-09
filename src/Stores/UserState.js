@@ -32,7 +32,17 @@ class UserState {
                         var pet = this.store.pets.get(key);
                         if(pet !== undefined)
                             pet.addUser(this);
-                },this);                    
+                },this);   
+                //go over eggs
+                var eggs = new Map(Object.entries(json.data.items.eggs));
+                eggs.forEach(function(value, key) {
+                    if(key !== null && key !== undefined)                   
+                        var egg = this.store.eggs.get(key);
+                        if(egg !== undefined)
+                            if(value > 0){
+                                egg.addUser(this);
+                            }
+                },this);                                  
             }));
 
         }

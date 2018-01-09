@@ -2,11 +2,13 @@ import { observable, action, computed } from 'mobx';
 import UserState from "./UserState";
 import QuestState from "./QuestState";
 import PetState from "./PetState";
+import EggState from "./EggState";
 
 class AppStore {
   @observable loadingobjects = true;
   @observable quests = new Map();
   @observable pets = new Map();
+  @observable eggs = new Map();
   @observable users = [];
   
 
@@ -31,6 +33,12 @@ class AppStore {
          pets.set(key, new PetState(key, this));
       },this);
       this.pets.merge(pets);
+
+      const eggs = new Map();
+      new Map(Object.entries(json.data.questEggs)).forEach(function(value,key){
+        eggs.set(key, new EggState(key, this));
+     },this);
+     this.eggs.merge(eggs);      
 
       this.loadingobjects = false;
       this.loadQueryString();
@@ -71,6 +79,10 @@ class AppStore {
       this.pets.forEach(function(value,key,map){
         value.removeUser(user);
       });
+      //also remove it from petts
+      this.eggs.forEach(function(value,key,map){
+        value.removeUser(user);
+      });      
       this.setQueryVariable();
   }
  
