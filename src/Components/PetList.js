@@ -13,8 +13,45 @@ class PetList extends Component {
         let petdetail = {id:category};
         petdetail.needed = [...this.props.store.pets].filter(([id,pet]) => pet.basetype === category).reduce((prevVal,[id,pet]) => prevVal + pet.needed , 0);
         petdetail.count = [...this.props.store.pets].filter(([id,pet]) => pet.basetype === category).reduce((prevVal,[id,pet]) => prevVal + pet.count , 0);
+        petdetail.usercount = 0;
+        if(this.props.store.infoUser !== "" && this.props.store.infoUser.data.items.pets !== undefined){
+            //convert pets to array value = -1=nopet, 5->40 in progress or 5 + mount = mount and pet
+            let userpets = Object.keys(this.props.store.infoUser.data.items.pets).map(k => ({pet:k, value: this.props.store.infoUser.data.items.pets[k]}))
+            //filter non quest pets
+            userpets = userpets.filter(up => [...this.props.store.pets].map(([key,data]) => key).includes(up.pet));
+            //convert mounts to array value = boolean
+            let usermounts = [];
+            if(this.props.store.infoUser.data.items.mounts !== undefined){
+                usermounts = Object.keys(this.props.store.infoUser.data.items.mounts).map(k => ({pet:k, value: this.props.store.infoUser.data.items.mounts[k]}))
+            }
+            userpets = userpets.map(function(pt){
+                let mountcnt = usermounts.filter(um => pt.pet === um.pet && um.value === true).length
+             if(pt.value === -1 && mountcnt === 1){
+                 //no pet but mount
+                 return {pet:pt.pet, value:1};
+             }
+             else{
+                 if(pt.value >= 5){
+                    if(mountcnt === 1){
+                        return {pet:pt.pet, value:2};
+                    }
+                    else{
+                        return {pet:pt.pet, value:1};
+                    }
+                 }
+                 else{
+                     return {pet:pt.pet, value:0};
+                 }
+             }   
+            });
+            userpets = userpets.map(up => ({pet:up.pet.substr(0,up.pet.indexOf('-')), value: up.value}))
+            petdetail.usercount = userpets.filter(up => up.pet === category).reduce((prevVal,up) => prevVal + up.value , 0)
+            
+        }
         return petdetail;
     },this);
+
+
 
     switch(this.sortKey){
         case "1":
@@ -106,9 +143,13 @@ class PetList extends Component {
                             <span class="badge badge-pill badge-item badge-count2">
                             {category.needed}
                             </span>
-                            <span class="badge badge-pill badge-item badge-info badge-count">
+                            <span class="badge badge-pill badge-item badge-count">
                             {category.count}
-                            </span>                          
+                            </span>
+                            {category.usercount >= 1 ?
+                            <span class="badge badge-pill badge-item badge-blue">
+                                {category.usercount}
+                            </span> : '' }                         
                             <span class={category.id === this.petInfo ? "selectableInventory item-content Pet Pet-" + category.id + "-Base " : "item-content Pet Pet-" + category.id + "-Base "} onClick={this.showPetInfo.bind(this, category.id)}>
 
                             </span>

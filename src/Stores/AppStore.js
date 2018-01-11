@@ -10,6 +10,7 @@ class AppStore {
   @observable pets = new Map();
   @observable eggs = new Map();
   @observable users = [];
+  @observable infoUser = "";
   
 
   constructor() {
@@ -84,6 +85,9 @@ class AppStore {
         value.removeUser(user);
       });      
       this.setQueryVariable();
+  }
+  @action setInfoUser(user){
+    this.infoUser = user;
   }
  
   @computed get petCategories() {

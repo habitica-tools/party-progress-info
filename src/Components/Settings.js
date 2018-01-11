@@ -13,7 +13,7 @@ class Settings extends Component {
                 <SettingsInput store={store} />
                 <div class="ui basic segment"></div>
                 <div class="ui cards">
-                    {store.users.map(u => u.loading ? <div class="ui active centered inline loader"></div> : <User user={u} store={store} /> )}
+                    {store.users.map(u => u.loading ? <div class="ui active centered inline loader"></div> : <User user={u} /> )}
                 </div>
             </div>
             );
