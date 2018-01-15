@@ -28,6 +28,13 @@ class App extends Component {
           </div>                  
           <div class="ui fluid container">
             <Settings store={store}/>
+            <div class="ui horizontal divider header">
+              <h4>Wanted Quest Pets</h4>
+            </div>            
+            <PetList store={store}/>
+            <br/>
+          </div>
+          <div class="ui fluid container">
             <div class="ui basic segment"></div>
             <div class="ui two column stackable grid">
               <div class="ui horizontal divider header">
@@ -39,19 +46,12 @@ class App extends Component {
               <br/>
               <QuestList store={store} category="gold"/>
             </div>
-          </div>
-          <br/>
+          </div>          
           <div class="ui fluid container">
             <div class="ui horizontal divider header">
-              <h4>Wanted Quest Pets</h4>
-            </div>            
-            <PetList store={store}/>
-            <br/>
-          </div>
-          <div class="ui fluid container">
-            <div class="ui horizontal divider header">
-              <h4>Non Hatched Quest Eggs (Work In Progress)</h4>
+              <h4>Non Hatched Quest Eggs</h4>
             </div>
+            <div class="ui basic segment"></div>
             <QuestEggsList store={store}/>
           </div>
         </div>
@@ -61,7 +61,7 @@ class App extends Component {
               <div class="three wide column">
                 <h4 class="ui inverted header">Code</h4>
                 <div class="ui inverted link list">
-                  <a href="https://bitbucket.org/pietervanh/habitica-tools">Git Repository</a>
+                  <a href="https://bitbucket.org/pietervanh/habitica-tools"><i class="bitbucket square icon"></i>Git Repository</a>
                 </div>
               </div>            
               <div class="seven wide column">

@@ -7,7 +7,7 @@ import PetInfo from './PetInfo';
 class PetList extends Component {
   @observable showAll = false;
   @observable petInfo = null;
-  @observable sortKey = "";
+  @observable sortKey = "1";
   @computed get petCategoriesWithCounts() {
     let pets = [...this.props.store.petCategories].map(function(category){
         let petdetail = {id:category};
@@ -46,7 +46,7 @@ class PetList extends Component {
             });
             userpets = userpets.map(up => ({pet:up.pet.substr(0,up.pet.indexOf('-')), value: up.value}))
             petdetail.usercount = userpets.filter(up => up.pet === category).reduce((prevVal,up) => prevVal + up.value , 0)
-            
+            petdetail.quests
         }
         return petdetail;
     },this);
@@ -102,9 +102,6 @@ class PetList extends Component {
         return(<div class="ui active centered inline loader"></div>);
     }
     else{
-
-        //this.sortedpetCategories = [...store.petCategories].map(category => createmorepetdetail(category));
-
         return(
         <div class="ui fluid container">             
         <div class="column stable">
@@ -127,14 +124,42 @@ class PetList extends Component {
               </select>        
             </div>
         </div>
-     
-                
-            <p>Total Pets Still Needed : <div class="badge badge-pill badge-count2">{store.totalNeededPetsParty}</div></p>
-            <p>Total Pets In Party : <div class="badge badge-pill badge-info badge-count">{store.totalCountPetsParty}</div></p>
-            <p>Total Pets Available : {store.totalCountPets}</p>
-
-              
-            <div class="item-rows">
+        <div class="ui four statistics">
+            <div class="ui tiny statistic">
+                <div class="value wanted">
+                    {store.totalNeededPetsParty}
+                </div>
+                <div class="label">
+                    Pets Wanted
+                </div>
+            </div>
+            <div class="ui tiny statistic">
+                <div class="value got">
+                    {store.totalCountPetsParty}
+                </div>
+                <div class="label">
+                    Pets in Party
+                </div>
+            </div>      
+            <div class="ui tiny statistic">
+                <div class="value got">
+                {parseInt(store.totalCountPetsParty / (store.totalCountPets / 100))} %
+                </div>
+                <div class="label">
+                    Pets Collected %
+                </div>
+            </div>
+            <div class="ui tiny statistic">
+                <div class="value">
+                    {store.totalCountPets}
+                </div>
+                <div class="label">
+                    Total Pets
+                </div>
+            </div>                     
+        </div>
+        <div class="ui basic segment"></div>
+        <div class="item-rows">
             <div class ="items">
             {[...this.petCategoriesWithCounts].map(category => 
                     <div>
@@ -170,13 +195,6 @@ class PetList extends Component {
         );
         }
     }
-
-                        /*
-                        Not possible since keys between pet and quest don't always match unfortunatley
-                        <div>
-                            {[...store.quests].filter(([id,quest]) => id === category.toLowerCase()).reduce((prevVal,[id,quest]) => prevVal + 1, 0)}
-                        </div> 
-                        */
 
     @action setPetInfo(category){
         this.petInfo = category;

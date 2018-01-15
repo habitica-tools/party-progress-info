@@ -7,7 +7,7 @@ import EggInfo from './EggInfo';
 class QuestEggsList extends Component {
   @observable showAll = false;
   @observable eggInfo = null;
-  @observable sortKey = "";
+  @observable sortKey = "2";
   @computed get eggsWithCounts() {
     let eggs = [...this.props.store.eggs].map(function(egginfo){
         let eggdetail = {id:egginfo};
@@ -69,12 +69,19 @@ class QuestEggsList extends Component {
         return(
         <div class="ui fluid container">             
         <div class="column stable">
-        <span class="dropdown-label">Sort By: </span>
+        <div class="ui stackable grid">
+            <div class="twelve wide column">
+                &nbsp;<br/><br/>
+            </div>
+            <div class="four wide column">
+                <span class="dropdown-label">Sort By: </span>
                 <select class="ui dropdown" value={this.sortKey} onChange={this.sortEggs}>
                     <option value="">Default</option>
                     <option value="1">Shortage</option>
                     <option value="2">Most</option>
-              </select>                       
+                </select>   
+            </div>                    
+        </div>
             <div class="item-rows">
             <div class ="items">
             {[...this.eggsWithCounts].map(egg => 
