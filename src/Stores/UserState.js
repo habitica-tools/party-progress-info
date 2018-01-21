@@ -20,29 +20,35 @@ class UserState {
                 this.data = json.data;
                 this.loading = false;
                 //go over quests 
-                var quests = new Map(Object.entries(json.data.items.quests));
-                quests.forEach(function(value, key) {
-                    if(value > 0)                   
-                        this.store.quests.get(key).addUser(this);
-                }, this); 
+                if(json.data.items.quests !== undefined){
+                    var quests = new Map(Object.entries(json.data.items.quests));
+                    quests.forEach(function(value, key) {
+                        if(value > 0)                   
+                            this.store.quests.get(key).addUser(this);
+                    }, this); 
+                }
                 //go over pets
-                var pets = new Map(Object.entries(json.data.items.pets));
-                pets.forEach(function(value, key) {
-                    if(key !== null && key !== undefined)                   
-                        var pet = this.store.pets.get(key);
-                        if(pet !== undefined)
-                            pet.addUser(this);
-                },this);   
+                if(json.data.items.pets !== undefined){
+                    var pets = new Map(Object.entries(json.data.items.pets));
+                    pets.forEach(function(value, key) {
+                        if(key !== null && key !== undefined)                   
+                            var pet = this.store.pets.get(key);
+                            if(pet !== undefined)
+                                pet.addUser(this);
+                    },this);   
+                }
                 //go over eggs
-                var eggs = new Map(Object.entries(json.data.items.eggs));
-                eggs.forEach(function(value, key) {
-                    if(key !== null && key !== undefined)                   
-                        var egg = this.store.eggs.get(key);
-                        if(egg !== undefined)
-                            if(value > 0){
-                                egg.addUser(this);
-                            }
-                },this);                                  
+                if(json.data.items.eggs !== undefined){
+                    var eggs = new Map(Object.entries(json.data.items.eggs));
+                    eggs.forEach(function(value, key) {
+                        if(key !== null && key !== undefined)                   
+                            var egg = this.store.eggs.get(key);
+                            if(egg !== undefined)
+                                if(value > 0){
+                                    egg.addUser(this);
+                                }
+                    },this);                               
+                }   
             }));
 
         }
