@@ -5,7 +5,7 @@ import { observer } from 'mobx-preact';
 class EggInfo extends Component {
     render({category, store}) {
         return (
-        <div class="ui fluid container">
+        <div class="ui fluid">
             <br/>
             <div class="ui horizontal divider header">
               <h4>{category}</h4>
@@ -22,7 +22,7 @@ class EggInfo extends Component {
                                     .map(([id,egg]) =>
                     <tr>
                         <td>{category}</td>
-                        <td>{egg.users.map(user => user.data.profile.name).join(',')}</td>
+                        <td>{egg.users.map(user => user.data.profile.name).join(', ')}</td>
                     </tr>   
                     )}
                 </tbody>

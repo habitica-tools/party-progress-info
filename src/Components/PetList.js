@@ -103,8 +103,7 @@ class PetList extends Component {
     }
     else{
         return(
-        <div class="ui fluid container">             
-        <div class="column stable">
+        <div>
         <div class="ui stackable grid">
             <div class="twelve wide column">
                 <div class="progress-container">
@@ -184,7 +183,6 @@ class PetList extends Component {
                     </div>
             )}
             </div>
-        </div>
         </div>
         <div class="column">
             {this.petInfo === null ? <br/> :

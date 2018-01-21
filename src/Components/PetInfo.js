@@ -6,7 +6,7 @@ import Pet from './Pet';
 class PetInfo extends Component {
     render({category, store}) {
         return (
-        <div class="ui fluid container">
+        <div class="ui fluid">
             <br/>
             <div class="ui horizontal divider header">
               <h4>{category}</h4>
@@ -23,20 +23,13 @@ class PetInfo extends Component {
                                     .map(([id,pet]) =>
                     <tr>
                         <td><Pet pet={pet}/></td>
-                        <td>{pet.users.map(user => user.data.profile.name).join(',')}</td>
+                        <td>{pet.users.map(user => user.data.profile.name).join(', ')}</td>
                     </tr>   
                     )}
                 </tbody>
             </table>
         </div>
         );
-                    /*                                 
-                                     => pet.users)
-                                    .filter(users => users.length >= 1)
-                                    .map(user => user[0] === undefined ? '' :
-
-                    )}
-                    */
     }
 }
 
