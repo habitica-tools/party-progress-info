@@ -13,7 +13,7 @@ class QuestEggsList extends Component {
         let eggdetail = {id:egginfo};
         eggdetail.count = [...this.props.store.eggs].filter(([id,egg]) => egg.id === egginfo[0]).reduce((prevVal,[id,egg]) => prevVal + egg.count , 0);
         return eggdetail;
-    },this);
+    },this).filter(egg => egg.count > 0);
     
     switch(this.sortKey){
         case "1":
