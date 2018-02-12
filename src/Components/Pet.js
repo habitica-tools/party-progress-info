@@ -3,6 +3,7 @@ import { observer } from 'mobx-preact';
 
 @observer
 class Pet extends Component {
+    imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
 
     render({pet}) {
         return (
@@ -15,7 +16,7 @@ class Pet extends Component {
                     {pet.count}
                 </div>  
                 <span class={"item-content Pet Pet-" + pet.id}>
-                    
+                    <img src={this.imageurl + "Pet-" + pet.id + ".png"} alt={pet.id}  />
                 </span>
                 </div>
                 <span class="pettxt">{pet.id}</span>

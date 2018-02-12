@@ -3,6 +3,7 @@ import { observer } from 'mobx-preact';
 
 @observer
 class Quest extends Component {
+    imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
 
     render({quest, id}) {
         return (
@@ -11,7 +12,8 @@ class Quest extends Component {
           <span class="badge badge-pill badge-item badge-count">
             {quest.count}
           </span>            
-            <span class={"item-content inventory_quest_scroll_" + id} id={id} onClick={this.showQuestInfo} >
+            <span class={"item-content Quest inventory_quest_scroll_" + id} id={id} onClick={this.showQuestInfo} >
+                <img src={this.imageurl + "inventory_quest_scroll_" + id + ".png"} alt={id}  />
             </span>
         </div>
         </div>

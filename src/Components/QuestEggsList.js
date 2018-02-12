@@ -5,6 +5,7 @@ import EggInfo from './EggInfo';
 
 @observer
 class QuestEggsList extends Component {
+  imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
   @observable showAll = false;
   @observable eggInfo = null;
   @observable sortKey = "2";
@@ -91,8 +92,8 @@ class QuestEggsList extends Component {
                             <span class="badge badge-pill badge-item badge-info badge-count">
                             {egg.count}
                             </span>                          
-                            <span class={egg.id[0] === this.eggInfo ? "selectableInventory item-content Pet_Egg_" + egg.id[0] + "" : "item-content Pet_Egg_" + egg.id[0] + ""} onClick={this.showEggInfo.bind(this, egg.id[0])}>
-
+                            <span class={egg.id[0] === this.eggInfo ? "selectableInventory item-content Egg Pet_Egg_" + egg.id[0] + "" : "item-content Egg Pet_Egg_" + egg.id[0] + ""} onClick={this.showEggInfo.bind(this, egg.id[0])}>
+                                <img src={this.imageurl + "Pet_Egg_" + egg.id[0] + ".png"} alt={egg.id[0]}  />
                             </span>
                         </div>                      
                         <span class="pettxt">{egg.id[0]}</span>

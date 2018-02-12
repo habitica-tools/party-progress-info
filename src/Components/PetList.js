@@ -4,7 +4,8 @@ import { observable, action, computed  } from 'mobx';
 import PetInfo from './PetInfo';
 
 @observer
-class PetList extends Component {
+class PetList extends Component { 
+  imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
   @observable showAll = false;
   @observable petInfo = null;
   @observable sortKey = "1";
@@ -102,14 +103,15 @@ class PetList extends Component {
         return(<div class="ui active centered inline loader"></div>);
     }
     else{
+        let totalpercentage = store.totalCountPetsParty > 0 ? parseInt(store.totalCountPetsParty / (store.totalCountPets / 100)) : "0"
+
         return(
         <div>
         <div class="ui stackable grid">
             <div class="twelve wide column">
                 <div class="progress-container">
                     <div class="progress">
-                        <div class="progress-bar bg-experience" style={"transition-duration: 300ms; width:" + store.totalCountPetsParty / (store.totalCountPets / 100)  + "%;"}></div>
-                        <span class="small-text">{parseInt(store.totalCountPetsParty / (store.totalCountPets / 100))}%</span>
+                        <div class="progress-bar bg-experience" style={"transition-duration: 300ms; width:" + totalpercentage + "%;"}></div>
                     </div>
                 </div>
             </div>
@@ -142,7 +144,7 @@ class PetList extends Component {
             </div>      
             <div class="ui tiny statistic">
                 <div class="value got">
-                {parseInt(store.totalCountPetsParty / (store.totalCountPets / 100))} %
+                {totalpercentage + " %"}
                 </div>
                 <div class="label">
                     Pets Collected %
@@ -175,7 +177,7 @@ class PetList extends Component {
                                 {category.usercount}
                             </span> : '' }                         
                             <span class={category.id === this.petInfo ? "selectableInventory item-content Pet Pet-" + category.id + "-Base " : "item-content Pet Pet-" + category.id + "-Base "} onClick={this.showPetInfo.bind(this, category.id)}>
-
+                                <img src={this.imageurl + "Pet-" + category.id + "-Base.png"} alt={category.id}  />
                             </span>
                         </div>                      
                         <span class="pettxt">{category.id}</span>

@@ -14,7 +14,7 @@ class App extends Component {
         <div class="ui fixed inverted menu">
           <div class="ui container">
             <a href="#" class="ui inverted header">
-              Habitica Party Tools
+              Habitica Party Progress Info
             </a>
           </div>
         </div>
@@ -54,6 +54,13 @@ class App extends Component {
             <div class="ui basic segment"></div>
             <QuestEggsList store={store}/>
           </div>
+          <div class="ui fluid container">
+          <div class="ui horizontal divider header">
+              <h4>Gear Collection</h4>
+            </div>
+            <div class="ui basic segment"></div>
+            Coming soon...
+          </div>
         </div>
         <div class="ui inverted vertical footer segment">
           <div class="ui center aligned container">
@@ -64,9 +71,15 @@ class App extends Component {
                   <a href="https://bitbucket.org/pietervanh/habitica-tools"><i class="bitbucket square icon"></i>Git Repository</a>
                 </div>
               </div>            
-              <div class="seven wide column">
+              <div class="five wide column">
                 <h4 class="ui inverted header">Copyright</h4>
                 <p>Some Assets are linked from <a href="https://habitica.com">HabitRPG</a> which are licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC-BY-NC-SA 3.0</a></p>
+              </div>
+              <div class="two wide column">
+                <h4 class="ui inverted header">Other Info</h4>
+                <div class="ui inverted link list">
+                <a href="http://habitica.wikia.com/wiki/Party_Tools">Wiki</a>
+                </div>
               </div>
             </div>
           </div>
