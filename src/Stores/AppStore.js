@@ -3,12 +3,14 @@ import UserState from "./UserState";
 import QuestState from "./QuestState";
 import PetState from "./PetState";
 import EggState from "./EggState";
+import GearState from "./GearState";
 
 class AppStore {
   @observable loadingobjects = true;
   @observable quests = new Map();
   @observable pets = new Map();
   @observable eggs = new Map();
+  @observable gear = new Map();
   @observable users = [];
   @observable infoUser = "";
   
@@ -37,9 +39,15 @@ class AppStore {
 
       const eggs = new Map();
       new Map(Object.entries(json.data.questEggs)).forEach(function(value,key){
-        eggs.set(key, new EggState(key, this));
-     },this);
-     this.eggs.merge(eggs);      
+        eggs.set(key, new EggState(key, value, this));
+      },this);
+      this.eggs.merge(eggs);      
+
+      const gear = new Map();
+      new Map(Object.entries(json.data.gear.flat)).forEach(function(value,key){
+        gear.set(key, new GearState(key, value, this));
+      },this);
+      this.gear.merge(gear);         
 
       this.loadingobjects = false;
       this.loadQueryString();
@@ -76,14 +84,19 @@ class AppStore {
       this.quests.forEach(function(value,key,map){
         value.removeUser(user);
       });
-      //also remove it from petts
+      //also remove it from pets
       this.pets.forEach(function(value,key,map){
         value.removeUser(user);
       });
-      //also remove it from petts
+      //also remove it from eggs
       this.eggs.forEach(function(value,key,map){
         value.removeUser(user);
-      });      
+      }); 
+
+      this.gear.forEach(function(value,key,map){
+        value.removeUser(user);
+      });    
+
       this.setQueryVariable();
   }
   @action setInfoUser(user){

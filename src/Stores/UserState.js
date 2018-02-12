@@ -47,7 +47,19 @@ class UserState {
                                 if(value > 0){
                                     egg.addUser(this);
                                 }
-                    },this);                               
+                    },this);
+                }
+                //go over gear
+                if(json.data.items.gear !== undefined){
+                    var gear = new Map(Object.entries(json.data.items.gear.owned));
+                    gear.forEach(function(value, key) {
+                        if(key !== null && key !== undefined)                   
+                            var gear = this.store.gear.get(key);
+                            if(gear !== undefined)
+                                if(value > 0){
+                                    gear.addUser(this);
+                                }
+                    },this);                                                 
                 }   
             }));
 

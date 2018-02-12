@@ -4,6 +4,7 @@ import Settings from './Settings';
 import QuestList from './QuestList';
 import QuestEggsList from './QuestEggsList';
 import PetList from './PetList';
+import GearList from './GearList';
 
 @observer
 class App extends Component {
@@ -59,7 +60,8 @@ class App extends Component {
               <h4>Gear Collection</h4>
             </div>
             <div class="ui basic segment"></div>
-            Coming soon...
+            Beware Gears is new there might be dragons or bugs
+            <GearList store={store}/>
           </div>
         </div>
         <div class="ui inverted vertical footer segment">
