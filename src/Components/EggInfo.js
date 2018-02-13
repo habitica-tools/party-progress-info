@@ -3,33 +3,30 @@ import { observer } from 'mobx-preact';
 
 @observer
 class EggInfo extends Component {
-    render({category, store}) {
+    render({category, store, egglist}) {
         return (
-        <div class="ui fluid">
-            <br/>
-            <div class="ui horizontal divider header">
-              <h4>{category}</h4>
+        <div class="ui mini modal active">
+            <div class="header">{category}
+            <button class="ui icon right floated button" onClick={this.Close}>
+                <i class="close icon"></i>
+            </button>
             </div>
-            <table class="ui very basic collapsing celled table">
-                <thead>
-                    <tr>
-                        <th>Egg</th>
-                        <th>User(s) Has</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <div class="content">
                     {[...store.eggs].filter(([id,egg]) => egg.id === category)
-                                    .map(([id,egg]) =>
-                    <tr>
-                        <td>{category}</td>
-                        <td>{egg.users.map(user => user.data.profile.name).join(', ')}</td>
-                    </tr>   
+                        .map(([id,egg]) =>
+                        egg.users.map(user => 
+                        <div key={user.id}>
+                            {user.data.profile.name + " has " + egg.usercount(user)}
+                        </div>)
                     )}
-                </tbody>
-            </table>
+            </div>
         </div>
         );
 
+    }
+
+    Close = (e) => {
+        this.props.egglist.hideEggInfo();
     }
 }
 

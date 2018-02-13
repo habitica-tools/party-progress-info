@@ -84,6 +84,8 @@
             left:14px;
         }   
         .item .item-content.Gear {
+            top: 15px;
+            left:14px;            
             height:91px;
             max-width:91px;
         }                
@@ -116,7 +118,11 @@
             background: #FFFFFF;
             box-shadow: 0 2px 2px 0 rgba(26, 24, 29, 0.15), 0 1px 4px 0 rgba(26, 24, 29, 0.1);
             border: 1px solid transparent;
-        }               
+        }      
+        .item:hover{
+            box-shadow: 0 3px 3px 0 rgba(107, 47, 119, 0.15), 0 1px 4px 0 rgba(103, 11, 241, 0.781);
+            border: 2px solid transparent;
+        }         
         .item .item-content {
             margin: auto;
             display: block;
@@ -166,6 +172,14 @@
         td>.item-wrapper{
             margin: auto 20px !important;
         }
+        .ui.modal > .close {
+            cursor: pointer;
+            position: absolute;
+            top: -2.5rem;
+            right: -2.5rem;
+            z-index: 1;
+            padding: 0.625rem 0px 0px;
+        }        
     </style>
     </head>
     <body>

@@ -94,7 +94,7 @@ class GearList extends Component {
         <div class="ui stackable grid">
             <div class="twelve wide column">
                 &nbsp;<br/><br/>
-            </div>
+            </div>            
             <div class="four wide column">
                 <span class="dropdown-label">Sort By: </span>
                 <select class="ui dropdown" value={this.sortKey} onChange={this.sortGear}>
@@ -117,11 +117,7 @@ class GearList extends Component {
                             {gear.count}
                             </span>                          
                             <span class={gear.id === this.gearinfo ? "selectableInventory item-content Gear"  : "item-content Gear"} onClick={this.showGearInfo.bind(this, gear.id)}>
-                                {gear.id.startsWith('armor') ?
                                 <img src={this.imageurl + "shop_" + gear.id + ".png"} alt={"shop_" + gear.id}  />
-                                :
-                                <img src={this.imageurl + gear.id + ".png"} alt={gear.id}  />
-                                }
                             </span>
                         </div>                      
                     </div>
@@ -132,7 +128,7 @@ class GearList extends Component {
         </div>
         <div class="column">
             {this.gearInfo === null ? <br/> :
-                <GearInfo category={this.gearInfo} store={store} />
+                <GearInfo category={this.gearInfo} store={store} gearlist={this} />
             }
         </div>
         </div>
@@ -141,11 +137,20 @@ class GearList extends Component {
     }
 
     @action setGearInfo(category){
-        this.gearInfo = category;
+        if(category === this.gearInfo){
+            this.setGearInfo(null);
+        }
+        else{
+            this.gearInfo = category;
+        }
     }
     
     showGearInfo = (e) => {
         this.setGearInfo(e);
+    }
+
+    @action hideGearInfo()  {
+        this.setGearInfo(null);
     }
     
     @action sortGear = (e) => {

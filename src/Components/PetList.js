@@ -197,7 +197,12 @@ class PetList extends Component {
     }
 
     @action setPetInfo(category){
-        this.petInfo = category;
+        if(this.petInfo === category){
+            this.petInfo = null;
+        }
+        else{
+            this.petInfo = category;
+        }
     }
     
     showPetInfo = (e) => {

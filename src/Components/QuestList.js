@@ -38,7 +38,12 @@ class QuestList extends Component {
   }
 
   @action showInfo(quest){
-    this.questInfo = quest;
+    if(this.questInfo === quest){
+      this.questInfo = null;
+    }
+    else{
+      this.questInfo = quest;
+    }
   }
 
 };

@@ -73,15 +73,23 @@ class App extends Component {
                   <a href="https://bitbucket.org/pietervanh/habitica-tools"><i class="bitbucket square icon"></i>Git Repository</a>
                 </div>
               </div>            
-              <div class="five wide column">
+              <div class="three wide column">
                 <h4 class="ui inverted header">Copyright</h4>
                 <p>Some Assets are linked from <a href="https://habitica.com">HabitRPG</a> which are licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC-BY-NC-SA 3.0</a></p>
               </div>
               <div class="two wide column">
                 <h4 class="ui inverted header">Other Info</h4>
                 <div class="ui inverted link list">
-                <a href="http://habitica.wikia.com/wiki/Party_Tools">Wiki</a>
+                <a href="http://habitica.wikia.com/wiki/Party_Progress_Info">Wiki</a>
                 </div>
+                <div class="two wide column">
+                <h4 class="ui inverted header">Related Links</h4>
+                <div class="ui inverted link list">
+                  <a href="http://habitica.com">Habitica</a>
+                  <a href="https://oldgods.net/habitica/cTheDragons/feed.html">Bulk Feed Pets Tool</a>
+                  <a href="https://oldgods.net/habitica/cTheDragons/group.html">Party &amp; Guild Data Tool</a>
+                </div> 
+                </div>               
               </div>
             </div>
           </div>

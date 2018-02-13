@@ -16,9 +16,11 @@ class EggState {
          if(value.data.items.eggs[this.id] !== undefined){
             count = count + value.data.items.eggs[this.id]
          }
-
     },this);
     return count;
+  }
+  usercount(user){
+    return computed(() => this.users.filter(u => u.id === user.id)[0].data.items.eggs[this.id]).get()
   }
 
   @action addUser(user) {

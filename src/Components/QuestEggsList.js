@@ -105,7 +105,7 @@ class QuestEggsList extends Component {
         </div>
         <div class="column">
             {this.eggInfo === null ? <br/> :
-                <EggInfo category={this.eggInfo} store={store} />
+                <EggInfo category={this.eggInfo} store={store} egglist={this} />
             }
         </div>
         </div>
@@ -114,11 +114,20 @@ class QuestEggsList extends Component {
     }
 
     @action setEggInfo(category){
-        this.eggInfo = category;
+        if(this.eggInfo === category){
+            this.hideEggInfo();
+        }
+        else{
+            this.eggInfo = category;
+        }
     }
     
     showEggInfo = (e) => {
         this.setEggInfo(e);
+    }
+
+    @action hideEggInfo() {
+        this.setEggInfo(null);
     }
     
     @action sortEggs = (e) => {
