@@ -80,16 +80,18 @@ class App extends Component {
               <div class="two wide column">
                 <h4 class="ui inverted header">Other Info</h4>
                 <div class="ui inverted link list">
-                <a href="http://habitica.wikia.com/wiki/Party_Progress_Info">Wiki</a>
+                  <a href="http://habitica.wikia.com/wiki/Party_Progress_Info">Wiki</a>
                 </div>
-                <div class="two wide column">
+              </div>                
+              <div class="two wide column">
                 <h4 class="ui inverted header">Related Links</h4>
                 <div class="ui inverted link list">
-                  <a href="http://habitica.com">Habitica</a>
-                  <a href="https://oldgods.net/habitica/cTheDragons/feed.html">Bulk Feed Pets Tool</a>
-                  <a href="https://oldgods.net/habitica/cTheDragons/group.html">Party &amp; Guild Data Tool</a>
-                </div> 
-                </div>               
+                  <ul>
+                    <li><a href="http://habitica.com">Habitica</a></li>
+                    <li><a href="https://oldgods.net/habitica/cTheDragons/feed.html">Bulk Feed Pets Tool</a></li>
+                    <li><a href="https://oldgods.net/habitica/cTheDragons/group.html">Party &amp; Guild Data Tool</a></li>
+                  </ul>
+                </div>         
               </div>
             </div>
           </div>
