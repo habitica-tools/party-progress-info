@@ -13,7 +13,25 @@ class AppStore {
   @observable gear = new Map();
   @observable users = [];
   @observable infoUser = "";
+
+  @observable menupage = "petsquesteggs";
+
+
+  @action gotoPetsQuestEggs() {
+    this.menupage = "petsquesteggs";
+  }
+
+  @action gotoOtherQuests() {
+    this.menupage = "otherquests";
+  }
   
+  @action gotoGear() {
+    this.menupage = "gear";
+  }
+
+  @action gotoAbout() {
+    this.menupage = "about";
+  }  
 
   constructor() {
     this.fetchCommonObjects();

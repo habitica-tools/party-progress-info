@@ -4,9 +4,8 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1">
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.css"></link>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.14/dist/semantic.min.css"></link>
         <link rel="shortcut icon" href="https://vignette3.wikia.nocookie.net/habitrpg/images/6/64/Favicon.ico/revision/latest?cb=20170614123540" />
-        <!--<link rel="stylesheet" type="text/css" href="https://habitica.com/static/css/app.73b7ab67268a0ddc6402afeee96eb14f.css">        -->
         <title>&#x1f44a; Habitica Party Progress Info</title>
         <style type="text/css">
         body {
@@ -110,16 +109,16 @@
             display: inline-block;
             margin-bottom: 12px;
         }         
-        .item{
+        .main .item{
             position: relative;
-            width: 94px;
+            width: 92px;
             height: 92px;
             border-radius: 2px;
             background: #FFFFFF;
             box-shadow: 0 2px 2px 0 rgba(26, 24, 29, 0.15), 0 1px 4px 0 rgba(26, 24, 29, 0.1);
             border: 1px solid transparent;
         }      
-        .item:hover{
+        .main .item:hover{
             box-shadow: 0 3px 3px 0 rgba(107, 47, 119, 0.15), 0 1px 4px 0 rgba(103, 11, 241, 0.781);
             border: 2px solid transparent;
         }         
@@ -165,29 +164,44 @@
         }
         .ui.statistic>.value, .ui.statistics .statistic>.value {
             font-size: 3rem!important;
-        }        
-        ui.card, .ui.cards>.card{
-            width:285px!important;
         }
+        @media screen and (min-width: 1200px){
+            ui.card, .ui.cards>.card{
+                width:270px!important;
+            }
+        }
+        @media screen and (min-width: 1000px) and (max-width:1200px) {
+                ui.card, .ui.cards>.card{
+                width:300px!important;
+            }
+        }  
+        @media screen and (min-width: 770px) and (max-width:1000px) {
+                ui.card, .ui.cards>.card{
+                width:350px!important;
+            }
+        }   
+        @media screen and (min-width: 400px) and (max-width:770px) {
+                ui.card, .ui.cards>.card{
+                width:100%!important;
+            }
+        }                     
+        @media screen and (max-width:400px) {
+                ui.card, .ui.cards>.card{
+                width:100%!important;
+            }
+        }  
+        
+              
+
         td>.item-wrapper{
             margin: auto 20px !important;
         }
-        .ui.modal > .close {
-            cursor: pointer;
-            position: absolute;
-            top: -2.5rem;
-            right: -2.5rem;
-            z-index: 1;
-            padding: 0.625rem 0px 0px;
-        }        
     </style>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114142556-1"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'UA-114142556-1');
     </script>
     </head>

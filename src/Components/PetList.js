@@ -126,14 +126,14 @@ class PetList extends Component {
             </div>
         </div>
         <div class="ui four statistics">
-            <div class="ui tiny statistic">
-                <div class="value wanted">
-                    {store.totalNeededPetsParty}
+        <div class="ui tiny statistic">
+            <div class="value got">
+                {totalpercentage + " %"}
                 </div>
                 <div class="label">
-                    Pets Wanted
+                    Pets Collected %
                 </div>
-            </div>
+            </div>     
             <div class="ui tiny statistic">
                 <div class="value got">
                     {store.totalCountPetsParty}
@@ -141,13 +141,13 @@ class PetList extends Component {
                 <div class="label">
                     Pets in Party
                 </div>
-            </div>      
+            </div>                
             <div class="ui tiny statistic">
-                <div class="value got">
-                {totalpercentage + " %"}
+                <div class="value wanted">
+                    {store.totalNeededPetsParty}
                 </div>
                 <div class="label">
-                    Pets Collected %
+                    Pets Wanted
                 </div>
             </div>
             <div class="ui tiny statistic">
