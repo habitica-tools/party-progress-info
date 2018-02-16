@@ -28,12 +28,10 @@ class App extends Component {
   render({store}) {
     return (
       <div>
-        <div class="ui fixed inverted pointing menu">
-          <div class="ui container">
-            <a href="#" class="ui inverted header">
+        <div class="ui stackable inverted pointing menu">
+            <a href="#" class="item header" onClick={this.gotoPetsQuestEggs}>
               Habitica Party Progress Info
             </a>
-          </div>
           <a class={store.menupage === "petsquesteggs" ?  "item active" : "item"} onClick={this.gotoPetsQuestEggs}>
             Pets Quest &amp; Eggs
           </a>
