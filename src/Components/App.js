@@ -5,6 +5,7 @@ import QuestList from './QuestList';
 import QuestEggsList from './QuestEggsList';
 import PetList from './PetList';
 import GearList from './GearList';
+import BackgroundList from './BackgroundList';
 
 @observer
 class App extends Component {
@@ -20,6 +21,10 @@ class App extends Component {
   gotoGear = () => {
     this.props.store.gotoGear();
   }
+
+  gotoBackgrounds = () => {
+    this.props.store.gotoBackgrounds();
+  }  
 
   gotoAbout = () => {
     this.props.store.gotoAbout();
@@ -41,6 +46,9 @@ class App extends Component {
           <a class={store.menupage === "gear" ?  "item active" : "item"} onClick={this.gotoGear}>
             Equipment
           </a>
+          <a class={store.menupage === "backgrounds" ?  "item active" : "item"} onClick={this.gotoBackgrounds}>
+            Backgrounds
+          </a>          
           <a class={store.menupage === "about" ?  "item active" : "item"} onClick={this.gotoAbout}>
             Help &amp; About
           </a>
@@ -48,15 +56,16 @@ class App extends Component {
         <div class="ui main container">
           {store.menupage === "about" &&   
           <div class="ui fluid container">            
-            <div class="ui message">
-              <div class="header">Help</div>
-              <p>With this tool you can see the nr of pets still needed for a party/user and which quests are in the inventory.</p>
+            <div class="ui info message">
+            
+              <div class="header"><i class="help circle icon"></i>Help</div>
+              <p>With this tool you can see the number of pets still needed for a party/user and which pet quests are in the inventory. This tool will also give you an overview of equipment, (backgrounds), and other quests available to user/party.</p>
               <p></p>
 
               <p>To get started fill in your own + all Partymembers Habitica userid on the form on the other pages</p>
               <p>
                   <ol>
-                  <li>Get your User ID <a href="https://habitica.com/#/options/settings/api">here</a></li>
+                  <li>Get your User ID <a href="https://habitica.com/user/settings/api">here</a></li>
                   <li>Then get your partymembers UserID's by clicking on their avatar in Habitica.</li>
                   <li>Fill in each User ID + Click Add</li>
                   <li>Save your unique link by bookmarking it so you can revisit the page every time</li>
@@ -66,8 +75,9 @@ class App extends Component {
               </p>
             </div>           
             <div class="ui message">
-            <div class="header">Contact</div>
-              <p>If you have suggestions for improvement for this tool you can always contact me on Habitica, where my handle is @PRoeleert.</p>
+            
+            <div class="header"><i class="address card outline icon"></i>Contact</div>
+              <p>If you have suggestions for improvement for this tool you can always contact me on Habitica, my UserID = f600354c-9d34-4a4c-a38d-cae52cf58705 with handle @PRoeleert.</p>
               <p>Or you can just say hi to me if you like this tool as well :)</p>
             </div>                     
           </div>   
@@ -75,7 +85,7 @@ class App extends Component {
           {store.menupage !== "about" &&                       
           <div class="ui fluid container">
             <div class="ui info ignored message">
-              Goto the <a href="#" onClick={this.gotoAbout}>Help About Section</a> for info on how to use this Tool.
+             <i class="help circle icon"></i>Goto the <a href="#" onClick={this.gotoAbout}>Help About Section</a> for info on how to use this Tool.
             </div>
             <Settings store={store}/>
           </div>
@@ -116,10 +126,27 @@ class App extends Component {
               <h4>Gear Collection</h4>
             </div>
             <div class="ui basic segment"></div>
-            Beware Gears is new there might be dragons or bugs
+            <div class="ui warning message">
+              <i class="warning sign icon"></i>
+              Beware Gears is new there might be dragons or bugs, if you find some please let me know.
+            </div> 
             <GearList store={store}/>
           </div>
           }
+          {store.menupage === "backgrounds" &&
+          <div class="ui fluid container">
+          <div class="ui horizontal divider header">
+              <h4>Background Collection</h4>
+            </div>
+            <div class="ui basic segment"></div>
+            <div class="ui negative message">
+              <i class="warning sign icon"></i>
+              <p>Unfortunately Background information is not publicly available.</p>
+              <p>When this changes in the future (hopefully), I'll offcourse show this data as well.</p>
+            </div>            
+            
+          </div>
+          }          
         </div>
         <div class="ui inverted vertical footer segment">
           <div class="ui center aligned container">

@@ -9,6 +9,8 @@ class PetList extends Component {
   @observable showAll = false;
   @observable petInfo = null;
   @observable sortKey = "1";
+  @observable showleaderboard = "top3";
+
   @computed get petCategoriesWithCounts() {
     let pets = [...this.props.store.petCategories].map(function(category){
         let petdetail = {id:category};
@@ -191,6 +193,62 @@ class PetList extends Component {
                 <PetInfo category={this.petInfo} store={store} />
             }
         </div>
+        <div class="column">
+            <div class="ui horizontal divider header">
+                <h4>Quest Pet LeaderBoard</h4>
+            </div>
+            <table class="ui celled table">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>QuestPet Count</th>
+                    <th>Percentage of Total</th>
+                </tr>
+            </thead>
+            <tbody>        
+            {this.showleaderboard === 'top3' &&       
+            store.top3petleaderboard.map(user => 
+                
+                    user.data.profile !== undefined ?
+                        <tr key={user.id}>
+                            <td>{user.data.profile.name}</td>
+                            <td>{user.totalPetCount}</td>
+                            <td>{store.totalCountPetsParty > 0 ? parseInt(user.totalPetCount / (store.totalCountPets / 100)) + "%" : "0%"}</td>
+                        </tr>
+                        :
+                        <tr key={user.id}>
+                            <td>{user.id}</td>
+                            <td>{user.totalPetCount}</td>
+                            <td>{store.totalCountPetsParty > 0 ? parseInt(user.totalPetCount / (store.totalCountPets / 100)) + "%" : "0%"}</td>
+                        </tr>
+            )
+            }
+            {this.showleaderboard === 'all' &&       
+            store.petleaderboard.map(user => 
+                
+                    user.data.profile !== undefined ?
+                        <tr key={user.id}>
+                            <td>{user.data.profile.name}</td>
+                            <td>{user.totalPetCount}</td>
+                            <td>{store.totalCountPetsParty > 0 ? parseInt(user.totalPetCount / (store.totalCountPets / 100)) + "%" : "0%"}</td>
+                        </tr>
+                        :
+                        <tr key={user.id}>
+                            <td>{user.id}</td>
+                            <td>{user.totalPetCount}</td>
+                            <td>{store.totalCountPetsParty > 0 ? parseInt(user.totalPetCount / (store.totalCountPets / 100)) + "%" : "0%"}</td>
+                        </tr>
+            )
+            }
+            </tbody>
+            </table>
+            {this.showleaderboard === 'top3' &&   
+                <button class="ui blue button" onClick={this.handleLeaderboardShowAll}><i class="unhide icon"></i>Show All</button>
+            }            
+            {this.showleaderboard === 'all' &&   
+                <button class="ui olive button" onClick={this.handleLeaderboardTop3Only}><i class="hide icon"></i>Top 3 Only</button>
+            }              
+        </div>
         </div>
         );
         }
@@ -201,7 +259,7 @@ class PetList extends Component {
             this.petInfo = null;
         }
         else{
-            this.petInfo = category;
+            this.petInfo = category;         
         }
     }
     
@@ -212,7 +270,15 @@ class PetList extends Component {
     @action sortPets = (e) => {
         this.sortKey = e.target.value;
     }
-  
+
+    @action handleLeaderboardShowAll = (e) => {
+        this.showleaderboard = "all";
+    }
+
+    @action handleLeaderboardTop3Only = (e) => {
+        this.showleaderboard = "top3";
+    }
+
 };
 
 export default PetList;  

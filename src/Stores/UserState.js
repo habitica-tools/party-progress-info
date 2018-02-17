@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, computed, action } from 'mobx';
 
 class UserState {
     @observable loading = true;
@@ -10,6 +10,34 @@ class UserState {
         this.id = id;
         this.addUser(id);
         //this.store.quests.get("atom1").addUser("atom1",2,"d3de6635-37f7-4369-99c3-399d036d0898");
+    }
+
+    @computed get totalPetCount(){
+        let count = 0;
+        if (!this.loading){
+            [...this.store.pets].map(pet => pet[1])
+            .filter(pet => pet.users.includes(this) ? pet : null)
+            .forEach(function(pet){
+                if(this.data.items.pets[pet.id] === -1){
+                    count = count + 1;
+                }
+                else{
+                    if(this.data.items.mounts === undefined){ //No Mounts at all
+                        count = count;
+                    }
+                    else
+                    {                
+                        if(!this.data.items.mounts[pet.id]){
+                            count = count + 1;
+                        }
+                        else{
+                            count = count + 2;
+                        }
+                    }
+                }
+            },this)
+        }
+        return count;
     }
 
     @action addUser(userid) {
@@ -61,6 +89,20 @@ class UserState {
                                 }
                     },this);                                                 
                 }   
+                //go over backgrounds
+                /*
+                if(json.data.items.backgrounds !== undefined){
+                    var backgrounds = new Map(Object.entries(json.data.items.backgrounds.owned));
+                    backgrounds.forEach(function(value, key) {
+                        if(key !== null && key !== undefined)                   
+                            var background = this.store.backgrounds.get(key);
+                            if(background !== undefined)
+                                if(value > 0){
+                                    backgrounds.addUser(this);
+                                }
+                    },this);                                                 
+                }        
+                */         
             }));
 
         }

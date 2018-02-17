@@ -22,7 +22,7 @@ class QuestList extends Component {
       </div>
       {this.showAll ? <button class="ui olive button" onClick={this.handlePartyOnly}><i class="hide icon"></i>Party Only</button> : <button class="ui blue button" onClick={this.handleShowAll}><i class="unhide icon"></i>Show All</button>}
       <div>
-        {this.questInfo === null ? <br/> : <QuestInfo quest={this.questInfo} store={store}/>  }
+        {this.questInfo === null ? <br/> : <QuestInfo quest={this.questInfo} store={store} questlist={this}/>  }
       </div>
       </div>
     );
@@ -44,6 +44,10 @@ class QuestList extends Component {
     else{
       this.questInfo = quest;
     }
+  }
+
+  @action hideInfo() {
+    this.questInfo = null;
   }
 
 };

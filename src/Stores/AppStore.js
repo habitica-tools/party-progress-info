@@ -11,6 +11,7 @@ class AppStore {
   @observable pets = new Map();
   @observable eggs = new Map();
   @observable gear = new Map();
+  @observable backgrounds = new Map();
   @observable users = [];
   @observable infoUser = "";
 
@@ -28,6 +29,10 @@ class AppStore {
   @action gotoGear() {
     this.menupage = "gear";
   }
+
+  @action gotoBackgrounds() {
+    this.menupage = "backgrounds";
+  }  
 
   @action gotoAbout() {
     this.menupage = "about";
@@ -65,7 +70,15 @@ class AppStore {
       new Map(Object.entries(json.data.gear.flat)).forEach(function(value,key){
         gear.set(key, new GearState(key, value, this));
       },this);
-      this.gear.merge(gear);         
+      this.gear.merge(gear);        
+      
+      /*
+      const backgrounds = new Map();
+      new Map(Object.entries(json.data.backgrounds.flat)).forEach(function(value,key){
+        backgrounds.set(key, new BackgroundState(key, value, this));
+      },this);
+      this.backgrounds.merge(backgrounds);      
+      */    
 
       this.loadingobjects = false;
       this.loadQueryString();
@@ -143,6 +156,26 @@ class AppStore {
   @computed get totalCountPets(){
     return ([...this.pets].length * 2) * this.users.length;
   }
+
+  @computed get petleaderboard() {
+    return this.users.sort(function(a,b){
+      if(a.totalPetCount > b.totalPetCount){
+          return -1;
+      }
+      if(a.totalPetCount < b.totalPetCount){
+          return 1;
+      }
+    });
+  }
+
+  @computed get top3petleaderboard(){
+    if(this.petleaderboard.length >= 2) {
+      return this.petleaderboard.slice(0,3);
+    }
+    else{
+      return this.petleaderboard;
+    }
+}  
 
   @computed get userQuerystring () {
     let qs = "";

@@ -14,7 +14,17 @@ class EggInfo extends Component {
             <div class="content">
                     {[...store.eggs].filter(([id,egg]) => egg.id === category)
                         .map(([id,egg]) =>
-                        egg.users.map(user => 
+                        egg.users
+                        .sort(function(a,b){
+                            if(egg.usercount(a) > egg.usercount(b)){
+                                return -1;
+                            }
+                            if(egg.usercount(a) < egg.usercount(b)){
+                                return 1;
+                            }
+                            return 0;
+                        })
+                        .map(user => 
                         <div key={user.id}>
                             {user.data.profile.name + " has " + egg.usercount(user)}
                         </div>)

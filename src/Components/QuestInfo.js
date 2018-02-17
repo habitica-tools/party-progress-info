@@ -4,32 +4,36 @@ import { observer } from 'mobx-preact';
 @observer
 class Quest extends Component {
     //TODO Better userrenderer errorprone
-    render({quest, store}) {
+    render({quest, store, questlist}) {
         return (
-        <div class="ui fluid container">
-            <br/>
-            <div class="ui horizontal divider header">
-              <h4>{quest.data.text}</h4>
+            <div class="ui mini modal active">
+            <div class="header">{quest.data.text}
+            <button class="ui icon right floated button" onClick={this.Close}>
+                <i class="close icon"></i>
+            </button>
             </div>
-            <table class="ui very basic collapsing celled table">
-                <thead>
-                    <tr>
-                        <th>User</th>
-                        <th>Nr of Quests</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {quest.users.map(quser => 
-                    <tr>
-                        <td>{quser.data.profile.name}</td>
-                        <td>{quser.data.items.quests[quest.id]}</td>
-                    </tr>
-                    )}
-                </tbody>
-            </table>
-        </div>
+            <div class="content">
+                    {quest.users.sort(function(a,b){
+                        if(a.data.items.quests[quest.id] > b.data.items.quests[quest.id]){
+                            return -1;
+                        }
+                        if(a.data.items.quests[quest.id] < b.data.items.quests[quest.id]){
+                            return 1;
+                        }           
+                        return 0;             
+                    }).map(quser => 
+                    <div key={quser.id}>
+                        {quser.data.profile.name + " has " + quser.data.items.quests[quest.id]}
+                    </div>
+                    )}          
+            </div>
+        </div>  
         );
     }
+
+    Close = (e) => {
+        this.props.questlist.hideInfo();
+    }    
 }
 
 
