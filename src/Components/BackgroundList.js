@@ -8,13 +8,13 @@ class BackgroundList extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
   @observable showAll = false;
   @observable BackgroundInfo = null;
-  @observable sortKey = "2";
+  @observable sortKey = "";
   @computed get BackgroundWithCounts() {
-    let Background = [...this.props.store.Background].map(function(Backgroundinfo){
+    let Background = [...this.props.store.backgrounds].map(function(Backgroundinfo){
         let Backgrounddetail = Backgroundinfo[1];
         //Backgrounddetail.count = [...this.props.store.Background].filter(([id,Backgroundi]) => Backgroundi.id === Backgroundinfo[0]).reduce((prevVal,[id,Backgroundi]) => prevVal + Backgroundi.count , 0);
         return Backgrounddetail;
-    },this).filter(Backgroundi => Backgroundi.count > 0);
+    },this)//.filter(Backgroundi => Backgroundi.count > 0);
     
     switch(this.sortKey){
         case "1":
@@ -95,7 +95,7 @@ class BackgroundList extends Component {
             </div>                    
         </div>
             <div class="item-rows">
-            <div class ="items">
+            <div class ="items backgrounds">
             {[...this.BackgroundWithCounts].map(Background => 
                     <div>
                     <div class="item-wrapper">
@@ -104,7 +104,7 @@ class BackgroundList extends Component {
                             {Background.count}
                             </span>                          
                             <span class={Background.id === this.Backgroundinfo ? "selectableInventory item-content Background"  : "item-content Background"} onClick={this.showBackgroundInfo.bind(this, Background.id)}>
-                                <img src={this.imageurl + "shop_" + Background.id + ".png"} alt={"shop_" + Background.id}  />
+                                <img src={this.imageurl + "background_" + Background.id + ".png"} alt={"shop_" + Background.id}  />
                             </span>
                         </div>                      
                     </div>

@@ -4,6 +4,7 @@ import QuestState from "./QuestState";
 import PetState from "./PetState";
 import EggState from "./EggState";
 import GearState from "./GearState";
+import BackgroundState from "./BackgroundState";
 
 class AppStore {
   @observable loadingobjects = true;
@@ -72,13 +73,13 @@ class AppStore {
       },this);
       this.gear.merge(gear);        
       
-      /*
+      
       const backgrounds = new Map();
-      new Map(Object.entries(json.data.backgrounds.flat)).forEach(function(value,key){
+      new Map(Object.entries(json.data.backgroundsFlat)).forEach(function(value,key){
         backgrounds.set(key, new BackgroundState(key, value, this));
       },this);
       this.backgrounds.merge(backgrounds);      
-      */    
+      
 
       this.loadingobjects = false;
       this.loadQueryString();
@@ -157,6 +158,27 @@ class AppStore {
     return ([...this.pets].length * 2) * this.users.length;
   }
 
+
+  @computed get gearleaderboard() {
+    return this.users.sort(function(a,b){
+      if(a.totalGearCount > b.totalGearCount){
+          return -1;
+      }
+      if(a.totalGearCount < b.totalGearCount){
+          return 1;
+      }
+    });
+  }
+
+  @computed get top3gearleaderboard(){
+    if(this.gearleaderboard.length >= 2) {
+      return this.gearleaderboard.slice(0,3);
+    }
+    else{
+      return this.gearleaderboard;
+    }
+  }    
+
   @computed get petleaderboard() {
     return this.users.sort(function(a,b){
       if(a.totalPetCount > b.totalPetCount){
@@ -175,7 +197,7 @@ class AppStore {
     else{
       return this.petleaderboard;
     }
-}  
+  }  
 
   @computed get userQuerystring () {
     let qs = "";

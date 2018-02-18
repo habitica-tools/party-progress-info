@@ -141,10 +141,10 @@ class App extends Component {
             <div class="ui basic segment"></div>
             <div class="ui negative message">
               <i class="warning sign icon"></i>
-              <p>Unfortunately Background information is not publicly available.</p>
+              <p>Unfortunately the Backgrounds a player owns is not public information.</p>
               <p>When this changes in the future (hopefully), I'll offcourse show this data as well.</p>
-            </div>            
-            
+            </div>  
+            <BackgroundList store={store}/>          
           </div>
           }          
         </div>
@@ -161,13 +161,13 @@ class App extends Component {
                 <h4 class="ui inverted header">Copyright</h4>
                 <p class="item">Some Assets are linked from <a href="https://habitica.com">HabitRPG</a> which are licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC-BY-NC-SA 3.0</a></p>
               </div>
-              <div class="two wide column">
+              <div class="three wide column">
                 <h4 class="ui inverted header">Other Info</h4>
                 <div class="ui inverted link list">
                   <a class="item" href="http://habitica.wikia.com/wiki/Party_Progress_Info">Wiki</a>
                 </div>
               </div>                
-              <div class="two wide column">
+              <div class="three wide column">
                 <h4 class="ui inverted header">Related Links</h4>
                 <div class="ui inverted link list">
                     <a class="item" href="http://habitica.com">Habitica</a>

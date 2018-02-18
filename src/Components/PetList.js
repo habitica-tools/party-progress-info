@@ -105,7 +105,7 @@ class PetList extends Component {
         return(<div class="ui active centered inline loader"></div>);
     }
     else{
-        let totalpercentage = store.totalCountPetsParty > 0 ? parseInt(store.totalCountPetsParty / (store.totalCountPets / 100)) : "0"
+        let totalpercentage = store.totalCountPetsParty > 0 ? parseFloat(store.totalCountPetsParty / (store.totalCountPets / 100)).toFixed(2) : "0"
 
         return(
         <div>
@@ -200,6 +200,7 @@ class PetList extends Component {
             <table class="ui celled table">
             <thead>
                 <tr>
+                    <th>Rank</th>
                     <th>User</th>
                     <th>QuestPet Count</th>
                     <th>Percentage of Total</th>
@@ -207,36 +208,40 @@ class PetList extends Component {
             </thead>
             <tbody>        
             {this.showleaderboard === 'top3' &&       
-            store.top3petleaderboard.map(user => 
+            store.top3petleaderboard.map((user,index) => 
                 
                     user.data.profile !== undefined ?
                         <tr key={user.id}>
+                            <td>{index + 1}</td>
                             <td>{user.data.profile.name}</td>
                             <td>{user.totalPetCount}</td>
-                            <td>{store.totalCountPetsParty > 0 ? parseInt(user.totalPetCount / (store.totalCountPets / 100)) + "%" : "0%"}</td>
+                            <td>{store.totalCountPetsParty > 0 ? parseFloat(user.totalPetCount / (store.totalCountPets / 100)).toFixed(2) + "%" : "0%"}</td>
                         </tr>
                         :
                         <tr key={user.id}>
+                            <td>{index + 1}</td>
                             <td>{user.id}</td>
                             <td>{user.totalPetCount}</td>
-                            <td>{store.totalCountPetsParty > 0 ? parseInt(user.totalPetCount / (store.totalCountPets / 100)) + "%" : "0%"}</td>
+                            <td>{store.totalCountPetsParty > 0 ? parseFloat(user.totalPetCount / (store.totalCountPets / 100)).toFixed(2) + "%" : "0%"}</td>
                         </tr>
             )
             }
             {this.showleaderboard === 'all' &&       
-            store.petleaderboard.map(user => 
+            store.petleaderboard.map((user,index) => 
                 
                     user.data.profile !== undefined ?
                         <tr key={user.id}>
+                            <td>{index + 1}</td>
                             <td>{user.data.profile.name}</td>
                             <td>{user.totalPetCount}</td>
-                            <td>{store.totalCountPetsParty > 0 ? parseInt(user.totalPetCount / (store.totalCountPets / 100)) + "%" : "0%"}</td>
+                            <td>{store.totalCountPetsParty > 0 ? parseFloat(user.totalPetCount / (store.totalCountPets / 100)).toFixed(2) + "%" : "0%"}</td>
                         </tr>
                         :
                         <tr key={user.id}>
+                            <td>{index + 1}</td>
                             <td>{user.id}</td>
                             <td>{user.totalPetCount}</td>
-                            <td>{store.totalCountPetsParty > 0 ? parseInt(user.totalPetCount / (store.totalCountPets / 100)) + "%" : "0%"}</td>
+                            <td>{store.totalCountPetsParty > 0 ? parseFloat(user.totalPetCount / (store.totalCountPets / 100)).toFixed(2) + "%" : "0%"}</td>
                         </tr>
             )
             }

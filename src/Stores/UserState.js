@@ -40,6 +40,20 @@ class UserState {
         return count;
     }
 
+    @computed get totalGearCount(){
+        let count = 0;
+        if(!this.loading){
+            [...this.store.gear].map(gear => gear[1])
+            .filter(gear => gear.users.includes(this) ? gear : null)
+            .forEach(function(gear){
+                if(this.data.items.gear.owned[gear.id] !== undefined){
+                    count = count + 1;
+                }
+            },this)
+        }
+        return count;
+    }
+
     @action addUser(userid) {
         this.loading = true;
         window.fetch('https://habitica.com/api/v3/members/' + userid)

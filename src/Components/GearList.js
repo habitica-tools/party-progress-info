@@ -9,6 +9,8 @@ class GearList extends Component {
   @observable showAll = false;
   @observable gearInfo = null;
   @observable sortKey = "2";
+  @observable showleaderboard = "top3";
+
   @computed get gearWithCounts() {
     let gear = [...this.props.store.gear].map(function(gearinfo){
         let geardetail = gearinfo[1];
@@ -89,7 +91,63 @@ class GearList extends Component {
     }
     else{
         return(
-        <div class="ui fluid container">             
+        <div class="ui fluid container">   
+        <div class="column">
+            <div class="ui horizontal divider header">
+                <h4>Gear LeaderBoard</h4>
+            </div>
+            <table class="ui celled table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>User</th>
+                    <th>Gear Count</th>
+                </tr>
+            </thead>
+            <tbody>        
+            {this.showleaderboard === 'top3' &&       
+            store.top3gearleaderboard.map((user,index) => 
+                
+                    user.data.profile !== undefined ?
+                        <tr key={user.id}>
+                            <td>{index + 1}</td>
+                            <td>{user.data.profile.name}</td>
+                            <td>{user.totalGearCount}</td>
+                        </tr>
+                        :
+                        <tr key={user.id}>
+                            <td>{index + 1}</td>
+                            <td>{user.id}</td>
+                            <td>{user.totalGearCount}</td>
+                        </tr>
+            )
+            }
+            {this.showleaderboard === 'all' &&       
+            store.gearleaderboard.map((user,index) => 
+                
+                    user.data.profile !== undefined ?
+                        <tr key={user.id}>
+                            <td>{index + 1}</td>
+                            <td>{user.data.profile.name}</td>
+                            <td>{user.totalGearCount}</td>
+                        </tr>
+                        :
+                        <tr key={user.id}>
+                            <td>{index + 1}</td>
+                            <td>{user.id}</td>
+                            <td>{user.totalGearCount}</td>
+                        </tr>
+            )
+            }
+            </tbody>
+            </table>
+            {this.showleaderboard === 'top3' &&   
+                <button class="ui blue button" onClick={this.handleLeaderboardShowAll}><i class="unhide icon"></i>Show All</button>
+            }            
+            {this.showleaderboard === 'all' &&   
+                <button class="ui olive button" onClick={this.handleLeaderboardTop3Only}><i class="hide icon"></i>Top 3 Only</button>
+            }              
+        </div>                  
         <div class="column stable">
         <div class="ui stackable grid">
             <div class="twelve wide column">
@@ -130,7 +188,7 @@ class GearList extends Component {
             {this.gearInfo === null ? <br/> :
                 <GearInfo category={this.gearInfo} store={store} gearlist={this} />
             }
-        </div>
+        </div>        
         </div>
         );
         }
@@ -156,6 +214,14 @@ class GearList extends Component {
     @action sortGear = (e) => {
         this.sortKey = e.target.value;
     }
+
+    @action handleLeaderboardShowAll = (e) => {
+        this.showleaderboard = "all";
+    }
+
+    @action handleLeaderboardTop3Only = (e) => {
+        this.showleaderboard = "top3";
+    }    
   
 };
 
