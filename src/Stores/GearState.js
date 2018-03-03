@@ -6,7 +6,7 @@ class GearState {
   @observable data = {};
   @observable users = [];
   
-  constructor(key, gear,store) {
+  constructor(key, gear, store) {
     this.id = key;
     this.data = gear
     this.store = store;
@@ -14,6 +14,16 @@ class GearState {
 
   @computed get count() {   
     return this.users.length;
+  }
+
+  @computed get selectedcount(){
+    let count =0;
+    if(this.store.infoUser !== ""){
+      if(this.users.filter(user => user === this.store.infoUser).length >= 1){
+          count = 1;
+      }
+    }
+      return count;
   }
 
   @action addUser(user) {
@@ -26,6 +36,7 @@ class GearState {
     }
     catch(e){}
   }    
+ 
 
 }
 

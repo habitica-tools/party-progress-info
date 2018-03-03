@@ -71,16 +71,16 @@
             color: #2fb33a !important;
         }
         .item .item-content.Pet {
-            top: -15px;
-            left: 6px;
+            top: -14px;
+            left: 5px;
         }
         .item .item-content.Quest {
-            top: 15px;
-            left:14px;
+            top: 14px;
+            left: 13px;
         }             
         .item .item-content.Egg {
-            top: 15px;
-            left:14px;
+            top: 14px;
+            left: 13px;
         }   
         .item .item-content.Gear {
             top: 15px;
@@ -103,7 +103,7 @@
         }
         .items > div {
             display: inline-block;
-            margin-right: 24px;
+            margin-right: 20px;
         }
         .items > div:last-of-type {
             margin-right: 0px;
@@ -119,8 +119,8 @@
         }               
         .main .item{
             position: relative;
-            width: 92px;
-            height: 92px;
+            width: 90px;
+            height: 90px;
             border-radius: 2px;
             background: #FFFFFF;
             box-shadow: 0 2px 2px 0 rgba(26, 24, 29, 0.15), 0 1px 4px 0 rgba(26, 24, 29, 0.1);
@@ -147,19 +147,34 @@
             height:24px;
             top: -30px;
         }
-        .progress-container{
+        .progress-container-big{
             height:30px;
+        }     
+        .progress-container-big > .progress > .progress-bar {
+            border-radius: 0px;
+            height: 18px;
+            min-width: 0px;       
+        }
+        .progress-container-big > .progress {
+            min-width: 200px;
+            margin: 0px;
+            border-radius: 0px;
+            height: 18px;
+            background-color: rgb(36, 36, 37);      
+        }             
+        .progress-container{
+            height:18px;
         }
         .progress-container > .progress > .progress-bar {
-            border-radius: 3px;
-            height: 18px;
+            border-radius: 0px;
+            height: 9px;
             min-width: 0px;       
         }
         .progress-container > .progress {
             min-width: 200px;
             margin: 0px;
-            border-radius: 3px;
-            height: 18px;
+            border-radius: 0px;
+            height: 9px;
             background-color: rgb(36, 36, 37);      
         }  
         .bg-experience {
@@ -167,7 +182,10 @@
         }
         .bg-health {
             background: #F74E52;
-        }        
+        }     
+        .bg-mana {
+            background: #50B5E9;
+        }             
         .small-text{
             color:#FFFFFF;
         }
@@ -202,9 +220,6 @@
                 width:100%!important;
             }
         }  
-        
-              
-
         td>.item-wrapper{
             margin: auto 20px !important;
         }

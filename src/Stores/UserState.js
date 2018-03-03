@@ -12,6 +12,18 @@ class UserState {
         //this.store.quests.get("atom1").addUser("atom1",2,"d3de6635-37f7-4369-99c3-399d036d0898");
     }
 
+    @computed get damage(){
+        if(!this.loading){
+            if(this.data.party !== undefined){
+                if(this.data.party.quest !== undefined){
+                    if(this.data.party.quest.progress !== undefined){
+                        return parseInt(this.data.party.quest.progress.up);
+                    }
+                }
+            }
+        }
+    }
+
     @computed get totalPetCount(){
         let count = 0;
         if (!this.loading){

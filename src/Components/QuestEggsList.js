@@ -11,7 +11,7 @@ class QuestEggsList extends Component {
   @observable sortKey = "2";
   @computed get eggsWithCounts() {
     let eggs = [...this.props.store.eggs].map(function(egginfo){
-        let eggdetail = {id:egginfo};
+        let eggdetail = egginfo;
         eggdetail.count = [...this.props.store.eggs].filter(([id,egg]) => egg.id === egginfo[0]).reduce((prevVal,[id,egg]) => prevVal + egg.count , 0);
         return eggdetail;
     },this).filter(egg => egg.count > 0);
@@ -88,15 +88,21 @@ class QuestEggsList extends Component {
             {[...this.eggsWithCounts].map(egg => 
                     <div>
                     <div class="item-wrapper">
-                        <div class="item">
+                        <div class="item" data-tooltip={egg[0]}>
                             <span class="badge badge-pill badge-item badge-info badge-count">
                             {egg.count}
-                            </span>                          
-                            <span class={egg.id[0] === this.eggInfo ? "selectableInventory item-content Egg Pet_Egg_" + egg.id[0] + "" : "item-content Egg Pet_Egg_" + egg.id[0] + ""} onClick={this.showEggInfo.bind(this, egg.id[0])}>
-                                <img src={this.imageurl + "Pet_Egg_" + egg.id[0] + ".png"} alt={egg.id[0]}  />
+                            </span>   
+                            {egg[1].selectedcount >=1 ?
+                            <span class="badge badge-pill badge-item badge-blue">
+                                {egg[1].selectedcount}
+                            </span>                   
+                            :''
+                            }                                                    
+                            <span class={egg[0] === this.eggInfo ? "selectableInventory item-content Egg Pet_Egg_" + egg[0] + "" : "item-content Egg Pet_Egg_" + egg[0] + ""} onClick={this.showEggInfo.bind(this, egg[0])}>
+                                <img src={this.imageurl + "Pet_Egg_" + egg[0] + ".png"} alt={egg[0]}  />
                             </span>
                         </div>                      
-                        <span class="pettxt">{egg.id[0]}</span>
+                        <span class="pettxt">{egg[0]}</span>
                     </div>
                     </div>
             )}

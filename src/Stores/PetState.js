@@ -85,6 +85,38 @@ class PetState {
     return count;
   }
 
+  //get usercount 
+
+  //get selectedcount
+  @computed get selectedcount(){
+    let count=0;
+    if(this.store.infoUser !== ""){
+        if(this.users.filter(user => user === this.store.infoUser).length >= 1){
+            this.users.filter(user => user === this.store.infoUser).forEach(function(value,index,array){
+                if(value.data.items.pets[this.id] === -1){
+                    count = count + 1;
+                }
+                else{
+                   if(value.data.items.mounts === undefined){ //No Mounts at all
+                       count = count;
+                   }
+                   else
+                   {                
+                       if(!value.data.items.mounts[this.id]){
+                           count = count + 1;
+                       }
+                       else{
+                           count = count + 2;
+                       }
+                   }
+                }
+           },this)
+        }
+    }
+
+    return count;
+  }
+
   @action addUser(user) {
     this.users.push(user);
   }

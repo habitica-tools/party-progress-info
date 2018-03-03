@@ -51,8 +51,8 @@ class AppStore {
       const quests = new Map();
       //this.quests.merge(json.data.quests);
       new Map(Object.entries(json.data.quests)).forEach(function(value, key) {
-        quests.set(key,new QuestState(value));
-      });
+        quests.set(key,new QuestState(key, value, this));
+      },this);
       this.quests.merge(quests);
 
       const pets = new Map();

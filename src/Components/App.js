@@ -143,6 +143,7 @@ class App extends Component {
               <i class="warning sign icon"></i>
               <p>Unfortunately the Backgrounds a player owns is not public information.</p>
               <p>When this changes in the future (hopefully), I'll offcourse show this data as well.</p>
+              <p>In the mean time you can vote on the <a href="https://trello.com/c/cMeJ3uKO/408-profile-v2-change-profile-sub-tab-to-public-profile-and-show-everything-public">feature request</a></p>
             </div>  
             <BackgroundList store={store}/>          
           </div>

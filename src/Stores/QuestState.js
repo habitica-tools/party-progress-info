@@ -6,9 +6,10 @@ class QuestState {
   @observable data = {};
   @observable users = [];
   
-  constructor(quest) {
-    this.id = quest.key;
+  constructor(key, quest, store) {
+    this.id = key;
     this.data = quest;
+    this.store = store;
   }
 
   @action addUser(user) {
@@ -30,6 +31,16 @@ class QuestState {
     }, this);
     return count;
   }
+
+  @computed get selectedcount(){
+    var count=0;
+    if(this.store.infoUser !== null){
+      this.users.filter(user => user === this.store.infoUser).forEach(function(value,index,array){
+        count = count + value.data.items.quests[this.id];
+      }, this);
+    }
+    return count;
+  }  
   
 }
 

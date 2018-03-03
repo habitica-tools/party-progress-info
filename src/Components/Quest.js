@@ -8,10 +8,16 @@ class Quest extends Component {
     render({quest, id}) {
         return (
         <div class="item-wrapper">
-        <div class="item">
+        <div class="item" data-tooltip={quest.data.text}>
           <span class="badge badge-pill badge-item badge-count">
             {quest.count}
-          </span>            
+          </span>
+          {quest.selectedcount >=1 ?
+          <span class="badge badge-pill badge-item badge-blue">
+            {quest.selectedcount}
+          </span>                   
+          :''
+          }   
             <span class={"item-content Quest inventory_quest_scroll_" + id} id={id} onClick={this.showQuestInfo} >
                 <img src={this.imageurl + "inventory_quest_scroll_" + id + ".png"} alt={id}  />
             </span>

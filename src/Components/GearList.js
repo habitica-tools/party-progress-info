@@ -14,7 +14,6 @@ class GearList extends Component {
   @computed get gearWithCounts() {
     let gear = [...this.props.store.gear].map(function(gearinfo){
         let geardetail = gearinfo[1];
-        //geardetail.count = [...this.props.store.gear].filter(([id,geari]) => geari.id === gearinfo[0]).reduce((prevVal,[id,geari]) => prevVal + geari.count , 0);
         return geardetail;
     },this).filter(geari => geari.count > 0);
     
@@ -170,10 +169,14 @@ class GearList extends Component {
             {[...this.gearWithCounts].map(gear => 
                     <div>
                     <div class="item-wrapper">
-                        <div class="item">
+                        <div class="item" data-tooltip={gear.data.text}>
                             <span class="badge badge-pill badge-item badge-info badge-count">
                             {gear.count}
-                            </span>                          
+                            </span>   
+                            {gear.selectedcount >= 1 ?
+                            <span class="badge badge-pill badge-item badge-blue">
+                                {gear.selectedcount}
+                            </span> : '' }                                                     
                             <span class={gear.id === this.gearinfo ? "selectableInventory item-content Gear"  : "item-content Gear"} onClick={this.showGearInfo.bind(this, gear.id)}>
                                 <img src={this.imageurl + "shop_" + gear.id + ".png"} alt={"shop_" + gear.id}  />
                             </span>

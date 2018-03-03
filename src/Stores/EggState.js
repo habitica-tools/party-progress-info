@@ -4,9 +4,11 @@ class EggState {
   id = null;
   store = null;
   @observable users = [];
+  @observable data = {};
   
-  constructor(egg,store) {
-    this.id = egg;
+  constructor(key,egg,store) {
+    this.id = key;
+    this.data = egg;
     this.store = store;
   }
 
@@ -20,7 +22,13 @@ class EggState {
     return count;
   }
   usercount(user){
-    return computed(() => this.users.filter(u => u.id === user.id)[0].data.items.eggs[this.id]).get()
+    return computed(() => 
+          this.users.filter(u => u.id === user.id).length === 1 ? 
+            this.users.filter(u => u.id === user.id)[0].data.items.eggs[this.id] !== undefined ?  
+            this.users.filter(u => u.id === user.id)[0].data.items.eggs[this.id] :
+            0
+            : 0
+          ).get()
   }
 
   @action addUser(user) {
@@ -32,6 +40,14 @@ class EggState {
       this.users.remove(user);
     }
     catch(e){}
+  }    
+
+  @computed get selectedcount(){
+    var count=0;
+      if(this.store.infoUser !== ""){
+        count = this.usercount(this.store.infoUser)
+      }
+    return count;
   }    
 
 }
