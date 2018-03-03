@@ -12,7 +12,7 @@ class User extends Component {
                     <div class="meta">
                         Lvl {user.data.stats.lvl} <span class="label label-info">{user.data.stats.class}</span> 
                         <span style="color:#b58105"><i class="dollar icon"></i>{parseInt(user.data.stats.gp)}</span>
-                        <span>Pending Dmg: {user.damage}</span>
+                        <span><i class="bomb icon"></i>{user.damage}</span>
                         <div class="progress-container">
                             <div class="progress">
                                 <div class="progress-bar bg-health" style={"transition-duration: 300ms; width:" + user.data.stats.hp / (user.data.stats.maxHealth / 100) + "%;"}></div>
