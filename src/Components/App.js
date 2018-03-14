@@ -100,6 +100,7 @@ class App extends Component {
               <p>If you have suggestions for improvement for this tool you can always contact me on Habitica, my UserID = f600354c-9d34-4a4c-a38d-cae52cf58705 with handle @PRoeleert.</p>
               <p>Or you can just say hi to me if you like this tool as well :)</p>
               <p>If you are a partyleader and you want to measure your performance against other parties, contact me and we'll duel :)</p>
+              <p><a href='https://ko-fi.com/J3J0AMLQ' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi5.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a></p>
             </div>                     
           </div>   
           } 
