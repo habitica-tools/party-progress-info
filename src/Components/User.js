@@ -5,6 +5,8 @@ import { observer } from 'mobx-preact';
 class User extends Component {
 
     render({user}) {
+        let mp = user.data.stats.mp / (user.data.stats.maxMP / 100) > 100 ? 100 : user.data.stats.mp / (user.data.stats.maxMP / 100);
+        let hp = user.data.stats.hp / (user.data.stats.maxHealth / 100) > 100 ? 100 : user.data.stats.hp / (user.data.stats.maxHealth / 100);
         return (
             <div class={this.checkinfoUser(user) ? 'card blue': 'card'}>
                 <div class="content">
@@ -15,10 +17,10 @@ class User extends Component {
                         <span><i class="bomb icon"></i>{user.damage}</span>
                         <div class="progress-container">
                             <div class="progress">
-                                <div class="progress-bar bg-health" style={"transition-duration: 300ms; width:" + user.data.stats.hp / (user.data.stats.maxHealth / 100) + "%;"}></div>
+                                <div class="progress-bar bg-health" style={"transition-duration: 300ms; width:" + hp + "%;"}></div>
                             </div>
                             <div class="progress">
-                                <div class="progress-bar bg-mana" style={"transition-duration: 300ms; width:" + user.data.stats.mp / (user.data.stats.maxMP / 100) + "%;"}></div>
+                                <div class="progress-bar bg-mana" style={"transition-duration: 300ms; width:" + mp + "%;"}></div>
                             </div>                            
                         </div>                                                                      
                     </div>

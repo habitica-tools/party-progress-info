@@ -10,7 +10,10 @@ class AppStore {
   @observable loadingobjects = true;
   @observable quests = new Map();
   @observable pets = new Map();
+  @observable basepets = new Map();
+  @observable premiumpets = new Map();
   @observable eggs = new Map();
+  @observable baseeggs = new Map();
   @observable gear = new Map();
   @observable backgrounds = new Map();
   @observable users = [];
@@ -22,6 +25,14 @@ class AppStore {
   @action gotoPetsQuestEggs() {
     this.menupage = "petsquesteggs";
   }
+
+  @action gotoBasePets() {
+    this.menupage = "basepets";
+  }  
+
+  @action gotoPremiumPets() {
+    this.menupage = "premiumpets";
+  }  
 
   @action gotoOtherQuests() {
     this.menupage = "otherquests";
@@ -61,11 +72,31 @@ class AppStore {
       },this);
       this.pets.merge(pets);
 
+      const basepets = new Map();
+      new Map(Object.entries(json.data.pets)).forEach(function(value,key){
+         basepets.set(key, new PetState(key, this));
+      },this);
+      this.basepets.merge(basepets);      
+
+      const premiumpets = new Map();
+      new Map(Object.entries(json.data.premiumPets)).forEach(function(value,key){
+         premiumpets.set(key, new PetState(key, this));
+      },this);
+      this.premiumpets.merge(premiumpets);           
+
       const eggs = new Map();
       new Map(Object.entries(json.data.questEggs)).forEach(function(value,key){
         eggs.set(key, new EggState(key, value, this));
       },this);
-      this.eggs.merge(eggs);      
+      this.eggs.merge(eggs);   
+
+      const baseeggs = new Map();
+      new Map(Object.entries(json.data.eggs)).forEach(function(value,key){
+        if(this.eggs.get(key) === undefined)
+          baseeggs.set(key, new EggState(key, value, this));
+      },this);
+      this.baseeggs.merge(baseeggs);    
+
 
       const gear = new Map();
       new Map(Object.entries(json.data.gear.flat)).forEach(function(value,key){
@@ -145,6 +176,26 @@ class AppStore {
     return categories;
   }
 
+  @computed get basepetCategories() {
+    var categories = new Set();
+    var pets = [...this.basepets].map(([id,pet]) =>  pet)
+        
+    for(var pet of pets){
+        categories.add(pet.basetype);
+    }
+    return categories;
+  }  
+
+  @computed get premiumpetCategories() {
+    var categories = new Set();
+    var pets = [...this.premiumpets].map(([id,pet]) =>  pet)
+        
+    for(var pet of pets){
+        categories.add(pet.basetype);
+    }
+    return categories;
+  } 
+
   @computed get totalNeededPetsParty () {
     return [...this.pets].map(([id,pet]) =>  pet)
         .reduce((prevVal, pet) =>  prevVal + pet.needed , 0);
@@ -154,10 +205,38 @@ class AppStore {
     return [...this.pets].map(([id,pet]) =>  pet)
         .reduce((prevVal, pet) =>  prevVal + pet.count , 0);
   }
+
   @computed get totalCountPets(){
     return ([...this.pets].length * 2) * this.users.length;
   }
 
+  @computed get totalNeededBasePetsParty () {
+    return [...this.basepets].map(([id,pet]) =>  pet)
+        .reduce((prevVal, pet) =>  prevVal + pet.needed , 0);
+  }
+  
+  @computed get totalCountBasePetsParty() {
+    return [...this.basepets].map(([id,pet]) =>  pet)
+        .reduce((prevVal, pet) =>  prevVal + pet.count , 0);
+  }
+
+  @computed get totalCountBasePets(){
+    return ([...this.basepets].length * 2) * this.users.length;
+  }
+
+  @computed get totalNeededPremiumPetsParty () {
+    return [...this.premiumpets].map(([id,pet]) =>  pet)
+        .reduce((prevVal, pet) =>  prevVal + pet.needed , 0);
+  }
+  
+  @computed get totalCountPremiumPetsParty() {
+    return [...this.premiumpets].map(([id,pet]) =>  pet)
+        .reduce((prevVal, pet) =>  prevVal + pet.count , 0);
+  }
+
+  @computed get totalCountPremiumPets(){
+    return ([...this.premiumpets].length * 2) * this.users.length;
+  }  
 
   @computed get gearleaderboard() {
     return this.users.sort(function(a,b){
@@ -198,6 +277,47 @@ class AppStore {
       return this.petleaderboard;
     }
   }  
+
+  @computed get basepetleaderboard() {
+    return this.users.sort(function(a,b){
+      if(a.totalBasePetCount > b.totalBasePetCount){
+          return -1;
+      }
+      if(a.totalBasePetCount < b.totalBasePetCount){
+          return 1;
+      }
+    });
+  }
+
+  @computed get top3basepetleaderboard(){
+    if(this.basepetleaderboard.length >= 2) {
+      return this.basepetleaderboard.slice(0,3);
+    }
+    else{
+      return this.basepetleaderboard;
+    }
+  }   
+  
+
+  @computed get premiumpetleaderboard() {
+    return this.users.sort(function(a,b){
+      if(a.totalPremiumPetCount > b.totalPremiumPetCount){
+          return -1;
+      }
+      if(a.totalPremiumPetCount < b.totalPremiumPetCount){
+          return 1;
+      }
+    });
+  }
+
+  @computed get top3premiumpetleaderboard(){
+    if(this.premiumpetleaderboard.length >= 2) {
+      return this.premiumpetleaderboard.slice(0,3);
+    }
+    else{
+      return this.premiumpetleaderboard;
+    }
+  }   
 
   @computed get userQuerystring () {
     let qs = "";

@@ -3,7 +3,10 @@ import { observer } from 'mobx-preact';
 import Settings from './Settings';
 import QuestList from './QuestList';
 import QuestEggsList from './QuestEggsList';
+import BaseEggsList from './BaseEggsList';
 import PetList from './PetList';
+import BasePetList from './BasePetList';
+import PremiumPetList from './PremiumPetList';
 import GearList from './GearList';
 import BackgroundList from './BackgroundList';
 
@@ -12,6 +15,13 @@ class App extends Component {
 
   gotoPetsQuestEggs = () => {
     this.props.store.gotoPetsQuestEggs();
+  }
+  gotoBasePets = () => {
+    this.props.store.gotoBasePets();
+  }
+
+  gotoPremiumPets = () => {
+    this.props.store.gotoPremiumPets();
   }
 
   gotoOtherQuests = () => {
@@ -43,6 +53,12 @@ class App extends Component {
           <a class={store.menupage === "otherquests" ?  "item active" : "item"} onClick={this.gotoOtherQuests}>
             Other Quests
           </a>
+          <a class={store.menupage === "basepets" ?  "item active" : "item"} onClick={this.gotoBasePets}>
+            Base Pets
+          </a>   
+          <a class={store.menupage === "premiumpets" ?  "item active" : "item"} onClick={this.gotoPremiumPets}>
+            Premium Pets
+          </a>                          
           <a class={store.menupage === "gear" ?  "item active" : "item"} onClick={this.gotoGear}>
             Equipment
           </a>
@@ -125,16 +141,40 @@ class App extends Component {
             </div>
           </div>
           }
+          {store.menupage === "basepets" &&
+          <div class="ui fluid container">            
+            <div class="ui horizontal divider header">
+              <h4>Wanted Base Pets</h4>
+            </div>            
+            <BasePetList store={store}/>
+            <div class="ui basic segment"></div>
+            <div class="ui horizontal divider header">
+              <h4>Non Hatched Base Pet Eggs</h4>
+            </div>
+            <div class="ui basic segment"></div>
+            <BaseEggsList store={store}/>
+          </div>
+          }      
+          {store.menupage === "premiumpets" &&
+          <div class="ui fluid container">            
+            <div class="ui horizontal divider header">
+              <h4>Wanted Premium Pets</h4>
+            </div>            
+            <PremiumPetList store={store}/>
+            <div class="ui basic segment"></div>
+            <div class="ui horizontal divider header">
+              <h4>Non Hatched Premium Pet Eggs</h4>
+            </div>
+            <div class="ui basic segment"></div>
+            <BaseEggsList store={store}/>
+          </div>
+          }                
           {store.menupage === "gear" &&
           <div class="ui fluid container">
           <div class="ui horizontal divider header">
               <h4>Gear Collection</h4>
             </div>
             <div class="ui basic segment"></div>
-            <div class="ui warning message">
-              <i class="warning sign icon"></i>
-              Beware Gears is new there might be dragons or bugs, if you find some please let me know.
-            </div> 
             <GearList store={store}/>
           </div>
           }

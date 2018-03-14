@@ -52,6 +52,62 @@ class UserState {
         return count;
     }
 
+    @computed get totalBasePetCount(){
+        let count = 0;
+        if (!this.loading){
+            [...this.store.basepets].map(pet => pet[1])
+            .filter(pet => pet.users.includes(this) ? pet : null)
+            .forEach(function(pet){
+                if(this.data.items.pets[pet.id] === -1){
+                    count = count + 1;
+                }
+                else{
+                    if(this.data.items.mounts === undefined){ //No Mounts at all
+                        count = count;
+                    }
+                    else
+                    {                
+                        if(!this.data.items.mounts[pet.id]){
+                            count = count + 1;
+                        }
+                        else{
+                            count = count + 2;
+                        }
+                    }
+                }
+            },this)
+        }
+        return count;
+    }    
+
+    @computed get totalPremiumPetCount(){
+        let count = 0;
+        if (!this.loading){
+            [...this.store.premiumpets].map(pet => pet[1])
+            .filter(pet => pet.users.includes(this) ? pet : null)
+            .forEach(function(pet){
+                if(this.data.items.pets[pet.id] === -1){
+                    count = count + 1;
+                }
+                else{
+                    if(this.data.items.mounts === undefined){ //No Mounts at all
+                        count = count;
+                    }
+                    else
+                    {                
+                        if(!this.data.items.mounts[pet.id]){
+                            count = count + 1;
+                        }
+                        else{
+                            count = count + 2;
+                        }
+                    }
+                }
+            },this)
+        }
+        return count;
+    }        
+
     @computed get totalGearCount(){
         let count = 0;
         if(!this.loading){
@@ -81,7 +137,7 @@ class UserState {
                             this.store.quests.get(key).addUser(this);
                     }, this); 
                 }
-                //go over pets
+                //go over questpets / base pets / premium pets
                 if(json.data.items.pets !== undefined){
                     var pets = new Map(Object.entries(json.data.items.pets));
                     pets.forEach(function(value, key) {
@@ -89,8 +145,16 @@ class UserState {
                             var pet = this.store.pets.get(key);
                             if(pet !== undefined)
                                 pet.addUser(this);
+                            var basepet = this.store.basepets.get(key);
+                            if(basepet !== undefined)
+                                basepet.addUser(this);    
+                            var premiumpet = this.store.premiumpets.get(key);
+                            if(premiumpet !== undefined)
+                                premiumpet.addUser(this);                                                            
+
                     },this);   
                 }
+             
                 //go over eggs
                 if(json.data.items.eggs !== undefined){
                     var eggs = new Map(Object.entries(json.data.items.eggs));
@@ -101,6 +165,11 @@ class UserState {
                                 if(value > 0){
                                     egg.addUser(this);
                                 }
+                            var baseegg = this.store.baseeggs.get(key);
+                            if(baseegg !== undefined)
+                                if(value > 0){
+                                    baseegg.addUser(this);
+                                }                                
                     },this);
                 }
                 //go over gear
