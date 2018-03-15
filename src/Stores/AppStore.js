@@ -151,11 +151,20 @@ class AppStore {
       this.pets.forEach(function(value,key,map){
         value.removeUser(user);
       });
+      this.basepets.forEach(function(value,key,map){
+        value.removeUser(user);
+      });     
+      this.premiumpets.forEach(function(value,key,map){
+        value.removeUser(user);
+      });       
       //also remove it from eggs
       this.eggs.forEach(function(value,key,map){
         value.removeUser(user);
       }); 
-
+      this.baseeggs.forEach(function(value,key,map){
+        value.removeUser(user);
+      });       
+      
       this.gear.forEach(function(value,key,map){
         value.removeUser(user);
       });    
