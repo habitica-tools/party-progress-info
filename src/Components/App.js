@@ -98,10 +98,22 @@ class App extends Component {
             <div class="ui message">
             <div class="header"><i class="address card outline icon"></i>Contact</div>
               <p>If you have suggestions for improvement for this tool you can always contact me on Habitica, my UserID = f600354c-9d34-4a4c-a38d-cae52cf58705 with handle @PRoeleert.</p>
+              <p>Log a Ticket on <a href="https://bitbucket.org/pietervanh/habitica-tools">Bitbucket</a></p>
               <p>Or you can just say hi to me if you like this tool as well :)</p>
               <p>If you are a partyleader and you want to measure your performance against other parties, contact me and we'll duel :)</p>
               <p><a href='https://ko-fi.com/J3J0AMLQ' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi5.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a></p>
             </div>                     
+            <div class="ui message">
+            <div class="header"><i class="address card outline icon"></i>Privacy Policy</div>
+            <p>I provide this application, for free of use. I am not in the business of selling your personal information to access this app.</p>
+            <p>I may use the following third party services with anonymised data to analyse our usage and performance</p>
+            <p>Third Party Services:
+              <ul>
+                <li><a href="https://privacy.google.com/businesses/compliance">Google Analytics</a></li>
+                <li><a href="https://surge.sh/tour">Surge.sh</a></li>
+              </ul>
+            </p>
+            </div>
           </div>   
           } 
           {store.menupage !== "about" &&                       

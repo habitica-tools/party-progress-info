@@ -120,7 +120,7 @@ class AppStore {
   }
 
   @action loadQueryString() {
-    this.users.clear();
+    //this.users.clear();
     var qstringusers = this.getQueryVariable("users");
     if(qstringusers !== false){
       qstringusers = decodeURIComponent(qstringusers);
@@ -137,8 +137,13 @@ class AppStore {
   }
 
   @action addUser(userid) {
-      this.users.push(new UserState(this, userid));
-      this.setQueryVariable();
+      //check user already exist
+      if(this.users.map(u => u.id).filter(u => u === userid).length === 0)
+      {
+        this.users.push(new UserState(this, userid));
+        this.setQueryVariable();
+      }
+
   }
 
   @action removeUser(user) {
