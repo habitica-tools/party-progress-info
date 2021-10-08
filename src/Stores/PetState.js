@@ -18,6 +18,8 @@ class PetState {
   id = null;
   store = null;
   @observable users = [];
+  @observable usersWithPet = [];
+  @observable usersWithMount = [];
   
   constructor(questpet,store) {
     this.id = questpet;
@@ -133,6 +135,28 @@ class PetState {
   @action removeUser(user) {
     try{
       this.users.remove(user);
+    }
+    catch(e){}
+  }    
+
+  @action addUserWithPet(user) {
+    this.usersWithPet.push(user);
+  }
+
+  @action removeUserWithPet(user) {
+    try{
+      this.usersWithPet.remove(user);
+    }
+    catch(e){}
+  }    
+
+  @action addUserWithMount(user) {
+    this.usersWithMount.push(user);
+  }
+
+  @action removeUserWithMount(user) {
+    try{
+      this.usersWithMount.remove(user);
     }
     catch(e){}
   }    

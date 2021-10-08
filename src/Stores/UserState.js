@@ -141,17 +141,43 @@ class UserState {
                 if(json.data.items.pets !== undefined){
                     var pets = new Map(Object.entries(json.data.items.pets));
                     pets.forEach(function(value, key) {
-                        if(key !== null && key !== undefined)                   
+                        if(key !== null && key !== undefined) { //TODO: redundant?
+                            var pet = this.store.pets.get(key);
+                            if(pet !== undefined) {
+                                pet.addUser(this);
+                                if(value > 0){
+                                    pet.addUserWithPet(this);
+                                }
+                            }
+                            var basepet = this.store.basepets.get(key);
+                            if(basepet !== undefined) {
+                                basepet.addUser(this);    
+                                if(value > 0){
+                                    basepet.addUserWithPet(this);
+                                }
+                            }
+                            var premiumpet = this.store.premiumpets.get(key);
+                            if(premiumpet !== undefined) {
+                                premiumpet.addUser(this);                                                            
+                                if(value > 0){
+                                    premiumpet.addUserWithPet(this);
+                                }
+                            }
+                        }
+                    },this);   
+                    var mounts = new Map(Object.entries(json.data.items.mounts));
+                    mounts.forEach(function(value, key) {
+                        if(key !== null && key !== undefined && value !== null && value === true){
                             var pet = this.store.pets.get(key);
                             if(pet !== undefined)
-                                pet.addUser(this);
+                                pet.addUserWithMount(this);
                             var basepet = this.store.basepets.get(key);
                             if(basepet !== undefined)
-                                basepet.addUser(this);    
+                                basepet.addUserWithMount(this);    
                             var premiumpet = this.store.premiumpets.get(key);
                             if(premiumpet !== undefined)
-                                premiumpet.addUser(this);                                                            
-
+                                premiumpet.addUserWithMount(this);                                                            
+                        }
                     },this);   
                 }
              

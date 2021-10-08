@@ -15,7 +15,8 @@ class PetInfo extends Component {
                 <thead>
                     <tr>
                         <th>Pet Need/Count</th>
-                        <th>User(s) Has</th>
+                        <th>User(s) With Pet</th>
+                        <th>User(s) With Mount</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,7 +24,8 @@ class PetInfo extends Component {
                                     .map(([id,pet]) =>
                     <tr>
                         <td><Pet pet={pet}/></td>
-                        <td>{pet.users.map(user => user.data.profile.name).join(', ')}</td>
+                        <td>{pet.usersWithPet.map(user => user.data.profile.name).join(', ')}</td>
+                        <td>{pet.usersWithMount.map(user => user.data.profile.name).join(', ')}</td>
                     </tr>   
                     )}
                 </tbody>
