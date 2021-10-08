@@ -12,9 +12,9 @@ class PremiumPetList extends Component {
   @observable showleaderboard = "top3";
 
   @computed get petCategoriesWithCounts() {
-    let pets = [...this.props.store.premiumpetCategories].map(function(category){
+    let pets = [...this.props.store.premiumhatchingpotionCategories].map(function(category){
         let petdetail = {id:category};
-        let categorypets = [...this.props.store.premiumpets].filter(([id,pet]) => pet.basetype === category);
+        let categorypets = [...this.props.store.premiumpets].filter(([id,pet]) => pet.potiontype === category);
         petdetail.needed = categorypets.reduce((prevVal,[id,pet]) => prevVal + pet.needed , 0);
         petdetail.count = categorypets.reduce((prevVal,[id,pet]) => prevVal + pet.count , 0);
         petdetail.selectedcount = categorypets.reduce((prevVal,[id,pet]) => prevVal + pet.selectedcount , 0);
@@ -144,7 +144,7 @@ class PremiumPetList extends Component {
                                 {category.selectedcount}
                             </span> : '' }                         
                             <span class={category.id === this.petInfo ? "selectableInventory item-content Pet Pet-" + category.id + "-Base " : "item-content Pet Pet-" + category.id + "-Base "} onClick={this.showPetInfo.bind(this, category.id)}>
-                                <img src={this.imageurl + "Pet-" + category.id + "-RoyalPurple.png"} alt={category.id}  />
+                                <img src={this.imageurl + "Pet-Wolf-" + category.id + ".png"} alt={category.id}  />
                             </span>
                         </div>                      
                         <span class="pettxt">{category.id}</span>

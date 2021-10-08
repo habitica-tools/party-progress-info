@@ -3,6 +3,7 @@ import UserState from "./UserState";
 import QuestState from "./QuestState";
 import PetState from "./PetState";
 import EggState from "./EggState";
+import HatchingPotionState from "./HatchingPotionState";
 import GearState from "./GearState";
 import BackgroundState from "./BackgroundState";
 
@@ -12,8 +13,10 @@ class AppStore {
   @observable pets = new Map();
   @observable basepets = new Map();
   @observable premiumpets = new Map();
+  @observable premiumhatchingpotions = new Map();
   @observable eggs = new Map();
   @observable baseeggs = new Map();
+  @observable alleggs = new Map();
   @observable gear = new Map();
   @observable backgrounds = new Map();
   @observable users = [];
@@ -90,6 +93,12 @@ class AppStore {
       },this);
       this.eggs.merge(eggs);   
 
+      const premiumhatchingpotions = new Map();
+      new Map(Object.entries(json.data.premiumHatchingPotions)).forEach(function(value,key){
+        premiumhatchingpotions.set(key, new HatchingPotionState(key, value, this));
+      },this);
+      this.premiumhatchingpotions.merge(premiumhatchingpotions);   
+
       const baseeggs = new Map();
       new Map(Object.entries(json.data.eggs)).forEach(function(value,key){
         if(this.eggs.get(key) === undefined)
@@ -97,6 +106,9 @@ class AppStore {
       },this);
       this.baseeggs.merge(baseeggs);    
 
+      const alleggs = new Map();
+      this.alleggs.merge(eggs);
+      this.alleggs.merge(baseeggs);
 
       const gear = new Map();
       new Map(Object.entries(json.data.gear.flat)).forEach(function(value,key){
@@ -137,13 +149,15 @@ class AppStore {
   }
 
   @action addUser(userid) {
-      //check user already exist
-      if(this.users.map(u => u.id).filter(u => u === userid).length === 0)
+      if(userid !== '' && !this.userExists(userid))
       {
         this.users.push(new UserState(this, userid));
         this.setQueryVariable();
       }
+  }
 
+  userExists(userid) {
+    return this.users.map(u => u.id).filter(u => u === userid).length > 0;
   }
 
   @action removeUser(user) {
@@ -160,6 +174,9 @@ class AppStore {
         value.removeUser(user);
       });     
       this.premiumpets.forEach(function(value,key,map){
+        value.removeUser(user);
+      });       
+      this.premiumhatchingpotions.forEach(function(value,key,map){
         value.removeUser(user);
       });       
       //also remove it from eggs
@@ -206,6 +223,16 @@ class AppStore {
         
     for(var pet of pets){
         categories.add(pet.basetype);
+    }
+    return categories;
+  } 
+
+  @computed get premiumhatchingpotionCategories() {
+    var categories = new Set();
+    var potions = [...this.premiumhatchingpotions].map(([id,potion]) =>  potion)
+        
+    for(var potion of potions){
+        categories.add(potion.id);
     }
     return categories;
   } 

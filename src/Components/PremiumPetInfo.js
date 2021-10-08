@@ -19,7 +19,7 @@ class PremiumPetInfo extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {[...store.premiumpets].filter(([id,pet]) => pet.basetype === category)
+                    {[...store.premiumpets].filter(([id,pet]) => pet.potiontype === category)
                                     .map(([id,pet]) =>
                     <tr>
                         <td><Pet pet={pet}/></td>

@@ -172,6 +172,20 @@ class UserState {
                                 }                                
                     },this);
                 }
+             
+                //go over hatching potions
+                if(json.data.items.hatchingPotions !== undefined){
+                    var potions = new Map(Object.entries(json.data.items.hatchingPotions));
+                    potions.forEach(function(value, key) {
+                        if(key !== null && key !== undefined)                   
+                            var potion = this.store.premiumhatchingpotions.get(key);
+                            if(potion !== undefined)
+                                if(value > 0){
+                                    potion.addUser(this);
+                                }                          
+                    },this);
+                }
+
                 //go over gear
                 if(json.data.items.gear !== undefined){
                     var gear = new Map(Object.entries(json.data.items.gear.owned));

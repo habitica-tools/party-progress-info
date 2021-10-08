@@ -33,6 +33,15 @@ class PetState {
       }
   }
 
+  @computed get potiontype(){
+      if(this.id !== null){
+          return this.id.slice(this.id.indexOf('-')+1);
+      }
+      else{
+          return "";
+      }
+  }
+
   @computed get needed(){
     var count=0;
     count = this.store.users.length * 2;

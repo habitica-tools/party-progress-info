@@ -60,7 +60,7 @@ class QuestEggsList extends Component {
   }
 
 
-  render({store}, {petInfo}){
+  render({store}){
 
 
     if(store.loadingobjects){

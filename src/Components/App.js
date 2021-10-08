@@ -2,11 +2,13 @@ import { h, render, Component } from 'preact';
 import { observer } from 'mobx-preact';
 import Settings from './Settings';
 import QuestList from './QuestList';
+import HatchingPotionQuestList from './HatchingPotionQuestList';
 import QuestEggsList from './QuestEggsList';
 import BaseEggsList from './BaseEggsList';
 import PetList from './PetList';
 import BasePetList from './BasePetList';
 import PremiumPetList from './PremiumPetList';
+import PremiumHatchingPotionList from './PremiumHatchingPotionList';
 import GearList from './GearList';
 import BackgroundList from './BackgroundList';
 
@@ -176,10 +178,15 @@ class App extends Component {
             <PremiumPetList store={store}/>
             <div class="ui basic segment"></div>
             <div class="ui horizontal divider header">
-              <h4>Non Hatched Premium Pet Eggs</h4>
+                <h4>Hatching Potion Quests Available in the Party</h4>
+            </div>
+            <HatchingPotionQuestList store={store} category="hatchingPotion"/>
+            <div class="ui basic segment"></div>
+            <div class="ui horizontal divider header">
+              <h4>Non Used Premium Magic Potions</h4>
             </div>
             <div class="ui basic segment"></div>
-            <BaseEggsList store={store}/>
+            <PremiumHatchingPotionList store={store}/>
           </div>
           }                
           {store.menupage === "gear" &&

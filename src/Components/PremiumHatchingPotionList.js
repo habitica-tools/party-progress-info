@@ -1,24 +1,24 @@
 import { h, render, Component } from 'preact';
 import { observer } from 'mobx-preact';
 import { observable, action, computed  } from 'mobx';
-import EggInfo from './EggInfo';
+import HatchingPotionInfo from './HatchingPotionInfo';
 
 @observer
-class BaseEggsList extends Component {
+class PremiumHatchingPotionList extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
   @observable showAll = false;
-  @observable eggInfo = null;
+  @observable potionInfo = null;
   @observable sortKey = "2";
-  @computed get eggsWithCounts() {
-    let eggs = [...this.props.store.baseeggs].map(function(egginfo){
-        let eggdetail = egginfo;
-        eggdetail.count = [...this.props.store.baseeggs].filter(([id,egg]) => egg.id === egginfo[0]).reduce((prevVal,[id,egg]) => prevVal + egg.count , 0);
-        return eggdetail;
-    },this).filter(egg => egg.count > 0);
+  @computed get potionsWithCounts() {
+    let potions = [...this.props.store.premiumhatchingpotions].map(function(potioninfo){
+        let potiondetail = potioninfo;
+        potiondetail.count = [...this.props.store.premiumhatchingpotions].filter(([id,potion]) => potion.id === potioninfo[0]).reduce((prevVal,[id,potion]) => prevVal + potion.count , 0);
+        return potiondetail;
+    },this).filter(potion => potion.count > 0);
     
     switch(this.sortKey){
         case "1":
-        eggs.sort(function(a,b){
+        potions.sort(function(a,b){
             if(a.count < b.count){
                 return -1;
             }
@@ -29,7 +29,7 @@ class BaseEggsList extends Component {
         })        
         break;
         case "2":
-        eggs.sort(function(a,b){
+        potions.sort(function(a,b){
             if(a.count > b.count){
                 return -1;
             }
@@ -56,13 +56,11 @@ class BaseEggsList extends Component {
         break;
     }
 
-    return eggs;
+    return potions;
   }
 
 
   render({store}){
-
-
     if(store.loadingobjects){
         return(<div class="ui active centered inline loader"></div>);
     }
@@ -76,7 +74,7 @@ class BaseEggsList extends Component {
             </div>
             <div class="four wide column">
                 <span class="dropdown-label">Sort By: </span>
-                <select class="ui dropdown" value={this.sortKey} onChange={this.sortEggs}>
+                <select class="ui dropdown" value={this.sortKey} onChange={this.sortPotions}>
                     <option value="">Default</option>
                     <option value="1">Shortage</option>
                     <option value="2">Most</option>
@@ -85,24 +83,24 @@ class BaseEggsList extends Component {
         </div>
             <div class="item-rows">
             <div class ="items">
-            {[...this.eggsWithCounts].map(egg => 
+            {[...this.potionsWithCounts].map(potion => 
                     <div>
                     <div class="item-wrapper">
-                        <div class="item" data-tooltip={egg[0]}>
+                        <div class="item" data-tooltip={potion[0]}>
                             <span class="badge badge-pill badge-item badge-info badge-count">
-                            {egg.count}
+                            {potion.count}
                             </span>   
-                            {egg[1].selectedcount >=1 ?
+                            {potion[1].selectedcount >=1 ?
                             <span class="badge badge-pill badge-item badge-blue">
-                                {egg[1].selectedcount}
+                                {potion[1].selectedcount}
                             </span>                   
                             :''
                             }                                                    
-                            <span class={egg[0] === this.eggInfo ? "selectableInventory item-content Egg Pet_Egg_" + egg[0] + "" : "item-content Egg Pet_Egg_" + egg[0] + ""} onClick={this.showEggInfo.bind(this, egg[0])}>
-                                <img src={this.imageurl + "Pet_Egg_" + egg[0] + ".png"} alt={egg[0]}  />
+                            <span class={potion[0] === this.potionInfo ? "selectableInventory item-content HatchingPotion Pet_HatchingPotion_" + potion[0] + "" : "item-content Egg Pet_Egg_" + potion[0] + ""} onClick={this.showPotionInfo.bind(this, potion[0])}>
+                                <img src={this.imageurl + "Pet_HatchingPotion_" + potion[0] + ".png"} alt={potion[0]}  />
                             </span>
                         </div>                      
-                        <span class="pettxt">{egg[0]}</span>
+                        <span class="pettxt">{potion[0]}</span>
                     </div>
                     </div>
             )}
@@ -110,8 +108,8 @@ class BaseEggsList extends Component {
         </div>
         </div>
         <div class="column">
-            {this.eggInfo === null ? <br/> :
-                <EggInfo category={this.eggInfo} store={store} egglist={this} />
+            {this.potionInfo === null ? <br/> :
+                <HatchingPotionInfo category={this.potionInfo} store={store} potionlist={this} />
             }
         </div>
         </div>
@@ -119,27 +117,27 @@ class BaseEggsList extends Component {
         }
     }
 
-    @action setEggInfo(category){
-        if(this.eggInfo === category){
-            this.hideEggInfo();
+    @action setPotionInfo(category){
+        if(this.potionInfo === category){
+            this.hidePotionInfo();
         }
         else{
-            this.eggInfo = category;
+            this.potionInfo = category;
         }
     }
     
-    showEggInfo = (e) => {
-        this.setEggInfo(e);
+    showPotionInfo = (e) => {
+        this.setPotionInfo(e);
     }
 
-    @action hideEggInfo() {
-        this.setEggInfo(null);
+    @action hidePotionInfo() {
+        this.setPotionInfo(null);
     }
     
-    @action sortEggs = (e) => {
+    @action sortPotions = (e) => {
         this.sortKey = e.target.value;
     }
   
 };
 
-export default BaseEggsList;  
+export default PremiumHatchingPotionList;  
