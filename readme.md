@@ -2,6 +2,10 @@
 
 Some Tools to help Habitica parties decide which Quest they should do next.
 
+### Original Repo
+
+This tool was originally created by pietervanh in [this repo](https://bitbucket.org/pietervanh/habitica-tools/src/master/).
+With his permission I took over this project in October 2021 to improve it further.
 
 ### Prerequisites
 
@@ -27,11 +31,13 @@ I use the awesome [surge.sh](http://surge.sh)
 
 ## Contributing
 
-Contact me if you want to contribute code or stuff
+Feel free to create forks and pull requests or contact me at dianx93@gmail.com.
 
 
 ## Authors
 
+Original Author [PieterV](https://bitbucket.org/pietervanh/)
+Current maintainer [DAlgma](https://bitbucket.org/dalgma/)
 
 ## License
 
