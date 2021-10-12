@@ -31,12 +31,13 @@ I use the awesome [surge.sh](http://surge.sh)
 
 ## Contributing
 
-Feel free to create forks and pull requests or contact me at dianx93@gmail.com.
+Feel free to create forks and pull requests or contact me in Habitica @EstGoddess or at dianx93@gmail.com.
 
 
 ## Authors
 
 Original Author [PieterV](https://bitbucket.org/pietervanh/)
+
 Current maintainer [DAlgma](https://bitbucket.org/dalgma/)
 
 ## License

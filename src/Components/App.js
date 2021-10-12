@@ -77,7 +77,7 @@ class App extends Component {
             <div class="ui info message">
             
               <div class="header"><i class="help circle icon"></i>Help</div>
-              <p>With this tool you can see the number of pets still needed for a party/user and which pet quests are in the inventory. This tool will also give you an overview of equipment, (backgrounds), and other quests available to user/party.</p>
+              <p>With this tool you can see the number of pets still needed for a party/user and which quests are in the inventory. This tool will also give you an overview of equipment and backgrounds.</p>
               <p></p>
 
               <p>To get started fill in your own + all Partymembers Habitica userid on the form on the other pages</p>
@@ -99,10 +99,13 @@ class App extends Component {
             </div>           
             <div class="ui message">
             <div class="header"><i class="address card outline icon"></i>Contact</div>
-              <p>If you have suggestions for improvement for this tool you can always contact me on Habitica, my UserID = f600354c-9d34-4a4c-a38d-cae52cf58705 with handle @PRoeleert.</p>
-              <p>Log a Ticket on <a href="https://bitbucket.org/pietervanh/habitica-tools">Bitbucket</a></p>
+              <p>If you have suggestions for improvement for this tool you can always contact me on Habitica, my UserID = d3c5312b-0e53-4cbc-b836-4c2a63e0ff06 with handle @EstGoddess.</p>
+              <p>Log a Ticket on <a href="https://bitbucket.org/DAlgma/habitica-tools">Bitbucket</a></p>
               <p>Or you can just say hi to me if you like this tool as well :)</p>
-              <p>If you are a partyleader and you want to measure your performance against other parties, contact me and we'll duel :)</p>
+              <p>This tool was originally created by PRoeleert in 2017 and in 2021 he gave it to me to maintain.</p>
+              <p>If you want to support <b>me</b>, then feel free to</p>
+              <p><a href='https://ko-fi.com/J3J66K0NE' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi3.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a></p>
+              <p>If you want to support <b>the original creator</b> of this page, PRoeleert, then:</p>
               <p><a href='https://ko-fi.com/J3J0AMLQ' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi5.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a></p>
             </div>                     
             <div class="ui message">
