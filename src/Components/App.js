@@ -186,7 +186,7 @@ class App extends Component {
             <HatchingPotionQuestList store={store} category="hatchingPotion"/>
             <div class="ui basic segment"></div>
             <div class="ui horizontal divider header">
-              <h4>Non Used Premium Magic Potions</h4>
+              <h4>Non Used Premium Hatching Potions</h4>
             </div>
             <div class="ui basic segment"></div>
             <PremiumHatchingPotionList store={store}/>
