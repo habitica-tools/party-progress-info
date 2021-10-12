@@ -124,7 +124,7 @@ class UserState {
 
     @action addUser(userid) {
         this.loading = true;
-        window.fetch('https://habitica.com/api/v3/members/' + userid)
+        window.fetch('https://habitica.com/api/v3/members/' + userid, {headers: {'x-client': 'd3c5312b-0e53-4cbc-b836-4c2a63e0ff06-HabiticaPartyProgressInfo'}})
             .then(res => res.json())
             .then(action(json => {
                 this.data = json.data;
