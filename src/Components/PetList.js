@@ -160,14 +160,14 @@ class PetList extends Component {
         </div>
         <div class="column">
             <div class="ui horizontal divider header">
-                <h4>Quest Pet LeaderBoard</h4>
+                <h4>Quest Pet Leaderboard</h4>
             </div>
             <table class="ui celled table">
             <thead>
                 <tr>
                     <th>Rank</th>
                     <th>User</th>
-                    <th>QuestPet Count</th>
+                    <th>Pet Count</th>
                     <th>Percentage of Total</th>
                 </tr>
             </thead>

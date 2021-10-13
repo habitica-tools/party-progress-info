@@ -93,14 +93,14 @@ class GearList extends Component {
         <div class="ui fluid container">   
         <div class="column">
             <div class="ui horizontal divider header">
-                <h4>Gear LeaderBoard</h4>
+                <h4>Equipment Leaderboard</h4>
             </div>
             <table class="ui celled table">
             <thead>
                 <tr>
                     <th>Rank</th>
                     <th>User</th>
-                    <th>Gear Count</th>
+                    <th>Equipment Count</th>
                 </tr>
             </thead>
             <tbody>        

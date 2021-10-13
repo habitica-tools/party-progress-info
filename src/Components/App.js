@@ -50,19 +50,19 @@ class App extends Component {
               Habitica Party Progress Info
             </a>
           <a class={store.menupage === "petsquesteggs" ?  "item active" : "item"} onClick={this.gotoPetsQuestEggs}>
-            Pets Quest &amp; Eggs
+            Quest Pets
+          </a>   
+          <a class={store.menupage === "premiumpets" ?  "item active" : "item"} onClick={this.gotoPremiumPets}>
+            Magic Potion Pets
+          </a>      
+          <a class={store.menupage === "basepets" ?  "item active" : "item"} onClick={this.gotoBasePets}>
+            Standard Pets
+          </a>                    
+          <a class={store.menupage === "gear" ?  "item active" : "item"} onClick={this.gotoGear}>
+            Equipment
           </a>
           <a class={store.menupage === "otherquests" ?  "item active" : "item"} onClick={this.gotoOtherQuests}>
             Other Quests
-          </a>
-          <a class={store.menupage === "basepets" ?  "item active" : "item"} onClick={this.gotoBasePets}>
-            Base Pets
-          </a>   
-          <a class={store.menupage === "premiumpets" ?  "item active" : "item"} onClick={this.gotoPremiumPets}>
-            Premium Pets
-          </a>                          
-          <a class={store.menupage === "gear" ?  "item active" : "item"} onClick={this.gotoGear}>
-            Equipment
           </a>
           <a class={store.menupage === "backgrounds" ?  "item active" : "item"} onClick={this.gotoBackgrounds}>
             Backgrounds
@@ -146,11 +146,49 @@ class App extends Component {
             <div class="ui basic segment"></div>
             <QuestEggsList store={store}/>
           </div>
+          }   
+          {store.menupage === "premiumpets" &&
+          <div class="ui fluid container">            
+            <div class="ui horizontal divider header">
+              <h4>Wanted Magic Potion Pets</h4>
+            </div>            
+            <PremiumPetList store={store}/>
+            <div class="ui basic segment"></div>
+            <div class="ui horizontal divider header">
+                <h4>Magic Hatching Potion Quests Available in the Party</h4>
+            </div>
+            <HatchingPotionQuestList store={store} category="hatchingPotion"/>
+            <div class="ui basic segment"></div>
+            <div class="ui horizontal divider header">
+              <h4>Non Used Magic Hatching Potions</h4>
+            </div>
+            <div class="ui basic segment"></div>
+            <PremiumHatchingPotionList store={store}/>
+          </div>
+          }        
+          {store.menupage === "basepets" &&
+          <div class="ui fluid container">            
+            <div class="ui horizontal divider header">
+              <h4>Wanted Standard Pets</h4>
+            </div>            
+            <BasePetList store={store}/>
+            <div class="ui basic segment"></div>
+            <div class="ui horizontal divider header">
+              <h4>Non Hatched Standard Pet Eggs</h4>
+            </div>
+            <div class="ui basic segment"></div>
+            <BaseEggsList store={store}/>
+          </div>
+          }           
+          {store.menupage === "gear" &&
+          <div class="ui fluid container">
+            <GearList store={store}/>
+          </div>
           }
           {store.menupage === "otherquests" &&
           <div class="ui fluid container">
           <div class="ui horizontal divider header">
-              <h4>Other Quests in Party</h4>
+              <h4>Other Quests Available in Party</h4>
             </div>
             <div class="ui basic segment"></div>
             <div class="ui two column stackable grid">
@@ -159,54 +197,12 @@ class App extends Component {
             </div>
           </div>
           }
-          {store.menupage === "basepets" &&
-          <div class="ui fluid container">            
-            <div class="ui horizontal divider header">
-              <h4>Wanted Base Pets</h4>
-            </div>            
-            <BasePetList store={store}/>
-            <div class="ui basic segment"></div>
-            <div class="ui horizontal divider header">
-              <h4>Non Hatched Base Pet Eggs</h4>
-            </div>
-            <div class="ui basic segment"></div>
-            <BaseEggsList store={store}/>
-          </div>
-          }      
-          {store.menupage === "premiumpets" &&
-          <div class="ui fluid container">            
-            <div class="ui horizontal divider header">
-              <h4>Wanted Premium Pets</h4>
-            </div>            
-            <PremiumPetList store={store}/>
-            <div class="ui basic segment"></div>
-            <div class="ui horizontal divider header">
-                <h4>Hatching Potion Quests Available in the Party</h4>
-            </div>
-            <HatchingPotionQuestList store={store} category="hatchingPotion"/>
-            <div class="ui basic segment"></div>
-            <div class="ui horizontal divider header">
-              <h4>Non Used Premium Hatching Potions</h4>
-            </div>
-            <div class="ui basic segment"></div>
-            <PremiumHatchingPotionList store={store}/>
-          </div>
-          }                
-          {store.menupage === "gear" &&
-          <div class="ui fluid container">
-          <div class="ui horizontal divider header">
-              <h4>Gear Collection</h4>
-            </div>
-            <div class="ui basic segment"></div>
-            <GearList store={store}/>
-          </div>
-          }
           {store.menupage === "backgrounds" &&
           <div class="ui fluid container">
+          <div class="ui basic segment"></div>
           <div class="ui horizontal divider header">
               <h4>Background Collection</h4>
             </div>
-            <div class="ui basic segment"></div>
             <div class="ui negative message">
               <i class="warning sign icon"></i>
               <p>Unfortunately the Backgrounds a player owns is not public information.</p>
