@@ -25,7 +25,7 @@ class User extends Component {
                         </div>                                                                      
                     </div>
                     <div class="extra content">
-                        <span class="left floated ui blue" onClick={this.setInfoUser}><i class="info icon"></i>Select</span>
+                        <span class="left floated ui blue" onClick={this.setInfoUser}><i class="info icon"></i>{this.getSelectButtonText()}</span>
                         <span class="right floated ui red" onClick={this.removeUser}><i class="trash icon"></i>Remove</span>
                     </div>                    
                 </div>
@@ -48,12 +48,24 @@ class User extends Component {
         
     }
 
-    removeUser = (e) => {
+    getSelectButtonText = () => {
+        if(this.props.user.store.infoUser === this.props.user){
+            return "Deselect";
+        }
+        return "Select";
+    }
+
+    removeUser = () => {
         this.props.user.store.removeUser(this.props.user);
     }
 
-    setInfoUser = (e) => {
-        this.props.user.store.setInfoUser(this.props.user);
+    setInfoUser = () => {
+        if(this.props.user.store.infoUser === this.props.user){
+            this.props.user.store.setInfoUser("");
+        }
+        else {
+            this.props.user.store.setInfoUser(this.props.user);
+        }
     }
 
 }
