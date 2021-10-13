@@ -156,6 +156,23 @@ class AppStore {
       }
   }
 
+  @action async addParty(userId, key) {
+      const members = await this.getPartyMembers(userId, key);
+      members.forEach(user => this.addUser(user));
+  }
+  
+  async getPartyMembers(userId, key) {
+    const result = await window.fetch('https://habitica.com/api/v3/groups/party/members', {
+      headers: {
+          'x-api-user': userId,
+          'x-api-key': key,
+          'x-client': 'd3c5312b-0e53-4cbc-b836-4c2a63e0ff06-HabiticaPartyProgressInfo'
+      }});
+
+    const json = await result.json();
+    return json.data.map(o => o._id);
+  }
+
   userExists(userid) {
     return this.users.map(u => u.id).filter(u => u === userid).length > 0;
   }
