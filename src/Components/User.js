@@ -8,7 +8,7 @@ class User extends Component {
         let mp = user.data.stats.mp / (user.data.stats.maxMP / 100) > 100 ? 100 : user.data.stats.mp / (user.data.stats.maxMP / 100);
         let hp = user.data.stats.hp / (user.data.stats.maxHealth / 100) > 100 ? 100 : user.data.stats.hp / (user.data.stats.maxHealth / 100);
         return (
-            <div class={this.checkinfoUser(user) ? 'card blue': 'card'}>
+            <div class={this.isSelectedUser() ? 'card blue': 'card'}>
                 <div class="content">
                     <div class="header">{user.data.profile.name}</div>
                     <div class="meta">
@@ -25,7 +25,7 @@ class User extends Component {
                         </div>                                                                      
                     </div>
                     <div class="extra content">
-                        <span class="left floated ui blue" onClick={this.setInfoUser}><i class="info icon"></i>{this.getSelectButtonText()}</span>
+                        <span class="left floated ui blue" onClick={this.selectUser}><i class="info icon"></i>{this.isSelectedUser() ? 'Deselect' : 'Select'}</span>
                         <span class="right floated ui red" onClick={this.removeUser}><i class="trash icon"></i>Remove</span>
                     </div>                    
                 </div>
@@ -33,33 +33,15 @@ class User extends Component {
         );
     }
 
-    checkinfoUser(user) {
-        if(this.props.user.store.infoUser !== ""){
-            if(this.props.user.store.infoUser.data.profile.name === user.data.profile.name){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-        else{
-            return false;
-        }
-        
-    }
-
-    getSelectButtonText = () => {
-        if(this.props.user.store.infoUser === this.props.user){
-            return "Deselect";
-        }
-        return "Select";
+    isSelectedUser() {
+        return this.props.user.store.infoUser === this.props.user;
     }
 
     removeUser = () => {
         this.props.user.store.removeUser(this.props.user);
     }
 
-    setInfoUser = () => {
+    selectUser = () => {
         if(this.props.user.store.infoUser === this.props.user){
             this.props.user.store.setInfoUser("");
         }
