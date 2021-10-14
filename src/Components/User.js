@@ -12,7 +12,7 @@ class User extends Component {
                 <div class="content">
                     <div class="header">{user.data.profile.name}</div>
                     <div class="meta">
-                        Lvl {user.data.stats.lvl} <span class="label label-info">{user.data.stats.class}</span> 
+                        Lvl {user.data.stats.lvl} <span class="label label-info">{this.parseUserClass(user.data.stats.class)}</span> 
                         <span style="color:#b58105"><i class="dollar icon"></i>{parseInt(user.data.stats.gp)}</span>
                         <span><i class="bomb icon"></i>{user.damage}</span>
                         <div class="progress-container">
@@ -48,6 +48,10 @@ class User extends Component {
         else {
             this.props.user.store.setInfoUser(this.props.user);
         }
+    }
+
+    parseUserClass (klass) {
+        return klass === "wizard" ? "mage" : klass;
     }
 
 }
