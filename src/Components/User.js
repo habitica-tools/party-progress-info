@@ -13,8 +13,8 @@ class User extends Component {
                     <div class="header">{user.data.profile.name}</div>
                     <div class="meta">
                         Lvl {user.data.stats.lvl} <span class="label label-info">{this.parseUserClass(user.data.stats.class)}</span> 
-                        <span style="color:#b58105"><i class="dollar icon"></i>{parseInt(user.data.stats.gp)}</span>
-                        <span><i class="bomb icon"></i>{user.damage}</span>
+                        <span data-tooltip="Gold" style="color:#b58105"><i class="dollar icon"></i>{parseInt(user.data.stats.gp)}</span>
+                        <span data-tooltip="Pending damage"><i class="bomb icon"></i>{user.damage}</span>
                         <div class="progress-container">
                             <div class="progress">
                                 <div class="progress-bar bg-health" style={"transition-duration: 300ms; width:" + hp + "%;"}></div>
