@@ -12,12 +12,18 @@ class PremiumPetList extends Component {
   @observable showleaderboard = "top3";
 
   @computed get petCategoriesWithCounts() {
+    const fromQuest = this.props.store.quests.entries().filter(([id,quest]) => 
+    quest.data.category === "hatchingPotion" || 
+    quest.data.category === "timeTravelers" && quest.data.drop.items[0].type === "hatchingPotions"
+        ).map(x => x[1].data.drop.items[0].key);
+
     let pets = [...this.props.store.premiumhatchingpotionCategories].map(function(category){
         let petdetail = {id:category};
         let categorypets = [...this.props.store.premiumpets].filter(([id,pet]) => pet.potiontype === category);
         petdetail.needed = categorypets.reduce((prevVal,[id,pet]) => prevVal + pet.needed , 0);
         petdetail.count = categorypets.reduce((prevVal,[id,pet]) => prevVal + pet.count , 0);
         petdetail.selectedcount = categorypets.reduce((prevVal,[id,pet]) => prevVal + pet.selectedcount , 0);
+        petdetail.quest = fromQuest.includes(category);
         return petdetail;
     },this);
 
@@ -126,10 +132,41 @@ class PremiumPetList extends Component {
                 </div>
             </div>                     
         </div>
-        <div class="ui basic segment"></div>
+        <div class="ui horizontal divider header">
+            <h5>Obtainable from Quests</h5>
+        </div>
         <div class="item-rows">
             <div class ="items">
-            {[...this.petCategoriesWithCounts].map(category => 
+            {[...this.petCategoriesWithCounts.filter(p => p.quest)].map(category => 
+                    <div>
+                    <div class="item-wrapper">
+                        <div class="item">
+                            <span class="badge badge-pill badge-item badge-count2">
+                            {category.needed}
+                            </span>
+                            <span class="badge badge-pill badge-item badge-count">
+                            {category.count}
+                            </span>
+                            {category.selectedcount >= 1 ?
+                            <span class="badge badge-pill badge-item badge-blue">
+                                {category.selectedcount}
+                            </span> : '' }                         
+                            <span class={category.id === this.petInfo ? "selectableInventory item-content Pet Pet-" + category.id + "-Base " : "item-content Pet Pet-" + category.id + "-Base "} onClick={this.showPetInfo.bind(this, category.id)}>
+                                <img src={this.imageurl + "Pet-Wolf-" + category.id + ".png"} alt={category.id}  />
+                            </span>
+                        </div>                      
+                        <span class="pettxt">{category.id}</span>
+                    </div>
+                    </div>
+            )}
+            </div>
+        </div>
+        <div class="ui horizontal divider header">
+            <h5>Others</h5>
+        </div>
+        <div class="item-rows">
+            <div class ="items">
+            {[...this.petCategoriesWithCounts.filter(p => !p.quest)].map(category => 
                     <div>
                     <div class="item-wrapper">
                         <div class="item">

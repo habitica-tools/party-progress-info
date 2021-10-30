@@ -97,7 +97,7 @@ class AppStore {
       new Map(Object.entries(json.data.premiumHatchingPotions)).forEach(function(value,key){
         premiumhatchingpotions.set(key, new HatchingPotionState(key, value, this));
       },this);
-      this.premiumhatchingpotions.merge(premiumhatchingpotions);   
+      this.premiumhatchingpotions.merge(premiumhatchingpotions);
 
       const baseeggs = new Map();
       new Map(Object.entries(json.data.eggs)).forEach(function(value,key){
