@@ -9,14 +9,14 @@ With his permission I took over this project in October 2021 to improve it furth
 
 ### Prerequisites
 
-NodeJs / Yarn Package Manager
+NodeJs / npm
 
 
 ### Installing
 
 
-> yarn install
-> yarn start
+> npm install
+> npm start
 
 
 ## Deployment
