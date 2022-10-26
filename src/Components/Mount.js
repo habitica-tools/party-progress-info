@@ -2,24 +2,24 @@ import { h, render, Component } from 'preact';
 import { observer } from 'mobx-preact';
 
 @observer
-class Pet extends Component {
+class Mount extends Component {
     imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
 
-    render({pet}) {
+    render({mount}) {
         return (
             <div class="item-wrapper">
                 <div class="item">
                 <span class="badge badge-pill badge-item badge-count2">
-                    {pet.petsNeeded}
+                    {mount.mountsNeeded}
                 </span>
                 <div class="badge badge-pill badge-item badge-info badge-count">
-                    {pet.petCount}
+                    {mount.mountCount}
                 </div>  
-                <span class={"item-content Pet Pet-" + pet.id}>
-                    <img src={this.imageurl + "Pet-" + pet.id + ".png"} alt={pet.id}  />
+                <span class={"item-content Mount Mount_Icon_" + mount.id}>
+                    <img src={this.imageurl + "Mount_Icon_" + mount.id + ".png"} alt={mount.id}  />
                 </span>
                 </div>
-                <span class="pettxt">{pet.id}</span>
+                <span class="pettxt">{mount.id}</span>
             </div>
         );
     }  
@@ -27,4 +27,4 @@ class Pet extends Component {
 }
 
 
-export default Pet;
+export default Mount;

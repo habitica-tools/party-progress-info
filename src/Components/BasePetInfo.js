@@ -1,6 +1,7 @@
 import { h, render, Component } from 'preact';
 import { observer } from 'mobx-preact';
 import Pet from './Pet';
+import Mount from './Mount';
 
 @observer
 class BasePetInfo extends Component {
@@ -14,8 +15,9 @@ class BasePetInfo extends Component {
             <table class="ui very basic collapsing celled table">
                 <thead>
                     <tr>
-                        <th>Pet Need/Count</th>
+                        <th>Pets Wanted/Owned</th>
                         <th>User(s) With Pet</th>
+                        <th>Mounts Wanted/Owned</th>
                         <th>User(s) With Mount</th>
                     </tr>
                 </thead>
@@ -25,6 +27,7 @@ class BasePetInfo extends Component {
                     <tr>
                         <td><Pet pet={pet}/></td>
                         <td>{pet.usersWithPet.map(user => user.data.profile.name).join(', ')}</td>
+                        <td><Mount mount={pet}/></td>
                         <td>{pet.usersWithMount.map(user => user.data.profile.name).join(', ')}</td>
                     </tr>   
                     )}

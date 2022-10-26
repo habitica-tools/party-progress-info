@@ -72,6 +72,47 @@ class PetState {
     return count; 
   }
 
+  @computed get petsNeeded(){
+    var count=0;
+    count = this.store.users.length;
+    this.users.forEach(function(value,index,array){
+        if(value.data.items.pets[this.id] !== -1){
+            if(value.data.items.mounts !== undefined){
+                if(!value.data.items.mounts[this.id]){
+                    //Has No Mount 
+                    count = count - 1;
+                }else{
+                    //Has Pet and Mount
+                    count = count -1;
+                }
+            }
+        }
+            
+    }, this);
+    return count; 
+  }
+
+  @computed get mountsNeeded(){
+    var count=0;
+    count = this.store.users.length;
+    this.users.forEach(function(value,index,array){
+        if(value.data.items.pets[this.id] === -1){
+            count = count - 1; //Has Mount but no Pet
+        }
+        else
+        {
+            if(value.data.items.mounts !== undefined){
+                if(value.data.items.mounts[this.id]){
+                    //Has Pet and Mount
+                    count = count -1; 
+                }
+            }
+        }
+            
+    }, this);
+    return count; 
+  }
+
   @computed get count() {
     var count=0;
     this.users.forEach(function(value,index,array){
@@ -89,6 +130,40 @@ class PetState {
                 }
                 else{
                     count = count + 2;
+                }
+            }
+         }
+    },this);
+    return count;
+  }
+
+  @computed get petCount() {
+    var count=0;
+    this.users.forEach(function(value,index,array){
+         if(value.data.items.pets[this.id] !== -1){
+            if(value.data.items.mounts !== undefined){
+                if(!value.data.items.mounts[this.id]){
+                    count = count + 1;
+                }
+                else{
+                    count = count + 1;
+                }
+            }
+         }
+    },this);
+    return count;
+  }
+
+  @computed get mountCount() {
+    var count=0;
+    this.users.forEach(function(value,index,array){
+         if(value.data.items.pets[this.id] === -1){
+             count = count + 1;
+         }
+         else{
+            if(value.data.items.mounts !== undefined){
+                if(value.data.items.mounts[this.id]){
+                    count = count + 1;
                 }
             }
          }
