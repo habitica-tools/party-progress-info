@@ -30,22 +30,11 @@ class UserState {
             [...this.store.pets].map(pet => pet[1])
             .filter(pet => pet.users.includes(this) ? pet : null)
             .forEach(function(pet){
-                if(this.data.items.pets[pet.id] === -1){
+                if(this.data.items.pets !== undefined && this.data.items.pets[pet.id] > 0) {
                     count = count + 1;
                 }
-                else{
-                    if(this.data.items.mounts === undefined){ //No Mounts at all
-                        count = count;
-                    }
-                    else
-                    {                
-                        if(!this.data.items.mounts[pet.id]){
-                            count = count + 1;
-                        }
-                        else{
-                            count = count + 2;
-                        }
-                    }
+                if(this.data.items.mounts !== undefined && this.data.items.mounts[pet.id] > 0) {
+                    count = count + 1;
                 }
             },this)
         }
@@ -58,22 +47,11 @@ class UserState {
             [...this.store.basepets].map(pet => pet[1])
             .filter(pet => pet.users.includes(this) ? pet : null)
             .forEach(function(pet){
-                if(this.data.items.pets[pet.id] === -1){
+                if(this.data.items.pets !== undefined && this.data.items.pets[pet.id] > 0) {
                     count = count + 1;
                 }
-                else{
-                    if(this.data.items.mounts === undefined){ //No Mounts at all
-                        count = count;
-                    }
-                    else
-                    {                
-                        if(!this.data.items.mounts[pet.id]){
-                            count = count + 1;
-                        }
-                        else{
-                            count = count + 2;
-                        }
-                    }
+                if(this.data.items.mounts !== undefined && this.data.items.mounts[pet.id] > 0) {
+                    count = count + 1;
                 }
             },this)
         }
@@ -86,22 +64,11 @@ class UserState {
             [...this.store.premiumpets].map(pet => pet[1])
             .filter(pet => pet.users.includes(this) ? pet : null)
             .forEach(function(pet){
-                if(this.data.items.pets[pet.id] === -1){
+                if(this.data.items.pets !== undefined && this.data.items.pets[pet.id] > 0) {
                     count = count + 1;
                 }
-                else{
-                    if(this.data.items.mounts === undefined){ //No Mounts at all
-                        count = count;
-                    }
-                    else
-                    {                
-                        if(!this.data.items.mounts[pet.id]){
-                            count = count + 1;
-                        }
-                        else{
-                            count = count + 2;
-                        }
-                    }
+                if(this.data.items.mounts !== undefined && this.data.items.mounts[pet.id] > 0) {
+                    count = count + 1;
                 }
             },this)
         }

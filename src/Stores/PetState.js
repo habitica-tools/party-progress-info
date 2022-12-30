@@ -48,26 +48,12 @@ class PetState {
     var count=0;
     count = this.store.users.length * 2;
     this.users.forEach(function(value,index,array){
-        if(value.data.items.pets[this.id] === -1){
-            count = count - 1; //Has Mount but no Pet
+        if(value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
+            count = count - 1;
         }
-        else
-        {
-            if(value.data.items.mounts === undefined){ //No Mounts at all
-                count = count - 1;
-            }
-            else
-            {           
-                if(!value.data.items.mounts[this.id]){
-                    //Has No Mount 
-                    count = count - 1;
-                }else{
-                    //Has Pet and Mount
-                    count = count -2; 
-                }
-            }
+        if(value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
+            count = count - 1;
         }
-            
     }, this);
     return count; 
   }
@@ -76,18 +62,9 @@ class PetState {
     var count=0;
     count = this.store.users.length;
     this.users.forEach(function(value,index,array){
-        if(value.data.items.pets[this.id] !== -1){
-            if(value.data.items.mounts !== undefined){
-                if(!value.data.items.mounts[this.id]){
-                    //Has No Mount 
-                    count = count - 1;
-                }else{
-                    //Has Pet and Mount
-                    count = count -1;
-                }
-            }
+        if(value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
+            count = count - 1;
         }
-            
     }, this);
     return count; 
   }
@@ -96,19 +73,9 @@ class PetState {
     var count=0;
     count = this.store.users.length;
     this.users.forEach(function(value,index,array){
-        if(value.data.items.pets[this.id] === -1){
-            count = count - 1; //Has Mount but no Pet
+        if(value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
+            count = count - 1;
         }
-        else
-        {
-            if(value.data.items.mounts !== undefined){
-                if(value.data.items.mounts[this.id]){
-                    //Has Pet and Mount
-                    count = count -1; 
-                }
-            }
-        }
-            
     }, this);
     return count; 
   }
@@ -116,23 +83,12 @@ class PetState {
   @computed get count() {
     var count=0;
     this.users.forEach(function(value,index,array){
-         if(value.data.items.pets[this.id] === -1){
-             count = count + 1;
-         }
-         else{
-            if(value.data.items.mounts === undefined){ //No Mounts at all
-                count = count;
-            }
-            else
-            {                
-                if(!value.data.items.mounts[this.id]){
-                    count = count + 1;
-                }
-                else{
-                    count = count + 2;
-                }
-            }
-         }
+        if(value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
+            count = count + 1;
+        }
+        if(value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
+            count = count + 1;
+        }
     },this);
     return count;
   }
@@ -140,16 +96,9 @@ class PetState {
   @computed get petCount() {
     var count=0;
     this.users.forEach(function(value,index,array){
-         if(value.data.items.pets[this.id] !== -1){
-            if(value.data.items.mounts !== undefined){
-                if(!value.data.items.mounts[this.id]){
-                    count = count + 1;
-                }
-                else{
-                    count = count + 1;
-                }
-            }
-         }
+        if(value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
+            count = count + 1;
+        }
     },this);
     return count;
   }
@@ -157,16 +106,9 @@ class PetState {
   @computed get mountCount() {
     var count=0;
     this.users.forEach(function(value,index,array){
-         if(value.data.items.pets[this.id] === -1){
-             count = count + 1;
-         }
-         else{
-            if(value.data.items.mounts !== undefined){
-                if(value.data.items.mounts[this.id]){
-                    count = count + 1;
-                }
-            }
-         }
+        if(value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
+            count = count + 1;
+        }
     },this);
     return count;
   }
@@ -179,22 +121,11 @@ class PetState {
     if(this.store.infoUser !== ""){
         if(this.users.filter(user => user === this.store.infoUser).length >= 1){
             this.users.filter(user => user === this.store.infoUser).forEach(function(value,index,array){
-                if(value.data.items.pets[this.id] === -1){
+                if(value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
                     count = count + 1;
                 }
-                else{
-                   if(value.data.items.mounts === undefined){ //No Mounts at all
-                       count = count;
-                   }
-                   else
-                   {                
-                       if(!value.data.items.mounts[this.id]){
-                           count = count + 1;
-                       }
-                       else{
-                           count = count + 2;
-                       }
-                   }
+                if(value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
+                    count = count + 1;
                 }
            },this)
         }
