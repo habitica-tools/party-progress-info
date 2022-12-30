@@ -165,20 +165,22 @@ class UserState {
                             }
                         }
                     },this);   
-                    var mounts = new Map(Object.entries(json.data.items.mounts));
-                    mounts.forEach(function(value, key) {
-                        if(key !== null && key !== undefined && value !== null && value === true){
-                            var pet = this.store.pets.get(key);
-                            if(pet !== undefined)
-                                pet.addUserWithMount(this);
-                            var basepet = this.store.basepets.get(key);
-                            if(basepet !== undefined)
-                                basepet.addUserWithMount(this);    
-                            var premiumpet = this.store.premiumpets.get(key);
-                            if(premiumpet !== undefined)
-                                premiumpet.addUserWithMount(this);                                                            
-                        }
-                    },this);   
+                    if(json.data.items.mounts !== undefined){
+                        var mounts = new Map(Object.entries(json.data.items.mounts));
+                        mounts.forEach(function(value, key) {
+                            if(key !== null && key !== undefined && value !== null && value === true){
+                                var pet = this.store.pets.get(key);
+                                if(pet !== undefined)
+                                    pet.addUserWithMount(this);
+                                var basepet = this.store.basepets.get(key);
+                                if(basepet !== undefined)
+                                    basepet.addUserWithMount(this);    
+                                var premiumpet = this.store.premiumpets.get(key);
+                                if(premiumpet !== undefined)
+                                    premiumpet.addUserWithMount(this);                                                            
+                            }
+                        },this);   
+                    }
                 }
              
                 //go over eggs
