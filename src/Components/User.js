@@ -5,32 +5,45 @@ import { observer } from 'mobx-preact';
 class User extends Component {
 
     render({user}) {
-        let mp = user.data.stats.mp / (user.data.stats.maxMP / 100) > 100 ? 100 : user.data.stats.mp / (user.data.stats.maxMP / 100);
-        let hp = user.data.stats.hp / (user.data.stats.maxHealth / 100) > 100 ? 100 : user.data.stats.hp / (user.data.stats.maxHealth / 100);
-        return (
-            <div class={this.isSelectedUser() ? 'card blue': 'card'}>
-                <div class="content">
-                    <div class="header">{user.data.profile.name}</div>
-                    <div class="meta">
-                        Lvl {user.data.stats.lvl} <span class="label label-info">{this.parseUserClass(user.data.stats.class)}</span> 
-                        <span data-tooltip="Gold" style="color:#b58105"><i class="dollar icon"></i>{parseInt(user.data.stats.gp)}</span>
-                        <span data-tooltip="Pending damage"><i class="bomb icon"></i>{user.damage}</span>
-                        <div class="progress-container">
-                            <div class="progress">
-                                <div class="progress-bar bg-health" style={"transition-duration: 300ms; width:" + hp + "%;"}></div>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar bg-mana" style={"transition-duration: 300ms; width:" + mp + "%;"}></div>
-                            </div>                            
-                        </div>                                                                      
+        if (user.loading) {
+            return (
+                <div class="card">
+                    <div class="content">
+                        <div class="ui active centered loader"></div>
                     </div>
-                    <div class="extra content">
-                        <span class="left floated ui blue" onClick={this.selectUser}><i class="info icon"></i>{this.isSelectedUser() ? 'Deselect' : 'Select'}</span>
-                        <span class="right floated ui red" onClick={this.removeUser}><i class="trash icon"></i>Remove</span>
-                    </div>                    
                 </div>
-            </div>
-        );
+            );
+        }
+        else {
+            let mp = user.data.stats.mp / (user.data.stats.maxMP / 100) > 100 ? 100 : user.data.stats.mp / (user.data.stats.maxMP / 100);
+            let hp = user.data.stats.hp / (user.data.stats.maxHealth / 100) > 100 ? 100 : user.data.stats.hp / (user.data.stats.maxHealth / 100);
+            return (
+                <div class={this.isSelectedUser() ? 'card blue': 'card'}>
+                    <div class="content">
+                        <div class="header">{user.data.profile.name}</div>
+                        <div class="meta">
+                            Lvl {user.data.stats.lvl} <span class="label label-info">{this.parseUserClass(user.data.stats.class)}</span>
+                            <span data-tooltip="Gold" style="color:#b58105"><i class="dollar icon"></i>{parseInt(user.data.stats.gp)}</span>
+                            <span data-tooltip="Pending damage"><i class="bomb icon"></i>{user.damage}</span>
+                        </div>
+                        <div class="description">
+                            <div class="progress-container">
+                                <div class="progress">
+                                    <div class="progress-bar bg-health" style={"transition-duration: 300ms; width:" + hp + "%;"}></div>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-mana" style={"transition-duration: 300ms; width:" + mp + "%;"}></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="extra content">
+                            <span class="left floated ui blue" onClick={this.selectUser}><i class="info icon"></i>{this.isSelectedUser() ? 'Deselect' : 'Select'}</span>
+                            <span class="right floated ui red" onClick={this.removeUser}><i class="trash icon"></i>Remove</span>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
     }
 
     isSelectedUser() {

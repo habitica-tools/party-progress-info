@@ -6,6 +6,7 @@ import EggState from "./EggState";
 import HatchingPotionState from "./HatchingPotionState";
 import GearState from "./GearState";
 import BackgroundState from "./BackgroundState";
+import HabiticaAPI from './HabiticaAPI';
 
 class AppStore {
   @observable loadingobjects = true;
@@ -24,6 +25,7 @@ class AppStore {
 
   @observable menupage = "petsquesteggs";
 
+  api = undefined;
 
   @action gotoPetsQuestEggs() {
     this.menupage = "petsquesteggs";
@@ -54,12 +56,14 @@ class AppStore {
   }  
 
   constructor() {
+    this.api = new HabiticaAPI();
+
     this.fetchCommonObjects();
   }
 
   @action fetchCommonObjects() {
     //https://habitica.com/apidoc/#api-Content-ContentGet
-    window.fetch('https://habitica.com/api/v3/content', {headers: {'x-client': 'd3c5312b-0e53-4cbc-b836-4c2a63e0ff06-HabiticaPartyProgressInfo'}})
+    this.api.fetch('https://habitica.com/api/v3/content', {headers: {'x-client': 'd3c5312b-0e53-4cbc-b836-4c2a63e0ff06-HabiticaPartyProgressInfo'}})
     .then(res => res.json())
     .then(action(json => {
       const quests = new Map();
