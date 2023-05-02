@@ -26,7 +26,7 @@ class Settings extends Component {
                 </div>
                 <br/>
                 <div class="ui cards">
-                    {store.users.map(u => u.loading ? <div class="ui active centered inline loader"></div> : <User user={u} /> )}
+                    {store.users.map(u => <User user={u} /> )}
                 </div>
                 <br/>
             </div>
