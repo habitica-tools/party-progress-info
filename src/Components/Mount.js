@@ -16,7 +16,8 @@ class Mount extends Component {
                     {mount.mountCount}
                 </div>  
                 <span class={"item-content Mount Mount_Icon_" + mount.id}>
-                    <img src={this.imageurl + "Mount_Icon_" + mount.id + ".png"} alt={mount.id}  />
+                    <img src={this.imageurl + "Mount_Body_" + mount.id + ".png"} alt={mount.id}  />
+                    <img src={this.imageurl + "Mount_Head_" + mount.id + ".png"} alt={mount.id}  />
                 </span>
                 </div>
                 <span class="pettxt">{mount.id}</span>

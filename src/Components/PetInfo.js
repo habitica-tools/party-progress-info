@@ -12,12 +12,12 @@ class PetInfo extends Component {
             <div class="ui horizontal divider header">
               <h4>{category}</h4>
             </div>
-            <table class="ui very basic collapsing celled table">
+            <table class="ui very basic celled table">
                 <thead>
                     <tr>
-                        <th>Pets Wanted/Owned</th>
+                        <th class="two wide">Pets Wanted/Owned</th>
                         <th>User(s) With Pet</th>
-                        <th>Mounts Wanted/Owned</th>
+                        <th class="two wide">Mounts Wanted/Owned</th>
                         <th>User(s) With Mount</th>
                     </tr>
                 </thead>
