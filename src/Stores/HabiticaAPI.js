@@ -1,5 +1,3 @@
-const { action } = require("mobx");
-
 class RateLimit {
     limit = null;
     remaining = null;
@@ -12,7 +10,7 @@ class RateLimit {
         }
     }
 
-    @action update(headers) {
+    update(headers) {
         this.limit = Number(headers.get("X-RateLimit-Limit"));
         this.remaining = Number(headers.get("X-RateLimit-Remaining"));
         this.reset = headers.get("X-RateLimit-Reset");
@@ -37,11 +35,11 @@ class HabiticaAPI {
         this.rateLimit = new RateLimit(null);
     }
 
-    @action fetch(url, params) {
+    fetch(url, params) {
         return this.fetch_retry(url, params, this.maxRetries);
     }
 
-    @action fetch_retry(url, params, retriesLeft) {
+    fetch_retry(url, params, retriesLeft) {
         return new Promise((resolve, reject) => {
             window.fetch(url, params)
                 .then(res => {
@@ -62,7 +60,7 @@ class HabiticaAPI {
                     }
                 })
                 .catch(error => {
-                    reject(error);
+                    throw error;
                 });
         });
     }
