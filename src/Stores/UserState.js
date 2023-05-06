@@ -2,7 +2,7 @@ import { observable, computed, action } from 'mobx';
 
 class UserState {
     @observable loading = true;
-    @observable failed = false;
+    @observable invalid = false;
     data  = {};
     id = null;
     store = null;
@@ -209,9 +209,27 @@ class UserState {
                 }        
                 */         
             }))
-            .catch(res => {
-                this.failed = true;
-            });
+            .catch(action(res => {
+                // 400: invalid userid
+                if (res.status === 400) {
+                    this.data.customMessage = "\"" + userid + "\" is not a valid UUID";
+                }
+                // 404: userid not found
+                else if (res.status === 404) {
+                    this.data.customMessage = "User with id \"" + userid + "\" not found";
+                }
+
+                res.json()
+                    .then(action(json => {
+                        if (!this.data.hasOwnProperty("customMessage")) {
+                            this.data = json;
+                            this.data.customMessage = JSON.stringify(json);
+                        }
+
+                        this.invalid = true;
+                        this.loading = false;
+                    }));
+            }));
 
         }
 }
