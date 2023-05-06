@@ -53,10 +53,10 @@ class User extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div class="extra content">
-                            <span class="left floated ui blue" onClick={this.selectUser}><i class="info icon"></i>{this.isSelectedUser() ? 'Deselect' : 'Select'}</span>
-                            <span class="right floated ui red" onClick={this.removeUser}><i class="trash icon"></i>Remove</span>
-                        </div>
+                    </div>
+                    <div class="extra content">
+                        <a class="left floated" onClick={this.selectUser}><i class="info icon"></i>{this.isSelectedUser() ? 'Deselect' : 'Select'}</a>
+                        <a class="right floated" onClick={this.removeUser}><i class="trash icon"></i>Remove</a>
                     </div>
                 </div>
             );
