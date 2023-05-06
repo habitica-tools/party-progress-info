@@ -212,11 +212,11 @@ class UserState {
             .catch(action(res => {
                 // 400: invalid userid
                 if (res.status === 400) {
-                    this.data.customMessage = "\"" + userid + "\" is not a valid UUID";
+                    this.data.customMessage = "\"" + userid + "\" is not a valid User ID";
                 }
                 // 404: userid not found
                 else if (res.status === 404) {
-                    this.data.customMessage = "User with id \"" + userid + "\" not found";
+                    this.data.customMessage = "User ID \"" + userid + "\" not found";
                 }
 
                 res.json()
