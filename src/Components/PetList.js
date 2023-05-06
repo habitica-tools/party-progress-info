@@ -173,7 +173,7 @@ class PetList extends Component {
             </thead>
             <tbody>        
             {this.showleaderboard === 'top3' &&       
-            store.top3petleaderboard.map((user,index) => 
+            store.top3petleaderboard.filter(u => !u.invalid).map((user,index) =>
                 
                     user.data.profile !== undefined ?
                         <tr key={user.id}>
@@ -192,7 +192,7 @@ class PetList extends Component {
             )
             }
             {this.showleaderboard === 'all' &&       
-            store.petleaderboard.map((user,index) => 
+            store.petleaderboard.filter(u => !u.invalid).map((user,index) =>
                 
                     user.data.profile !== undefined ?
                         <tr key={user.id}>

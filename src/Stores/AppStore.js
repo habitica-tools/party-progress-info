@@ -214,8 +214,13 @@ class AppStore {
 
       this.setQueryVariable();
   }
+
   @action setInfoUser(user){
     this.infoUser = user;
+  }
+
+  countValidUsers() {
+    return this.users.reduce((prevVal, u) => prevVal + (u.loading || u.invalid ? 0 : 1), 0);
   }
  
   @computed get petCategories() {
@@ -269,7 +274,7 @@ class AppStore {
   }
 
   @computed get totalCountPets(){
-    return ([...this.pets].length * 2) * this.users.length;
+    return ([...this.pets].length * 2) * this.countValidUsers();
   }
 
   @computed get totalNeededBasePetsParty () {
@@ -283,7 +288,7 @@ class AppStore {
   }
 
   @computed get totalCountBasePets(){
-    return ([...this.basepets].length * 2) * this.users.length;
+    return ([...this.basepets].length * 2) * this.countValidUsers();
   }
 
   @computed get totalNeededPremiumPetsParty () {
@@ -297,7 +302,7 @@ class AppStore {
   }
 
   @computed get totalCountPremiumPets(){
-    return ([...this.premiumpets].length * 2) * this.users.length;
+    return ([...this.premiumpets].length * 2) * this.countValidUsers();
   }  
 
   @computed get gearleaderboard() {

@@ -19,7 +19,7 @@ class Settings extends Component {
                             </span>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <span data-tooltip="Total pending damage" style="color:#646464"><i class="bomb icon"></i>
-                                {store.users.map(u => u.loading ? 0 : u.damage).reduce((a, b) => a + b, 0)}
+                                {store.users.map(u => u.loading || u.invalid ? 0 : u.damage).reduce((a, b) => a + b, 0)}
                             </span>
                         </h5>
                     </div>      

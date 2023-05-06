@@ -14,6 +14,23 @@ class User extends Component {
                 </div>
             );
         }
+        else if (user.invalid) {
+            return (
+                <div class="card">
+                    <div class="content">
+                        <div class="center aligned header">
+                            <i class="user times icon"></i>
+                        </div>
+                        <div class="description">
+                            {user.data.customMessage}
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <a class="right floated" onClick={this.removeUser}><i class="trash icon"></i>Remove</a>
+                    </div>
+                </div>
+            );
+        }
         else {
             let mp = user.data.stats.mp / (user.data.stats.maxMP / 100) > 100 ? 100 : user.data.stats.mp / (user.data.stats.maxMP / 100);
             let hp = user.data.stats.hp / (user.data.stats.maxHealth / 100) > 100 ? 100 : user.data.stats.hp / (user.data.stats.maxHealth / 100);
@@ -36,10 +53,10 @@ class User extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div class="extra content">
-                            <span class="left floated ui blue" onClick={this.selectUser}><i class="info icon"></i>{this.isSelectedUser() ? 'Deselect' : 'Select'}</span>
-                            <span class="right floated ui red" onClick={this.removeUser}><i class="trash icon"></i>Remove</span>
-                        </div>
+                    </div>
+                    <div class="extra content">
+                        <a class="left floated" onClick={this.selectUser}><i class="info icon"></i>{this.isSelectedUser() ? 'Deselect' : 'Select'}</a>
+                        <a class="right floated" onClick={this.removeUser}><i class="trash icon"></i>Remove</a>
                     </div>
                 </div>
             );
