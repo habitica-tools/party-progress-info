@@ -64,7 +64,7 @@ class User extends Component {
     }
 
     isSelectedUser() {
-        return this.props.user.store.infoUser === this.props.user;
+        return this.props.user.isInfoUser;
     }
 
     removeUser = () => {
@@ -72,11 +72,11 @@ class User extends Component {
     }
 
     selectUser = () => {
-        if(this.props.user.store.infoUser === this.props.user){
-            this.props.user.store.setInfoUser("");
+        if(this.isSelectedUser()){
+            this.props.user.store.removeInfoUser(this.props.user);
         }
         else {
-            this.props.user.store.setInfoUser(this.props.user);
+            this.props.user.store.addInfoUser(this.props.user);
         }
     }
 

@@ -232,6 +232,10 @@ class UserState {
             }));
 
         }
+
+    @computed get isInfoUser() {
+        return this.store.infoUser.includes(this);
+    }
 }
 
 export default UserState;

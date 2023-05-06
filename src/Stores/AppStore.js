@@ -21,7 +21,7 @@ class AppStore {
   @observable gear = new Map();
   @observable backgrounds = new Map();
   @observable users = [];
-  @observable infoUser = "";
+  @observable infoUser = [];
 
   @observable menupage = "petsquesteggs";
 
@@ -215,8 +215,12 @@ class AppStore {
       this.setQueryVariable();
   }
 
-  @action setInfoUser(user){
-    this.infoUser = user;
+  @action addInfoUser(user){
+    this.infoUser.push(user);
+  }
+
+  @action removeInfoUser(user){
+    this.infoUser.remove(user);
   }
 
   countValidUsers() {
