@@ -34,11 +34,9 @@ class QuestState {
 
   @computed get selectedcount(){
     var count=0;
-    if(this.store.infoUser !== null){
-      this.users.filter(user => user === this.store.infoUser).forEach(function(value,index,array){
-        count = count + value.data.items.quests[this.id];
-      }, this);
-    }
+    this.users.filter(user => user.isInfoUser).forEach(function(value,index,array){
+      count = count + value.data.items.quests[this.id];
+    }, this);
     return count;
   }  
   

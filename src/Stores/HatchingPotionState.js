@@ -21,15 +21,6 @@ class HatchingPotionState {
     },this);
     return count;
   }
-  usercount(user){
-    return computed(() => 
-          this.users.filter(u => u.id === user.id).length === 1 ? 
-            this.users.filter(u => u.id === user.id)[0].data.items.hatchingPotions[this.id] !== undefined ?  
-            this.users.filter(u => u.id === user.id)[0].data.items.hatchingPotions[this.id] :
-            0
-            : 0
-          ).get()
-  }
 
   @action addUser(user) {
     this.users.push(user);
@@ -44,9 +35,8 @@ class HatchingPotionState {
 
   @computed get selectedcount(){
     var count=0;
-      if(this.store.infoUser !== ""){
-        count = this.usercount(this.store.infoUser)
-      }
+    count = this.users.filter(u => u.isInfoUser)
+      .reduce((prevVal, user) => prevVal + (user.data.items.hatchingPotions[this.id] !== undefined ? user.data.items.hatchingPotions[this.id] : 0), count);
     return count;
   }   
 
