@@ -118,18 +118,15 @@ class PetState {
   //get selectedcount
   @computed get selectedcount(){
     let count=0;
-    if(this.store.infoUser !== ""){
-        if(this.users.filter(user => user === this.store.infoUser).length >= 1){
-            this.users.filter(user => user === this.store.infoUser).forEach(function(value,index,array){
-                if(value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
-                    count = count + 1;
-                }
-                if(value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
-                    count = count + 1;
-                }
-           },this)
+
+    this.users.filter(user => user.isInfoUser).forEach(function(value,index,array){
+        if(value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
+            count = count + 1;
         }
-    }
+        if(value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
+            count = count + 1;
+        }
+    },this)
 
     return count;
   }

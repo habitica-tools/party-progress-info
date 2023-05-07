@@ -18,12 +18,8 @@ class GearState {
 
   @computed get selectedcount(){
     let count =0;
-    if(this.store.infoUser !== ""){
-      if(this.users.filter(user => user === this.store.infoUser).length >= 1){
-          count = 1;
-      }
-    }
-      return count;
+    count = this.users.reduce((prevVal, user) => prevVal + (user.isInfoUser ? 1 : 0), count);
+    return count;
   }
 
   @action addUser(user) {
