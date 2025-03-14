@@ -11,10 +11,20 @@ import PremiumPetList from './PremiumPetList';
 import PremiumHatchingPotionList from './PremiumHatchingPotionList';
 import GearList from './GearList';
 import BackgroundList from './BackgroundList';
+import AuthenticationModal from './AuthenticationModal';
 
 @observer
 class App extends Component {
+	askingAuth = false;
 
+	openAuthenticationModal = () => {
+    this.askingAuth = true;
+  }
+
+  hideAuthenticationModal() {
+      this.askingAuth = false;
+  }
+  
   gotoPetsQuestEggs = () => {
     this.props.store.gotoPetsQuestEggs();
   }
@@ -126,7 +136,10 @@ class App extends Component {
             </p>
             </div>
           </div>   
-          } 
+          }
+          {(store.authUserId == null || store.authKey == null) &&
+            <AuthenticationModal store={store} parent={this} />
+          }
           {store.menupage !== "about" &&                       
           <div class="ui fluid container">
             <div class="ui info ignored message">

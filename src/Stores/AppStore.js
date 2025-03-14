@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx';
+import { observable, action, computed, autorun } from 'mobx';
 import UserState from "./UserState";
 import QuestState from "./QuestState";
 import PetState from "./PetState";
@@ -22,6 +22,8 @@ class AppStore {
   @observable backgrounds = new Map();
   @observable users = [];
   @observable infoUser = [];
+  @observable authUserId = null;
+  @observable authKey = null;
 
   @observable menupage = "petsquesteggs";
 
@@ -135,6 +137,11 @@ class AppStore {
     }))
   }
 
+  @action reloadUsers(){
+    this.users.clear();
+    this.loadQueryString();
+  }
+
   @action loadQueryString() {
     //this.users.clear();
     var qstringusers = this.getQueryVariable("users");
@@ -158,6 +165,11 @@ class AppStore {
         this.users.push(new UserState(this, userid));
         this.setQueryVariable();
       }
+  }
+
+  @action async addAuth(userId, key) {
+    this.authUserId = userId;
+    this.authKey = key;
   }
 
   @action async addParty(userId, key) {
