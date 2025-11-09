@@ -34,7 +34,7 @@ module.exports = {
 
     //server
     devServer: {
-        contentBase: path.join(__dirname, 'src'),
+        static: path.join(__dirname, 'src'),
         compress: true,
         historyApiFallback: true
     }
