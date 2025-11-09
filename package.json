@@ -1,6 +1,6 @@
 {
   "name": "habitica-party-tools",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "scripts": {
     "start": "set NODE_ENV=dev && webpack-dev-server --inline",
