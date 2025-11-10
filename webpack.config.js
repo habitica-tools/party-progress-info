@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
 
     //input
-    entry: ['babel-polyfill', './src'],
+    entry: ['./src'],
 
     //output
     output: {
