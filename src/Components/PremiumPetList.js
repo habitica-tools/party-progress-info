@@ -4,7 +4,7 @@ import { observable, action, computed  } from 'mobx';
 import PremiumPetInfo from './PremiumPetInfo';
 
 @observer
-class PremiumPetList extends Component { 
+class PremiumPetList extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
   @observable showAll = false;
   @observable petInfo = null;
@@ -12,8 +12,8 @@ class PremiumPetList extends Component {
   @observable showleaderboard = "top3";
 
   @computed get petCategoriesWithCounts() {
-    const fromQuest = this.props.store.quests.entries().filter(([id,quest]) => 
-    quest.data.category === "hatchingPotion" || 
+    const fromQuest = this.props.store.quests.entries().filter(([id,quest]) =>
+    quest.data.category === "hatchingPotion" ||
     quest.data.category === "timeTravelers" && quest.data.drop.items[0].type === "hatchingPotions"
         ).map(x => x[1].data.drop.items[0].key);
 
@@ -37,7 +37,7 @@ class PremiumPetList extends Component {
                 return 1;
             }
             return 0;
-        })        
+        })
         break;
         case "2":
         pets.sort(function(a,b){
@@ -48,7 +48,7 @@ class PremiumPetList extends Component {
                 return 1;
             }
             return 0;
-        })        
+        })
         break;
         case "3":
         pets.sort(function(a,b){
@@ -59,12 +59,12 @@ class PremiumPetList extends Component {
                 return 1;
             }
             return 0;
-        })        
+        })
         break;
         default:
         break;
     }
-   
+
     return pets;
   }
 
@@ -95,7 +95,7 @@ class PremiumPetList extends Component {
                     <option value="1">Shortage</option>
                     <option value="2">Most</option>
                     <option value="3">A-Z</option>
-              </select>        
+              </select>
             </div>
         </div>
         <div class="ui four statistics">
@@ -106,7 +106,7 @@ class PremiumPetList extends Component {
                 <div class="label">
                     Pets Collected %
                 </div>
-            </div>     
+            </div>
             <div class="ui tiny statistic">
                 <div class="value got">
                     {store.totalCountPremiumPetsParty}
@@ -114,7 +114,7 @@ class PremiumPetList extends Component {
                 <div class="label">
                     Pets in Party
                 </div>
-            </div>                
+            </div>
             <div class="ui tiny statistic">
                 <div class="value wanted">
                     {store.totalNeededPremiumPetsParty}
@@ -130,14 +130,14 @@ class PremiumPetList extends Component {
                 <div class="label">
                     Total Pets
                 </div>
-            </div>                     
+            </div>
         </div>
         <div class="ui horizontal divider header">
             <h5>Obtainable from Quests</h5>
         </div>
         <div class="item-rows">
             <div class ="items">
-            {[...this.petCategoriesWithCounts.filter(p => p.quest)].map(category => 
+            {[...this.petCategoriesWithCounts.filter(p => p.quest)].map(category =>
                     <div>
                     <div class="item-wrapper">
                         <div class="item">
@@ -150,11 +150,11 @@ class PremiumPetList extends Component {
                             {category.selectedcount >= 1 ?
                             <span class="badge badge-pill badge-item badge-blue">
                                 {category.selectedcount}
-                            </span> : '' }                         
+                            </span> : '' }
                             <span class={category.id === this.petInfo ? "selectableInventory item-content Pet Pet-" + category.id + "-Base " : "item-content Pet Pet-" + category.id + "-Base "} onClick={this.showPetInfo.bind(this, category.id)}>
                                 <img src={this.imageurl + "Pet-Wolf-" + category.id + ".png"} alt={category.id}  />
                             </span>
-                        </div>                      
+                        </div>
                         <span class="pettxt">{category.id}</span>
                     </div>
                     </div>
@@ -166,7 +166,7 @@ class PremiumPetList extends Component {
         </div>
         <div class="item-rows">
             <div class ="items">
-            {[...this.petCategoriesWithCounts.filter(p => !p.quest)].map(category => 
+            {[...this.petCategoriesWithCounts.filter(p => !p.quest)].map(category =>
                     <div>
                     <div class="item-wrapper">
                         <div class="item">
@@ -179,11 +179,11 @@ class PremiumPetList extends Component {
                             {category.selectedcount >= 1 ?
                             <span class="badge badge-pill badge-item badge-blue">
                                 {category.selectedcount}
-                            </span> : '' }                         
+                            </span> : '' }
                             <span class={category.id === this.petInfo ? "selectableInventory item-content Pet Pet-" + category.id + "-Base " : "item-content Pet Pet-" + category.id + "-Base "} onClick={this.showPetInfo.bind(this, category.id)}>
                                 <img src={this.imageurl + "Pet-Wolf-" + category.id + ".png"} alt={category.id}  />
                             </span>
-                        </div>                      
+                        </div>
                         <span class="pettxt">{category.id}</span>
                     </div>
                     </div>
@@ -208,10 +208,10 @@ class PremiumPetList extends Component {
                     <th>Percentage of Total</th>
                 </tr>
             </thead>
-            <tbody>        
-            {this.showleaderboard === 'top3' &&       
-            store.top3premiumpetleaderboard.map((user,index) => 
-                
+            <tbody>
+            {this.showleaderboard === 'top3' &&
+            store.top3premiumpetleaderboard.map((user,index) =>
+
                     user.data.profile !== undefined ?
                         <tr key={user.id}>
                             <td>{index + 1}</td>
@@ -228,9 +228,9 @@ class PremiumPetList extends Component {
                         </tr>
             )
             }
-            {this.showleaderboard === 'all' &&       
-            store.premiumpetleaderboard.map((user,index) => 
-                
+            {this.showleaderboard === 'all' &&
+            store.premiumpetleaderboard.map((user,index) =>
+
                     user.data.profile !== undefined ?
                         <tr key={user.id}>
                             <td>{index + 1}</td>
@@ -249,12 +249,12 @@ class PremiumPetList extends Component {
             }
             </tbody>
             </table>
-            {this.showleaderboard === 'top3' &&   
+            {this.showleaderboard === 'top3' &&
                 <button class="ui blue button" onClick={this.handleLeaderboardShowAll}><i class="unhide icon"></i>Show All</button>
-            }            
-            {this.showleaderboard === 'all' &&   
+            }
+            {this.showleaderboard === 'all' &&
                 <button class="ui olive button" onClick={this.handleLeaderboardTop3Only}><i class="hide icon"></i>Top 3 Only</button>
-            }              
+            }
         </div>
         </div>
         );
@@ -266,14 +266,14 @@ class PremiumPetList extends Component {
             this.petInfo = null;
         }
         else{
-            this.petInfo = category;         
+            this.petInfo = category;
         }
     }
-    
+
     showPetInfo = (e) => {
         this.setPetInfo(e);
     }
-    
+
     @action sortPets = (e) => {
         this.sortKey = e.target.value;
     }
@@ -288,4 +288,4 @@ class PremiumPetList extends Component {
 
 };
 
-export default PremiumPetList;  
+export default PremiumPetList;

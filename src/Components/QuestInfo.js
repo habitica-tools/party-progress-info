@@ -19,21 +19,21 @@ class Quest extends Component {
                         }
                         if(a.data.items.quests[quest.id] < b.data.items.quests[quest.id]){
                             return 1;
-                        }           
-                        return 0;             
-                    }).map(quser => 
+                        }
+                        return 0;
+                    }).map(quser =>
                     <div key={quser.id}>
                         {quser.data.profile.name + " has " + quser.data.items.quests[quest.id]}
                     </div>
-                    )}          
+                    )}
             </div>
-        </div>  
+        </div>
         );
     }
 
     Close = (e) => {
         this.props.questlist.hideInfo();
-    }    
+    }
 }
 
 

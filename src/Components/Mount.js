@@ -14,7 +14,7 @@ class Mount extends Component {
                 </span>
                 <div class="badge badge-pill badge-item badge-info badge-count">
                     {mount.mountCount}
-                </div>  
+                </div>
                 <span class={"item-content Mount Mount_Icon_" + mount.id}>
                     <img src={this.imageurl + "Mount_Body_" + mount.id + ".png"} alt={mount.id}  />
                     <img src={this.imageurl + "Mount_Head_" + mount.id + ".png"} alt={mount.id}  />
@@ -23,8 +23,8 @@ class Mount extends Component {
                 <span class="pettxt">{mount.id}</span>
             </div>
         );
-    }  
-    
+    }
+
 }
 
 

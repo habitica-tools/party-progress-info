@@ -29,7 +29,7 @@ class PremiumPetInfo extends Component {
                         <td>{pet.usersWithPet.map(user => user.data.profile.name).join(', ')}</td>
                         <td><Mount mount={pet}/></td>
                         <td>{pet.usersWithMount.map(user => user.data.profile.name).join(', ')}</td>
-                    </tr>   
+                    </tr>
                     )}
                 </tbody>
             </table>

@@ -7,7 +7,7 @@ class BackgroundInfo extends Component {
         return (
             <div>
         {[...store.Background].filter(([id,Background]) => Background.id === category)
-                        .map(([id,Background]) =>        
+                        .map(([id,Background]) =>
                 <div class="ui mini modal active">
                     <div class="header">{Background.data.text}
                     <button class="ui icon right floated button" onClick={this.Close}>
@@ -17,8 +17,8 @@ class BackgroundInfo extends Component {
                     <div class="content">
                     {Background.users.map(user => user.data.profile.name).join(', ')}
                     </div>
-                </div>     
-        )}   
+                </div>
+        )}
         </div>
         );
 
@@ -26,7 +26,7 @@ class BackgroundInfo extends Component {
 
     Close = (e) => {
         this.props.Backgroundlist.hideBackgroundInfo();
-    }    
+    }
 }
 
 

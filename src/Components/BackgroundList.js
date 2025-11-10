@@ -15,7 +15,7 @@ class BackgroundList extends Component {
         //Backgrounddetail.count = [...this.props.store.Background].filter(([id,Backgroundi]) => Backgroundi.id === Backgroundinfo[0]).reduce((prevVal,[id,Backgroundi]) => prevVal + Backgroundi.count , 0);
         return Backgrounddetail;
     },this)//.filter(Backgroundi => Backgroundi.count > 0);
-    
+
     switch(this.sortKey){
         case "1":
         Background.sort(function(a,b){
@@ -26,7 +26,7 @@ class BackgroundList extends Component {
                 return 1;
             }
             return 0;
-        })        
+        })
         break;
         case "2":
         Background.sort(function(a,b){
@@ -37,7 +37,7 @@ class BackgroundList extends Component {
                 return 1;
             }
             return 0;
-        })        
+        })
         break;
         case "3":
         Background.sort(function(a,b){
@@ -48,7 +48,7 @@ class BackgroundList extends Component {
                 return 1;
             }
             return 0;
-        })        
+        })
         break;
         case "4":
         Background.sort(function(a,b){
@@ -59,8 +59,8 @@ class BackgroundList extends Component {
                 return 1;
             }
             return 0;
-        })        
-        break;        
+        })
+        break;
         default:
         break;
     }
@@ -77,12 +77,12 @@ class BackgroundList extends Component {
     }
     else{
         return(
-        <div class="ui fluid container">             
+        <div class="ui fluid container">
         <div class="column stable">
         <div class="ui stackable grid">
             <div class="twelve wide column">
                 &nbsp;<br/><br/>
-            </div>            
+            </div>
             <div class="four wide column">
                 <span class="dropdown-label">Sort By: </span>
                 <select class="ui dropdown" value={this.sortKey} onChange={this.sortBackground}>
@@ -91,22 +91,22 @@ class BackgroundList extends Component {
                     <option value="2">Most</option>
                     <option value="3">A-Z</option>
                     <option value="4">Set</option>
-                </select>   
-            </div>                    
+                </select>
+            </div>
         </div>
             <div class="item-rows">
             <div class ="items backgrounds">
-            {[...this.BackgroundWithCounts].map(Background => 
+            {[...this.BackgroundWithCounts].map(Background =>
                     <div>
                     <div class="item-wrapper">
                         <div class="item">
                             <span class="badge badge-pill badge-item badge-info badge-count">
                             {Background.count}
-                            </span>                          
+                            </span>
                             <span class={Background.id === this.Backgroundinfo ? "selectableInventory item-content Background"  : "item-content Background"} onClick={this.showBackgroundInfo.bind(this, Background.id)}>
                                 <img src={this.imageurl + "background_" + Background.id + ".png"} alt={"shop_" + Background.id}  />
                             </span>
-                        </div>                      
+                        </div>
                     </div>
                     </div>
             )}
@@ -131,7 +131,7 @@ class BackgroundList extends Component {
             this.BackgroundInfo = category;
         }
     }
-    
+
     showBackgroundInfo = (e) => {
         this.setBackgroundInfo(e);
     }
@@ -139,11 +139,11 @@ class BackgroundList extends Component {
     @action hideBackgroundInfo()  {
         this.setBackgroundInfo(null);
     }
-    
+
     @action sortBackground = (e) => {
         this.sortKey = e.target.value;
     }
-  
+
 };
 
-export default BackgroundList;  
+export default BackgroundList;

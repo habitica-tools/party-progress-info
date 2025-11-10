@@ -3,19 +3,19 @@ const isProd = (process.env.NODE_ENV === 'production');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    
+
     //input
-    entry: ['babel-polyfill','./src'],
+    entry: ['babel-polyfill', './src'],
 
     //output
     output: {
-        path : path.join(__dirname, 'build'),
-        filename : 'bundle.js'
+        path: path.join(__dirname, 'build'),
+        filename: 'bundle.js'
     },
 
     //transformations
     module: {
-        rules : [
+        rules: [
             {
                 test: /\.jsx?/i,
                 loader: 'babel-loader',
@@ -23,10 +23,10 @@ module.exports = {
             }
         ]
     },
-       
+
     //sourcemaps
     devtool: 'source-map',
-    
+
     plugins: [new HtmlWebpackPlugin({
         template: './src/index.html',
         favicon: "./src/favicon.ico"

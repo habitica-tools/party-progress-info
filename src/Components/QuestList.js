@@ -11,7 +11,7 @@ class QuestList extends Component {
 
   render({store, category},{showAll, questInfo}) {
 
-    return(  
+    return(
     store.loadingobjects ?  <div class="ui active centered inline loader"></div> :
     <div class="column">
       <h4 class="ui header">{category} quests</h4>
@@ -29,7 +29,7 @@ class QuestList extends Component {
       </div>
     );
   }
-//{id} {quest.data.text}  
+//{id} {quest.data.text}
 
   @action handleShowAll = (e) => {
     this.showAll = true;

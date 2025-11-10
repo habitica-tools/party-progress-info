@@ -10,7 +10,7 @@ class HatchingPotionQuestList extends Component {
   @observable questInfo = null;
 
   render({store, category}) {
-    return(  
+    return(
     store.loadingobjects ?  <div class="ui active centered inline loader"></div> :
     <div class="column">
       <h4 class="ui header">{category} quests</h4>

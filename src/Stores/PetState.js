@@ -20,7 +20,7 @@ class PetState {
   @observable users = [];
   @observable usersWithPet = [];
   @observable usersWithMount = [];
-  
+
   constructor(questpet,store) {
     this.id = questpet;
     this.store = store;
@@ -55,7 +55,7 @@ class PetState {
             count = count - 1;
         }
     }, this);
-    return count; 
+    return count;
   }
 
   @computed get petsNeeded(){
@@ -66,7 +66,7 @@ class PetState {
             count = count - 1;
         }
     }, this);
-    return count; 
+    return count;
   }
 
   @computed get mountsNeeded(){
@@ -77,7 +77,7 @@ class PetState {
             count = count - 1;
         }
     }, this);
-    return count; 
+    return count;
   }
 
   @computed get count() {
@@ -113,7 +113,7 @@ class PetState {
     return count;
   }
 
-  //get usercount 
+  //get usercount
 
   //get selectedcount
   @computed get selectedcount(){
@@ -140,7 +140,7 @@ class PetState {
       this.users.remove(user);
     }
     catch(e){}
-  }    
+  }
 
   @action addUserWithPet(user) {
     this.usersWithPet.push(user);
@@ -151,7 +151,7 @@ class PetState {
       this.usersWithPet.remove(user);
     }
     catch(e){}
-  }    
+  }
 
   @action addUserWithMount(user) {
     this.usersWithMount.push(user);
@@ -162,7 +162,7 @@ class PetState {
       this.usersWithMount.remove(user);
     }
     catch(e){}
-  }    
+  }
 
 }
 

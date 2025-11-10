@@ -5,7 +5,7 @@ class HatchingPotionState {
   store = null;
   @observable users = [];
   @observable data = {};
-  
+
   constructor(key,potion,store) {
     this.id = key;
     this.data = potion;
@@ -31,14 +31,14 @@ class HatchingPotionState {
       this.users.remove(user);
     }
     catch(e){}
-  }    
+  }
 
   @computed get selectedcount(){
     var count=0;
     count = this.users.filter(u => u.isInfoUser)
       .reduce((prevVal, user) => prevVal + (user.data.items.hatchingPotions[this.id] !== undefined ? user.data.items.hatchingPotions[this.id] : 0), count);
     return count;
-  }   
+  }
 
 }
 

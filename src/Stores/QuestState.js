@@ -5,7 +5,7 @@ class QuestState {
   id = null;
   @observable data = {};
   @observable users = [];
-  
+
   constructor(key, quest, store) {
     this.id = key;
     this.data = quest;
@@ -21,7 +21,7 @@ class QuestState {
       this.users.remove(user);
     }
     catch(e){}
-  }  
+  }
 
   //computeds
   @computed get count(){
@@ -38,8 +38,8 @@ class QuestState {
       count = count + value.data.items.quests[this.id];
     }, this);
     return count;
-  }  
-  
+  }
+
 }
 
 export default QuestState;

@@ -24,7 +24,7 @@ class EggInfo extends Component {
                             }
                             return 0;
                         })
-                        .map(user => 
+                        .map(user =>
                         <div key={user.id}>
                             {user.data.profile.name + " has " + egg.usercount(user)}
                         </div>)

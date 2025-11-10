@@ -15,7 +15,7 @@ class QuestEggsList extends Component {
         eggdetail.count = [...this.props.store.eggs].filter(([id,egg]) => egg.id === egginfo[0]).reduce((prevVal,[id,egg]) => prevVal + egg.count , 0);
         return eggdetail;
     },this).filter(egg => egg.count > 0);
-    
+
     switch(this.sortKey){
         case "1":
         eggs.sort(function(a,b){
@@ -26,7 +26,7 @@ class QuestEggsList extends Component {
                 return 1;
             }
             return 0;
-        })        
+        })
         break;
         case "2":
         eggs.sort(function(a,b){
@@ -37,7 +37,7 @@ class QuestEggsList extends Component {
                 return 1;
             }
             return 0;
-        })        
+        })
         break;
         /*
         case "3":
@@ -49,7 +49,7 @@ class QuestEggsList extends Component {
                 return 1;
             }
             return 0;
-        })        
+        })
         break;
         */
         default:
@@ -68,7 +68,7 @@ class QuestEggsList extends Component {
     }
     else{
         return(
-        <div class="ui fluid container">             
+        <div class="ui fluid container">
         <div class="column stable">
         <div class="ui stackable grid">
             <div class="twelve wide column">
@@ -80,28 +80,28 @@ class QuestEggsList extends Component {
                     <option value="">Default</option>
                     <option value="1">Shortage</option>
                     <option value="2">Most</option>
-                </select>   
-            </div>                    
+                </select>
+            </div>
         </div>
             <div class="item-rows">
             <div class ="items">
-            {[...this.eggsWithCounts].map(egg => 
+            {[...this.eggsWithCounts].map(egg =>
                     <div>
                     <div class="item-wrapper">
                         <div class="item" data-tooltip={egg[0]}>
                             <span class="badge badge-pill badge-item badge-info badge-count">
                             {egg.count}
-                            </span>   
+                            </span>
                             {egg[1].selectedcount >=1 ?
                             <span class="badge badge-pill badge-item badge-blue">
                                 {egg[1].selectedcount}
-                            </span>                   
+                            </span>
                             :''
-                            }                                                    
+                            }
                             <span class={egg[0] === this.eggInfo ? "selectableInventory item-content Egg Pet_Egg_" + egg[0] + "" : "item-content Egg Pet_Egg_" + egg[0] + ""} onClick={this.showEggInfo.bind(this, egg[0])}>
                                 <img src={this.imageurl + "Pet_Egg_" + egg[0] + ".png"} alt={egg[0]}  />
                             </span>
-                        </div>                      
+                        </div>
                         <span class="pettxt">{egg[0]}</span>
                     </div>
                     </div>
@@ -127,7 +127,7 @@ class QuestEggsList extends Component {
             this.eggInfo = category;
         }
     }
-    
+
     showEggInfo = (e) => {
         this.setEggInfo(e);
     }
@@ -135,11 +135,11 @@ class QuestEggsList extends Component {
     @action hideEggInfo() {
         this.setEggInfo(null);
     }
-    
+
     @action sortEggs = (e) => {
         this.sortKey = e.target.value;
     }
-  
+
 };
 
-export default QuestEggsList;  
+export default QuestEggsList;

@@ -11,7 +11,7 @@ class Settings extends Component {
             store.loadingobjects ? <div class="ui active centered inline loader"></div> :
             <div>
                 <SettingsInput store={store} /><br/>
-                <div class="ui fluid container">            
+                <div class="ui fluid container">
                     <div class="ui horizontal divider header">
                         <h5>
                             <span data-tooltip="Users" style="color:#0082E2"><i class="user icon"></i>
@@ -22,7 +22,7 @@ class Settings extends Component {
                                 {store.users.map(u => u.loading || u.invalid ? 0 : u.damage).reduce((a, b) => a + b, 0)}
                             </span>
                         </h5>
-                    </div>      
+                    </div>
                 </div>
                 <br/>
                 <div class="ui cards">

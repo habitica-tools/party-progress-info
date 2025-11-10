@@ -57,7 +57,7 @@ class UserState {
             },this)
         }
         return count;
-    }    
+    }
 
     @computed get totalPremiumPetCount(){
         let count = 0;
@@ -74,7 +74,7 @@ class UserState {
             },this)
         }
         return count;
-    }        
+    }
 
     @computed get totalGearCount(){
         let count = 0;
@@ -102,13 +102,13 @@ class UserState {
             .then(action(json => {
                 this.data = json.data;
                 this.loading = false;
-                //go over quests 
+                //go over quests
                 if(json.data.items.quests !== undefined){
                     var quests = new Map(Object.entries(json.data.items.quests));
                     quests.forEach(function(value, key) {
-                        if(value > 0)                   
+                        if(value > 0)
                             this.store.quests.get(key).addUser(this);
-                    }, this); 
+                    }, this);
                 }
                 //go over questpets / base pets / premium pets
                 if(json.data.items.pets !== undefined){
@@ -124,20 +124,20 @@ class UserState {
                             }
                             var basepet = this.store.basepets.get(key);
                             if(basepet !== undefined) {
-                                basepet.addUser(this);    
+                                basepet.addUser(this);
                                 if(value > 0){
                                     basepet.addUserWithPet(this);
                                 }
                             }
                             var premiumpet = this.store.premiumpets.get(key);
                             if(premiumpet !== undefined) {
-                                premiumpet.addUser(this);                                                            
+                                premiumpet.addUser(this);
                                 if(value > 0){
                                     premiumpet.addUserWithPet(this);
                                 }
                             }
                         }
-                    },this);   
+                    },this);
                     if(json.data.items.mounts !== undefined){
                         var mounts = new Map(Object.entries(json.data.items.mounts));
                         mounts.forEach(function(value, key) {
@@ -147,20 +147,20 @@ class UserState {
                                     pet.addUserWithMount(this);
                                 var basepet = this.store.basepets.get(key);
                                 if(basepet !== undefined)
-                                    basepet.addUserWithMount(this);    
+                                    basepet.addUserWithMount(this);
                                 var premiumpet = this.store.premiumpets.get(key);
                                 if(premiumpet !== undefined)
-                                    premiumpet.addUserWithMount(this);                                                            
+                                    premiumpet.addUserWithMount(this);
                             }
-                        },this);   
+                        },this);
                     }
                 }
-             
+
                 //go over eggs
                 if(json.data.items.eggs !== undefined){
                     var eggs = new Map(Object.entries(json.data.items.eggs));
                     eggs.forEach(function(value, key) {
-                        if(key !== null && key !== undefined)                   
+                        if(key !== null && key !== undefined)
                             var egg = this.store.eggs.get(key);
                             if(egg !== undefined)
                                 if(value > 0){
@@ -170,20 +170,20 @@ class UserState {
                             if(baseegg !== undefined)
                                 if(value > 0){
                                     baseegg.addUser(this);
-                                }                                
+                                }
                     },this);
                 }
-             
+
                 //go over hatching potions
                 if(json.data.items.hatchingPotions !== undefined){
                     var potions = new Map(Object.entries(json.data.items.hatchingPotions));
                     potions.forEach(function(value, key) {
-                        if(key !== null && key !== undefined)                   
+                        if(key !== null && key !== undefined)
                             var potion = this.store.premiumhatchingpotions.get(key);
                             if(potion !== undefined)
                                 if(value > 0){
                                     potion.addUser(this);
-                                }                          
+                                }
                     },this);
                 }
 
@@ -191,28 +191,28 @@ class UserState {
                 if(json.data.items.gear !== undefined){
                     var gear = new Map(Object.entries(json.data.items.gear.owned));
                     gear.forEach(function(value, key) {
-                        if(key !== null && key !== undefined)                   
+                        if(key !== null && key !== undefined)
                             var gear = this.store.gear.get(key);
                             if(gear !== undefined)
                                 if(value > 0){
                                     gear.addUser(this);
                                 }
-                    },this);                                                 
-                }   
+                    },this);
+                }
                 //go over backgrounds
                 /*
                 if(json.data.items.backgrounds !== undefined){
                     var backgrounds = new Map(Object.entries(json.data.items.backgrounds.owned));
                     backgrounds.forEach(function(value, key) {
-                        if(key !== null && key !== undefined)                   
+                        if(key !== null && key !== undefined)
                             var background = this.store.backgrounds.get(key);
                             if(background !== undefined)
                                 if(value > 0){
                                     backgrounds.addUser(this);
                                 }
-                    },this);                                                 
-                }        
-                */         
+                    },this);
+                }
+                */
             }))
             .catch(action(res => {
                 // 400: invalid userid

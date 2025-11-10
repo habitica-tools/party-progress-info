@@ -5,14 +5,14 @@ class BackgroundState {
   id = null;
   @observable data = {};
   @observable users = [];
-  
+
   constructor(key, background,store) {
     this.id = key;
     this.data = background
     this.store = store;
   }
 
-  @computed get count() {   
+  @computed get count() {
     return this.users.length;
   }
 
@@ -25,7 +25,7 @@ class BackgroundState {
       this.users.remove(user);
     }
     catch(e){}
-  }    
+  }
 
 }
 
