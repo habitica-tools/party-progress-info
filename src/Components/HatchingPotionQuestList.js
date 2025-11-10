@@ -1,5 +1,5 @@
 import { h, render, Component } from 'preact';
-import { observer } from 'mobx-preact';
+import { observer } from 'mobx-react';
 import { observable, action } from 'mobx';
 import Quest from './Quest';
 import QuestInfo from './QuestInfo';

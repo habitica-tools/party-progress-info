@@ -1,6 +1,6 @@
 import { h, render, Component } from 'preact';
 import { observable, action } from 'mobx';
-import { observer } from 'mobx-preact';
+import { observer } from 'mobx-react';
 import AddPartyModal from './AddPartyModal';
 
 

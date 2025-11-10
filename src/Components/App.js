@@ -1,5 +1,5 @@
 import { h, render, Component } from 'preact';
-import { observer } from 'mobx-preact';
+import { observer } from 'mobx-react';
 import Settings from './Settings';
 import QuestList from './QuestList';
 import HatchingPotionQuestList from './HatchingPotionQuestList';

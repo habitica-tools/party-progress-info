@@ -10,16 +10,16 @@ import HabiticaAPI from './HabiticaAPI';
 
 class AppStore {
   @observable loadingobjects = true;
-  @observable quests = new Map();
-  @observable pets = new Map();
-  @observable basepets = new Map();
-  @observable premiumpets = new Map();
-  @observable premiumhatchingpotions = new Map();
-  @observable eggs = new Map();
-  @observable baseeggs = new Map();
-  @observable alleggs = new Map();
-  @observable gear = new Map();
-  @observable backgrounds = new Map();
+  quests = observable.map(new Map());
+  pets = observable.map(new Map());
+  basepets = observable.map(new Map());
+  premiumpets = observable.map(new Map());
+  premiumhatchingpotions = observable.map(new Map());
+  eggs = observable.map(new Map());
+  baseeggs = observable.map(new Map());
+  alleggs = observable.map(new Map());
+  gear = observable.map(new Map());
+  backgrounds = observable.map(new Map());
   @observable users = [];
   @observable infoUser = [];
   @observable authUserId = null;

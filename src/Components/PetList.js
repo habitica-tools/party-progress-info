@@ -1,5 +1,5 @@
 import { h, render, Component } from 'preact';
-import { observer } from 'mobx-preact';
+import { observer } from 'mobx-react';
 import { observable, action, computed  } from 'mobx';
 import PetInfo from './PetInfo';
 

@@ -1,9 +1,9 @@
 import { h, render } from 'preact';
 import AppStore from './Stores/AppStore';
 import App from './Components/App';
-import { useStrict } from 'mobx';
+import { configure } from 'mobx';
 
-useStrict(true);
+configure({ enforceActions: "observed" });
 const store = new AppStore();
 
 render(
