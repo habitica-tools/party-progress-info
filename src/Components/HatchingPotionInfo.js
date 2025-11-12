@@ -17,7 +17,7 @@ class HatchingPotionInfo extends Component {
             <div class="content">
                     {[...store.premiumhatchingpotions].filter(([id,potion]) => potion.id === category)
                         .map(([id,potion]) =>
-                        potion.users
+                        potion.users.slice()
                         .sort(function(a,b){
                             if(potion.usercount(a) > potion.usercount(b)){
                                 return -1;

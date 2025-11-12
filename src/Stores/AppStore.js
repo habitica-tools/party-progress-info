@@ -322,7 +322,7 @@ class AppStore {
   }
 
   @computed get gearleaderboard() {
-    return this.users.sort(function(a,b){
+    return this.users.slice().sort(function(a,b){
       if(a.totalGearCount > b.totalGearCount){
           return -1;
       }
@@ -342,7 +342,7 @@ class AppStore {
   }
 
   @computed get petleaderboard() {
-    return this.users.sort(function(a,b){
+    return this.users.slice().sort(function(a,b){
       if(a.totalPetCount > b.totalPetCount){
           return -1;
       }
@@ -362,7 +362,7 @@ class AppStore {
   }
 
   @computed get basepetleaderboard() {
-    return this.users.sort(function(a,b){
+    return this.users.slice().sort(function(a,b){
       if(a.totalBasePetCount > b.totalBasePetCount){
           return -1;
       }
@@ -383,7 +383,7 @@ class AppStore {
 
 
   @computed get premiumpetleaderboard() {
-    return this.users.sort(function(a,b){
+    return this.users.slice().sort(function(a,b){
       if(a.totalPremiumPetCount > b.totalPremiumPetCount){
           return -1;
       }

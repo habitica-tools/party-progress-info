@@ -15,7 +15,7 @@ class Quest extends Component {
             </button>
             </div>
             <div class="content">
-                    {quest.users.sort(function(a,b){
+                    {quest.users.slice().sort(function(a,b){
                         if(a.data.items.quests[quest.id] > b.data.items.quests[quest.id]){
                             return -1;
                         }

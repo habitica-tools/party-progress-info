@@ -17,7 +17,7 @@ class EggInfo extends Component {
             <div class="content">
                     {[...store.alleggs].filter(([id,egg]) => egg.id === category)
                         .map(([id,egg]) =>
-                        egg.users
+                        egg.users.slice()
                         .sort(function(a,b){
                             if(egg.usercount(a) > egg.usercount(b)){
                                 return -1;
