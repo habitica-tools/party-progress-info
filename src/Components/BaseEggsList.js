@@ -6,9 +6,9 @@ import EggInfo from './EggInfo';
 @observer
 class BaseEggsList extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
-  @observable showAll = false;
-  @observable eggInfo = null;
-  @observable sortKey = "2";
+  @observable accessor showAll = false;
+  @observable accessor eggInfo = null;
+  @observable accessor sortKey = "2";
   @computed get eggsWithCounts() {
     let eggs = [...this.props.store.baseeggs].map(function(egginfo){
         let eggdetail = egginfo;

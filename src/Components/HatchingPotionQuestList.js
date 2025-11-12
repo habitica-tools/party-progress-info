@@ -6,8 +6,8 @@ import QuestInfo from './QuestInfo';
 
 @observer
 class HatchingPotionQuestList extends Component {
-  @observable showAll = false;
-  @observable questInfo = null;
+  @observable accessor showAll = false;
+  @observable accessor questInfo = null;
 
   render({store, category}) {
     return(

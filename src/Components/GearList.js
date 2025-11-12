@@ -6,10 +6,10 @@ import GearInfo from './GearInfo';
 @observer
 class GearList extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
-  @observable showAll = false;
-  @observable gearInfo = null;
-  @observable sortKey = "2";
-  @observable showleaderboard = "top3";
+  @observable accessor showAll = false;
+  @observable accessor gearInfo = null;
+  @observable accessor sortKey = "2";
+  @observable accessor showleaderboard = "top3";
 
   @computed get gearWithCounts() {
     let gear = [...this.props.store.gear].map(function(gearinfo){

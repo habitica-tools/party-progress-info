@@ -3,8 +3,8 @@ import { observable, action, computed } from 'mobx';
 class GearState {
   store = null;
   id = null;
-  @observable data = {};
-  @observable users = [];
+  @observable accessor data = {};
+  @observable accessor users = [];
 
   constructor(key, gear, store) {
     this.id = key;

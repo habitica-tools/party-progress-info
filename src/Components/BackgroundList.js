@@ -6,9 +6,9 @@ import BackgroundInfo from './BackgroundInfo';
 @observer
 class BackgroundList extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
-  @observable showAll = false;
-  @observable BackgroundInfo = null;
-  @observable sortKey = "";
+  @observable accessor showAll = false;
+  @observable accessor BackgroundInfo = null;
+  @observable accessor sortKey = "";
   @computed get BackgroundWithCounts() {
     let Background = [...this.props.store.backgrounds].map(function(Backgroundinfo){
         let Backgrounddetail = Backgroundinfo[1];

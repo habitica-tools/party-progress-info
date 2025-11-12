@@ -1,8 +1,8 @@
 import { observable, computed, action } from 'mobx';
 
 class UserState {
-    @observable loading = true;
-    @observable invalid = false;
+    @observable accessor loading = true;
+    @observable accessor invalid = false;
     data  = {};
     id = null;
     store = null;

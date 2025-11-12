@@ -6,10 +6,10 @@ import PetInfo from './PetInfo';
 @observer
 class PetList extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
-  @observable showAll = false;
-  @observable petInfo = null;
-  @observable sortKey = "1";
-  @observable showleaderboard = "top3";
+  @observable accessor showAll = false;
+  @observable accessor petInfo = null;
+  @observable accessor sortKey = "1";
+  @observable accessor showleaderboard = "top3";
 
   @computed get petCategoriesWithCounts() {
     let pets = [...this.props.store.petCategories].map(function(category){

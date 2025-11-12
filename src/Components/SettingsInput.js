@@ -6,8 +6,8 @@ import AddPartyModal from './AddPartyModal';
 
 @observer
 class SettingsInput extends Component {
-    @observable input="";
-    @observable addingParty = false;
+    @observable accessor input="";
+    @observable accessor addingParty = false;
 
     render({store}) {
         return (

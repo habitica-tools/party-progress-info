@@ -9,7 +9,7 @@ import BackgroundState from "./BackgroundState";
 import HabiticaAPI from './HabiticaAPI';
 
 class AppStore {
-  @observable loadingobjects = true;
+  @observable accessor loadingobjects = true;
   quests = observable.map(new Map());
   pets = observable.map(new Map());
   basepets = observable.map(new Map());
@@ -20,12 +20,12 @@ class AppStore {
   alleggs = observable.map(new Map());
   gear = observable.map(new Map());
   backgrounds = observable.map(new Map());
-  @observable users = [];
-  @observable infoUser = [];
-  @observable authUserId = null;
-  @observable authKey = null;
+  @observable accessor users = [];
+  @observable accessor infoUser = [];
+  @observable accessor authUserId = null;
+  @observable accessor authKey = null;
 
-  @observable menupage = "petsquesteggs";
+  @observable accessor menupage = "petsquesteggs";
 
   api = undefined;
 

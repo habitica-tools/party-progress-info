@@ -3,8 +3,8 @@ import { observable, action, computed } from 'mobx';
 class EggState {
   id = null;
   store = null;
-  @observable users = [];
-  @observable data = {};
+  @observable accessor users = [];
+  @observable accessor data = {};
 
   constructor(key,egg,store) {
     this.id = key;

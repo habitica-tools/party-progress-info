@@ -17,9 +17,9 @@ import { observable, action, computed } from 'mobx';
 class PetState {
   id = null;
   store = null;
-  @observable users = [];
-  @observable usersWithPet = [];
-  @observable usersWithMount = [];
+  @observable accessor users = [];
+  @observable accessor usersWithPet = [];
+  @observable accessor usersWithMount = [];
 
   constructor(questpet,store) {
     this.id = questpet;

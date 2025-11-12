@@ -6,9 +6,9 @@ import HatchingPotionInfo from './HatchingPotionInfo';
 @observer
 class PremiumHatchingPotionList extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
-  @observable showAll = false;
-  @observable potionInfo = null;
-  @observable sortKey = "2";
+  @observable accessor showAll = false;
+  @observable accessor potionInfo = null;
+  @observable accessor sortKey = "2";
   @computed get potionsWithCounts() {
     let potions = [...this.props.store.premiumhatchingpotions].map(function(potioninfo){
         let potiondetail = potioninfo;

@@ -3,8 +3,8 @@ import { observable, action, computed } from 'mobx';
 class HatchingPotionState {
   id = null;
   store = null;
-  @observable users = [];
-  @observable data = {};
+  @observable accessor users = [];
+  @observable accessor data = {};
 
   constructor(key,potion,store) {
     this.id = key;
