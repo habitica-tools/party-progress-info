@@ -5,7 +5,9 @@ import { observer } from 'mobx-react';
 class Pet extends Component {
     imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
 
-    render({pet}) {
+    render() {
+        const pet = this.props.pet;
+
         return (
             <div class="item-wrapper">
                 <div class="item">

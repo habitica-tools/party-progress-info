@@ -9,7 +9,9 @@ class SettingsInput extends Component {
     @observable accessor input="";
     @observable accessor addingParty = false;
 
-    render({store}) {
+    render() {
+        const store = this.props.store;
+
         return (
         <div class="ui fluid action input">
             <input

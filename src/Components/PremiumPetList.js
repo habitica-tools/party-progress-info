@@ -69,8 +69,8 @@ class PremiumPetList extends Component {
   }
 
 
-  render({store}, {petInfo}){
-
+  render(){
+    const store = this.props.store;
 
     if(store.loadingobjects){
         return(<div class="ui active centered inline loader"></div>);

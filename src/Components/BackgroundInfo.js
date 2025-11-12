@@ -3,7 +3,10 @@ import { observer } from 'mobx-react';
 
 @observer
 class BackgroundInfo extends Component {
-    render({category, store}) {
+    render() {
+        const store = this.props.store;
+        const category = this.props.category;
+
         return (
             <div>
         {[...store.Background].filter(([id,Background]) => Background.id === category)

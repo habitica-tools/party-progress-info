@@ -14,7 +14,7 @@ class AuthenticationModal extends Component {
         this.setState({ userId: this.props.userId });
     }
 
-    render({store, userId}) {
+    render() {
         return (
         <div class="ui mini modal active">
             <div class="header">Authenticate

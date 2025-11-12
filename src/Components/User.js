@@ -4,7 +4,9 @@ import { observer } from 'mobx-react';
 @observer
 class User extends Component {
 
-    render({user}) {
+    render() {
+        const user = this.props.user;
+
         if (user.loading) {
             return (
                 <div class="card">

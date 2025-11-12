@@ -5,7 +5,10 @@ import { observer } from 'mobx-react';
 class Quest extends Component {
     imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
 
-    render({quest, id}) {
+    render() {
+      const quest = this.props.quest;
+      const id = this.props.id;
+
         return (
         <div class="item-wrapper">
         <div class="item" data-tooltip={quest.data.text}>

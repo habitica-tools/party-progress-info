@@ -52,7 +52,8 @@ class App extends Component {
     this.props.store.gotoAbout();
   }
 
-  render({store}) {
+  render() {
+    const store = this.props.store;
     return (
       <div>
         <div class="ui stackable inverted pointing menu">

@@ -9,7 +9,10 @@ class HatchingPotionQuestList extends Component {
   @observable accessor showAll = false;
   @observable accessor questInfo = null;
 
-  render({store, category}) {
+  render() {
+    const store = this.props.store;
+    const category = this.props.category;
+
     return(
     store.loadingobjects ?  <div class="ui active centered inline loader"></div> :
     <div class="column">

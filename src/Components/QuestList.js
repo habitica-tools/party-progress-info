@@ -9,7 +9,9 @@ class QuestList extends Component {
   @observable accessor showAll = false;
   @observable accessor questInfo = null;
 
-  render({store, category},{showAll, questInfo}) {
+  render() {
+    const store = this.props.store;
+    const category = this.props.category;
 
     return(
     store.loadingobjects ?  <div class="ui active centered inline loader"></div> :

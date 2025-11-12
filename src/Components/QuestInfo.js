@@ -4,7 +4,9 @@ import { observer } from 'mobx-react';
 @observer
 class Quest extends Component {
     //TODO Better userrenderer errorprone
-    render({quest, store, questlist}) {
+    render() {
+        const quest = this.props.quest;
+
         return (
             <div class="ui mini modal active">
             <div class="header">{quest.data.text}

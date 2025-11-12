@@ -60,8 +60,8 @@ class QuestEggsList extends Component {
   }
 
 
-  render({store}){
-
+  render(){
+    const store = this.props.store;
 
     if(store.loadingobjects){
         return(<div class="ui active centered inline loader"></div>);

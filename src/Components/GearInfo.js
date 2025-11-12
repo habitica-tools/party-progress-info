@@ -3,7 +3,10 @@ import { observer } from 'mobx-react';
 
 @observer
 class GearInfo extends Component {
-    render({category, store}) {
+    render() {
+        const store = this.props.store;
+        const category = this.props.category;
+
         return (
             <div>
         {[...store.gear].filter(([id,gear]) => gear.id === category)

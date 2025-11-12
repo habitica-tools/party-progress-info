@@ -3,7 +3,10 @@ import { observer } from 'mobx-react';
 
 @observer
 class HatchingPotionInfo extends Component {
-    render({category, store}) {
+    render() {
+        const store = this.props.store;
+        const category = this.props.category;
+
         return (
         <div class="ui mini modal active">
             <div class="header">{category}

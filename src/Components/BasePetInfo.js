@@ -5,7 +5,10 @@ import Mount from './Mount';
 
 @observer
 class BasePetInfo extends Component {
-    render({category, store}) {
+    render() {
+        const store = this.props.store;
+        const category = this.props.category;
+
         return (
         <div class="ui fluid">
             <br/>

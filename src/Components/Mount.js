@@ -5,7 +5,9 @@ import { observer } from 'mobx-react';
 class Mount extends Component {
     imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
 
-    render({mount}) {
+    render() {
+        const mount = this.props.mount;
+
         return (
             <div class="item-wrapper">
                 <div class="item">

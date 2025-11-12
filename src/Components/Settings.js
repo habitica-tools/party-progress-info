@@ -6,7 +6,9 @@ import User from './User';
 @observer
 class Settings extends Component {
 
-    render({store}) {
+    render() {
+        const store = this.props.store;
+
         return (
             store.loadingobjects ? <div class="ui active centered inline loader"></div> :
             <div>
