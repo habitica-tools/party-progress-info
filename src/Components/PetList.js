@@ -10,11 +10,17 @@ class PetList extends Component {
   @observable accessor petInfo = null;
   @observable accessor sortKey = "1";
   @observable accessor showleaderboard = "top3";
+  store = null;
+
+  constructor(props){
+    super(props);
+    this.store = this.props.store;
+  }
 
   @computed get petCategoriesWithCounts() {
-    let pets = [...this.props.store.petCategories].map(function(category){
+    let pets = [...this.store.petCategories].map(function(category){
         let petdetail = {id:category};
-        let categorypets = [...this.props.store.pets].filter(([id,pet]) => pet.basetype === category);
+        let categorypets = [...this.store.pets].filter(([id,pet]) => pet.basetype === category);
         petdetail.needed = categorypets.reduce((prevVal,[id,pet]) => prevVal + pet.needed , 0);
         petdetail.count = categorypets.reduce((prevVal,[id,pet]) => prevVal + pet.count , 0);
         petdetail.selectedcount = categorypets.reduce((prevVal,[id,pet]) => prevVal + pet.selectedcount , 0);

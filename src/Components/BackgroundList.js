@@ -9,10 +9,17 @@ class BackgroundList extends Component {
   @observable accessor showAll = false;
   @observable accessor BackgroundInfo = null;
   @observable accessor sortKey = "";
+  store = null;
+
+  constructor(props){
+    super(props);
+    this.store = this.props.store;
+  }
+
   @computed get BackgroundWithCounts() {
-    let Background = [...this.props.store.backgrounds].map(function(Backgroundinfo){
+    let Background = [...this.store.backgrounds].map(function(Backgroundinfo){
         let Backgrounddetail = Backgroundinfo[1];
-        //Backgrounddetail.count = [...this.props.store.Background].filter(([id,Backgroundi]) => Backgroundi.id === Backgroundinfo[0]).reduce((prevVal,[id,Backgroundi]) => prevVal + Backgroundi.count , 0);
+        //Backgrounddetail.count = [...this.store.Background].filter(([id,Backgroundi]) => Backgroundi.id === Backgroundinfo[0]).reduce((prevVal,[id,Backgroundi]) => prevVal + Backgroundi.count , 0);
         return Backgrounddetail;
     },this)//.filter(Backgroundi => Backgroundi.count > 0);
 

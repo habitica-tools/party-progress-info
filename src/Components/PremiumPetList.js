@@ -10,16 +10,22 @@ class PremiumPetList extends Component {
   @observable accessor petInfo = null;
   @observable accessor sortKey = "1";
   @observable accessor showleaderboard = "top3";
+  store = null;
+
+  constructor(props){
+    super(props);
+    this.store = props.store;
+  }
 
   @computed get petCategoriesWithCounts() {
-    const fromQuest = this.props.store.quests.entries().filter(([id,quest]) =>
+    const fromQuest = this.store.quests.entries().filter(([id,quest]) =>
     quest.data.category === "hatchingPotion" ||
     quest.data.category === "timeTravelers" && quest.data.drop.items[0].type === "hatchingPotions"
         ).map(x => x[1].data.drop.items[0].key);
 
-    let pets = [...this.props.store.premiumhatchingpotionCategories].map(function(category){
+    let pets = [...this.store.premiumhatchingpotionCategories].map(function(category){
         let petdetail = {id:category};
-        let categorypets = [...this.props.store.premiumpets].filter(([id,pet]) => pet.potiontype === category);
+        let categorypets = [...this.store.premiumpets].filter(([id,pet]) => pet.potiontype === category);
         petdetail.needed = categorypets.reduce((prevVal,[id,pet]) => prevVal + pet.needed , 0);
         petdetail.count = categorypets.reduce((prevVal,[id,pet]) => prevVal + pet.count , 0);
         petdetail.selectedcount = categorypets.reduce((prevVal,[id,pet]) => prevVal + pet.selectedcount , 0);

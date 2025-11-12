@@ -10,9 +10,15 @@ class GearList extends Component {
   @observable accessor gearInfo = null;
   @observable accessor sortKey = "2";
   @observable accessor showleaderboard = "top3";
+  store = null;
+
+  constructor(props){
+    super(props);
+    this.store = this.props.store;
+  }
 
   @computed get gearWithCounts() {
-    let gear = [...this.props.store.gear].map(function(gearinfo){
+    let gear = [...this.store.gear].map(function(gearinfo){
         let geardetail = gearinfo[1];
         return geardetail;
     },this).filter(geari => geari.count > 0);

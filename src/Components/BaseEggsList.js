@@ -9,10 +9,17 @@ class BaseEggsList extends Component {
   @observable accessor showAll = false;
   @observable accessor eggInfo = null;
   @observable accessor sortKey = "2";
+  store = null;
+
+  constructor(props){
+    super(props);
+    this.store = this.props.store;
+  }
+
   @computed get eggsWithCounts() {
-    let eggs = [...this.props.store.baseeggs].map(function(egginfo){
+    let eggs = [...this.store.baseeggs].map(function(egginfo){
         let eggdetail = egginfo;
-        eggdetail.count = [...this.props.store.baseeggs].filter(([id,egg]) => egg.id === egginfo[0]).reduce((prevVal,[id,egg]) => prevVal + egg.count , 0);
+        eggdetail.count = [...this.store.baseeggs].filter(([id,egg]) => egg.id === egginfo[0]).reduce((prevVal,[id,egg]) => prevVal + egg.count , 0);
         return eggdetail;
     },this).filter(egg => egg.count > 0);
 

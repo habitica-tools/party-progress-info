@@ -9,10 +9,17 @@ class PremiumHatchingPotionList extends Component {
   @observable accessor showAll = false;
   @observable accessor potionInfo = null;
   @observable accessor sortKey = "2";
+  store = null;
+
+  constructor(props){
+    super(props);
+    this.store = this.props.store;
+  }
+
   @computed get potionsWithCounts() {
-    let potions = [...this.props.store.premiumhatchingpotions].map(function(potioninfo){
+    let potions = [...this.store.premiumhatchingpotions].map(function(potioninfo){
         let potiondetail = potioninfo;
-        potiondetail.count = [...this.props.store.premiumhatchingpotions].filter(([id,potion]) => potion.id === potioninfo[0]).reduce((prevVal,[id,potion]) => prevVal + potion.count , 0);
+        potiondetail.count = [...this.store.premiumhatchingpotions].filter(([id,potion]) => potion.id === potioninfo[0]).reduce((prevVal,[id,potion]) => prevVal + potion.count , 0);
         return potiondetail;
     },this).filter(potion => potion.count > 0);
 
