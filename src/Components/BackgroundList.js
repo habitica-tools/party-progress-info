@@ -7,7 +7,7 @@ import BackgroundInfo from './BackgroundInfo';
 class BackgroundList extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
   @observable accessor showAll = false;
-  @observable accessor BackgroundInfo = null;
+  @observable accessor backgroundInfo = null;
   @observable accessor sortKey = "";
   store = null;
 
@@ -16,16 +16,16 @@ class BackgroundList extends Component {
     this.store = this.props.store;
   }
 
-  @computed get BackgroundWithCounts() {
-    let Background = [...this.store.backgrounds].map(function(Backgroundinfo){
-        let Backgrounddetail = Backgroundinfo[1];
+  @computed get backgroundsWithCounts() {
+    let backgrounds = [...this.store.backgrounds].map(function(background){
+        let backgroundDetail = background[1];
         //Backgrounddetail.count = [...this.store.Background].filter(([id,Backgroundi]) => Backgroundi.id === Backgroundinfo[0]).reduce((prevVal,[id,Backgroundi]) => prevVal + Backgroundi.count , 0);
-        return Backgrounddetail;
+        return backgroundDetail;
     },this)//.filter(Backgroundi => Backgroundi.count > 0);
 
     switch(this.sortKey){
         case "1":
-        Background.sort(function(a,b){
+        backgrounds.sort(function(a,b){
             if(a.count < b.count){
                 return -1;
             }
@@ -36,7 +36,7 @@ class BackgroundList extends Component {
         })
         break;
         case "2":
-        Background.sort(function(a,b){
+        backgrounds.sort(function(a,b){
             if(a.count > b.count){
                 return -1;
             }
@@ -47,7 +47,7 @@ class BackgroundList extends Component {
         })
         break;
         case "3":
-        Background.sort(function(a,b){
+        backgrounds.sort(function(a,b){
             if(a.id < b.id){
                 return -1;
             }
@@ -58,7 +58,7 @@ class BackgroundList extends Component {
         })
         break;
         case "4":
-        Background.sort(function(a,b){
+        backgrounds.sort(function(a,b){
             if(a.data.set < b.data.set){
                 return -1;
             }
@@ -72,7 +72,7 @@ class BackgroundList extends Component {
         break;
     }
 
-    return Background;
+    return backgrounds;
   }
 
 
@@ -103,15 +103,15 @@ class BackgroundList extends Component {
         </div>
             <div class="item-rows">
             <div class ="items backgrounds">
-            {[...this.BackgroundWithCounts].map(Background =>
+            {[...this.backgroundsWithCounts].map(background =>
                     <div>
                     <div class="item-wrapper">
                         <div class="item">
                             <span class="badge badge-pill badge-item badge-info badge-count">
-                            {Background.count}
+                            {background.count}
                             </span>
-                            <span class={Background.id === this.Backgroundinfo ? "selectableInventory item-content Background"  : "item-content Background"} onClick={this.showBackgroundInfo.bind(this, Background.id)}>
-                                <img src={this.imageurl + "background_" + Background.id + ".png"} alt={"shop_" + Background.id}  />
+                            <span class={background.id === this.backgroundInfo ? "selectableInventory item-content Background"  : "item-content Background"} onClick={this.showBackgroundInfo.bind(this, background.id)}>
+                                <img src={this.imageurl + "background_" + background.id + ".png"} alt={"shop_" + background.id}  />
                             </span>
                         </div>
                     </div>
@@ -121,8 +121,8 @@ class BackgroundList extends Component {
         </div>
         </div>
         <div class="column">
-            {this.BackgroundInfo === null ? <br/> :
-                <BackgroundInfo category={this.BackgroundInfo} store={store} Backgroundlist={this} />
+            {this.backgroundInfo === null ? <br/> :
+                <BackgroundInfo category={this.backgroundInfo} store={store} backgroundlist={this} />
             }
         </div>
         </div>
@@ -131,11 +131,11 @@ class BackgroundList extends Component {
     }
 
     @action setBackgroundInfo(category){
-        if(category === this.BackgroundInfo){
+        if(category === this.backgroundInfo){
             this.setBackgroundInfo(null);
         }
         else{
-            this.BackgroundInfo = category;
+            this.backgroundInfo = category;
         }
     }
 
