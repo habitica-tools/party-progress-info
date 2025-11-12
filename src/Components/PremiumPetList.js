@@ -18,10 +18,10 @@ class PremiumPetList extends Component {
   }
 
   @computed get petCategoriesWithCounts() {
-    const fromQuest = this.store.quests.entries().filter(([id,quest]) =>
+    const fromQuest = Array.from(this.store.quests.entries().filter(([id,quest]) =>
     quest.data.category === "hatchingPotion" ||
     quest.data.category === "timeTravelers" && quest.data.drop.items[0].type === "hatchingPotions"
-        ).map(x => x[1].data.drop.items[0].key);
+        ).map(x => x[1].data.drop.items[0].key));
 
     let pets = [...this.store.premiumhatchingpotionCategories].map(function(category){
         let petdetail = {id:category};

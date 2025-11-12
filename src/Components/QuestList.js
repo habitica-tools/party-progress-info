@@ -18,11 +18,11 @@ class QuestList extends Component {
     <div class="column">
       <h4 class="ui header">{category} quests</h4>
       <div class="items">
-      {store.quests.entries()
+      {Array.from(store.quests.entries()
       .filter(([id,quest]) => quest.data.category === category || quest.data.category === "timeTravelers" && quest.data.drop.items[0].type === "eggs")
       .filter(([id,quest]) => this.showAll ? quest : quest.users.length > 0).map(([id, quest]) =>
         <Quest quest={quest} id={id} questlist={this} />
-      )}
+      ))}
       </div>
       {this.showAll ? <button class="ui olive button" onClick={this.handlePartyOnly}><i class="hide icon"></i>Party Only</button> : <button class="ui blue button" onClick={this.handleShowAll}><i class="unhide icon"></i>Show All</button>}
       <div>
