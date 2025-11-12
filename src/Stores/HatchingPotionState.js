@@ -40,6 +40,9 @@ class HatchingPotionState {
     return count;
   }
 
+  usercount(user) {
+    return (user.data.items.hatchingPotions[this.id] !== undefined ? user.data.items.hatchingPotions[this.id] : 0);
+  }
 }
 
 export default HatchingPotionState;

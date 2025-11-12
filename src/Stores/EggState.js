@@ -33,6 +33,10 @@ class EggState {
     catch(e){}
   }
 
+  usercount(user) {
+    return (user.data.items.eggs[this.id] !== undefined ? user.data.items.eggs[this.id] : 0);
+  }
+
   @computed get selectedcount(){
     var count=0;
     count = this.users.filter(u => u.isInfoUser)
