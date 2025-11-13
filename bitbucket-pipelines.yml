@@ -1,10 +1,7 @@
-#  Template NodeJS build
+#  NodeJS build and deploy
 
-#  This template allows you to validate your NodeJS code.
-#  The workflow allows running tests and code linting on the default branch.
-#  -----
-#  This is an example Starter pipeline configuration
-#  Use a skeleton to build, test and deploy using manual and parallel steps
+#  This pipeline builds a website using NodeJS
+#  and deploys it to a Bitbucket Pages repository.
 
 image: node:24
 
@@ -28,35 +25,41 @@ definitions:
           - npx eslint .
         artifacts:
           download: false
+    - step: &deploy
+        name: Deploy
+        script:
+          - git clone https://x-token-auth:$DEPLOYMENT_TOKEN@bitbucket.org/$BITBUCKET_WORKSPACE/$BITBUCKET_WORKSPACE.bitbucket.io.git
+          - cd $BITBUCKET_WORKSPACE.bitbucket.io
+          - TARGET_PATH=$DEPLOYMENT_PATH_PREFIX/$BITBUCKET_REPO_SLUG
+          - mkdir -p $TARGET_PATH
+          - rm -rf $TARGET_PATH/*
+          - cp -r ../build/* $TARGET_PATH/
+          - git config user.email $DEPLOYMENT_USER_EMAIL
+          - git add --all
+          - git status
+          - git commit -m "$DEPLOYMENT_COMMIT_MESSAGE from $BITBUCKET_REPO_SLUG"
+          - git push
 
 pipelines:
   branches:
-#    main:
-    '**':
+    main:
       - parallel:
+        # - step: *lint
         - step: *build
-#        - step: *lint
         - step:
             name: Check for secrets
             script:
               - pipe: atlassian/git-secrets-scan:3.2.0
 
-    # The following deployment steps will be executed for each pipeline run. To configure your steps and conditionally deploy see https://support.atlassian.com/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/
-
       - stage:
           name: Deploy to Staging
           deployment: staging
           steps:
-            - step:
-                name: Deploy
-                script:
-                  - echo "Your deployment to staging script goes here..."
+            - step: *deploy
+
       - stage:
           name: Deploy to Production
           deployment: production
           trigger: manual
           steps:
-            - step:
-                name: Deploy
-                script:
-                  - echo "Your deployment to production script goes here..."
+            - step: *deploy
