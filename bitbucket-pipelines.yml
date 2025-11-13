@@ -1,0 +1,62 @@
+#  Template NodeJS build
+
+#  This template allows you to validate your NodeJS code.
+#  The workflow allows running tests and code linting on the default branch.
+#  -----
+#  This is an example Starter pipeline configuration
+#  Use a skeleton to build, test and deploy using manual and parallel steps
+
+image: node:24
+
+definitions:
+  steps:
+    - step: &build
+        name: Build
+        caches:
+          - node
+        script:
+          - npm install
+          - npm run build
+        artifacts:
+          - build/**
+    - step: &lint
+        name: Lint
+        caches:
+          - node
+        script:
+          - npm install eslint
+          - npx eslint .
+        artifacts:
+          download: false
+
+pipelines:
+  branches:
+#    main:
+    '**':
+      - parallel:
+        - step: *build
+#        - step: *lint
+        - step:
+            name: Check for secrets
+            script:
+              - pipe: atlassian/git-secrets-scan:3.2.0
+
+    # The following deployment steps will be executed for each pipeline run. To configure your steps and conditionally deploy see https://support.atlassian.com/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/
+
+      - stage:
+          name: Deploy to Staging
+          deployment: staging
+          steps:
+            - step:
+                name: Deploy
+                script:
+                  - echo "Your deployment to staging script goes here..."
+      - stage:
+          name: Deploy to Production
+          deployment: production
+          trigger: manual
+          steps:
+            - step:
+                name: Deploy
+                script:
+                  - echo "Your deployment to production script goes here..."
