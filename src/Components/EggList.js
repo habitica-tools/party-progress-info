@@ -20,6 +20,12 @@ class EggList extends Component {
       case "most":
         array.sort((a, b) => b.count - a.count);
         break;
+      case "alphabetical":
+        array.sort((a, b) => {
+          if (a.id < b.id) return -1;
+          if (a.id > b.id) return 1;
+          return 0;
+        });
     }
 
     return array;
@@ -49,6 +55,7 @@ class EggList extends Component {
                   <option value="default">Default</option>
                   <option value="least">Shortage</option>
                   <option value="most">Most</option>
+                  <option value="alphabetical">A-Z</option>
                 </select>
               </div>
             </div>
