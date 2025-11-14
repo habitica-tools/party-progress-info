@@ -10,6 +10,7 @@ import HabiticaAPI from './HabiticaAPI';
 
 class AppStore {
   @observable accessor loadingobjects = true;
+
   quests = observable.map(new Map());
   pets = observable.map(new Map());
   basepets = observable.map(new Map());
@@ -20,9 +21,11 @@ class AppStore {
   alleggs = observable.map(new Map());
   gear = observable.map(new Map());
   backgrounds = observable.map(new Map());
+
   @observable accessor users = [];
   @observable accessor infoUser = [];
 
+  loadParty = false;
   @observable accessor menupage = "petsquesteggs";
 
   api = undefined;
@@ -134,6 +137,12 @@ class AppStore {
   }
 
   @action loadQueryString() {
+    var queryParty = this.getQueryVariable("party");
+    if (queryParty !== null) {
+      this.loadParty = true;
+      this.addParty();
+    }
+
     var queryStringUsers = this.getQueryVariable("users");
     if (queryStringUsers !== null) {
       queryStringUsers = decodeURIComponent(queryStringUsers);
@@ -155,8 +164,10 @@ class AppStore {
       .then(res => res.json())
       .then(json => json.data.map(member => member._id))
       .then(members => {
-        members.forEach(user => this.addUser(user))
-      });
+        this.loadParty = false;
+        members.forEach(user => this.addUser(user));
+      })
+      .catch(err => {});
   }
 
   userExists(userid) {
@@ -383,7 +394,11 @@ class AppStore {
   setQueryVariable = function () {
     let userQueryString = this.userQueryString;
 
-    history.pushState(userQueryString, "", (userQueryString != "" ? "?users=" + userQueryString : "?"));
+    let searchParams = [];
+    if (this.loadParty) searchParams.push("party=true");
+    if (userQueryString !== "") searchParams.push("users=" + this.userQueryString);
+
+    history.pushState(userQueryString, "", "?" + searchParams.join("&"));
   }
 
   getQueryVariable = function (variable) {
