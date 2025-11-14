@@ -2,7 +2,6 @@ import { h, render, Component } from 'preact';
 import { observer } from 'mobx-react';
 import Settings from './Settings';
 import QuestList from './QuestList';
-import HatchingPotionQuestList from './HatchingPotionQuestList';
 import QuestEggsList from './QuestEggsList';
 import BaseEggsList from './BaseEggsList';
 import PetList from './PetList';
@@ -169,7 +168,7 @@ class App extends Component {
               <div class="ui horizontal divider header">
                 <h4>Magic Hatching Potion Quests Available in the Party</h4>
               </div>
-              <HatchingPotionQuestList store={store} category="hatchingPotion" />
+              <QuestList store={store} category="hatchingPotion" />
               <div class="ui basic segment"></div>
               <div class="ui horizontal divider header">
                 <h4>Non Used Magic Hatching Potions</h4>
