@@ -93,16 +93,17 @@ class UserState {
   }
 
   @action addUser(userid) {
-    if (!this.store.api.hasCredentials) {
-      this.loading = false;
-      this.invalid = true;
-      this.data.customMessage = "Authentication required to fetch user data.";
-      return;
-    }
-    else if (!this.store.api.isValidToken(userid)) {
+    if (!this.store.api.isValidToken(userid)) {
       this.loading = false;
       this.invalid = true;
       this.data.customMessage = "\"" + userid + "\" is not a valid User ID";
+      return;
+    }
+
+    if (!this.store.api.hasValidCredentials) {
+      this.loading = false;
+      this.invalid = true;
+      this.data.customMessage = "Valid authentication required to fetch user data";
       return;
     }
 
@@ -229,6 +230,10 @@ class UserState {
         // 400: invalid userid
         if (res.status === 400) {
           this.data.customMessage = "\"" + userid + "\" is not a valid User ID";
+        }
+        // 401: invalid credentials
+        else if (res.status === 401) {
+          this.data.customMessage = "Invalid API credentials";
         }
         // 404: userid not found
         else if (res.status === 404) {

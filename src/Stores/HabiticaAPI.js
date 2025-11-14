@@ -37,6 +37,7 @@ class HabiticaAPI {
   maxRetries = 3;
   @observable accessor userId = null;
   @observable accessor apiToken = null;
+  @observable accessor credentialsValid = true;
 
   isValidToken(token) {
     return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(token);
@@ -45,6 +46,9 @@ class HabiticaAPI {
   @action async setCredentials(userId, apiToken) {
     this.userId = userId;
     this.apiToken = apiToken;
+
+    // assume credentials are valid until proven otherwise
+    this.credentialsValid = true;
   }
 
   @computed get hasCredentials() {
@@ -54,36 +58,69 @@ class HabiticaAPI {
     );
   }
 
+  @computed get hasValidCredentials() {
+    return this.hasCredentials && this.credentialsValid;
+  }
+
   getContent() {
-    return this.fetch(HABITICA_API_URL + 'content', {
-      headers: {
-        'x-client': XCLIENT_HEADER
-      }
-    });
+    return this.fetch(HABITICA_API_URL + 'content');
   }
 
   getUser(userid) {
-    return this.fetch(HABITICA_API_URL + 'members/' + userid, {
-      headers: {
-        'x-api-user': this.userId,
-        'x-api-key': this.apiToken,
-        'x-client': XCLIENT_HEADER
-      }
-    });
+    return this.fetch(HABITICA_API_URL + 'members/' + userid, true);
   }
 
   getPartyMembers() {
-    return this.fetch(HABITICA_API_URL + 'groups/party/members', {
-      headers: {
-        'x-api-user': this.userId,
-        'x-api-key': this.apiToken,
-        'x-client': XCLIENT_HEADER
-      }
-    });
+    return this.fetch(HABITICA_API_URL + 'groups/party/members', true);
   }
 
-  fetch(url, params) {
-    return HabiticaAPI.fetch_retry(url, params, this.maxRetries);
+  fetch(url, requiresCredentials = false) {
+    let headers = {
+      'x-client': XCLIENT_HEADER
+    }
+
+    if (!requiresCredentials) {
+      return HabiticaAPI.fetch_retry(url, { headers: headers });
+    }
+
+    if (this.credentialsValid) {
+      headers['x-api-user'] = this.userId;
+      headers['x-api-key'] = this.apiToken;
+
+      return new Promise((resolve, reject) => {
+        HabiticaAPI.fetch_retry(url, { headers: headers })
+          .then(
+            action(res => {
+              this.credentialsValid = true;
+              resolve(res);
+            })
+          )
+          .catch(
+            action(res => {
+              if (typeof res.status !== 'undefined' && res.status === 401) {
+                this.credentialsValid = false;
+              }
+              reject(res);
+            })
+          );
+      });
+    }
+    else {
+      // immediately reject if credentials are known to be invalid
+      return Promise.reject(
+        Response.json({
+          success: false,
+          error: "invalid_credentials",
+          message: "There is no account that uses those credentials.",
+        }, {
+          bodyUsed: false,
+          ok: false,
+          status: 401,
+          statusText: '',
+          url: url
+        })
+      );
+    }
   }
 
   static fetch_retry(url, params, retriesLeft) {
