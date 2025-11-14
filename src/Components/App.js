@@ -129,7 +129,9 @@ class App extends Component {
             </div>
           }
           {store.menupage !== "about" && !store.hasAuth &&
-            <AuthenticationModal store={store} parent={this} />
+            <div class="ui fluid action input">
+              <AuthenticationModal store={store} parent={this} />
+            </div>
           }
           {store.menupage !== "about" &&
             <div class="ui fluid container">
