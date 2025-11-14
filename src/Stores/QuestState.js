@@ -17,24 +17,24 @@ class QuestState {
   }
 
   @action removeUser(user) {
-    try{
+    try {
       this.users.remove(user);
     }
-    catch(e){}
+    catch (e) { }
   }
 
   //computeds
-  @computed get count(){
-    var count=0;
-    this.users.forEach(function(value,index,array){
+  @computed get count() {
+    var count = 0;
+    this.users.forEach(function (value, index, array) {
       count = count + value.data.items.quests[this.id];
     }, this);
     return count;
   }
 
-  @computed get selectedcount(){
-    var count=0;
-    this.users.filter(user => user.isInfoUser).forEach(function(value,index,array){
+  @computed get selectedcount() {
+    var count = 0;
+    this.users.filter(user => user.isInfoUser).forEach(function (value, index, array) {
       count = count + value.data.items.quests[this.id];
     }, this);
     return count;

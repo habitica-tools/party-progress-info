@@ -21,112 +21,112 @@ class PetState {
   @observable accessor usersWithPet = [];
   @observable accessor usersWithMount = [];
 
-  constructor(questpet,store) {
+  constructor(questpet, store) {
     this.id = questpet;
     this.store = store;
   }
 
-  @computed get basetype(){
-      if(this.id !== null){
-          return this.id.slice(0,this.id.indexOf('-'));
-      }
-      else{
-          return "";
-      }
+  @computed get basetype() {
+    if (this.id !== null) {
+      return this.id.slice(0, this.id.indexOf('-'));
+    }
+    else {
+      return "";
+    }
   }
 
-  @computed get potiontype(){
-      if(this.id !== null){
-          return this.id.slice(this.id.indexOf('-')+1);
-      }
-      else{
-          return "";
-      }
+  @computed get potiontype() {
+    if (this.id !== null) {
+      return this.id.slice(this.id.indexOf('-') + 1);
+    }
+    else {
+      return "";
+    }
   }
 
-  @computed get needed(){
-    var count=0;
+  @computed get needed() {
+    var count = 0;
     count = this.store.countValidUsers() * 2;
-    this.users.forEach(function(value,index,array){
-        if(value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
-            count = count - 1;
-        }
-        if(value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
-            count = count - 1;
-        }
+    this.users.forEach(function (value, index, array) {
+      if (value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
+        count = count - 1;
+      }
+      if (value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
+        count = count - 1;
+      }
     }, this);
     return count;
   }
 
-  @computed get petsNeeded(){
-    var count=0;
+  @computed get petsNeeded() {
+    var count = 0;
     count = this.store.countValidUsers();
-    this.users.forEach(function(value,index,array){
-        if(value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
-            count = count - 1;
-        }
+    this.users.forEach(function (value, index, array) {
+      if (value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
+        count = count - 1;
+      }
     }, this);
     return count;
   }
 
-  @computed get mountsNeeded(){
-    var count=0;
+  @computed get mountsNeeded() {
+    var count = 0;
     count = this.store.countValidUsers();
-    this.users.forEach(function(value,index,array){
-        if(value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
-            count = count - 1;
-        }
+    this.users.forEach(function (value, index, array) {
+      if (value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
+        count = count - 1;
+      }
     }, this);
     return count;
   }
 
   @computed get count() {
-    var count=0;
-    this.users.forEach(function(value,index,array){
-        if(value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
-            count = count + 1;
-        }
-        if(value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
-            count = count + 1;
-        }
-    },this);
+    var count = 0;
+    this.users.forEach(function (value, index, array) {
+      if (value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
+        count = count + 1;
+      }
+      if (value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
+        count = count + 1;
+      }
+    }, this);
     return count;
   }
 
   @computed get petCount() {
-    var count=0;
-    this.users.forEach(function(value,index,array){
-        if(value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
-            count = count + 1;
-        }
-    },this);
+    var count = 0;
+    this.users.forEach(function (value, index, array) {
+      if (value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
+        count = count + 1;
+      }
+    }, this);
     return count;
   }
 
   @computed get mountCount() {
-    var count=0;
-    this.users.forEach(function(value,index,array){
-        if(value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
-            count = count + 1;
-        }
-    },this);
+    var count = 0;
+    this.users.forEach(function (value, index, array) {
+      if (value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
+        count = count + 1;
+      }
+    }, this);
     return count;
   }
 
   //get usercount
 
   //get selectedcount
-  @computed get selectedcount(){
-    let count=0;
+  @computed get selectedcount() {
+    let count = 0;
 
-    this.users.filter(user => user.isInfoUser).forEach(function(value,index,array){
-        if(value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
-            count = count + 1;
-        }
-        if(value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
-            count = count + 1;
-        }
-    },this)
+    this.users.filter(user => user.isInfoUser).forEach(function (value, index, array) {
+      if (value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
+        count = count + 1;
+      }
+      if (value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
+        count = count + 1;
+      }
+    }, this)
 
     return count;
   }
@@ -136,10 +136,10 @@ class PetState {
   }
 
   @action removeUser(user) {
-    try{
+    try {
       this.users.remove(user);
     }
-    catch(e){}
+    catch (e) { }
   }
 
   @action addUserWithPet(user) {
@@ -147,10 +147,10 @@ class PetState {
   }
 
   @action removeUserWithPet(user) {
-    try{
+    try {
       this.usersWithPet.remove(user);
     }
-    catch(e){}
+    catch (e) { }
   }
 
   @action addUserWithMount(user) {
@@ -158,10 +158,10 @@ class PetState {
   }
 
   @action removeUserWithMount(user) {
-    try{
+    try {
       this.usersWithMount.remove(user);
     }
-    catch(e){}
+    catch (e) { }
   }
 
 }
