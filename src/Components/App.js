@@ -121,9 +121,9 @@ class App extends Component {
                 <p>Or you can just say hi to me if you like this tool as well :)</p>
                 <p>This tool was originally created by PRoeleert in 2017 and in 2021 he gave it to me to maintain.</p>
                 <p>If you want to support <b>me</b>, then feel free to</p>
-                <p><a href='https://ko-fi.com/J3J66K0NE' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi3.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a></p>
+                <p><a href='https://ko-fi.com/J3J66K0NE' target='_blank' rel="noreferrer"><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi3.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a></p>
                 <p>If you want to support <b>the original creator</b> of this page, PRoeleert, then:</p>
-                <p><a href='https://ko-fi.com/J3J0AMLQ' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi5.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a></p>
+                <p><a href='https://ko-fi.com/J3J0AMLQ' target='_blank' rel="noreferrer"><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi5.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a></p>
               </div>
               <div class="ui message">
                 <div class="header"><i class="address card outline icon"></i>Privacy Policy</div>

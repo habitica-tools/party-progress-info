@@ -23,6 +23,7 @@ class UserState {
         }
       }
     }
+    return 0;
   }
 
   @computed get totalPetCount() {
@@ -227,7 +228,7 @@ class UserState {
 
         res.json()
           .then(action(json => {
-            if (!this.data.hasOwnProperty("customMessage")) {
+            if (!Object.prototype.hasOwnProperty.call(this.data, "customMessage")) {
               this.data = json;
               this.data.customMessage = JSON.stringify(json);
             }
