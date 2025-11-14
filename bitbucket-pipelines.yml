@@ -27,6 +27,12 @@ definitions:
           - yarn run lint
         artifacts:
           download: false
+    - step: &security
+        name: Check for secrets
+        script:
+          - pipe: atlassian/git-secrets-scan:3.2.0
+        artifacts:
+          download: false
     - step: &deploy
         name: Deploy
         script:
@@ -46,12 +52,9 @@ pipelines:
   branches:
     main:
       - parallel:
-        # - step: *lint
+        - step: *lint
         - step: *build
-        - step:
-            name: Check for secrets
-            script:
-              - pipe: atlassian/git-secrets-scan:3.2.0
+        - step: *security
 
       - stage:
           name: Deploy to Staging
@@ -65,3 +68,10 @@ pipelines:
           trigger: manual
           steps:
             - step: *deploy
+
+  pull-requests:
+    "**":
+      - parallel:
+        - step: *lint
+        - step: *build
+        - step: *security
