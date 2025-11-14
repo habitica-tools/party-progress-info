@@ -5,24 +5,26 @@ import Egg from './Egg';
 import EggInfo from './EggInfo';
 
 @observer
-class BaseEggsList extends Component {
+class EggList extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
   @observable accessor showAll = false;
   @observable accessor eggInfo = null;
   @observable accessor sortKey = "2";
   store = null;
+  category = "";
 
   constructor(props) {
     super(props);
     this.store = this.props.store;
+    this.category = this.props.category;
   }
 
   @computed get eggsWithCounts() {
-    let eggs = [...this.store.baseeggs].map(function (egginfo) {
+    let eggs = [...this.store.eggsDict[this.category]].map(function (egginfo) {
       let eggdetail = egginfo;
-      eggdetail.count = [...this.store.baseeggs].filter(([id, egg]) => egg.id === egginfo[0]).reduce((prevVal, [id, egg]) => prevVal + egg.count, 0);
+      eggdetail.count = [...this.store.eggsDict[this.category]].filter(([id, egg]) => egg.id === egginfo[0]).reduce((prevVal, [id, egg]) => prevVal + egg.count, 0);
       return eggdetail;
-    }, this).filter(egg => egg.count > 0);
+    }, this);
 
     switch (this.sortKey) {
       case "1":
@@ -132,4 +134,4 @@ class BaseEggsList extends Component {
 
 };
 
-export default BaseEggsList;
+export default EggList;

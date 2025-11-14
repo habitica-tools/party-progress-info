@@ -22,6 +22,8 @@ class AppStore {
   gear = observable.map(new Map());
   backgrounds = observable.map(new Map());
 
+  @observable accessor eggsDict = { base: observable.map(new Map()), quest: observable.map(new Map()) };
+
   @observable accessor users = [];
   @observable accessor infoUser = [];
 
@@ -109,6 +111,9 @@ class AppStore {
             baseeggs.set(key, new EggState(key, value, this));
         }, this);
         this.baseeggs.merge(baseeggs);
+
+        this.eggsDict.quest.merge(eggs);
+        this.eggsDict.base.merge(baseeggs);
 
         this.alleggs.merge(eggs);
         this.alleggs.merge(baseeggs);

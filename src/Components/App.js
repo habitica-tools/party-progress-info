@@ -2,8 +2,7 @@ import { h, render, Component } from 'preact';
 import { observer } from 'mobx-react';
 import Settings from './Settings';
 import QuestList from './QuestList';
-import QuestEggsList from './QuestEggsList';
-import BaseEggsList from './BaseEggsList';
+import EggList from './EggList';
 import PetList from './PetList';
 import BasePetList from './BasePetList';
 import PremiumPetList from './PremiumPetList';
@@ -155,7 +154,7 @@ class App extends Component {
                 <h4>Non Hatched Quest Eggs</h4>
               </div>
               <div class="ui basic segment"></div>
-              <QuestEggsList store={store} />
+              <EggList store={store} category="quest" />
             </div>
           }
           {store.menupage === "premiumpets" &&
@@ -188,7 +187,7 @@ class App extends Component {
                 <h4>Non Hatched Standard Pet Eggs</h4>
               </div>
               <div class="ui basic segment"></div>
-              <BaseEggsList store={store} />
+              <EggList store={store} category="base" />
             </div>
           }
           {store.menupage === "gear" &&
