@@ -64,12 +64,10 @@ class AppStore {
   }
 
   @action fetchCommonObjects() {
-    //https://habitica.com/apidoc/#api-Content-ContentGet
     this.api.fetch('https://habitica.com/api/v3/content', { headers: { 'x-client': 'd3c5312b-0e53-4cbc-b836-4c2a63e0ff06-HabiticaPartyProgressInfo' } })
       .then(res => res.json())
       .then(action(json => {
         const quests = new Map();
-        //this.quests.merge(json.data.quests);
         new Map(Object.entries(json.data.quests)).forEach(function (value, key) {
           quests.set(key, new QuestState(key, value, this));
         }, this);
@@ -112,7 +110,6 @@ class AppStore {
         }, this);
         this.baseeggs.merge(baseeggs);
 
-        const alleggs = new Map();
         this.alleggs.merge(eggs);
         this.alleggs.merge(baseeggs);
 
@@ -122,19 +119,24 @@ class AppStore {
         }, this);
         this.gear.merge(gear);
 
-
         const backgrounds = new Map();
         new Map(Object.entries(json.data.backgroundsFlat)).forEach(function (value, key) {
           backgrounds.set(key, new BackgroundState(key, value, this));
         }, this);
         this.backgrounds.merge(backgrounds);
 
-
         this.loadingobjects = false;
         this.loadQueryString();
-
-        //testlink = ?users=f600354c-9d34-4a4c-a38d-cae52cf58705|0c70156b-4b7e-4fd6-b704-4e832b4580a6|c06b7879-feb2-4c5b-a13e-4a5a2878b9e2|ce787cea-383b-4381-82c4-5060e03d5e92|eb17ca88-16f3-4d77-ad57-4c2cc2cc1433|80d34f3c-8231-4133-9406-391bdf4449a3|5ba6203e-570a-49d3-9027-3a1115a73db8|372ca806-dcea-4013-83e3-411e63ef92a4|bd28fa68-205a-48f4-a707-2ecc47ac5920|c6dbf416-47ef-428b-a452-3c154049757f|d3de6635-37f7-4369-99c3-399d036d0898|abf7a2d4-caf0-4a98-b053-49313e8fc262
       }))
+  }
+
+  @action async addAuth(userId, key) {
+    this.authUserId = userId;
+    this.authKey = key;
+  }
+
+  @computed get hasAuth() {
+    return this.authUserId !== null && this.authKey !== null;
   }
 
   @action reloadUsers() {
@@ -143,7 +145,6 @@ class AppStore {
   }
 
   @action loadQueryString() {
-    //this.users.clear();
     var qstringusers = this.getQueryVariable("users");
     if (qstringusers !== false) {
       qstringusers = decodeURIComponent(qstringusers);
@@ -151,7 +152,6 @@ class AppStore {
         qstringusers.split('|').forEach(function (val, index) {
           this.addUser(val);
         }, this)
-
       }
       else {
         this.addUser(qstringusers);
@@ -164,11 +164,6 @@ class AppStore {
       this.users.push(new UserState(this, userid));
       this.setQueryVariable();
     }
-  }
-
-  @action async addAuth(userId, key) {
-    this.authUserId = userId;
-    this.authKey = key;
   }
 
   @action async addParty(userId, key) {
@@ -195,11 +190,13 @@ class AppStore {
 
   @action removeUser(user) {
     this.users.remove(user);
-    //also remove it from quests
+
+    // also remove it from quests
     this.quests.forEach(function (value, key, map) {
       value.removeUser(user);
     });
-    //also remove it from pets
+
+    // also remove it from pets
     this.pets.forEach(function (value, key, map) {
       value.removeUser(user);
     });
@@ -212,7 +209,8 @@ class AppStore {
     this.premiumhatchingpotions.forEach(function (value, key, map) {
       value.removeUser(user);
     });
-    //also remove it from eggs
+
+    // also remove it from eggs
     this.eggs.forEach(function (value, key, map) {
       value.removeUser(user);
     });
@@ -220,6 +218,7 @@ class AppStore {
       value.removeUser(user);
     });
 
+    // also remove it from gear
     this.gear.forEach(function (value, key, map) {
       value.removeUser(user);
     });

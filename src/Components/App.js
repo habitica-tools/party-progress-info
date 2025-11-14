@@ -128,7 +128,7 @@ class App extends Component {
               </div>
             </div>
           }
-          {(store.authUserId == null || store.authKey == null) &&
+          {store.menupage !== "about" && !store.hasAuth &&
             <AuthenticationModal store={store} parent={this} />
           }
           {store.menupage !== "about" &&

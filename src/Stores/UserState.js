@@ -3,9 +3,11 @@ import { observable, computed, action } from 'mobx';
 class UserState {
   @observable accessor loading = true;
   @observable accessor invalid = false;
+
   data = {};
   id = null;
   store = null;
+
   constructor(store, id) {
     this.store = store;
     this.id = id;
@@ -91,6 +93,13 @@ class UserState {
   }
 
   @action addUser(userid) {
+    if (!this.store.hasAuth) {
+      this.loading = false;
+      this.invalid = true;
+      this.data.customMessage = "Authentication required to fetch user data.";
+      return;
+    }
+
     this.loading = true;
     this.store.api.fetch('https://habitica.com/api/v3/members/' + userid, {
       headers: {
@@ -237,7 +246,6 @@ class UserState {
             this.loading = false;
           }));
       }));
-
   }
 
   @computed get isInfoUser() {
