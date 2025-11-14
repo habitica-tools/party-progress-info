@@ -23,8 +23,8 @@ definitions:
           - node
         script:
           - corepack enable
-          - yarn install eslint
-          - npx eslint .
+          - yarn install
+          - yarn run lint
         artifacts:
           download: false
     - step: &deploy
