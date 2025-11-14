@@ -16,7 +16,7 @@ definitions:
           - yarn install
           - yarn run build
         artifacts:
-          - build/**
+          - dist/**
     - step: &lint
         name: Lint
         caches:
