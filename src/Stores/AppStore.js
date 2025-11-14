@@ -134,17 +134,12 @@ class AppStore {
   }
 
   @action loadQueryString() {
-    var qstringusers = this.getQueryVariable("users");
-    if (qstringusers !== false) {
-      qstringusers = decodeURIComponent(qstringusers);
-      if (qstringusers.indexOf("|") > 1) {
-        qstringusers.split('|').forEach(function (val, index) {
-          this.addUser(val);
-        }, this)
-      }
-      else {
-        this.addUser(qstringusers);
-      }
+    var queryStringUsers = this.getQueryVariable("users");
+    if (queryStringUsers !== null) {
+      queryStringUsers = decodeURIComponent(queryStringUsers);
+      queryStringUsers.split('|').forEach(function (val, index) {
+        this.addUser(val);
+      }, this)
     }
   }
 
@@ -381,26 +376,19 @@ class AppStore {
     }
   }
 
-  @computed get userQuerystring() {
-    let qs = "";
-    [...this.users].forEach(function (val, index) {
-      qs = qs + "|" + val.id
-    })
-    return qs.slice(1, qs.length);
+  @computed get userQueryString() {
+    return this.users.map(user => user.id).join("|");
   }
 
   setQueryVariable = function () {
-    history.pushState(this.userQuerystring, "users", "?users=" + this.userQuerystring);
+    let userQueryString = this.userQueryString;
+
+    history.pushState(userQueryString, "", (userQueryString != "" ? "?users=" + userQueryString : "?"));
   }
 
   getQueryVariable = function (variable) {
-    var query = window.location.search.substring(1);
-    var vars = query.split("&");
-    for (var i = 0; i < vars.length; i++) {
-      var pair = vars[i].split("=");
-      if (pair[0] == variable) { return pair[1]; }
-    }
-    return (false);
+    var urlSearchParams = new URLSearchParams(window.location.search);
+    return urlSearchParams.get(variable);
   }
 
 }
