@@ -33,7 +33,7 @@ definitions:
           - TARGET_PATH=$DEPLOYMENT_PATH_PREFIX/$BITBUCKET_REPO_SLUG
           - mkdir -p $TARGET_PATH
           - rm -rf $TARGET_PATH/*
-          - cp -r ../build/* $TARGET_PATH/
+          - cp -r ../dist/* $TARGET_PATH/
           - git config user.email $DEPLOYMENT_USER_EMAIL
           - git add --all
           - git status
