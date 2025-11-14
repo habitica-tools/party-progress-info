@@ -22,8 +22,6 @@ class AppStore {
   backgrounds = observable.map(new Map());
   @observable accessor users = [];
   @observable accessor infoUser = [];
-  @observable accessor authUserId = null;
-  @observable accessor authKey = null;
 
   @observable accessor menupage = "petsquesteggs";
 
@@ -64,7 +62,7 @@ class AppStore {
   }
 
   @action fetchCommonObjects() {
-    this.api.fetch('https://habitica.com/api/v3/content', { headers: { 'x-client': 'd3c5312b-0e53-4cbc-b836-4c2a63e0ff06-HabiticaPartyProgressInfo' } })
+    this.api.getContent()
       .then(res => res.json())
       .then(action(json => {
         const quests = new Map();
@@ -130,15 +128,6 @@ class AppStore {
       }))
   }
 
-  @action async addAuth(userId, key) {
-    this.authUserId = userId;
-    this.authKey = key;
-  }
-
-  @computed get hasAuth() {
-    return this.authUserId !== null && this.authKey !== null;
-  }
-
   @action reloadUsers() {
     this.users.clear();
     this.loadQueryString();
@@ -167,21 +156,12 @@ class AppStore {
   }
 
   @action async addParty() {
-    const members = await this.getPartyMembers(this.authUserId, this.authKey);
-    members.forEach(user => this.addUser(user));
-  }
-
-  async getPartyMembers(userId, key) {
-    const result = await window.fetch('https://habitica.com/api/v3/groups/party/members', {
-      headers: {
-        'x-api-user': userId,
-        'x-api-key': key,
-        'x-client': 'd3c5312b-0e53-4cbc-b836-4c2a63e0ff06-HabiticaPartyProgressInfo'
-      }
-    });
-
-    const json = await result.json();
-    return json.data.map(o => o._id);
+    this.api.getPartyMembers()
+      .then(res => res.json())
+      .then(json => json.data.map(member => member._id))
+      .then(members => {
+        members.forEach(user => this.addUser(user))
+      });
   }
 
   userExists(userid) {

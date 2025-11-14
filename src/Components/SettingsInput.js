@@ -26,7 +26,7 @@ class SettingsInput extends Component {
         ><i class="user icon"></i> Add</div>
         &nbsp;
         <div
-          class={"ui blue button" + (store.hasAuth ? "" : " disabled")}
+          class={"ui blue button" + (store.api.hasCredentials ? "" : " disabled")}
           onClick={this.addParty}
         ><i class="users icon"></i> Add Party</div>
       </div>

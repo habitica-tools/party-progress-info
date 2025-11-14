@@ -93,7 +93,7 @@ class UserState {
   }
 
   @action addUser(userid) {
-    if (!this.store.hasAuth) {
+    if (!this.store.api.hasCredentials) {
       this.loading = false;
       this.invalid = true;
       this.data.customMessage = "Authentication required to fetch user data.";
@@ -107,13 +107,7 @@ class UserState {
     }
 
     this.loading = true;
-    this.store.api.fetch('https://habitica.com/api/v3/members/' + userid, {
-      headers: {
-        'x-api-user': this.store.authUserId,
-        'x-api-key': this.store.authKey,
-        'x-client': 'd3c5312b-0e53-4cbc-b836-4c2a63e0ff06-HabiticaPartyProgressInfo'
-      }
-    })
+    this.store.api.getUser(userid)
       .then(res => res.json())
       .then(action(json => {
         this.data = json.data;

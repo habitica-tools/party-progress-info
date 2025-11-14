@@ -70,8 +70,8 @@ class AuthenticationModal extends Component {
     }
   }
 
-  @action AddAuth = () => {
-    this.props.store.addAuth(this.state.userId, this.state.key);
+  @action addAuth = () => {
+    this.props.store.api.setCredentials(this.state.userId, this.state.key);
     this.setState({ userId: "", key: "" });
 
     this.props.store.reloadUsers();
