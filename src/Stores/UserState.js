@@ -99,6 +99,12 @@ class UserState {
       this.data.customMessage = "Authentication required to fetch user data.";
       return;
     }
+    else if (!this.store.api.isValidToken(userid)) {
+      this.loading = false;
+      this.invalid = true;
+      this.data.customMessage = "\"" + userid + "\" is not a valid User ID";
+      return;
+    }
 
     this.loading = true;
     this.store.api.fetch('https://habitica.com/api/v3/members/' + userid, {

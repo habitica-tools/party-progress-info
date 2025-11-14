@@ -166,8 +166,8 @@ class AppStore {
     }
   }
 
-  @action async addParty(userId, key) {
-    const members = await this.getPartyMembers(userId, key);
+  @action async addParty() {
+    const members = await this.getPartyMembers(this.authUserId, this.authKey);
     members.forEach(user => this.addUser(user));
   }
 

@@ -1,13 +1,10 @@
 import { h, render, Component } from 'preact';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
-import AddPartyModal from './AddPartyModal';
-
 
 @observer
 class SettingsInput extends Component {
   @observable accessor input = "";
-  @observable accessor addingParty = false;
 
   render() {
     const store = this.props.store;
@@ -16,37 +13,47 @@ class SettingsInput extends Component {
       <div class="ui fluid action input">
         <input
           className="new-user"
-          placeholder="Give In UserId ex: f600354c-9d34-4a4c-a38d-cae52cf58705"
-          autoFocus={true} value={this.input} onChange={this.onChange} />
-        <div class="ui blue button" onClick={this.AddUser}><i class="user icon"></i> Add</div>
+          placeholder="Enter UserId, e.g. f600354c-9d34-4a4c-a38d-cae52cf58705"
+          maxLength={37}
+          autoFocus={true}
+          value={this.input}
+          onChange={this.onChange}
+          onKeyDown={(this.inputIsValid ? this.onKeyDown : null)}
+        />
+        <div
+          class={"ui blue button" + (this.inputIsValid ? "" : " disabled")}
+          onClick={this.addUser}
+        ><i class="user icon"></i> Add</div>
         &nbsp;
-        <div class="ui blue button" onClick={this.openAddPartyModal}><i class="users icon"></i> Add Party</div>
-        <div class="column">
-          {!this.addingParty ? <br /> :
-            <AddPartyModal store={store} userId={this.input} parent={this} />
-          }
-        </div>
+        <div
+          class={"ui blue button" + (store.hasAuth ? "" : " disabled")}
+          onClick={this.addParty}
+        ><i class="users icon"></i> Add Party</div>
       </div>
     );
   }
+
+  get inputIsValid() {
+    return this.props.store.api.isValidToken(this.input);
+  }
+
   @action onChange = (e) => {
     this.input = e.target.value;
   }
 
-  @action AddUser = () => {
+  @action onKeyDown = (e) => {
+    if (e.key === "Enter") {
+      this.addUser();
+    }
+  }
+
+  @action addUser = () => {
     this.props.store.addUser(this.input);
     this.input = "";
   }
 
-  @action openAddPartyModal = () => {
-    this.addingParty = true;
-  }
-
-  @action hideAddPartyModal() {
-    this.addingParty = false;
-  }
-
-  @action clearInput() {
+  @action addParty = () => {
+    this.props.store.addParty();
     this.input = "";
   }
 }
