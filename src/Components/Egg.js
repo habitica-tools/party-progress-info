@@ -6,12 +6,11 @@ class Egg extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
 
   render() {
-    const id = this.props.id;
     const egg = this.props.egg;
 
     return (
       <div class="item-wrapper">
-        <div class="item" data-tooltip={id}>
+        <div class="item" data-tooltip={egg.id}>
           <span class="badge badge-pill badge-item badge-info badge-count">
             {egg.count}
           </span>
@@ -21,11 +20,11 @@ class Egg extends Component {
             </span>
             : ''
           }
-          <span class={"item-content Egg Pet_Egg_" + id} onClick={this.showEggInfo}>
-            <img src={this.imageurl + "Pet_Egg_" + id + ".png"} alt={id} />
+          <span class={"item-content Egg Pet_Egg_" + egg.id} onClick={this.showEggInfo}>
+            <img src={this.imageurl + "Pet_Egg_" + egg.id + ".png"} alt={egg.id} />
           </span>
         </div>
-        <span class="pettxt">{id}</span>
+        <span>{egg.id}</span>
       </div>
     );
   }
