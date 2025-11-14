@@ -18,20 +18,35 @@ class QuestList extends Component {
         <div class="column">
           <h4 class="ui header">{category} quests</h4>
           <div class="items">
-            {Array.from(store.quests.entries()
-              .filter(([id, quest]) => quest.data.category === category || quest.data.category === "timeTravelers" && quest.data.drop.items[0].type === "eggs")
-              .filter(([id, quest]) => this.showAll ? quest : quest.users.length > 0).map(([id, quest]) =>
+            {Array.from(store.quests.entries().filter(this.categoryFilter)
+              .filter(([_, quest]) => this.showAll ? quest : quest.users.length > 0).map(([id, quest]) =>
                 <Quest quest={quest} id={id} questlist={this} />
               ))}
           </div>
-          {this.showAll ? <button class="ui olive button" onClick={this.handlePartyOnly}><i class="hide icon"></i>Party Only</button> : <button class="ui blue button" onClick={this.handleShowAll}><i class="unhide icon"></i>Show All</button>}
+          {this.showAll
+            ? <button class="ui olive button" onClick={this.handlePartyOnly}><i class="hide icon"></i>Party Only</button>
+            : <button class="ui blue button" onClick={this.handleShowAll}><i class="unhide icon"></i>Show All</button>}
           <div>
             {this.questInfo === null ? <br /> : <QuestInfo quest={this.questInfo} store={store} questlist={this} />}
           </div>
         </div>
     );
   }
-  //{id} {quest.data.text}
+
+  categoryFilter = ([_, quest]) => {
+    if (quest.data.category === this.props.category) {
+      return true;
+    }
+
+    if (quest.data.category === "timeTravelers") {
+      return (
+        (this.props.category == "pet" && quest.data.drop.items[0].type === "eggs")
+        || (this.props.category == "hatchingPotion" && quest.data.drop.items[0].type === "hatchingPotions")
+      );
+    }
+
+    return false;
+  }
 
   @action handleShowAll = (e) => {
     this.showAll = true;
@@ -53,7 +68,6 @@ class QuestList extends Component {
   @action hideInfo() {
     this.questInfo = null;
   }
-
 };
 
 export default QuestList;

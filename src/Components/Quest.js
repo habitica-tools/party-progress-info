@@ -32,9 +32,6 @@ class Quest extends Component {
   showQuestInfo = (e) => {
     this.props.questlist.showInfo(this.props.quest);
   }
-
-
 }
-
 
 export default Quest;
