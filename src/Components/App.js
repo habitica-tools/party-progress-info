@@ -15,16 +15,6 @@ import AuthenticationModal from './AuthenticationModal';
 
 @observer
 class App extends Component {
-  askingAuth = false;
-
-  openAuthenticationModal = () => {
-    this.askingAuth = true;
-  }
-
-  hideAuthenticationModal() {
-    this.askingAuth = false;
-  }
-
   gotoPetsQuestEggs = () => {
     this.props.store.gotoPetsQuestEggs();
   }
@@ -266,7 +256,6 @@ class App extends Component {
       </div>
     );
   }
-
 };
 
 

@@ -17,11 +17,7 @@ class AuthenticationModal extends Component {
   render() {
     return (
       <div class="ui mini modal active">
-        <div class="header">Authenticate
-          <button class="ui icon right floated button" onClick={this.Close}>
-            <i class="close icon"></i>
-          </button>
-        </div>
+        <div class="header">Authenticate</div>
         <div class="content">
           <label>User ID: </label>
           <input
@@ -44,10 +40,6 @@ class AuthenticationModal extends Component {
     );
   }
 
-  @action populateUserId = (userId) => {
-    this.setState({ userId: userId });
-  }
-
   @action onUserIdChange = (e) => {
     this.setState({ userId: e.target.value });
   }
@@ -59,14 +51,9 @@ class AuthenticationModal extends Component {
   @action AddAuth = () => {
     this.props.store.addAuth(this.state.userId, this.state.key);
     this.setState({ userId: "", key: "" });
+
     this.props.store.reloadUsers();
-    this.Close();
   }
-
-  Close = (e) => {
-    this.props.parent.hideAuthenticationModal();
-  }
-
 }
 
 
