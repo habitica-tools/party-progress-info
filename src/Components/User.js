@@ -90,5 +90,3 @@ class User extends Component {
 
 
 export default User;
-
-//<img class=" right floated mini ui image" src={"https://habitica.com/export/avatar-" + user.id + ".png"}/>

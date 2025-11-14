@@ -1,17 +1,3 @@
-//Todo
-
-//user.data.items.pets
-//Axolotl-Base:5
-//Axolotl-CottonCandyPink:-1
-//Axolotl-Zombie:-1
-//user.data.items.mounts
-//Aloxlotl-Base:true
-
-// 5 - 40 inprogress
-// -1  Mount no Pet
-// 5 can also mean completed
-
-//So to decide which Pets are favorable it needs to be -1 or not in List compared to general data.questpets
 import { observable, action, computed } from 'mobx';
 
 class PetState {

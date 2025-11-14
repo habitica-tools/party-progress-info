@@ -19,9 +19,8 @@ class BackgroundList extends Component {
   @computed get backgroundsWithCounts() {
     let backgrounds = [...this.store.backgrounds].map(function (background) {
       let backgroundDetail = background[1];
-      //Backgrounddetail.count = [...this.store.Background].filter(([id,Backgroundi]) => Backgroundi.id === Backgroundinfo[0]).reduce((prevVal,[id,Backgroundi]) => prevVal + Backgroundi.count , 0);
       return backgroundDetail;
-    }, this)//.filter(Backgroundi => Backgroundi.count > 0);
+    }, this);
 
     switch (this.sortKey) {
       case "1":

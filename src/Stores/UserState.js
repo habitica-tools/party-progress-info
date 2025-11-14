@@ -10,7 +10,6 @@ class UserState {
     this.store = store;
     this.id = id;
     this.addUser(id);
-    //this.store.quests.get("atom1").addUser("atom1",2,"d3de6635-37f7-4369-99c3-399d036d0898");
   }
 
   @computed get damage() {
@@ -201,6 +200,7 @@ class UserState {
               }
           }, this);
         }
+
         //go over backgrounds
         /*
         if(json.data.items.backgrounds !== undefined){
