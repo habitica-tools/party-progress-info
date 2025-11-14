@@ -1,6 +1,7 @@
 import { h, render, Component } from 'preact';
 import { observer } from 'mobx-react';
 import { observable, action, computed } from 'mobx';
+import Egg from './Egg';
 import EggInfo from './EggInfo';
 
 @observer
@@ -80,25 +81,7 @@ class BaseEggsList extends Component {
             <div class="item-rows">
               <div class="items">
                 {[...this.eggsWithCounts].map(egg =>
-                  <div>
-                    <div class="item-wrapper">
-                      <div class="item" data-tooltip={egg[0]}>
-                        <span class="badge badge-pill badge-item badge-info badge-count">
-                          {egg.count}
-                        </span>
-                        {egg[1].selectedcount >= 1 ?
-                          <span class="badge badge-pill badge-item badge-blue">
-                            {egg[1].selectedcount}
-                          </span>
-                          : ''
-                        }
-                        <span class={egg[0] === this.eggInfo ? "selectableInventory item-content Egg Pet_Egg_" + egg[0] + "" : "item-content Egg Pet_Egg_" + egg[0] + ""} onClick={this.showEggInfo.bind(this, egg[0])}>
-                          <img src={this.imageurl + "Pet_Egg_" + egg[0] + ".png"} alt={egg[0]} />
-                        </span>
-                      </div>
-                      <span class="pettxt">{egg[0]}</span>
-                    </div>
-                  </div>
+                  <Egg id={egg[0]} egg={egg[1]} eggList={this} />
                 )}
               </div>
             </div>
@@ -111,6 +94,19 @@ class BaseEggsList extends Component {
         </div>
       );
     }
+  }
+
+  @action showInfo(id) {
+    if (this.eggInfo === id) {
+      this.eggInfo = null;
+    }
+    else {
+      this.eggInfo = id;
+    }
+  }
+
+  @action hideInfo() {
+    this.eggInfo = null;
   }
 
   @action setEggInfo(category) {
