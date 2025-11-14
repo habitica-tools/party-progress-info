@@ -35,6 +35,10 @@ class HabiticaAPI {
     this.rateLimit = new RateLimit(null);
   }
 
+  isValidToken(token) {
+    return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(token);
+  }
+
   fetch(url, params) {
     return this.fetch_retry(url, params, this.maxRetries);
   }

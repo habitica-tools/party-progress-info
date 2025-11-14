@@ -22,21 +22,37 @@ class AuthenticationModal extends Component {
           <label>User ID: </label>
           <input
             className="user-id"
-            autoFocus={true} value={this.state.userId} onChange={this.onUserIdChange}
+            maxLength={37}
+            autoFocus={true}
+            value={this.state.userId}
+            onChange={this.onUserIdChange}
           /><p />
           <label>API Token: </label>
           <input
             className="user-key"
             type="password"
-            autoFocus={true} value={this.state.key} onChange={this.onKeyChange}
+            maxLength={37}
+            value={this.state.key}
+            onChange={this.onKeyChange}
+            onKeyDown={(this.userAndKeyAreValid ? this.onKeyDown : null)}
           />
           <p />
-          <div class="ui blue button" onClick={this.AddAuth}><i class="users icon"></i> Authenticate</div>
+          <div
+            onClick={this.addAuth}
+            class={"ui blue button" + (this.userAndKeyAreValid ? "" : " disabled")}
+          ><i class="users icon"></i> Authenticate</div>
           <div style="white-space: pre-line;" class="ui icon right floated button" data-bs-html="true" data-tooltip="Habitica API does not allow fetching user info without authentication any more.&#xa;You can find your User ID and API Token in Habitica.com -> User -> Settings -> Site Data.&#xa;Your credentials are not saved, this modal will pop up again after site refresh." data-position="right center">
             <i class="info icon"></i>
           </div>
         </div>
       </div>
+    );
+  }
+
+  get userAndKeyAreValid() {
+    return (
+      this.props.store.api.isValidToken(this.state.userId)
+      && this.props.store.api.isValidToken(this.state.key)
     );
   }
 
@@ -46,6 +62,12 @@ class AuthenticationModal extends Component {
 
   @action onKeyChange = (e) => {
     this.setState({ key: e.target.value });
+  }
+
+  @action onKeyDown = (e) => {
+    if (e.key === "Enter") {
+      this.addAuth();
+    }
   }
 
   @action AddAuth = () => {
