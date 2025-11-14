@@ -31,7 +31,7 @@ class Egg extends Component {
   }
 
   showEggInfo = () => {
-    this.props.eggList.showInfo(this.props.id);
+    this.props.eggList.showInfo(this.props.egg);
   }
 }
 

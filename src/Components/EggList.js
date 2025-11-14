@@ -8,7 +8,7 @@ import EggInfo from './EggInfo';
 class EggList extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
   @observable accessor showAll = false;
-  @observable accessor eggInfo = null;
+  @observable accessor info = null;
   @observable accessor sortKey = "2";
   store = null;
   category = "";
@@ -89,8 +89,8 @@ class EggList extends Component {
             </div>
           </div>
           <div class="column">
-            {this.eggInfo === null ? <br /> :
-              <EggInfo category={this.eggInfo} store={store} egglist={this} />
+            {this.info === null ? <br /> :
+              <EggInfo egg={this.info} store={store} eggList={this} />
             }
           </div>
         </div>
@@ -98,40 +98,22 @@ class EggList extends Component {
     }
   }
 
-  @action showInfo(id) {
-    if (this.eggInfo === id) {
-      this.eggInfo = null;
+  @action showInfo(egg) {
+    if (this.info === egg) {
+      this.info = null;
     }
     else {
-      this.eggInfo = id;
+      this.info = egg;
     }
   }
 
   @action hideInfo() {
-    this.eggInfo = null;
-  }
-
-  @action setEggInfo(category) {
-    if (this.eggInfo === category) {
-      this.hideEggInfo();
-    }
-    else {
-      this.eggInfo = category;
-    }
-  }
-
-  showEggInfo = (e) => {
-    this.setEggInfo(e);
-  }
-
-  @action hideEggInfo() {
-    this.setEggInfo(null);
+    this.info = null;
   }
 
   @action sortEggs = (e) => {
     this.sortKey = e.target.value;
   }
-
 };
 
 export default EggList;
