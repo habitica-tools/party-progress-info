@@ -12,8 +12,9 @@ definitions:
         caches:
           - node
         script:
-          - npm install
-          - npm run build
+          - corepack enable
+          - yarn install
+          - yarn run build
         artifacts:
           - build/**
     - step: &lint
@@ -21,7 +22,8 @@ definitions:
         caches:
           - node
         script:
-          - npm install eslint
+          - corepack enable
+          - yarn install eslint
           - npx eslint .
         artifacts:
           download: false
