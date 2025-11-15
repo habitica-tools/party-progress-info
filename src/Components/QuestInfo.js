@@ -25,7 +25,7 @@ class Quest extends Component {
             return 0;
           }).map(quser =>
             <div key={quser.id}>
-              {quser.data.profile.name + " has " + quser.data.items.quests[quest.id]}
+              {quser.data.profile.name + ' has ' + quser.data.items.quests[quest.id]}
             </div>
           )}
         </div>

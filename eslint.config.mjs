@@ -1,6 +1,6 @@
-import stylistic from "@stylistic/eslint-plugin";
-import preactConfig from "eslint-config-preact";
-import { defineConfig } from "eslint/config";
+import { defineConfig } from 'eslint/config';
+import preactConfig from 'eslint-config-preact';
+import stylistic from '@stylistic/eslint-plugin';
 
 export default defineConfig([
     {
@@ -8,49 +8,51 @@ export default defineConfig([
     },
     {
         ignores: [
-            "dist/**",
-            "node_modules/**",
+            'dist/**',
+            'node_modules/**',
         ],
     },
     {
         plugins: {
-            "@stylistic": stylistic,
+            '@stylistic': stylistic,
         },
     },
     {
-        files: ["./**/*.js"],
+        files: ['./**/*.*(m)js'],
         rules: {
             // stylistic rules
-            "@stylistic/eol-last": ["warn", "never"],
-            "sort-imports": ["warn", {
-                "allowSeparatedGroups": true,
+            '@stylistic/eol-last': ['warn', 'never'],
+            '@stylistic/jsx-quotes': ['warn', 'prefer-double'],
+            '@stylistic/quotes': ['warn', 'single', { 'avoidEscape': true }],
+            'sort-imports': ['warn', {
+                'allowSeparatedGroups': true,
             }],
         }
     },
     {
-        files: ["./*.js"],
+        files: ['./*.js'],
         rules: {
-            "@stylistic/indent": ["warn", 4],
+            '@stylistic/indent': ['warn', 4],
         }
     },
     {
-        files: ["./src/**/*.js"],
+        files: ['./src/**/*.js'],
         rules: {
-            "@stylistic/indent": ["warn", 2],
+            '@stylistic/indent': ['warn', 2],
 
-            "object-shorthand": ["warn", "never"],
-            "radix": ["warn", "as-needed"],
-            "react/jsx-no-bind": ["warn", { "allowBind": true }],
+            'object-shorthand': ['warn', 'never'],
+            'radix': ['warn', 'as-needed'],
+            'react/jsx-no-bind': ['warn', { 'allowBind': true }],
 
             // disable rules that conflict with the current code style
-            "react/self-closing-comp": ["off"],
-            "react/no-did-mount-set-state": ["off"],
-            "react/jsx-key": ["off"],
-            "no-var": ["off"],
-            "prefer-template": ["off"],
-            "prefer-arrow-callback": ["off"],
-            "no-else-return": ["off"],
-            "no-unused-vars": ["off"],
+            'react/self-closing-comp': ['off'],
+            'react/no-did-mount-set-state': ['off'],
+            'react/jsx-key': ['off'],
+            'no-var': ['off'],
+            'prefer-template': ['off'],
+            'prefer-arrow-callback': ['off'],
+            'no-else-return': ['off'],
+            'no-unused-vars': ['off'],
         }
     }
 ])

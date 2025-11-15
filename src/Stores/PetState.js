@@ -17,7 +17,7 @@ class PetState {
       return this.id.slice(0, this.id.indexOf('-'));
     }
     else {
-      return "";
+      return '';
     }
   }
 
@@ -26,7 +26,7 @@ class PetState {
       return this.id.slice(this.id.indexOf('-') + 1);
     }
     else {
-      return "";
+      return '';
     }
   }
 

@@ -10,18 +10,18 @@ import EggInfo from './EggInfo';
 class EggList extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
   @observable accessor info = null;
-  @observable accessor sortKey = "most";
+  @observable accessor sortKey = 'most';
   @observable accessor partyOnly = true;
 
   sort(array, key) {
     switch (key) {
-      case "least":
+      case 'least':
         array.sort((a, b) => a.count - b.count);
         break;
-      case "most":
+      case 'most':
         array.sort((a, b) => b.count - a.count);
         break;
-      case "alphabetical":
+      case 'alphabetical':
         array.sort((a, b) => {
           if (a.id < b.id) return -1;
           if (a.id > b.id) return 1;

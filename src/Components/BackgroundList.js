@@ -10,7 +10,7 @@ class BackgroundList extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
   @observable accessor showAll = false;
   @observable accessor backgroundInfo = null;
-  @observable accessor sortKey = "";
+  @observable accessor sortKey = '';
   store = null;
 
   constructor(props) {
@@ -25,7 +25,7 @@ class BackgroundList extends Component {
     }, this);
 
     switch (this.sortKey) {
-      case "1":
+      case '1':
         backgrounds.sort(function (a, b) {
           if (a.count < b.count) {
             return -1;
@@ -36,7 +36,7 @@ class BackgroundList extends Component {
           return 0;
         })
         break;
-      case "2":
+      case '2':
         backgrounds.sort(function (a, b) {
           if (a.count > b.count) {
             return -1;
@@ -47,7 +47,7 @@ class BackgroundList extends Component {
           return 0;
         })
         break;
-      case "3":
+      case '3':
         backgrounds.sort(function (a, b) {
           if (a.id < b.id) {
             return -1;
@@ -58,7 +58,7 @@ class BackgroundList extends Component {
           return 0;
         })
         break;
-      case "4":
+      case '4':
         backgrounds.sort(function (a, b) {
           if (a.data.set < b.data.set) {
             return -1;
@@ -111,8 +111,8 @@ class BackgroundList extends Component {
                         <span class="badge badge-pill badge-item badge-info badge-count">
                           {background.count}
                         </span>
-                        <span class={background.id === this.backgroundInfo ? "selectableInventory item-content Background" : "item-content Background"} onClick={this.showBackgroundInfo.bind(this, background.id)}>
-                          <img src={this.imageurl + "background_" + background.id + ".png"} alt={"shop_" + background.id} />
+                        <span class={background.id === this.backgroundInfo ? 'selectableInventory item-content Background' : 'item-content Background'} onClick={this.showBackgroundInfo.bind(this, background.id)}>
+                          <img src={this.imageurl + 'background_' + background.id + '.png'} alt={'shop_' + background.id} />
                         </span>
                       </div>
                     </div>

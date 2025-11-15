@@ -10,8 +10,8 @@ class GearList extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
   @observable accessor showAll = false;
   @observable accessor gearInfo = null;
-  @observable accessor sortKey = "2";
-  @observable accessor showleaderboard = "top3";
+  @observable accessor sortKey = '2';
+  @observable accessor showleaderboard = 'top3';
   store = null;
 
   constructor(props) {
@@ -26,7 +26,7 @@ class GearList extends Component {
     }, this).filter(geari => geari.count > 0);
 
     switch (this.sortKey) {
-      case "1":
+      case '1':
         gear.sort(function (a, b) {
           if (a.count < b.count) {
             return -1;
@@ -37,7 +37,7 @@ class GearList extends Component {
           return 0;
         })
         break;
-      case "2":
+      case '2':
         gear.sort(function (a, b) {
           if (a.count > b.count) {
             return -1;
@@ -48,7 +48,7 @@ class GearList extends Component {
           return 0;
         })
         break;
-      case "3":
+      case '3':
         gear.sort(function (a, b) {
           if (a.id < b.id) {
             return -1;
@@ -59,7 +59,7 @@ class GearList extends Component {
           return 0;
         })
         break;
-      case "4":
+      case '4':
         gear.sort(function (a, b) {
           if (a.data.set < b.data.set) {
             return -1;
@@ -70,7 +70,7 @@ class GearList extends Component {
           return 0;
         })
         break;
-      case "5":
+      case '5':
         gear.sort(function (a, b) {
           if (a.data.type < b.data.type) {
             return -1;
@@ -185,8 +185,8 @@ class GearList extends Component {
                           <span class="badge badge-pill badge-item badge-blue">
                             {gear.selectedcount}
                           </span> : ''}
-                        <span class={gear.id === this.gearinfo ? "selectableInventory item-content Gear" : "item-content Gear"} onClick={this.showGearInfo.bind(this, gear.id)}>
-                          <img src={this.imageurl + "shop_" + gear.id + ".png"} alt={"shop_" + gear.id} />
+                        <span class={gear.id === this.gearinfo ? 'selectableInventory item-content Gear' : 'item-content Gear'} onClick={this.showGearInfo.bind(this, gear.id)}>
+                          <img src={this.imageurl + 'shop_' + gear.id + '.png'} alt={'shop_' + gear.id} />
                         </span>
                       </div>
                     </div>
@@ -227,11 +227,11 @@ class GearList extends Component {
   }
 
   @action handleLeaderboardShowAll = (e) => {
-    this.showleaderboard = "all";
+    this.showleaderboard = 'all';
   }
 
   @action handleLeaderboardTop3Only = (e) => {
-    this.showleaderboard = "top3";
+    this.showleaderboard = 'top3';
   }
 
 };

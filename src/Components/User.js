@@ -48,10 +48,10 @@ class User extends Component {
             <div class="description">
               <div class="progress-container">
                 <div class="progress">
-                  <div class="progress-bar bg-health" style={"transition-duration: 300ms; width:" + hp + "%;"}></div>
+                  <div class="progress-bar bg-health" style={'transition-duration: 300ms; width:' + hp + '%;'}></div>
                 </div>
                 <div class="progress">
-                  <div class="progress-bar bg-mana" style={"transition-duration: 300ms; width:" + mp + "%;"}></div>
+                  <div class="progress-bar bg-mana" style={'transition-duration: 300ms; width:' + mp + '%;'}></div>
                 </div>
               </div>
             </div>
@@ -83,7 +83,7 @@ class User extends Component {
   }
 
   parseUserClass(klass) {
-    return klass === "wizard" ? "mage" : klass;
+    return klass === 'wizard' ? 'mage' : klass;
   }
 
 }

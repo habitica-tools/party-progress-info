@@ -7,7 +7,7 @@ class AuthenticationModal extends Component {
 
   constructor() {
     super();
-    this.state = { userId: "", key: "" }
+    this.state = { userId: '', key: '' }
   }
 
   componentDidMount() {
@@ -39,7 +39,7 @@ class AuthenticationModal extends Component {
           <p />
           <div
             onClick={this.addAuth}
-            class={"ui blue button" + (this.userAndKeyAreValid ? "" : " disabled")}
+            class={'ui blue button' + (this.userAndKeyAreValid ? '' : ' disabled')}
           ><i class="users icon"></i> Authenticate</div>
           <div style="white-space: pre-line;" class="ui icon right floated button" data-bs-html="true" data-tooltip="Habitica API does not allow fetching user info without authentication any more.&#xa;You can find your User ID and API Token in Habitica.com -> User -> Settings -> Site Data.&#xa;Your credentials are not saved, this modal will pop up again after site refresh." data-position="right center">
             <i class="info icon"></i>
@@ -65,7 +65,7 @@ class AuthenticationModal extends Component {
   }
 
   @action onKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       this.addAuth();
     }
   }
@@ -76,7 +76,7 @@ class AuthenticationModal extends Component {
     this.props.store.reloadUsers();
     this.props.store.addUser(this.state.userId);
 
-    this.setState({ userId: "", key: "" });
+    this.setState({ userId: '', key: '' });
   }
 }
 

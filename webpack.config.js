@@ -25,17 +25,17 @@ let config = {
     // resolves
     resolve: {
         alias: {
-            "react": "preact/compat",
-            "react-dom/test-utils": "preact/test-utils",
-            "react-dom": "preact/compat",     // Must be below test-utils
-            "react/jsx-runtime": "preact/jsx-runtime"
+            'react': 'preact/compat',
+            'react-dom/test-utils': 'preact/test-utils',
+            'react-dom': 'preact/compat',     // Must be below test-utils
+            'react/jsx-runtime': 'preact/jsx-runtime'
         },
     },
 
     // plugins
     plugins: [new HtmlWebpackPlugin({
         template: './src/index.html',
-        favicon: "./src/favicon.ico"
+        favicon: './src/favicon.ico'
     })],
 
     // server

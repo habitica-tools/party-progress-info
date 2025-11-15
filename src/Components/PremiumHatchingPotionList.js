@@ -10,7 +10,7 @@ class PremiumHatchingPotionList extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
   @observable accessor showAll = false;
   @observable accessor potionInfo = null;
-  @observable accessor sortKey = "2";
+  @observable accessor sortKey = '2';
   store = null;
 
   constructor(props) {
@@ -26,7 +26,7 @@ class PremiumHatchingPotionList extends Component {
     }, this).filter(potion => potion.count > 0);
 
     switch (this.sortKey) {
-      case "1":
+      case '1':
         potions.sort(function (a, b) {
           if (a.count < b.count) {
             return -1;
@@ -37,7 +37,7 @@ class PremiumHatchingPotionList extends Component {
           return 0;
         })
         break;
-      case "2":
+      case '2':
         potions.sort(function (a, b) {
           if (a.count > b.count) {
             return -1;
@@ -94,8 +94,8 @@ class PremiumHatchingPotionList extends Component {
                           </span>
                           : ''
                         }
-                        <span class={potion[0] === this.potionInfo ? "selectableInventory item-content HatchingPotion Pet_HatchingPotion_" + potion[0] + "" : "item-content Egg Pet_Egg_" + potion[0] + ""} onClick={this.showPotionInfo.bind(this, potion[0])}>
-                          <img src={this.imageurl + "Pet_HatchingPotion_" + potion[0] + ".png"} alt={potion[0]} />
+                        <span class={potion[0] === this.potionInfo ? 'selectableInventory item-content HatchingPotion Pet_HatchingPotion_' + potion[0] + '' : 'item-content Egg Pet_Egg_' + potion[0] + ''} onClick={this.showPotionInfo.bind(this, potion[0])}>
+                          <img src={this.imageurl + 'Pet_HatchingPotion_' + potion[0] + '.png'} alt={potion[0]} />
                         </span>
                       </div>
                       <span class="pettxt">{potion[0]}</span>

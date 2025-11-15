@@ -4,7 +4,7 @@ import { render } from 'preact';
 import App from './Components/App';
 import AppStore from './Stores/AppStore';
 
-configure({ enforceActions: "observed" });
+configure({ enforceActions: 'observed' });
 const store = new AppStore();
 
 render(

@@ -29,7 +29,7 @@ class HatchingPotionInfo extends Component {
                 })
                 .map(user =>
                   <div key={user.id}>
-                    {user.data.profile.name + " has " + potion.usercount(user)}
+                    {user.data.profile.name + ' has ' + potion.usercount(user)}
                   </div>)
             )}
         </div>

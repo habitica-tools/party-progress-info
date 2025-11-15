@@ -50,30 +50,30 @@ class App extends Component {
           <a href="#" class="item header" onClick={this.gotoPetsQuestEggs}>
             Habitica Party Progress Info
           </a>
-          <a class={store.menupage === "petsquesteggs" ? "item active" : "item"} onClick={this.gotoPetsQuestEggs}>
+          <a class={store.menupage === 'petsquesteggs' ? 'item active' : 'item'} onClick={this.gotoPetsQuestEggs}>
             Quest Pets
           </a>
-          <a class={store.menupage === "premiumpets" ? "item active" : "item"} onClick={this.gotoPremiumPets}>
+          <a class={store.menupage === 'premiumpets' ? 'item active' : 'item'} onClick={this.gotoPremiumPets}>
             Magic Potion Pets
           </a>
-          <a class={store.menupage === "basepets" ? "item active" : "item"} onClick={this.gotoBasePets}>
+          <a class={store.menupage === 'basepets' ? 'item active' : 'item'} onClick={this.gotoBasePets}>
             Standard Pets
           </a>
-          <a class={store.menupage === "gear" ? "item active" : "item"} onClick={this.gotoGear}>
+          <a class={store.menupage === 'gear' ? 'item active' : 'item'} onClick={this.gotoGear}>
             Equipment
           </a>
-          <a class={store.menupage === "otherquests" ? "item active" : "item"} onClick={this.gotoOtherQuests}>
+          <a class={store.menupage === 'otherquests' ? 'item active' : 'item'} onClick={this.gotoOtherQuests}>
             Other Quests
           </a>
-          <a class={store.menupage === "backgrounds" ? "item active" : "item"} onClick={this.gotoBackgrounds}>
+          <a class={store.menupage === 'backgrounds' ? 'item active' : 'item'} onClick={this.gotoBackgrounds}>
             Backgrounds
           </a>
-          <a class={store.menupage === "about" ? "item active" : "item"} onClick={this.gotoAbout}>
+          <a class={store.menupage === 'about' ? 'item active' : 'item'} onClick={this.gotoAbout}>
             Help &amp; About
           </a>
         </div>
         <div class="ui main container">
-          {store.menupage === "about" &&
+          {store.menupage === 'about' &&
             <div class="ui fluid container">
               <div class="ui info message">
 
@@ -113,12 +113,12 @@ class App extends Component {
                 <p>Feel free, to show your appreciation towards the original creator and the previous maintainer:</p>
                 <div class="kofi-container">
                   <b>@EstGoddess</b>
-                  <a href='https://ko-fi.com/J3J66K0NE' target='_blank' rel="noreferrer">
-                    <img class="kofi-button" src='https://cdn.ko-fi.com/cdn/kofi3.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+                  <a href="https://ko-fi.com/J3J66K0NE" target="_blank" rel="noreferrer">
+                    <img class="kofi-button" src="https://cdn.ko-fi.com/cdn/kofi3.png?v=3" border="0" alt="Buy Me a Coffee at ko-fi.com" />
                   </a>
                   <b>@PRoeleert</b>
-                  <a href='https://ko-fi.com/J3J0AMLQ' target='_blank' rel="noreferrer">
-                    <img class="kofi-button" src='https://cdn.ko-fi.com/cdn/kofi3.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+                  <a href="https://ko-fi.com/J3J0AMLQ" target="_blank" rel="noreferrer">
+                    <img class="kofi-button" src="https://cdn.ko-fi.com/cdn/kofi3.png?v=3" border="0" alt="Buy Me a Coffee at ko-fi.com" />
                   </a>
                 </div>
               </div>
@@ -133,12 +133,12 @@ class App extends Component {
               </div>
             </div>
           }
-          {store.menupage !== "about" && !store.api.hasValidCredentials &&
+          {store.menupage !== 'about' && !store.api.hasValidCredentials &&
             <div class="ui fluid action input">
               <AuthenticationModal store={store} parent={this} />
             </div>
           }
-          {store.menupage !== "about" &&
+          {store.menupage !== 'about' &&
             <div class="ui fluid container">
               <div class="ui info ignored message">
                 <i class="help circle icon"></i>Go to the <a href="#" onClick={this.gotoAbout}>Help & About section</a> for info on how to use this tool.
@@ -146,7 +146,7 @@ class App extends Component {
               <Settings store={store} />
             </div>
           }
-          {store.menupage === "petsquesteggs" &&
+          {store.menupage === 'petsquesteggs' &&
             <div class="ui fluid container">
               <div class="ui horizontal divider header">
                 <h4>Wanted Quest Pets</h4>
@@ -164,7 +164,7 @@ class App extends Component {
               <EggList store={store} category="quest" />
             </div>
           }
-          {store.menupage === "premiumpets" &&
+          {store.menupage === 'premiumpets' &&
             <div class="ui fluid container">
               <div class="ui horizontal divider header">
                 <h4>Wanted Magic Potion Pets</h4>
@@ -183,7 +183,7 @@ class App extends Component {
               <PremiumHatchingPotionList store={store} />
             </div>
           }
-          {store.menupage === "basepets" &&
+          {store.menupage === 'basepets' &&
             <div class="ui fluid container">
               <div class="ui horizontal divider header">
                 <h4>Wanted Standard Pets</h4>
@@ -197,12 +197,12 @@ class App extends Component {
               <EggList store={store} category="base" />
             </div>
           }
-          {store.menupage === "gear" &&
+          {store.menupage === 'gear' &&
             <div class="ui fluid container">
               <GearList store={store} />
             </div>
           }
-          {store.menupage === "otherquests" &&
+          {store.menupage === 'otherquests' &&
             <div class="ui fluid container">
               <div class="ui horizontal divider header">
                 <h4>Other Quests Available in Party</h4>
@@ -214,7 +214,7 @@ class App extends Component {
               </div>
             </div>
           }
-          {store.menupage === "backgrounds" &&
+          {store.menupage === 'backgrounds' &&
             <div class="ui fluid container">
               <div class="ui basic segment"></div>
               <div class="ui horizontal divider header">

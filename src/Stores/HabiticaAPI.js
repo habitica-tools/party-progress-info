@@ -1,4 +1,4 @@
-import { action, computed, observable } from "mobx";
+import { action, computed, observable } from 'mobx';
 
 const HABITICA_API_URL = 'https://habitica.com/api/v3/';
 const XCLIENT_HEADER = 'b477462a-5bb5-4040-9505-f0b049b4f0bb-HabiticaPartyProgressInfo';
@@ -16,12 +16,12 @@ class RateLimit {
   }
 
   update(headers) {
-    this.limit = Number(headers.get("X-RateLimit-Limit"));
-    this.remaining = Number(headers.get("X-RateLimit-Remaining"));
-    this.reset = headers.get("X-RateLimit-Reset");
+    this.limit = Number(headers.get('X-RateLimit-Limit'));
+    this.remaining = Number(headers.get('X-RateLimit-Remaining'));
+    this.reset = headers.get('X-RateLimit-Reset');
 
-    if (headers.has("Retry-After")) {
-      this.retryAfter = Number(headers.get("Retry-After"));
+    if (headers.has('Retry-After')) {
+      this.retryAfter = Number(headers.get('Retry-After'));
     }
     else {
       this.retryAfter = null;
@@ -39,7 +39,7 @@ class HabiticaAPI {
   @observable accessor apiToken = null;
   @observable accessor credentialsValid = true;
 
-  apiTokenCheckSum = "";
+  apiTokenCheckSum = '';
 
   isValidToken(token) {
     return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(token);
@@ -207,8 +207,8 @@ class HabiticaAPI {
       return Promise.reject(
         Response.json({
           success: false,
-          error: "invalid_credentials",
-          message: "There is no account that uses those credentials.",
+          error: 'invalid_credentials',
+          message: 'There is no account that uses those credentials.',
         }, {
           bodyUsed: false,
           ok: false,

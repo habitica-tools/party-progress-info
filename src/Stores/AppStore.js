@@ -1,13 +1,13 @@
 import { action, computed, observable } from 'mobx';
 
-import BackgroundState from "./BackgroundState";
-import EggState from "./EggState";
-import GearState from "./GearState";
+import BackgroundState from './BackgroundState';
+import EggState from './EggState';
+import GearState from './GearState';
 import HabiticaAPI from './HabiticaAPI';
-import HatchingPotionState from "./HatchingPotionState";
-import PetState from "./PetState";
-import QuestState from "./QuestState";
-import UserState from "./UserState";
+import HatchingPotionState from './HatchingPotionState';
+import PetState from './PetState';
+import QuestState from './QuestState';
+import UserState from './UserState';
 
 class AppStore {
   @observable accessor loadingobjects = true;
@@ -30,36 +30,36 @@ class AppStore {
   @observable accessor infoUser = [];
 
   loadParty = false;
-  @observable accessor menupage = "petsquesteggs";
+  @observable accessor menupage = 'petsquesteggs';
 
   api = undefined;
 
   @action gotoPetsQuestEggs() {
-    this.menupage = "petsquesteggs";
+    this.menupage = 'petsquesteggs';
   }
 
   @action gotoBasePets() {
-    this.menupage = "basepets";
+    this.menupage = 'basepets';
   }
 
   @action gotoPremiumPets() {
-    this.menupage = "premiumpets";
+    this.menupage = 'premiumpets';
   }
 
   @action gotoOtherQuests() {
-    this.menupage = "otherquests";
+    this.menupage = 'otherquests';
   }
 
   @action gotoGear() {
-    this.menupage = "gear";
+    this.menupage = 'gear';
   }
 
   @action gotoBackgrounds() {
-    this.menupage = "backgrounds";
+    this.menupage = 'backgrounds';
   }
 
   @action gotoAbout() {
-    this.menupage = "about";
+    this.menupage = 'about';
   }
 
   constructor() {
@@ -136,13 +136,13 @@ class AppStore {
   }
 
   @action loadQueryString() {
-    var queryParty = this.getQueryVariable("party");
+    var queryParty = this.getQueryVariable('party');
     if (queryParty !== null) {
       this.loadParty = true;
       this.addParty();
     }
 
-    var queryStringUsers = this.getQueryVariable("users");
+    var queryStringUsers = this.getQueryVariable('users');
     if (queryStringUsers !== null) {
       queryStringUsers = decodeURIComponent(queryStringUsers);
       queryStringUsers.split('|').forEach(function (val, index) {
@@ -385,17 +385,17 @@ class AppStore {
   }
 
   @computed get userQueryString() {
-    return this.users.map(user => user.id).join("|");
+    return this.users.map(user => user.id).join('|');
   }
 
   setQueryVariable = function () {
     let userQueryString = this.userQueryString;
 
     let searchParams = [];
-    if (this.loadParty) searchParams.push("party=true");
-    if (userQueryString !== "") searchParams.push("users=" + this.userQueryString);
+    if (this.loadParty) searchParams.push('party=true');
+    if (userQueryString !== '') searchParams.push('users=' + this.userQueryString);
 
-    history.pushState(userQueryString, "", "?" + searchParams.join("&"));
+    history.pushState(userQueryString, '', '?' + searchParams.join('&'));
   }
 
   getQueryVariable = function (variable) {

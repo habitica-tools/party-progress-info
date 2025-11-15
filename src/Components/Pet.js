@@ -17,8 +17,8 @@ class Pet extends Component {
           <div class="badge badge-pill badge-item badge-info badge-count">
             {pet.petCount}
           </div>
-          <span class={"item-content Pet Pet-" + pet.id}>
-            <img src={this.imageurl + "Pet-" + pet.id + ".png"} alt={pet.id} />
+          <span class={'item-content Pet Pet-' + pet.id}>
+            <img src={this.imageurl + 'Pet-' + pet.id + '.png'} alt={pet.id} />
           </span>
         </div>
         <span class="pettxt">{pet.id}</span>

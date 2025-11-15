@@ -40,10 +40,10 @@ class QuestList extends Component {
       return true;
     }
 
-    if (quest.data.category === "timeTravelers") {
+    if (quest.data.category === 'timeTravelers') {
       return (
-        (this.props.category == "pet" && quest.data.drop.items[0].type === "eggs")
-        || (this.props.category == "hatchingPotion" && quest.data.drop.items[0].type === "hatchingPotions")
+        (this.props.category == 'pet' && quest.data.drop.items[0].type === 'eggs')
+        || (this.props.category == 'hatchingPotion' && quest.data.drop.items[0].type === 'hatchingPotions')
       );
     }
 

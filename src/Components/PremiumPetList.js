@@ -10,8 +10,8 @@ class PremiumPetList extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
   @observable accessor showAll = false;
   @observable accessor petInfo = null;
-  @observable accessor sortKey = "1";
-  @observable accessor showleaderboard = "top3";
+  @observable accessor sortKey = '1';
+  @observable accessor showleaderboard = 'top3';
   store = null;
 
   constructor(props) {
@@ -21,8 +21,8 @@ class PremiumPetList extends Component {
 
   @computed get petCategoriesWithCounts() {
     const fromQuest = Array.from(this.store.quests.entries().filter(([id, quest]) =>
-      quest.data.category === "hatchingPotion" ||
-      quest.data.category === "timeTravelers" && quest.data.drop.items[0].type === "hatchingPotions"
+      quest.data.category === 'hatchingPotion' ||
+      quest.data.category === 'timeTravelers' && quest.data.drop.items[0].type === 'hatchingPotions'
     ).map(x => x[1].data.drop.items[0].key));
 
     let pets = [...this.store.premiumhatchingpotionCategories].map(function (category) {
@@ -36,7 +36,7 @@ class PremiumPetList extends Component {
     }, this);
 
     switch (this.sortKey) {
-      case "1":
+      case '1':
         pets.sort(function (a, b) {
           if (a.count < b.count) {
             return -1;
@@ -47,7 +47,7 @@ class PremiumPetList extends Component {
           return 0;
         })
         break;
-      case "2":
+      case '2':
         pets.sort(function (a, b) {
           if (a.count > b.count) {
             return -1;
@@ -58,7 +58,7 @@ class PremiumPetList extends Component {
           return 0;
         })
         break;
-      case "3":
+      case '3':
         pets.sort(function (a, b) {
           if (a.id < b.id) {
             return -1;
@@ -84,7 +84,7 @@ class PremiumPetList extends Component {
       return (<div class="ui active centered inline loader"></div>);
     }
     else {
-      let totalpercentage = store.totalCountPremiumPetsParty > 0 ? parseFloat(store.totalCountPremiumPetsParty / (store.totalCountPremiumPets / 100)).toFixed(2) : "0"
+      let totalpercentage = store.totalCountPremiumPetsParty > 0 ? parseFloat(store.totalCountPremiumPetsParty / (store.totalCountPremiumPets / 100)).toFixed(2) : '0'
 
       return (
         <div>
@@ -92,7 +92,7 @@ class PremiumPetList extends Component {
             <div class="twelve wide column">
               <div class="progress-container-big">
                 <div class="progress">
-                  <div class="progress-bar bg-experience" style={"transition-duration: 300ms; width:" + totalpercentage + "%;"}></div>
+                  <div class="progress-bar bg-experience" style={'transition-duration: 300ms; width:' + totalpercentage + '%;'}></div>
                 </div>
               </div>
             </div>
@@ -109,7 +109,7 @@ class PremiumPetList extends Component {
           <div class="ui four statistics">
             <div class="ui tiny statistic">
               <div class="value got">
-                {totalpercentage + " %"}
+                {totalpercentage + ' %'}
               </div>
               <div class="label">
                 Pets Collected %
@@ -159,8 +159,8 @@ class PremiumPetList extends Component {
                         <span class="badge badge-pill badge-item badge-blue">
                           {category.selectedcount}
                         </span> : ''}
-                      <span class={category.id === this.petInfo ? "selectableInventory item-content Pet Pet-" + category.id + "-Base " : "item-content Pet Pet-" + category.id + "-Base "} onClick={this.showPetInfo.bind(this, category.id)}>
-                        <img src={this.imageurl + "Pet-Wolf-" + category.id + ".png"} alt={category.id} />
+                      <span class={category.id === this.petInfo ? 'selectableInventory item-content Pet Pet-' + category.id + '-Base ' : 'item-content Pet Pet-' + category.id + '-Base '} onClick={this.showPetInfo.bind(this, category.id)}>
+                        <img src={this.imageurl + 'Pet-Wolf-' + category.id + '.png'} alt={category.id} />
                       </span>
                     </div>
                     <span class="pettxt">{category.id}</span>
@@ -188,8 +188,8 @@ class PremiumPetList extends Component {
                         <span class="badge badge-pill badge-item badge-blue">
                           {category.selectedcount}
                         </span> : ''}
-                      <span class={category.id === this.petInfo ? "selectableInventory item-content Pet Pet-" + category.id + "-Base " : "item-content Pet Pet-" + category.id + "-Base "} onClick={this.showPetInfo.bind(this, category.id)}>
-                        <img src={this.imageurl + "Pet-Wolf-" + category.id + ".png"} alt={category.id} />
+                      <span class={category.id === this.petInfo ? 'selectableInventory item-content Pet Pet-' + category.id + '-Base ' : 'item-content Pet Pet-' + category.id + '-Base '} onClick={this.showPetInfo.bind(this, category.id)}>
+                        <img src={this.imageurl + 'Pet-Wolf-' + category.id + '.png'} alt={category.id} />
                       </span>
                     </div>
                     <span class="pettxt">{category.id}</span>
@@ -225,14 +225,14 @@ class PremiumPetList extends Component {
                         <td>{index + 1}</td>
                         <td>{user.data.profile.name}</td>
                         <td>{user.totalPremiumPetCount}</td>
-                        <td>{store.totalCountPremiumPetsParty > 0 ? parseFloat(user.totalPremiumPetCount / (store.totalCountPremiumPets / 100)).toFixed(2) + "%" : "0%"}</td>
+                        <td>{store.totalCountPremiumPetsParty > 0 ? parseFloat(user.totalPremiumPetCount / (store.totalCountPremiumPets / 100)).toFixed(2) + '%' : '0%'}</td>
                       </tr>
                       :
                       <tr key={user.id}>
                         <td>{index + 1}</td>
                         <td>{user.id}</td>
                         <td>{user.totalPremiumPetCount}</td>
-                        <td>{store.totalCountPremiumPetsParty > 0 ? parseFloat(user.totalPremiumPetCount / (store.totalCountPremiumPets / 100)).toFixed(2) + "%" : "0%"}</td>
+                        <td>{store.totalCountPremiumPetsParty > 0 ? parseFloat(user.totalPremiumPetCount / (store.totalCountPremiumPets / 100)).toFixed(2) + '%' : '0%'}</td>
                       </tr>
                   )
                 }
@@ -244,14 +244,14 @@ class PremiumPetList extends Component {
                         <td>{index + 1}</td>
                         <td>{user.data.profile.name}</td>
                         <td>{user.totalPremiumPetCount}</td>
-                        <td>{store.totalCountPremiumPetsParty > 0 ? parseFloat(user.totalPremiumPetCount / (store.totalCountPremiumPets / 100)).toFixed(2) + "%" : "0%"}</td>
+                        <td>{store.totalCountPremiumPetsParty > 0 ? parseFloat(user.totalPremiumPetCount / (store.totalCountPremiumPets / 100)).toFixed(2) + '%' : '0%'}</td>
                       </tr>
                       :
                       <tr key={user.id}>
                         <td>{index + 1}</td>
                         <td>{user.id}</td>
                         <td>{user.totalPremiumPetCount}</td>
-                        <td>{store.totalCountPremiumPetsParty > 0 ? parseFloat(user.totalPremiumPetCount / (store.totalCountPremiumPets / 100)).toFixed(2) + "%" : "0%"}</td>
+                        <td>{store.totalCountPremiumPetsParty > 0 ? parseFloat(user.totalPremiumPetCount / (store.totalCountPremiumPets / 100)).toFixed(2) + '%' : '0%'}</td>
                       </tr>
                   )
                 }
@@ -287,11 +287,11 @@ class PremiumPetList extends Component {
   }
 
   @action handleLeaderboardShowAll = (e) => {
-    this.showleaderboard = "all";
+    this.showleaderboard = 'all';
   }
 
   @action handleLeaderboardTop3Only = (e) => {
-    this.showleaderboard = "top3";
+    this.showleaderboard = 'top3';
   }
 
 };

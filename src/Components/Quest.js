@@ -21,8 +21,8 @@ class Quest extends Component {
             </span>
             : ''
           }
-          <span class={"item-content Quest inventory_quest_scroll_" + id} id={id} onClick={this.showQuestInfo} >
-            <img src={this.imageurl + "inventory_quest_scroll_" + id + ".png"} alt={id} />
+          <span class={'item-content Quest inventory_quest_scroll_' + id} id={id} onClick={this.showQuestInfo} >
+            <img src={this.imageurl + 'inventory_quest_scroll_' + id + '.png'} alt={id} />
           </span>
         </div>
       </div>

@@ -20,8 +20,8 @@ class Egg extends Component {
             </span>
             : ''
           }
-          <span class={"item-content Egg Pet_Egg_" + egg.id} onClick={this.showEggInfo}>
-            <img src={this.imageurl + "Pet_Egg_" + egg.id + ".png"} alt={egg.id} />
+          <span class={'item-content Egg Pet_Egg_' + egg.id} onClick={this.showEggInfo}>
+            <img src={this.imageurl + 'Pet_Egg_' + egg.id + '.png'} alt={egg.id} />
           </span>
         </div>
         <span>{egg.id}</span>

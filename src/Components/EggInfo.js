@@ -19,7 +19,7 @@ class EggInfo extends Component {
               .sort((userA, userB) => egg.userCount(userB) - egg.userCount(userA))
               .map(user =>
                 <div key={user.id}>
-                  {user.data.profile.name + " has " + egg.userCount(user)}
+                  {user.data.profile.name + ' has ' + egg.userCount(user)}
                 </div>
               )
           }
