@@ -39,6 +39,8 @@ class HabiticaAPI {
   @observable accessor apiToken = null;
   @observable accessor credentialsValid = true;
 
+  apiTokenCheckSum = "";
+
   isValidToken(token) {
     return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(token);
   }
@@ -49,6 +51,8 @@ class HabiticaAPI {
 
     // assume credentials are valid until proven otherwise
     this.credentialsValid = true;
+
+    this.calculateApiTokenCheckSum();
   }
 
   @computed get hasCredentials() {
@@ -74,9 +78,23 @@ class HabiticaAPI {
     return this.cachedFetch(HABITICA_API_URL + 'groups/party/members', true, null);
   }
 
+  calculateApiTokenCheckSum() {
+    let chk = 0x12345678;
+    for (let i = 0; i < this.apiToken.length; i++) {
+      chk += this.apiToken.charCodeAt(i);
+      chk = (chk << 5) | (chk >>> 27);
+    }
+    this.apiTokenCheckSum = (chk & 0xFFFFFFFF).toString(16);
+  }
+
+  cacheKey(url, requiresCredentials) {
+    if (requiresCredentials) return [url, this.userId, this.apiTokenCheckSum].join('|');
+    return url;
+  }
+
   cachedFetch(url, requiresCredentials = false, cacheDuration = null) {
     if (cacheDuration !== null) {
-      let cachedItem = localStorage.getItem(url);
+      let cachedItem = localStorage.getItem(this.cacheKey(url, requiresCredentials));
       if (cachedItem !== null) {
         let cachedData = JSON.parse(cachedItem);
 
@@ -95,10 +113,14 @@ class HabiticaAPI {
     if (cacheDuration === null) return promise;
 
     return promise.then(json => {
-      localStorage.setItem(url, JSON.stringify({
-        timestamp: Date.now(),
-        data: json
-      }));
+      localStorage.setItem(
+        this.cacheKey(url, requiresCredentials),
+        JSON.stringify({
+          timestamp: Date.now(),
+          duration: cacheDuration,
+          data: json
+        })
+      );
       return json;
     });
   }
