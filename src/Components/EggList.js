@@ -38,7 +38,7 @@ class EggList extends Component {
       return (<div class="ui active centered inline loader"></div>);
     }
     else {
-      let eggs = [...store.eggsDict[this.props.category]].map(([_, egg]) => egg);
+      let eggs = [...store.eggs[this.props.category]].map(([_, egg]) => egg);
 
       eggs = this.sort(eggs, this.sortKey);
 

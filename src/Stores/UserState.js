@@ -170,17 +170,15 @@ class UserState {
         if (json.data.items.eggs !== undefined) {
           var eggs = new Map(Object.entries(json.data.items.eggs));
           eggs.forEach(function (value, key) {
-            if (key !== null && key !== undefined)
-              var egg = this.store.eggs.get(key);
-            if (egg !== undefined)
-              if (value > 0) {
-                egg.addUser(this);
+            if (value > 0 && key !== null && key !== undefined) {
+              for (let category of this.store.eggs.categories) {
+                let egg = this.store.eggs[category].get(key);
+                if (egg !== undefined) {
+                  egg.addUser(this);
+                  break;
+                }
               }
-            var baseegg = this.store.baseeggs.get(key);
-            if (baseegg !== undefined)
-              if (value > 0) {
-                baseegg.addUser(this);
-              }
+            }
           }, this);
         }
 
