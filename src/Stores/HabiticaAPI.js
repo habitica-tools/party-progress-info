@@ -92,6 +92,48 @@ class HabiticaAPI {
     return url;
   }
 
+  deleteOldCacheEntries() {
+    let keys = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      keys.push(localStorage.key(i));
+    }
+
+    const now = Date.now();
+    let entries = keys.map(key => {
+      return {key: key, item: localStorage.getItem(key)};
+    });
+    entries = entries
+      .map(({key, item}) => {
+        let data = JSON.parse(item);
+        let age = now - data.timestamp;
+
+        if (data !== null && (data.duration === undefined || age >= data.duration)) {
+          localStorage.removeItem(key);
+          return {key: key, age: null};
+        }
+
+        let size = new Blob([item]).size;
+        // keep non-credentialed cache entries first
+        let priority = key.indexOf('|') === -1 ? 1 : 0;
+        return {key: key, age: age, size: size, priority: priority};
+      })
+      .filter((entry) => {
+        return entry.age !== null;
+      })
+      .sort((a, b) => b.age - a.age)
+      .sort((a, b) => a.priority - b.priority);
+
+    let totalSize = entries.reduce((prev, entry) => prev + entry.size, 0);
+    let sizeReduction = 0;
+    for (let entry of entries) {
+      // stop when under 4MB
+      if (totalSize - sizeReduction <= 4 * 1024 * 1024) break;
+
+      localStorage.removeItem(entry.key);
+      sizeReduction += entry.size;
+    }
+  }
+
   cachedFetch(url, requiresCredentials = false, cacheDuration = null) {
     if (cacheDuration !== null) {
       let cachedItem = localStorage.getItem(this.cacheKey(url, requiresCredentials));
@@ -113,14 +155,18 @@ class HabiticaAPI {
     if (cacheDuration === null) return promise;
 
     return promise.then(json => {
-      localStorage.setItem(
-        this.cacheKey(url, requiresCredentials),
-        JSON.stringify({
-          timestamp: Date.now(),
-          duration: cacheDuration,
-          data: json
-        })
-      );
+      try {
+        localStorage.setItem(
+          this.cacheKey(url, requiresCredentials),
+          JSON.stringify({
+            timestamp: Date.now(),
+            duration: cacheDuration,
+            data: json
+          })
+        );
+      } catch (e) {
+        if (e instanceof QuotaExceededError) this.deleteOldCacheEntries();
+      }
       return json;
     });
   }
