@@ -14,9 +14,9 @@ class Egg extends Component {
           <span class="badge badge-pill badge-item badge-info badge-count">
             {egg.count}
           </span>
-          {egg.selectedcount >= 1 ?
+          {egg.selectedCount >= 1 ?
             <span class="badge badge-pill badge-item badge-blue">
-              {egg.selectedcount}
+              {egg.selectedCount}
             </span>
             : ''
           }

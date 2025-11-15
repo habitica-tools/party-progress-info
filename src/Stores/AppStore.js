@@ -105,10 +105,9 @@ class AppStore {
         const questEggKeys = new Map(Object.entries(json.data.questEggs));
 
         new Map(Object.entries(json.data.eggs)).forEach(function (value, key) {
-          if (questEggKeys.has(key))
-            questEggs.set(key, new EggState(key, value, this));
-          else
-            baseEggs.set(key, new EggState(key, value, this));
+          let egg = new EggState(value);
+          if (questEggKeys.has(key)) questEggs.set(key, egg);
+          else baseEggs.set(key, egg);
         }, this);
         this.eggs.base.merge(baseEggs);
         this.eggs.quest.merge(questEggs);

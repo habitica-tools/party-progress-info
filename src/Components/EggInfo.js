@@ -16,10 +16,10 @@ class EggInfo extends Component {
         <div class="content">
           {
             egg.users.slice()
-              .sort((userA, userB) => egg.usercount(userB) - egg.usercount(userA))
+              .sort((userA, userB) => egg.userCount(userB) - egg.userCount(userA))
               .map(user =>
                 <div key={user.id}>
-                  {user.data.profile.name + " has " + egg.usercount(user)}
+                  {user.data.profile.name + " has " + egg.userCount(user)}
                 </div>
               )
           }
