@@ -1,5 +1,6 @@
-import { h, render, Component } from 'preact';
-import { observable, action } from 'mobx';
+import { Component } from 'preact';
+
+import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
 @observer

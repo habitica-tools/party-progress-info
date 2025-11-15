@@ -1,6 +1,8 @@
-import { h, render, Component } from 'preact';
+import { Component } from 'preact';
+
+import { action, computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { observable, action, computed } from 'mobx';
+
 import HatchingPotionInfo from './HatchingPotionInfo';
 
 @observer

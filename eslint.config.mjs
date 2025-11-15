@@ -18,15 +18,26 @@ export default defineConfig([
         },
     },
     {
+        files: ["./**/*.js"],
+        rules: {
+            // stylistic rules
+            "@stylistic/eol-last": ["warn", "never"],
+            "sort-imports": ["warn", {
+                "allowSeparatedGroups": true,
+            }],
+        }
+    },
+    {
         files: ["./*.js"],
         rules: {
-            "@stylistic/indent": ["error", 4],
+            "@stylistic/indent": ["warn", 4],
         }
     },
     {
         files: ["./src/**/*.js"],
         rules: {
-            "@stylistic/indent": ["error", 2],
+            "@stylistic/indent": ["warn", 2],
+
             "object-shorthand": ["warn", "never"],
             "radix": ["warn", "as-needed"],
             "react/jsx-no-bind": ["warn", { "allowBind": true }],

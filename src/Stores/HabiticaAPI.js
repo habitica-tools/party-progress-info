@@ -1,4 +1,4 @@
-import { observable, action, computed } from "mobx";
+import { action, computed, observable } from "mobx";
 
 const HABITICA_API_URL = 'https://habitica.com/api/v3/';
 const XCLIENT_HEADER = 'b477462a-5bb5-4040-9505-f0b049b4f0bb-HabiticaPartyProgressInfo';

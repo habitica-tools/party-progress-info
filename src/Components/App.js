@@ -1,15 +1,17 @@
-import { h, render, Component } from 'preact';
+import { Component } from 'preact';
 import { observer } from 'mobx-react';
-import Settings from './Settings';
-import QuestList from './QuestList';
-import EggList from './EggList';
-import PetList from './PetList';
-import BasePetList from './BasePetList';
-import PremiumPetList from './PremiumPetList';
-import PremiumHatchingPotionList from './PremiumHatchingPotionList';
-import GearList from './GearList';
-import BackgroundList from './BackgroundList';
+
 import AuthenticationModal from './AuthenticationModal';
+import Settings from './Settings';
+
+import BackgroundList from './BackgroundList';
+import BasePetList from './BasePetList';
+import EggList from './EggList';
+import GearList from './GearList';
+import PetList from './PetList';
+import PremiumHatchingPotionList from './PremiumHatchingPotionList';
+import PremiumPetList from './PremiumPetList';
+import QuestList from './QuestList';
 
 @observer
 class App extends Component {

@@ -1,12 +1,13 @@
-import { observable, action, computed, autorun } from 'mobx';
-import UserState from "./UserState";
-import QuestState from "./QuestState";
-import PetState from "./PetState";
-import EggState from "./EggState";
-import HatchingPotionState from "./HatchingPotionState";
-import GearState from "./GearState";
+import { action, computed, observable } from 'mobx';
+
 import BackgroundState from "./BackgroundState";
+import EggState from "./EggState";
+import GearState from "./GearState";
 import HabiticaAPI from './HabiticaAPI';
+import HatchingPotionState from "./HatchingPotionState";
+import PetState from "./PetState";
+import QuestState from "./QuestState";
+import UserState from "./UserState";
 
 class AppStore {
   @observable accessor loadingobjects = true;

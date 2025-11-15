@@ -1,7 +1,8 @@
-import { h, render, Component } from 'preact';
+import { Component } from 'preact';
 import { observer } from 'mobx-react';
-import Pet from './Pet';
+
 import Mount from './Mount';
+import Pet from './Pet';
 
 @observer
 class PremiumPetInfo extends Component {

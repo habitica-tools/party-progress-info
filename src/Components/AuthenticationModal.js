@@ -1,6 +1,6 @@
-import { h, render, Component } from 'preact';
+import { Component } from 'preact';
+import { action } from 'mobx';
 import { observer } from 'mobx-react';
-import { observable, action } from 'mobx';
 
 @observer
 class AuthenticationModal extends Component {

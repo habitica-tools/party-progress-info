@@ -1,7 +1,8 @@
-import { h, render } from 'preact';
-import AppStore from './Stores/AppStore';
-import App from './Components/App';
 import { configure } from 'mobx';
+import { render } from 'preact';
+
+import App from './Components/App';
+import AppStore from './Stores/AppStore';
 
 configure({ enforceActions: "observed" });
 const store = new AppStore();
