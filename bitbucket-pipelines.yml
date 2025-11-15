@@ -42,10 +42,10 @@ definitions:
           - mkdir -p $TARGET_PATH
           - rm -rf $TARGET_PATH/*
           - cp -r ../dist/* $TARGET_PATH/
-          - git config user.email $DEPLOYMENT_USER_EMAIL
-          - git add --all
+          - if git diff --quiet --exit-code; then echo 'No changes to deploy'; exit; fi
           - git status
-          - git commit -m "$DEPLOYMENT_COMMIT_MESSAGE from $BITBUCKET_REPO_SLUG"
+          - git config user.email $DEPLOYMENT_USER_EMAIL
+          - git commit -am "$DEPLOYMENT_COMMIT_MESSAGE from $BITBUCKET_REPO_SLUG"
           - git push
 
 pipelines:
