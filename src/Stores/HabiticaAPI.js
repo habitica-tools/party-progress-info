@@ -63,15 +63,44 @@ class HabiticaAPI {
   }
 
   getContent() {
-    return this.fetch(HABITICA_API_URL + 'content');
+    return this.cachedFetch(HABITICA_API_URL + 'content', false, 30 * 60 * 1000);
   }
 
   getUser(userid) {
-    return this.fetch(HABITICA_API_URL + 'members/' + userid, true);
+    return this.cachedFetch(HABITICA_API_URL + 'members/' + userid, true, 5 * 60 * 1000);
   }
 
   getPartyMembers() {
-    return this.fetch(HABITICA_API_URL + 'groups/party/members', true);
+    return this.cachedFetch(HABITICA_API_URL + 'groups/party/members', true, null);
+  }
+
+  cachedFetch(url, requiresCredentials = false, cacheDuration = null) {
+    if (cacheDuration !== null) {
+      let cachedItem = localStorage.getItem(url);
+      if (cachedItem !== null) {
+        let cachedData = JSON.parse(cachedItem);
+
+        if ((Date.now() - cachedData.timestamp) < cacheDuration) {
+          return Promise.resolve(cachedData.data);
+        }
+        else {
+          localStorage.removeItem(url);
+        }
+      }
+    }
+
+    let promise = this.fetch(url, requiresCredentials)
+      .then(res => res.json());
+
+    if (cacheDuration === null) return promise;
+
+    return promise.then(json => {
+      localStorage.setItem(url, JSON.stringify({
+        timestamp: Date.now(),
+        data: json
+      }));
+      return json;
+    });
   }
 
   fetch(url, requiresCredentials = false) {

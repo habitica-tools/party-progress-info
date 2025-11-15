@@ -109,7 +109,6 @@ class UserState {
 
     this.loading = true;
     this.store.api.getUser(userid)
-      .then(res => res.json())
       .then(action(json => {
         this.data = json.data;
         this.loading = false;
