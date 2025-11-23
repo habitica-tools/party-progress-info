@@ -3,16 +3,16 @@ import { observable, action, computed } from 'mobx';
 class GearState {
   store = null;
   id = null;
-  @observable data = {};
-  @observable users = [];
-  
+  @observable accessor data = {};
+  @observable accessor users = [];
+
   constructor(key, gear, store) {
     this.id = key;
     this.data = gear
     this.store = store;
   }
 
-  @computed get count() {   
+  @computed get count() {
     return this.users.length;
   }
 
@@ -31,8 +31,8 @@ class GearState {
       this.users.remove(user);
     }
     catch(e){}
-  }    
- 
+  }
+
 
 }
 

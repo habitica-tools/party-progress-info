@@ -9,23 +9,23 @@ import BackgroundState from "./BackgroundState";
 import HabiticaAPI from './HabiticaAPI';
 
 class AppStore {
-  @observable loadingobjects = true;
-  @observable quests = new Map();
-  @observable pets = new Map();
-  @observable basepets = new Map();
-  @observable premiumpets = new Map();
-  @observable premiumhatchingpotions = new Map();
-  @observable eggs = new Map();
-  @observable baseeggs = new Map();
-  @observable alleggs = new Map();
-  @observable gear = new Map();
-  @observable backgrounds = new Map();
-  @observable users = [];
-  @observable infoUser = [];
-  @observable authUserId = null;
-  @observable authKey = null;
+  @observable accessor loadingobjects = true;
+  quests = observable.map(new Map());
+  pets = observable.map(new Map());
+  basepets = observable.map(new Map());
+  premiumpets = observable.map(new Map());
+  premiumhatchingpotions = observable.map(new Map());
+  eggs = observable.map(new Map());
+  baseeggs = observable.map(new Map());
+  alleggs = observable.map(new Map());
+  gear = observable.map(new Map());
+  backgrounds = observable.map(new Map());
+  @observable accessor users = [];
+  @observable accessor infoUser = [];
+  @observable accessor authUserId = null;
+  @observable accessor authKey = null;
 
-  @observable menupage = "petsquesteggs";
+  @observable accessor menupage = "petsquesteggs";
 
   api = undefined;
 
@@ -35,27 +35,27 @@ class AppStore {
 
   @action gotoBasePets() {
     this.menupage = "basepets";
-  }  
+  }
 
   @action gotoPremiumPets() {
     this.menupage = "premiumpets";
-  }  
+  }
 
   @action gotoOtherQuests() {
     this.menupage = "otherquests";
   }
-  
+
   @action gotoGear() {
     this.menupage = "gear";
   }
 
   @action gotoBackgrounds() {
     this.menupage = "backgrounds";
-  }  
+  }
 
   @action gotoAbout() {
     this.menupage = "about";
-  }  
+  }
 
   constructor() {
     this.api = new HabiticaAPI();
@@ -85,19 +85,19 @@ class AppStore {
       new Map(Object.entries(json.data.pets)).forEach(function(value,key){
          basepets.set(key, new PetState(key, this));
       },this);
-      this.basepets.merge(basepets);      
+      this.basepets.merge(basepets);
 
       const premiumpets = new Map();
       new Map(Object.entries(json.data.premiumPets)).forEach(function(value,key){
          premiumpets.set(key, new PetState(key, this));
       },this);
-      this.premiumpets.merge(premiumpets);           
+      this.premiumpets.merge(premiumpets);
 
       const eggs = new Map();
       new Map(Object.entries(json.data.questEggs)).forEach(function(value,key){
         eggs.set(key, new EggState(key, value, this));
       },this);
-      this.eggs.merge(eggs);   
+      this.eggs.merge(eggs);
 
       const premiumhatchingpotions = new Map();
       new Map(Object.entries(json.data.premiumHatchingPotions)).forEach(function(value,key){
@@ -110,7 +110,7 @@ class AppStore {
         if(this.eggs.get(key) === undefined)
           baseeggs.set(key, new EggState(key, value, this));
       },this);
-      this.baseeggs.merge(baseeggs);    
+      this.baseeggs.merge(baseeggs);
 
       const alleggs = new Map();
       this.alleggs.merge(eggs);
@@ -120,15 +120,15 @@ class AppStore {
       new Map(Object.entries(json.data.gear.flat)).forEach(function(value,key){
         gear.set(key, new GearState(key, value, this));
       },this);
-      this.gear.merge(gear);        
-      
-      
+      this.gear.merge(gear);
+
+
       const backgrounds = new Map();
       new Map(Object.entries(json.data.backgroundsFlat)).forEach(function(value,key){
         backgrounds.set(key, new BackgroundState(key, value, this));
       },this);
-      this.backgrounds.merge(backgrounds);      
-      
+      this.backgrounds.merge(backgrounds);
+
 
       this.loadingobjects = false;
       this.loadQueryString();
@@ -151,7 +151,7 @@ class AppStore {
         qstringusers.split('|').forEach(function(val,index){
           this.addUser(val);
         },this)
-          
+
       }
       else{
         this.addUser(qstringusers);
@@ -176,7 +176,7 @@ class AppStore {
       const members = await this.getPartyMembers(userId, key);
       members.forEach(user => this.addUser(user));
   }
-  
+
   async getPartyMembers(userId, key) {
     const result = await window.fetch('https://habitica.com/api/v3/groups/party/members', {
       headers: {
@@ -205,24 +205,24 @@ class AppStore {
       });
       this.basepets.forEach(function(value,key,map){
         value.removeUser(user);
-      });     
+      });
       this.premiumpets.forEach(function(value,key,map){
         value.removeUser(user);
-      });       
+      });
       this.premiumhatchingpotions.forEach(function(value,key,map){
         value.removeUser(user);
-      });       
+      });
       //also remove it from eggs
       this.eggs.forEach(function(value,key,map){
         value.removeUser(user);
-      }); 
+      });
       this.baseeggs.forEach(function(value,key,map){
         value.removeUser(user);
-      });       
-      
+      });
+
       this.gear.forEach(function(value,key,map){
         value.removeUser(user);
-      });    
+      });
 
       this.setQueryVariable();
   }
@@ -238,11 +238,11 @@ class AppStore {
   countValidUsers() {
     return this.users.reduce((prevVal, u) => prevVal + (u.loading || u.invalid ? 0 : 1), 0);
   }
- 
+
   @computed get petCategories() {
     var categories = new Set();
     var pets = [...this.pets].map(([id,pet]) =>  pet)
-        
+
     for(var pet of pets){
         categories.add(pet.basetype);
     }
@@ -252,38 +252,38 @@ class AppStore {
   @computed get basepetCategories() {
     var categories = new Set();
     var pets = [...this.basepets].map(([id,pet]) =>  pet)
-        
+
     for(var pet of pets){
         categories.add(pet.basetype);
     }
     return categories;
-  }  
+  }
 
   @computed get premiumpetCategories() {
     var categories = new Set();
     var pets = [...this.premiumpets].map(([id,pet]) =>  pet)
-        
+
     for(var pet of pets){
         categories.add(pet.basetype);
     }
     return categories;
-  } 
+  }
 
   @computed get premiumhatchingpotionCategories() {
     var categories = new Set();
     var potions = [...this.premiumhatchingpotions].map(([id,potion]) =>  potion)
-        
+
     for(var potion of potions){
         categories.add(potion.id);
     }
     return categories;
-  } 
+  }
 
   @computed get totalNeededPetsParty () {
     return [...this.pets].map(([id,pet]) =>  pet)
         .reduce((prevVal, pet) =>  prevVal + pet.needed , 0);
   }
-  
+
   @computed get totalCountPetsParty() {
     return [...this.pets].map(([id,pet]) =>  pet)
         .reduce((prevVal, pet) =>  prevVal + pet.count , 0);
@@ -297,7 +297,7 @@ class AppStore {
     return [...this.basepets].map(([id,pet]) =>  pet)
         .reduce((prevVal, pet) =>  prevVal + pet.needed , 0);
   }
-  
+
   @computed get totalCountBasePetsParty() {
     return [...this.basepets].map(([id,pet]) =>  pet)
         .reduce((prevVal, pet) =>  prevVal + pet.count , 0);
@@ -311,7 +311,7 @@ class AppStore {
     return [...this.premiumpets].map(([id,pet]) =>  pet)
         .reduce((prevVal, pet) =>  prevVal + pet.needed , 0);
   }
-  
+
   @computed get totalCountPremiumPetsParty() {
     return [...this.premiumpets].map(([id,pet]) =>  pet)
         .reduce((prevVal, pet) =>  prevVal + pet.count , 0);
@@ -319,10 +319,10 @@ class AppStore {
 
   @computed get totalCountPremiumPets(){
     return ([...this.premiumpets].length * 2) * this.countValidUsers();
-  }  
+  }
 
   @computed get gearleaderboard() {
-    return this.users.sort(function(a,b){
+    return this.users.slice().sort(function(a,b){
       if(a.totalGearCount > b.totalGearCount){
           return -1;
       }
@@ -339,10 +339,10 @@ class AppStore {
     else{
       return this.gearleaderboard;
     }
-  }    
+  }
 
   @computed get petleaderboard() {
-    return this.users.sort(function(a,b){
+    return this.users.slice().sort(function(a,b){
       if(a.totalPetCount > b.totalPetCount){
           return -1;
       }
@@ -359,10 +359,10 @@ class AppStore {
     else{
       return this.petleaderboard;
     }
-  }  
+  }
 
   @computed get basepetleaderboard() {
-    return this.users.sort(function(a,b){
+    return this.users.slice().sort(function(a,b){
       if(a.totalBasePetCount > b.totalBasePetCount){
           return -1;
       }
@@ -379,11 +379,11 @@ class AppStore {
     else{
       return this.basepetleaderboard;
     }
-  }   
-  
+  }
+
 
   @computed get premiumpetleaderboard() {
-    return this.users.sort(function(a,b){
+    return this.users.slice().sort(function(a,b){
       if(a.totalPremiumPetCount > b.totalPremiumPetCount){
           return -1;
       }
@@ -400,7 +400,7 @@ class AppStore {
     else{
       return this.premiumpetleaderboard;
     }
-  }   
+  }
 
   @computed get userQuerystring () {
     let qs = "";
@@ -423,8 +423,8 @@ class AppStore {
                 if(pair[0] == variable){return pair[1];}
         }
         return(false);
-  } 
-      
+  }
+
 }
 
 export default AppStore;

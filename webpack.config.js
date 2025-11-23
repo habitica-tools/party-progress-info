@@ -3,19 +3,19 @@ const isProd = (process.env.NODE_ENV === 'production');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    
+
     //input
-    entry: ['babel-polyfill','./src'],
+    entry: ['./src'],
 
     //output
     output: {
-        path : path.join(__dirname, 'build'),
-        filename : 'bundle.js'
+        path: path.join(__dirname, 'build'),
+        filename: 'bundle.js'
     },
 
     //transformations
     module: {
-        rules : [
+        rules: [
             {
                 test: /\.jsx?/i,
                 loader: 'babel-loader',
@@ -23,10 +23,20 @@ module.exports = {
             }
         ]
     },
-       
+
+    //resolves
+    resolve: {
+        alias: {
+            "react": "preact/compat",
+            "react-dom/test-utils": "preact/test-utils",
+            "react-dom": "preact/compat",     // Must be below test-utils
+            "react/jsx-runtime": "preact/jsx-runtime"
+        },
+    },
+
     //sourcemaps
     devtool: 'source-map',
-    
+
     plugins: [new HtmlWebpackPlugin({
         template: './src/index.html',
         favicon: "./src/favicon.ico"
@@ -34,7 +44,7 @@ module.exports = {
 
     //server
     devServer: {
-        contentBase: path.join(__dirname, 'src'),
+        static: path.join(__dirname, 'src'),
         compress: true,
         historyApiFallback: true
     }

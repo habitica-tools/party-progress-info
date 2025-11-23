@@ -3,9 +3,9 @@ import { observable, action, computed } from 'mobx';
 class HatchingPotionState {
   id = null;
   store = null;
-  @observable users = [];
-  @observable data = {};
-  
+  @observable accessor users = [];
+  @observable accessor data = {};
+
   constructor(key,potion,store) {
     this.id = key;
     this.data = potion;
@@ -31,15 +31,18 @@ class HatchingPotionState {
       this.users.remove(user);
     }
     catch(e){}
-  }    
+  }
 
   @computed get selectedcount(){
     var count=0;
     count = this.users.filter(u => u.isInfoUser)
       .reduce((prevVal, user) => prevVal + (user.data.items.hatchingPotions[this.id] !== undefined ? user.data.items.hatchingPotions[this.id] : 0), count);
     return count;
-  }   
+  }
 
+  usercount(user) {
+    return (user.data.items.hatchingPotions[this.id] !== undefined ? user.data.items.hatchingPotions[this.id] : 0);
+  }
 }
 
 export default HatchingPotionState;

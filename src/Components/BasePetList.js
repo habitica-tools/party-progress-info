@@ -1,20 +1,26 @@
 import { h, render, Component } from 'preact';
-import { observer } from 'mobx-preact';
+import { observer } from 'mobx-react';
 import { observable, action, computed  } from 'mobx';
 import BasePetInfo from './BasePetInfo';
 
 @observer
-class BasePetList extends Component { 
+class BasePetList extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
-  @observable showAll = false;
-  @observable petInfo = null;
-  @observable sortKey = "1";
-  @observable showleaderboard = "top3";
+  @observable accessor showAll = false;
+  @observable accessor petInfo = null;
+  @observable accessor sortKey = "1";
+  @observable accessor showleaderboard = "top3";
+  store = null;
+
+  constructor(props){
+    super(props);
+    this.store = this.props.store;
+  }
 
   @computed get petCategoriesWithCounts() {
-    let pets = [...this.props.store.basepetCategories].map(function(category){
+    let pets = [...this.store.basepetCategories].map(function(category){
         let petdetail = {id:category};
-        let categorypets = [...this.props.store.basepets].filter(([id,pet]) => pet.basetype === category);
+        let categorypets = [...this.store.basepets].filter(([id,pet]) => pet.basetype === category);
         petdetail.needed = categorypets.reduce((prevVal,[id,pet]) => prevVal + pet.needed , 0);
         petdetail.count = categorypets.reduce((prevVal,[id,pet]) => prevVal + pet.count , 0);
         petdetail.selectedcount = categorypets.reduce((prevVal,[id,pet]) => prevVal + pet.selectedcount , 0);
@@ -31,7 +37,7 @@ class BasePetList extends Component {
                 return 1;
             }
             return 0;
-        })        
+        })
         break;
         case "2":
         pets.sort(function(a,b){
@@ -42,7 +48,7 @@ class BasePetList extends Component {
                 return 1;
             }
             return 0;
-        })        
+        })
         break;
         case "3":
         pets.sort(function(a,b){
@@ -53,18 +59,18 @@ class BasePetList extends Component {
                 return 1;
             }
             return 0;
-        })        
+        })
         break;
         default:
         break;
     }
-   
+
     return pets;
   }
 
 
-  render({store}, {petInfo}){
-
+  render(){
+    const store = this.props.store;
 
     if(store.loadingobjects){
         return(<div class="ui active centered inline loader"></div>);
@@ -89,7 +95,7 @@ class BasePetList extends Component {
                     <option value="1">Shortage</option>
                     <option value="2">Most</option>
                     <option value="3">A-Z</option>
-              </select>        
+              </select>
             </div>
         </div>
         <div class="ui four statistics">
@@ -100,7 +106,7 @@ class BasePetList extends Component {
                 <div class="label">
                     Pets Collected %
                 </div>
-            </div>     
+            </div>
             <div class="ui tiny statistic">
                 <div class="value got">
                     {store.totalCountBasePetsParty}
@@ -108,7 +114,7 @@ class BasePetList extends Component {
                 <div class="label">
                     Pets in Party
                 </div>
-            </div>                
+            </div>
             <div class="ui tiny statistic">
                 <div class="value wanted">
                     {store.totalNeededBasePetsParty}
@@ -124,12 +130,12 @@ class BasePetList extends Component {
                 <div class="label">
                     Total Pets
                 </div>
-            </div>                     
+            </div>
         </div>
         <div class="ui basic segment"></div>
         <div class="item-rows">
             <div class ="items">
-            {[...this.petCategoriesWithCounts].map(category => 
+            {[...this.petCategoriesWithCounts].map(category =>
                     <div>
                     <div class="item-wrapper">
                         <div class="item">
@@ -142,11 +148,11 @@ class BasePetList extends Component {
                             {category.selectedcount >= 1 ?
                             <span class="badge badge-pill badge-item badge-blue">
                                 {category.selectedcount}
-                            </span> : '' }                         
+                            </span> : '' }
                             <span class={category.id === this.petInfo ? "selectableInventory item-content Pet Pet-" + category.id + "-Base " : "item-content Pet Pet-" + category.id + "-Base "} onClick={this.showPetInfo.bind(this, category.id)}>
                                 <img src={this.imageurl + "Pet-" + category.id + "-Base.png"} alt={category.id}  />
                             </span>
-                        </div>                      
+                        </div>
                         <span class="pettxt">{category.id}</span>
                     </div>
                     </div>
@@ -171,10 +177,10 @@ class BasePetList extends Component {
                     <th>Percentage of Total</th>
                 </tr>
             </thead>
-            <tbody>        
-            {this.showleaderboard === 'top3' &&       
-            store.top3basepetleaderboard.map((user,index) => 
-                
+            <tbody>
+            {this.showleaderboard === 'top3' &&
+            store.top3basepetleaderboard.map((user,index) =>
+
                     user.data.profile !== undefined ?
                         <tr key={user.id}>
                             <td>{index + 1}</td>
@@ -191,9 +197,9 @@ class BasePetList extends Component {
                         </tr>
             )
             }
-            {this.showleaderboard === 'all' &&       
-            store.basepetleaderboard.map((user,index) => 
-                
+            {this.showleaderboard === 'all' &&
+            store.basepetleaderboard.map((user,index) =>
+
                     user.data.profile !== undefined ?
                         <tr key={user.id}>
                             <td>{index + 1}</td>
@@ -212,12 +218,12 @@ class BasePetList extends Component {
             }
             </tbody>
             </table>
-            {this.showleaderboard === 'top3' &&   
+            {this.showleaderboard === 'top3' &&
                 <button class="ui blue button" onClick={this.handleLeaderboardShowAll}><i class="unhide icon"></i>Show All</button>
-            }            
-            {this.showleaderboard === 'all' &&   
+            }
+            {this.showleaderboard === 'all' &&
                 <button class="ui olive button" onClick={this.handleLeaderboardTop3Only}><i class="hide icon"></i>Top 3 Only</button>
-            }              
+            }
         </div>
         </div>
         );
@@ -229,14 +235,14 @@ class BasePetList extends Component {
             this.petInfo = null;
         }
         else{
-            this.petInfo = category;         
+            this.petInfo = category;
         }
     }
-    
+
     showPetInfo = (e) => {
         this.setPetInfo(e);
     }
-    
+
     @action sortPets = (e) => {
         this.sortKey = e.target.value;
     }
@@ -251,4 +257,4 @@ class BasePetList extends Component {
 
 };
 
-export default BasePetList;  
+export default BasePetList;

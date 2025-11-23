@@ -1,9 +1,12 @@
 import { h, render, Component } from 'preact';
-import { observer } from 'mobx-preact';
+import { observer } from 'mobx-react';
 
 @observer
 class EggInfo extends Component {
-    render({category, store}) {
+    render() {
+        const store = this.props.store;
+        const category = this.props.category;
+
         return (
         <div class="ui mini modal active">
             <div class="header">{category}
@@ -14,7 +17,7 @@ class EggInfo extends Component {
             <div class="content">
                     {[...store.alleggs].filter(([id,egg]) => egg.id === category)
                         .map(([id,egg]) =>
-                        egg.users
+                        egg.users.slice()
                         .sort(function(a,b){
                             if(egg.usercount(a) > egg.usercount(b)){
                                 return -1;
@@ -24,7 +27,7 @@ class EggInfo extends Component {
                             }
                             return 0;
                         })
-                        .map(user => 
+                        .map(user =>
                         <div key={user.id}>
                             {user.data.profile.name + " has " + egg.usercount(user)}
                         </div>)

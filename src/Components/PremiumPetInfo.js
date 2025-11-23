@@ -1,11 +1,14 @@
 import { h, render, Component } from 'preact';
-import { observer } from 'mobx-preact';
+import { observer } from 'mobx-react';
 import Pet from './Pet';
 import Mount from './Mount';
 
 @observer
 class PremiumPetInfo extends Component {
-    render({category, store}) {
+    render() {
+        const store = this.props.store;
+        const category = this.props.category;
+
         return (
         <div class="ui fluid">
             <br/>
@@ -29,7 +32,7 @@ class PremiumPetInfo extends Component {
                         <td>{pet.usersWithPet.map(user => user.data.profile.name).join(', ')}</td>
                         <td><Mount mount={pet}/></td>
                         <td>{pet.usersWithMount.map(user => user.data.profile.name).join(', ')}</td>
-                    </tr>   
+                    </tr>
                     )}
                 </tbody>
             </table>

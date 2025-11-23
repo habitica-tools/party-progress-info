@@ -1,11 +1,13 @@
 import { h, render, Component } from 'preact';
-import { observer } from 'mobx-preact';
+import { observer } from 'mobx-react';
 
 @observer
 class Mount extends Component {
     imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
 
-    render({mount}) {
+    render() {
+        const mount = this.props.mount;
+
         return (
             <div class="item-wrapper">
                 <div class="item">
@@ -14,7 +16,7 @@ class Mount extends Component {
                 </span>
                 <div class="badge badge-pill badge-item badge-info badge-count">
                     {mount.mountCount}
-                </div>  
+                </div>
                 <span class={"item-content Mount Mount_Icon_" + mount.id}>
                     <img src={this.imageurl + "Mount_Body_" + mount.id + ".png"} alt={mount.id}  />
                     <img src={this.imageurl + "Mount_Head_" + mount.id + ".png"} alt={mount.id}  />
@@ -23,8 +25,8 @@ class Mount extends Component {
                 <span class="pettxt">{mount.id}</span>
             </div>
         );
-    }  
-    
+    }
+
 }
 
 

@@ -1,5 +1,5 @@
 import { h, render, Component } from 'preact';
-import { observer } from 'mobx-preact';
+import { observer } from 'mobx-react';
 import { observable, action } from 'mobx';
 
 @observer
@@ -14,7 +14,7 @@ class AddPartyModal extends Component {
         this.setState({ userId: this.props.userId });
     }
 
-    render({store, userId}) {
+    render() {
         return (
         <div class="ui mini modal active">
             <div class="header">Add Party
@@ -48,22 +48,22 @@ class AddPartyModal extends Component {
 
     gotoAbout = () => {
         this.props.store.gotoAbout();
-    }  
+    }
 
-	@action populateUserId = (userId) => {
+    @action populateUserId = (userId) => {
         this.setState({ userId: userId });
-	}
+    }
 
-	@action onUserIdChange = (e) => {
+    @action onUserIdChange = (e) => {
         this.setState({ userId: e.target.value });
-	}
+    }
 
-	@action onKeyChange = (e) => {
+    @action onKeyChange = (e) => {
         this.setState({ key: e.target.value });
-	}
+    }
 
-	@action AddParty = () => {
-		this.props.store.addParty(this.state.userId, this.state.key);
+    @action AddParty = () => {
+        this.props.store.addParty(this.state.userId, this.state.key);
         this.setState({ userId: "", key: "" });
         this.emptyUserIdInParent();
         this.Close();
