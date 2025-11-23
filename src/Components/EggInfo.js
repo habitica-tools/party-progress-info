@@ -1,47 +1,36 @@
-import { h, render, Component } from 'preact';
+import { Component } from 'preact';
 import { observer } from 'mobx-react';
 
 @observer
 class EggInfo extends Component {
   render() {
-    const store = this.props.store;
-    const category = this.props.category;
+    const egg = this.props.egg;
 
     return (
       <div class="ui mini modal active">
-        <div class="header">{category}
-          <button class="ui icon right floated button" onClick={this.Close}>
+        <div class="header">{egg.id}
+          <button class="ui icon right floated button" onClick={this.close}>
             <i class="close icon"></i>
           </button>
         </div>
         <div class="content">
-          {[...store.alleggs].filter(([id, egg]) => egg.id === category)
-            .map(([id, egg]) =>
-              egg.users.slice()
-                .sort(function (a, b) {
-                  if (egg.usercount(a) > egg.usercount(b)) {
-                    return -1;
-                  }
-                  if (egg.usercount(a) < egg.usercount(b)) {
-                    return 1;
-                  }
-                  return 0;
-                })
-                .map(user =>
-                  <div key={user.id}>
-                    {user.data.profile.name + " has " + egg.usercount(user)}
-                  </div>)
-            )}
+          {
+            egg.users.slice()
+              .sort((userA, userB) => egg.userCount(userB) - egg.userCount(userA))
+              .map(user =>
+                <div key={user.id}>
+                  {user.data.profile.name + " has " + egg.userCount(user)}
+                </div>
+              )
+          }
         </div>
       </div>
     );
-
   }
 
-  Close = (e) => {
-    this.props.egglist.hideEggInfo();
+  close = () => {
+    this.props.eggList.hideInfo();
   }
 }
-
 
 export default EggInfo;

@@ -1,25 +1,15 @@
 import { observable, action, computed } from 'mobx';
 
 class EggState {
-  id = null;
-  store = null;
-  @observable accessor users = [];
   @observable accessor data = {};
+  @observable accessor users = [];
 
-  constructor(key, egg, store) {
-    this.id = key;
-    this.data = egg;
-    this.store = store;
+  constructor(data) {
+    this.data = data;
   }
 
-  @computed get count() {
-    var count = 0;
-    this.users.forEach(function (value, index, array) {
-      if (value.data.items.eggs[this.id] !== undefined) {
-        count = count + value.data.items.eggs[this.id]
-      }
-    }, this);
-    return count;
+  get id() {
+    return this.data.key;
   }
 
   @action addUser(user) {
@@ -27,23 +17,24 @@ class EggState {
   }
 
   @action removeUser(user) {
-    try {
-      this.users.remove(user);
-    }
-    catch (e) { }
+    this.users.remove(user);
   }
 
-  usercount(user) {
+  userCount(user) {
     return (user.data.items.eggs[this.id] !== undefined ? user.data.items.eggs[this.id] : 0);
   }
 
-  @computed get selectedcount() {
-    var count = 0;
-    count = this.users.filter(u => u.isInfoUser)
-      .reduce((prevVal, user) => prevVal + (user.data.items.eggs[this.id] !== undefined ? user.data.items.eggs[this.id] : 0), count);
-    return count;
+  usersCount(users) {
+    return users.reduce((value, user) => value + this.userCount(user), 0);
   }
 
+  @computed get count() {
+    return this.usersCount(this.users);
+  }
+
+  @computed get selectedCount() {
+    return this.usersCount(this.users.filter(user => user.isInfoUser));
+  }
 }
 
 export default EggState;

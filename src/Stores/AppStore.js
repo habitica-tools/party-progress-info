@@ -16,11 +16,14 @@ class AppStore {
   basepets = observable.map(new Map());
   premiumpets = observable.map(new Map());
   premiumhatchingpotions = observable.map(new Map());
-  eggs = observable.map(new Map());
-  baseeggs = observable.map(new Map());
-  alleggs = observable.map(new Map());
   gear = observable.map(new Map());
   backgrounds = observable.map(new Map());
+
+  @observable accessor eggs = {
+    categories: ['base', 'quest'],
+    base: observable.map(new Map()),
+    quest: observable.map(new Map())
+  };
 
   @observable accessor users = [];
   @observable accessor infoUser = [];
@@ -91,27 +94,23 @@ class AppStore {
         }, this);
         this.premiumpets.merge(premiumpets);
 
-        const eggs = new Map();
-        new Map(Object.entries(json.data.questEggs)).forEach(function (value, key) {
-          eggs.set(key, new EggState(key, value, this));
-        }, this);
-        this.eggs.merge(eggs);
-
         const premiumhatchingpotions = new Map();
         new Map(Object.entries(json.data.premiumHatchingPotions)).forEach(function (value, key) {
           premiumhatchingpotions.set(key, new HatchingPotionState(key, value, this));
         }, this);
         this.premiumhatchingpotions.merge(premiumhatchingpotions);
 
-        const baseeggs = new Map();
-        new Map(Object.entries(json.data.eggs)).forEach(function (value, key) {
-          if (this.eggs.get(key) === undefined)
-            baseeggs.set(key, new EggState(key, value, this));
-        }, this);
-        this.baseeggs.merge(baseeggs);
+        const baseEggs = new Map();
+        const questEggs = new Map();
+        const questEggKeys = new Map(Object.entries(json.data.questEggs));
 
-        this.alleggs.merge(eggs);
-        this.alleggs.merge(baseeggs);
+        new Map(Object.entries(json.data.eggs)).forEach(function (value, key) {
+          let egg = new EggState(value);
+          if (questEggKeys.has(key)) questEggs.set(key, egg);
+          else baseEggs.set(key, egg);
+        }, this);
+        this.eggs.base.merge(baseEggs);
+        this.eggs.quest.merge(questEggs);
 
         const gear = new Map();
         new Map(Object.entries(json.data.gear.flat)).forEach(function (value, key) {
@@ -195,12 +194,11 @@ class AppStore {
     });
 
     // also remove it from eggs
-    this.eggs.forEach(function (value, key, map) {
-      value.removeUser(user);
-    });
-    this.baseeggs.forEach(function (value, key, map) {
-      value.removeUser(user);
-    });
+    for (let category of this.eggs.categories) {
+      this.eggs[category].forEach(function (egg) {
+        egg.removeUser(user);
+      });
+    }
 
     // also remove it from gear
     this.gear.forEach(function (value, key, map) {
