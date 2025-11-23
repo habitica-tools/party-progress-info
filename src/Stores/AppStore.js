@@ -10,6 +10,7 @@ import HabiticaAPI from './HabiticaAPI';
 
 class AppStore {
   @observable accessor loadingobjects = true;
+
   quests = observable.map(new Map());
   pets = observable.map(new Map());
   basepets = observable.map(new Map());
@@ -20,9 +21,11 @@ class AppStore {
   alleggs = observable.map(new Map());
   gear = observable.map(new Map());
   backgrounds = observable.map(new Map());
+
   @observable accessor users = [];
   @observable accessor infoUser = [];
 
+  loadParty = false;
   @observable accessor menupage = "petsquesteggs";
 
   api = undefined;
@@ -134,17 +137,18 @@ class AppStore {
   }
 
   @action loadQueryString() {
-    var qstringusers = this.getQueryVariable("users");
-    if (qstringusers !== false) {
-      qstringusers = decodeURIComponent(qstringusers);
-      if (qstringusers.indexOf("|") > 1) {
-        qstringusers.split('|').forEach(function (val, index) {
-          this.addUser(val);
-        }, this)
-      }
-      else {
-        this.addUser(qstringusers);
-      }
+    var queryParty = this.getQueryVariable("party");
+    if (queryParty !== null) {
+      this.loadParty = true;
+      this.addParty();
+    }
+
+    var queryStringUsers = this.getQueryVariable("users");
+    if (queryStringUsers !== null) {
+      queryStringUsers = decodeURIComponent(queryStringUsers);
+      queryStringUsers.split('|').forEach(function (val, index) {
+        this.addUser(val);
+      }, this)
     }
   }
 
@@ -160,8 +164,10 @@ class AppStore {
       .then(res => res.json())
       .then(json => json.data.map(member => member._id))
       .then(members => {
-        members.forEach(user => this.addUser(user))
-      });
+        this.loadParty = false;
+        members.forEach(user => this.addUser(user));
+      })
+      .catch(err => {});
   }
 
   userExists(userid) {
@@ -381,26 +387,23 @@ class AppStore {
     }
   }
 
-  @computed get userQuerystring() {
-    let qs = "";
-    [...this.users].forEach(function (val, index) {
-      qs = qs + "|" + val.id
-    })
-    return qs.slice(1, qs.length);
+  @computed get userQueryString() {
+    return this.users.map(user => user.id).join("|");
   }
 
   setQueryVariable = function () {
-    history.pushState(this.userQuerystring, "users", "?users=" + this.userQuerystring);
+    let userQueryString = this.userQueryString;
+
+    let searchParams = [];
+    if (this.loadParty) searchParams.push("party=true");
+    if (userQueryString !== "") searchParams.push("users=" + this.userQueryString);
+
+    history.pushState(userQueryString, "", "?" + searchParams.join("&"));
   }
 
   getQueryVariable = function (variable) {
-    var query = window.location.search.substring(1);
-    var vars = query.split("&");
-    for (var i = 0; i < vars.length; i++) {
-      var pair = vars[i].split("=");
-      if (pair[0] == variable) { return pair[1]; }
-    }
-    return (false);
+    var urlSearchParams = new URLSearchParams(window.location.search);
+    return urlSearchParams.get(variable);
   }
 
 }
