@@ -6,7 +6,7 @@ class BackgroundState {
   @observable accessor data = {};
   @observable accessor users = [];
 
-  constructor(key, background,store) {
+  constructor(key, background, store) {
     this.id = key;
     this.data = background
     this.store = store;
@@ -21,10 +21,10 @@ class BackgroundState {
   }
 
   @action removeUser(user) {
-    try{
+    try {
       this.users.remove(user);
     }
-    catch(e){}
+    catch (e) { }
   }
 
 }

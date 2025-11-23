@@ -12,8 +12,9 @@ definitions:
         caches:
           - node
         script:
-          - npm install
-          - npm run build
+          - corepack enable
+          - yarn install
+          - yarn run build
         artifacts:
           - build/**
     - step: &lint
@@ -21,8 +22,15 @@ definitions:
         caches:
           - node
         script:
-          - npm install eslint
-          - npx eslint .
+          - corepack enable
+          - yarn install
+          - yarn run lint
+        artifacts:
+          download: false
+    - step: &security
+        name: Check for secrets
+        script:
+          - pipe: atlassian/git-secrets-scan:3.2.0
         artifacts:
           download: false
     - step: &deploy
@@ -33,7 +41,7 @@ definitions:
           - TARGET_PATH=$DEPLOYMENT_PATH_PREFIX/$BITBUCKET_REPO_SLUG
           - mkdir -p $TARGET_PATH
           - rm -rf $TARGET_PATH/*
-          - cp -r ../build/* $TARGET_PATH/
+          - cp -r ../dist/* $TARGET_PATH/
           - git config user.email $DEPLOYMENT_USER_EMAIL
           - git add --all
           - git status
@@ -44,12 +52,9 @@ pipelines:
   branches:
     main:
       - parallel:
-        # - step: *lint
+        - step: *lint
         - step: *build
-        - step:
-            name: Check for secrets
-            script:
-              - pipe: atlassian/git-secrets-scan:3.2.0
+        - step: *security
 
       - stage:
           name: Deploy to Staging
@@ -63,3 +68,10 @@ pipelines:
           trigger: manual
           steps:
             - step: *deploy
+
+  pull-requests:
+    "**":
+      - parallel:
+        - step: *lint
+        - step: *build
+        - step: *security

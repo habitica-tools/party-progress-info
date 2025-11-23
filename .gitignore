@@ -1,6 +1,8 @@
+.DS_Store
+
+.yarn
 node_modules
 npm-debug.log
-.DS_Store
-build
-
 yarn-error.log
+
+dist

@@ -16,8 +16,8 @@ class GearState {
     return this.users.length;
   }
 
-  @computed get selectedcount(){
-    let count =0;
+  @computed get selectedcount() {
+    let count = 0;
     count = this.users.reduce((prevVal, user) => prevVal + (user.isInfoUser ? 1 : 0), count);
     return count;
   }
@@ -27,10 +27,10 @@ class GearState {
   }
 
   @action removeUser(user) {
-    try{
+    try {
       this.users.remove(user);
     }
-    catch(e){}
+    catch (e) { }
   }
 
 

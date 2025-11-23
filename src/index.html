@@ -1,246 +1,311 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.14/dist/semantic.min.css"></link>
-        <link rel="shortcut icon" href="favicon.ico" />
-        <title>&#x1f44a; Habitica Party Progress Info</title>
-        <style type="text/css">
-        body {
-            background-color: #FFFFFF;
-        }
-        .ui.menu .item img.logo {
-            margin-right: 1.5em;
-        }
-        .ui.inverted.header {
-            color: #fff;
-            margin: 5px;
-        }
-        .main.container {
-            margin-top: 4em;
-        }
-        .wireframe {
-            margin-top: 2em;
-        }
-        .ui.footer.segment {
-            margin: 5em 0em 0em;
-            padding: 5em 0em;
-        }
-        .hasQuest {
-            background-color: lightblue!important;
-            -webkit-border-radius: 50%;
-            border-radius: 50%;
-        }
-        .badge-count {
-            right: -9px;
-            color: #FFFFFF;
-            background: #2fb33a;
-            padding: 4.5px 8.5px;
-            min-width: 24px;
-            height: 24px;
-            box-shadow: 0 1px 1px 0 rgba(26, 24, 29, 0.12);
-            position: absolute;
-        }
-        .badge-count2 {
-            left: -9px;
-            color: #FFFFFF;
-            background: #e60606;
-            padding: 4.5px 8.5px;
-            min-width: 24px;
-            height: 24px;
-            box-shadow: 0 1px 1px 0 rgba(26, 24, 29, 0.12);
-            position: absolute;
-        }
-        .badge-blue {
-            right: -9px;
-            top: 70px;
-            color: #FFFFFF;
-            background: #2185d0;
-            padding: 4.5px 8.5px;
-            min-width: 24px;
-            height: 24px;
-            box-shadow: 0 1px 1px 0 rgba(26, 24, 29, 0.12);
-            position: absolute;
-        }
-        .wanted{
-            color: #e60606 !important;
-        }
-        .got{
-            color: #2fb33a !important;
-        }
-        .item .item-content.Pet {
-            top: -14px;
-            left: 5px;
-        }
-        .item .item-content.Mount > img {
-            width: 90px;
-            height: 90px;
-            position: absolute;
-        }
-        .item .item-content.Quest {
-            top: 14px;
-            left: 13px;
-        }
-        .item .item-content.Egg {
-            top: 14px;
-            left: 13px;
-        }
-        .item .item-content.Gear {
-            top: 15px;
-            left:14px;
-            height:91px;
-            max-width:91px;
-        }
-        .item .item-content.Background {
-            height:140px;
-        }
-        .badge {
-            font-size: 12px;
-            font-weight: bold;
-            line-height: 1.33;
-            box-shadow: 0 1px 1px 0 rgba(26, 24, 29, 0.12);
-            z-index:99;
-        }
-        .badge-pill {
-           border-radius: 100px;
-        }
-        .items > div {
-            display: inline-block;
-            margin-right: 20px;
-        }
-        .items > div:last-of-type {
-            margin-right: 0px;
-        }
-        .item-wrapper {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 12px;
-        }
-        .main .item:hover{
-            box-shadow: 0 3px 3px 0 rgba(107, 47, 119, 0.15), 0 1px 4px 0 rgba(103, 11, 241, 0.781);
-            border: 2px solid transparent;
-        }
-        .main .item{
-            position: relative;
-            width: 90px;
-            height: 90px;
-            border-radius: 2px;
-            background: #FFFFFF;
-            box-shadow: 0 2px 2px 0 rgba(26, 24, 29, 0.15), 0 1px 4px 0 rgba(26, 24, 29, 0.1);
-            border: 1px solid transparent;
-        }
-        .backgrounds .item{
-            width: 144px;
-            height: 156px;
-        }
-        .main .item:hover{
-            box-shadow: 0 3px 3px 0 rgba(107, 47, 119, 0.15), 0 1px 4px 0 rgba(103, 11, 241, 0.781);
-            border: 2px solid transparent;
-        }
-        .item .item-content {
-            margin: auto;
-            display: block;
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-        }
-        .pettxt{
-            height:24px;
-            top: -30px;
-        }
-        .progress-container-big{
-            height:30px;
-        }
-        .progress-container-big > .progress > .progress-bar {
-            border-radius: 0px;
-            height: 18px;
-            min-width: 0px;
-        }
-        .progress-container-big > .progress {
-            min-width: 200px;
-            margin: 0px;
-            border-radius: 0px;
-            height: 18px;
-            background-color: rgb(36, 36, 37);
-        }
-        .progress-container{
-            height:18px;
-        }
-        .progress-container > .progress > .progress-bar {
-            border-radius: 0px;
-            height: 9px;
-            min-width: 0px;
-        }
-        .progress-container > .progress {
-            min-width: 200px;
-            margin: 0px;
-            border-radius: 0px;
-            height: 9px;
-            background-color: rgb(36, 36, 37);
-        }
-        .bg-experience {
-            background: #2fb33a;
-        }
-        .bg-health {
-            background: #F74E52;
-        }
-        .bg-mana {
-            background: #50B5E9;
-        }
-        .small-text{
-            color:#FFFFFF;
-        }
-        .ui.blue.card, .ui.blue.cards>.card, .ui.cards>.blue.card {
-            box-shadow: 0 0 0 1px #d4d4d5, 0 11px 0 0 #2185d0, 0 1px 3px 0 #d4d4d5;
-        }
-        .ui.statistic>.value, .ui.statistics .statistic>.value {
-            font-size: 3rem!important;
-        }
-        @media screen and (min-width: 1200px){
-            ui.card, .ui.cards>.card{
-                width:270px!important;
-            }
-        }
-        @media screen and (min-width: 1000px) and (max-width:1200px) {
-                ui.card, .ui.cards>.card{
-                width:300px!important;
-            }
-        }
-        @media screen and (min-width: 770px) and (max-width:1000px) {
-                ui.card, .ui.cards>.card{
-                width:350px!important;
-            }
-        }
-        @media screen and (min-width: 400px) and (max-width:770px) {
-                ui.card, .ui.cards>.card{
-                width:100%!important;
-            }
-        }
-        @media screen and (max-width:400px) {
-                ui.card, .ui.cards>.card{
-                width:100%!important;
-            }
-        }
-        td>.item-wrapper{
-            margin: auto 20px !important;
-        }
-        [data-tooltip]::after {
-            white-space: pre;
-        }
-    </style>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114142556-1"></script>
-    <script>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.14/dist/semantic.min.css">
+  </link>
+  <link rel="shortcut icon" href="favicon.ico" />
+  <title>&#x1f44a; Habitica Party Progress Info</title>
+  <style type="text/css">
+    body {
+      background-color: #FFFFFF;
+    }
+
+    .ui.menu .item img.logo {
+      margin-right: 1.5em;
+    }
+
+    .ui.inverted.header {
+      color: #fff;
+      margin: 5px;
+    }
+
+    .main.container {
+      margin-top: 4em;
+    }
+
+    .wireframe {
+      margin-top: 2em;
+    }
+
+    .ui.footer.segment {
+      margin: 5em 0em 0em;
+      padding: 5em 0em;
+    }
+
+    .hasQuest {
+      background-color: lightblue !important;
+      -webkit-border-radius: 50%;
+      border-radius: 50%;
+    }
+
+    .badge-count {
+      right: -9px;
+      color: #FFFFFF;
+      background: #2fb33a;
+      padding: 4.5px 8.5px;
+      min-width: 24px;
+      height: 24px;
+      box-shadow: 0 1px 1px 0 rgba(26, 24, 29, 0.12);
+      position: absolute;
+    }
+
+    .badge-count2 {
+      left: -9px;
+      color: #FFFFFF;
+      background: #e60606;
+      padding: 4.5px 8.5px;
+      min-width: 24px;
+      height: 24px;
+      box-shadow: 0 1px 1px 0 rgba(26, 24, 29, 0.12);
+      position: absolute;
+    }
+
+    .badge-blue {
+      right: -9px;
+      top: 70px;
+      color: #FFFFFF;
+      background: #2185d0;
+      padding: 4.5px 8.5px;
+      min-width: 24px;
+      height: 24px;
+      box-shadow: 0 1px 1px 0 rgba(26, 24, 29, 0.12);
+      position: absolute;
+    }
+
+    .wanted {
+      color: #e60606 !important;
+    }
+
+    .got {
+      color: #2fb33a !important;
+    }
+
+    .item .item-content.Pet {
+      top: -14px;
+      left: 5px;
+    }
+
+    .item .item-content.Mount>img {
+      width: 90px;
+      height: 90px;
+      position: absolute;
+    }
+
+    .item .item-content.Quest {
+      top: 14px;
+      left: 13px;
+    }
+
+    .item .item-content.Egg {
+      top: 14px;
+      left: 13px;
+    }
+
+    .item .item-content.Gear {
+      top: 15px;
+      left: 14px;
+      height: 91px;
+      max-width: 91px;
+    }
+
+    .item .item-content.Background {
+      height: 140px;
+    }
+
+    .badge {
+      font-size: 12px;
+      font-weight: bold;
+      line-height: 1.33;
+      box-shadow: 0 1px 1px 0 rgba(26, 24, 29, 0.12);
+      z-index: 99;
+    }
+
+    .badge-pill {
+      border-radius: 100px;
+    }
+
+    .items>div {
+      display: inline-block;
+      margin-right: 20px;
+    }
+
+    .items>div:last-of-type {
+      margin-right: 0px;
+    }
+
+    .item-wrapper {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .main .item:hover {
+      box-shadow: 0 3px 3px 0 rgba(107, 47, 119, 0.15), 0 1px 4px 0 rgba(103, 11, 241, 0.781);
+      border: 2px solid transparent;
+    }
+
+    .main .item {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      border-radius: 2px;
+      background: #FFFFFF;
+      box-shadow: 0 2px 2px 0 rgba(26, 24, 29, 0.15), 0 1px 4px 0 rgba(26, 24, 29, 0.1);
+      border: 1px solid transparent;
+    }
+
+    .backgrounds .item {
+      width: 144px;
+      height: 156px;
+    }
+
+    .main .item:hover {
+      box-shadow: 0 3px 3px 0 rgba(107, 47, 119, 0.15), 0 1px 4px 0 rgba(103, 11, 241, 0.781);
+      border: 2px solid transparent;
+    }
+
+    .item .item-content {
+      margin: auto;
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+
+    .pettxt {
+      height: 24px;
+      top: -30px;
+    }
+
+    .progress-container-big {
+      height: 30px;
+    }
+
+    .progress-container-big>.progress>.progress-bar {
+      border-radius: 0px;
+      height: 18px;
+      min-width: 0px;
+    }
+
+    .progress-container-big>.progress {
+      min-width: 200px;
+      margin: 0px;
+      border-radius: 0px;
+      height: 18px;
+      background-color: rgb(36, 36, 37);
+    }
+
+    .progress-container {
+      height: 18px;
+    }
+
+    .progress-container>.progress>.progress-bar {
+      border-radius: 0px;
+      height: 9px;
+      min-width: 0px;
+    }
+
+    .progress-container>.progress {
+      min-width: 200px;
+      margin: 0px;
+      border-radius: 0px;
+      height: 9px;
+      background-color: rgb(36, 36, 37);
+    }
+
+    .bg-experience {
+      background: #2fb33a;
+    }
+
+    .bg-health {
+      background: #F74E52;
+    }
+
+    .bg-mana {
+      background: #50B5E9;
+    }
+
+    .small-text {
+      color: #FFFFFF;
+    }
+
+    .ui.blue.card,
+    .ui.blue.cards>.card,
+    .ui.cards>.blue.card {
+      box-shadow: 0 0 0 1px #d4d4d5, 0 11px 0 0 #2185d0, 0 1px 3px 0 #d4d4d5;
+    }
+
+    .ui.statistic>.value,
+    .ui.statistics .statistic>.value {
+      font-size: 3rem !important;
+    }
+
+    @media screen and (min-width: 1200px) {
+
+      ui.card,
+      .ui.cards>.card {
+        width: 270px !important;
+      }
+    }
+
+    @media screen and (min-width: 1000px) and (max-width:1200px) {
+
+      ui.card,
+      .ui.cards>.card {
+        width: 300px !important;
+      }
+    }
+
+    @media screen and (min-width: 770px) and (max-width:1000px) {
+
+      ui.card,
+      .ui.cards>.card {
+        width: 350px !important;
+      }
+    }
+
+    @media screen and (min-width: 400px) and (max-width:770px) {
+
+      ui.card,
+      .ui.cards>.card {
+        width: 100% !important;
+      }
+    }
+
+    @media screen and (max-width:400px) {
+
+      ui.card,
+      .ui.cards>.card {
+        width: 100% !important;
+      }
+    }
+
+    td>.item-wrapper {
+      margin: auto 20px !important;
+    }
+
+    [data-tooltip]::after {
+      white-space: pre;
+    }
+  </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114142556-1"></script>
+  <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'UA-114142556-1');
-    </script>
-    </head>
-    <body>
-        <div id="root"></div>
-    </body>
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+
 </html>

@@ -6,19 +6,19 @@ class HatchingPotionState {
   @observable accessor users = [];
   @observable accessor data = {};
 
-  constructor(key,potion,store) {
+  constructor(key, potion, store) {
     this.id = key;
     this.data = potion;
     this.store = store;
   }
 
   @computed get count() {
-    var count=0;
-    this.users.forEach(function(value,index,array){
-         if(value.data.items.hatchingPotions[this.id] !== undefined){
-            count = count + value.data.items.hatchingPotions[this.id]
-         }
-    },this);
+    var count = 0;
+    this.users.forEach(function (value, index, array) {
+      if (value.data.items.hatchingPotions[this.id] !== undefined) {
+        count = count + value.data.items.hatchingPotions[this.id]
+      }
+    }, this);
     return count;
   }
 
@@ -27,14 +27,14 @@ class HatchingPotionState {
   }
 
   @action removeUser(user) {
-    try{
+    try {
       this.users.remove(user);
     }
-    catch(e){}
+    catch (e) { }
   }
 
-  @computed get selectedcount(){
-    var count=0;
+  @computed get selectedcount() {
+    var count = 0;
     count = this.users.filter(u => u.isInfoUser)
       .reduce((prevVal, user) => prevVal + (user.data.items.hatchingPotions[this.id] !== undefined ? user.data.items.hatchingPotions[this.id] : 0), count);
     return count;
