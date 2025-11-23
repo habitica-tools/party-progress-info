@@ -66,7 +66,6 @@ class AppStore {
 
   @action fetchCommonObjects() {
     this.api.getContent()
-      .then(res => res.json())
       .then(action(json => {
         const quests = new Map();
         new Map(Object.entries(json.data.quests)).forEach(function (value, key) {
@@ -161,7 +160,6 @@ class AppStore {
 
   @action async addParty() {
     this.api.getPartyMembers()
-      .then(res => res.json())
       .then(json => json.data.map(member => member._id))
       .then(members => {
         this.loadParty = false;

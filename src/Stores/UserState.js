@@ -109,7 +109,6 @@ class UserState {
 
     this.loading = true;
     this.store.api.getUser(userid)
-      .then(res => res.json())
       .then(action(json => {
         this.data = json.data;
         this.loading = false;
@@ -227,6 +226,10 @@ class UserState {
         */
       }))
       .catch(action(res => {
+        if (res.status === undefined) {
+          throw res;
+        }
+
         // 400: invalid userid
         if (res.status === 400) {
           this.data.customMessage = "\"" + userid + "\" is not a valid User ID";

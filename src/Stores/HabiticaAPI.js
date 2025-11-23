@@ -39,6 +39,8 @@ class HabiticaAPI {
   @observable accessor apiToken = null;
   @observable accessor credentialsValid = true;
 
+  apiTokenCheckSum = "";
+
   isValidToken(token) {
     return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(token);
   }
@@ -49,6 +51,8 @@ class HabiticaAPI {
 
     // assume credentials are valid until proven otherwise
     this.credentialsValid = true;
+
+    this.calculateApiTokenCheckSum();
   }
 
   @computed get hasCredentials() {
@@ -63,15 +67,108 @@ class HabiticaAPI {
   }
 
   getContent() {
-    return this.fetch(HABITICA_API_URL + 'content');
+    return this.cachedFetch(HABITICA_API_URL + 'content', false, 30 * 60 * 1000);
   }
 
   getUser(userid) {
-    return this.fetch(HABITICA_API_URL + 'members/' + userid, true);
+    return this.cachedFetch(HABITICA_API_URL + 'members/' + userid, true, 5 * 60 * 1000);
   }
 
   getPartyMembers() {
-    return this.fetch(HABITICA_API_URL + 'groups/party/members', true);
+    return this.cachedFetch(HABITICA_API_URL + 'groups/party/members', true, null);
+  }
+
+  calculateApiTokenCheckSum() {
+    let chk = 0x12345678;
+    for (let i = 0; i < this.apiToken.length; i++) {
+      chk += this.apiToken.charCodeAt(i);
+      chk = (chk << 5) | (chk >>> 27);
+    }
+    this.apiTokenCheckSum = (chk & 0xFFFFFFFF).toString(16);
+  }
+
+  cacheKey(url, requiresCredentials) {
+    if (requiresCredentials) return [url, this.userId, this.apiTokenCheckSum].join('|');
+    return url;
+  }
+
+  deleteOldCacheEntries() {
+    let keys = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      keys.push(localStorage.key(i));
+    }
+
+    const now = Date.now();
+    let entries = keys.map(key => {
+      return {key: key, item: localStorage.getItem(key)};
+    });
+    entries = entries
+      .map(({key, item}) => {
+        let data = JSON.parse(item);
+        let age = now - data.timestamp;
+
+        if (data !== null && (data.duration === undefined || age >= data.duration)) {
+          localStorage.removeItem(key);
+          return {key: key, age: null};
+        }
+
+        let size = new Blob([item]).size;
+        // keep non-credentialed cache entries first
+        let priority = key.indexOf('|') === -1 ? 1 : 0;
+        return {key: key, age: age, size: size, priority: priority};
+      })
+      .filter((entry) => {
+        return entry.age !== null;
+      })
+      .sort((a, b) => b.age - a.age)
+      .sort((a, b) => a.priority - b.priority);
+
+    let totalSize = entries.reduce((prev, entry) => prev + entry.size, 0);
+    let sizeReduction = 0;
+    for (let entry of entries) {
+      // stop when under 4MB
+      if (totalSize - sizeReduction <= 4 * 1024 * 1024) break;
+
+      localStorage.removeItem(entry.key);
+      sizeReduction += entry.size;
+    }
+  }
+
+  cachedFetch(url, requiresCredentials = false, cacheDuration = null) {
+    if (cacheDuration !== null) {
+      let cachedItem = localStorage.getItem(this.cacheKey(url, requiresCredentials));
+      if (cachedItem !== null) {
+        let cachedData = JSON.parse(cachedItem);
+
+        if ((Date.now() - cachedData.timestamp) < cacheDuration) {
+          return Promise.resolve(cachedData.data);
+        }
+        else {
+          localStorage.removeItem(url);
+        }
+      }
+    }
+
+    let promise = this.fetch(url, requiresCredentials)
+      .then(res => res.json());
+
+    if (cacheDuration === null) return promise;
+
+    return promise.then(json => {
+      try {
+        localStorage.setItem(
+          this.cacheKey(url, requiresCredentials),
+          JSON.stringify({
+            timestamp: Date.now(),
+            duration: cacheDuration,
+            data: json
+          })
+        );
+      } catch (e) {
+        if (e instanceof QuotaExceededError) this.deleteOldCacheEntries();
+      }
+      return json;
+    });
   }
 
   fetch(url, requiresCredentials = false) {
