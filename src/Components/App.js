@@ -15,16 +15,6 @@ import AuthenticationModal from './AuthenticationModal';
 
 @observer
 class App extends Component {
-  askingAuth = false;
-
-  openAuthenticationModal = () => {
-    this.askingAuth = true;
-  }
-
-  hideAuthenticationModal() {
-    this.askingAuth = false;
-  }
-
   gotoPetsQuestEggs = () => {
     this.props.store.gotoPetsQuestEggs();
   }
@@ -138,8 +128,10 @@ class App extends Component {
               </div>
             </div>
           }
-          {(store.authUserId == null || store.authKey == null) &&
-            <AuthenticationModal store={store} parent={this} />
+          {store.menupage !== "about" && !store.api.hasValidCredentials &&
+            <div class="ui fluid action input">
+              <AuthenticationModal store={store} parent={this} />
+            </div>
           }
           {store.menupage !== "about" &&
             <div class="ui fluid container">
@@ -266,7 +258,6 @@ class App extends Component {
       </div>
     );
   }
-
 };
 
 

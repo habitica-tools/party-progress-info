@@ -3,9 +3,11 @@ import { observable, computed, action } from 'mobx';
 class UserState {
   @observable accessor loading = true;
   @observable accessor invalid = false;
+
   data = {};
   id = null;
   store = null;
+
   constructor(store, id) {
     this.store = store;
     this.id = id;
@@ -91,14 +93,22 @@ class UserState {
   }
 
   @action addUser(userid) {
+    if (!this.store.api.isValidToken(userid)) {
+      this.loading = false;
+      this.invalid = true;
+      this.data.customMessage = "\"" + userid + "\" is not a valid User ID";
+      return;
+    }
+
+    if (!this.store.api.hasValidCredentials) {
+      this.loading = false;
+      this.invalid = true;
+      this.data.customMessage = "Valid authentication required to fetch user data";
+      return;
+    }
+
     this.loading = true;
-    this.store.api.fetch('https://habitica.com/api/v3/members/' + userid, {
-      headers: {
-        'x-api-user': this.store.authUserId,
-        'x-api-key': this.store.authKey,
-        'x-client': 'd3c5312b-0e53-4cbc-b836-4c2a63e0ff06-HabiticaPartyProgressInfo'
-      }
-    })
+    this.store.api.getUser(userid)
       .then(res => res.json())
       .then(action(json => {
         this.data = json.data;
@@ -221,6 +231,10 @@ class UserState {
         if (res.status === 400) {
           this.data.customMessage = "\"" + userid + "\" is not a valid User ID";
         }
+        // 401: invalid credentials
+        else if (res.status === 401) {
+          this.data.customMessage = "Invalid API credentials";
+        }
         // 404: userid not found
         else if (res.status === 404) {
           this.data.customMessage = "User ID \"" + userid + "\" not found";
@@ -237,7 +251,6 @@ class UserState {
             this.loading = false;
           }));
       }));
-
   }
 
   @computed get isInfoUser() {

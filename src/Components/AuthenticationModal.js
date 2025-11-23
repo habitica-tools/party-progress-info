@@ -17,25 +17,30 @@ class AuthenticationModal extends Component {
   render() {
     return (
       <div class="ui mini modal active">
-        <div class="header">Authenticate
-          <button class="ui icon right floated button" onClick={this.Close}>
-            <i class="close icon"></i>
-          </button>
-        </div>
+        <div class="header">Authenticate</div>
         <div class="content">
           <label>User ID: </label>
           <input
             className="user-id"
-            autoFocus={true} value={this.state.userId} onChange={this.onUserIdChange}
+            maxLength={37}
+            autoFocus={true}
+            value={this.state.userId}
+            onChange={this.onUserIdChange}
           /><p />
           <label>API Token: </label>
           <input
             className="user-key"
             type="password"
-            autoFocus={true} value={this.state.key} onChange={this.onKeyChange}
+            maxLength={37}
+            value={this.state.key}
+            onChange={this.onKeyChange}
+            onKeyDown={(this.userAndKeyAreValid ? this.onKeyDown : null)}
           />
           <p />
-          <div class="ui blue button" onClick={this.AddAuth}><i class="users icon"></i> Authenticate</div>
+          <div
+            onClick={this.addAuth}
+            class={"ui blue button" + (this.userAndKeyAreValid ? "" : " disabled")}
+          ><i class="users icon"></i> Authenticate</div>
           <div style="white-space: pre-line;" class="ui icon right floated button" data-bs-html="true" data-tooltip="Habitica API does not allow fetching user info without authentication any more.&#xa;You can find your User ID and API Token in Habitica.com -> User -> Settings -> Site Data.&#xa;Your credentials are not saved, this modal will pop up again after site refresh." data-position="right center">
             <i class="info icon"></i>
           </div>
@@ -44,8 +49,11 @@ class AuthenticationModal extends Component {
     );
   }
 
-  @action populateUserId = (userId) => {
-    this.setState({ userId: userId });
+  get userAndKeyAreValid() {
+    return (
+      this.props.store.api.isValidToken(this.state.userId)
+      && this.props.store.api.isValidToken(this.state.key)
+    );
   }
 
   @action onUserIdChange = (e) => {
@@ -56,17 +64,20 @@ class AuthenticationModal extends Component {
     this.setState({ key: e.target.value });
   }
 
-  @action AddAuth = () => {
-    this.props.store.addAuth(this.state.userId, this.state.key);
-    this.setState({ userId: "", key: "" });
+  @action onKeyDown = (e) => {
+    if (e.key === "Enter") {
+      this.addAuth();
+    }
+  }
+
+  @action addAuth = () => {
+    this.props.store.api.setCredentials(this.state.userId, this.state.key);
+
     this.props.store.reloadUsers();
-    this.Close();
-  }
+    this.props.store.addUser(this.state.userId);
 
-  Close = (e) => {
-    this.props.parent.hideAuthenticationModal();
+    this.setState({ userId: "", key: "" });
   }
-
 }
 
 
