@@ -1,19 +1,17 @@
 const path = require('path');
-const isProd = (process.env.NODE_ENV === 'production');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
-
-    //input
+config = {
+    // input
     entry: ['./src'],
 
-    //output
+    // output
     output: {
         path: path.join(__dirname, 'build'),
         filename: 'bundle.js'
     },
 
-    //transformations
+    // transformations
     module: {
         rules: [
             {
@@ -24,7 +22,7 @@ module.exports = {
         ]
     },
 
-    //resolves
+    // resolves
     resolve: {
         alias: {
             "react": "preact/compat",
@@ -34,18 +32,24 @@ module.exports = {
         },
     },
 
-    //sourcemaps
-    devtool: 'source-map',
-
+    // plugins
     plugins: [new HtmlWebpackPlugin({
         template: './src/index.html',
         favicon: "./src/favicon.ico"
     })],
 
-    //server
+    // server
     devServer: {
         static: path.join(__dirname, 'src'),
         compress: true,
         historyApiFallback: true
     }
+}
+
+module.exports = (_, argv) => {
+    if (argv.mode === 'development') {
+        config.devtool = 'source-map';
+    }
+
+    return config;
 }
