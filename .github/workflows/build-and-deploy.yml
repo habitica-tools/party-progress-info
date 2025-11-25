@@ -4,70 +4,24 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - '**'
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Enable corepack
-        run: corepack enable
-      - name: Install dependencies
-        run: yarn install
-      - name: Lint
-        run: yarn run lint
+    uses: ./.github/workflows/lint.yml
 
   build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Enable corepack
-        run: corepack enable
-      - name: Install dependencies
-        run: yarn install
-      - name: Build
-        run: yarn run build
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: dist/
+    uses: ./.github/workflows/build.yml
 
   deploy-staging:
-    needs: [build]
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push'
-    environment: staging
-    steps:
-      - name: Checkout repository for GitHub Pages
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ github.repository_owner }}/${{ github.repository_owner }}.github.io
-          ssh-key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist
-      - name: Prepare Deployment
-        run: |
-          TARGET_PATH=${{ vars.DEPLOYMENT_PATH_PREFIX }}/${{ github.event.repository.name }}
-          mkdir -p $TARGET_PATH
-          rm -rf $TARGET_PATH/*
-          cp -r ./dist/* $TARGET_PATH/
-          rm -rf ./dist
-      - name: Deploy to GitHub Pages repository
-        run: |
-          git status
-          if git diff --quiet --exit-code && [[ -z "$(git ls-files --others --exclude-standard)" ]]; then
-            echo 'No changes to deploy'
-            exit 0
-          fi
-          git config user.name "${{ github.event.pusher.name }}"
-          git config user.email "${{ github.event.pusher.email }}"
-          git add --all
-          git commit -m "${{ vars.DEPLOYMENT_COMMIT_MESSAGE }}: ${{ github.repository }}@${{ github.sha }}"
-          git push
+    needs: [lint, build]
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: staging
+    secrets: inherit
+
+  deploy-production:
+    needs: [deploy-staging]
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: production
+    secrets: inherit
