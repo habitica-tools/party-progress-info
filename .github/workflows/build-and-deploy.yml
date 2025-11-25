@@ -21,6 +21,7 @@ jobs:
 
   deploy-production:
     needs: [deploy-staging]
+    if: needs.deploy-staging.changes == 'true'
     uses: ./.github/workflows/deploy.yml
     with:
       environment: production

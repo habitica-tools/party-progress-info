@@ -9,6 +9,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
+    outputs:
+      changes: ${{ steps.deploy-to-github-pages.outputs.changes }}
     steps:
       - name: Checkout repository for GitHub Pages
         uses: actions/checkout@v4
@@ -28,10 +30,12 @@ jobs:
           cp -r ./dist/* $TARGET_PATH/
           rm -rf ./dist
       - name: Deploy to GitHub Pages repository
+        id: deploy-to-github-pages
         run: |
           git status
           if git diff --quiet --exit-code && [[ -z "$(git ls-files --others --exclude-standard)" ]]; then
-            echo 'No changes to deploy'
+            echo "No changes to deploy"
+            echo "changes=false" >> $GITHUB_OUTPUT
             exit 0
           fi
           git config user.name "${{ github.event.pusher.name }}"
@@ -39,3 +43,4 @@ jobs:
           git add --all
           git commit -m "${{ vars.DEPLOYMENT_COMMIT_MESSAGE }}: ${{ github.repository }}@${{ github.sha }}"
           git push
+          echo "changes=true" >> $GITHUB_OUTPUT
