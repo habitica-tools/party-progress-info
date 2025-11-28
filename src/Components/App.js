@@ -229,23 +229,23 @@ class App extends Component {
               <div class="three wide column">
                 <h4 class="ui inverted header">Code</h4>
                 <div class="ui inverted link list">
-                  <a class="item" href="https://bitbucket.org/pietervanh/habitica-tools"><i class="bitbucket square icon"></i>Git Repository</a>
+                  <a class="item" href="https://github.com/habitica-tools/party-progress-info"><i class="github square icon"></i>GitHub Repository</a>
                 </div>
               </div>
               <div class="three wide column">
                 <h4 class="ui inverted header">Copyright</h4>
-                <p class="item">Some Assets are linked from <a href="https://habitica.com">HabitRPG</a> which are licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC-BY-NC-SA 3.0</a></p>
+                <p class="item">Most assets are linked from <a href="https://habitica.com">Habitica</a> which are licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC-BY-NC-SA 3.0</a></p>
               </div>
               <div class="three wide column">
                 <h4 class="ui inverted header">Other Info</h4>
                 <div class="ui inverted link list">
-                  <a class="item" href="http://habitica.wikia.com/wiki/Party_Progress_Info">Wiki</a>
+                  <a class="item" href="https://habitica.wikia.com/wiki/Party_Progress_Info">Wiki</a>
                 </div>
               </div>
               <div class="three wide column">
                 <h4 class="ui inverted header">Related Links</h4>
                 <div class="ui inverted link list">
-                  <a class="item" href="http://habitica.com">Habitica</a>
+                  <a class="item" href="https://habitica.com">Habitica</a>
                   <a class="item" href="https://oldgods.net/habitica/cTheDragons/feed.html">Bulk Feed Pets Tool</a>
                   <a class="item" href="https://oldgods.net/habitica/cTheDragons/group.html">Party &amp; Guild Data Tool</a>
                 </div>
