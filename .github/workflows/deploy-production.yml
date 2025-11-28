@@ -1,0 +1,19 @@
+name: Deploy to Production
+
+on:
+  workflow_run:
+    workflows: ["Build and Deploy to Staging"]
+    types:
+      - completed
+
+concurrency:
+  group: deploy-to-production
+  cancel-in-progress: true
+
+jobs:
+  deploy-production:
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: production
+      artifact-run-id: ${{ github.event.workflow_run.id }}
+    secrets: inherit
