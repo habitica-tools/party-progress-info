@@ -9,6 +9,12 @@ on:
       artifact-run-id:
         required: true
         type: string
+      author-name:
+        required: true
+        type: string
+      author-email:
+        required: true
+        type: string
 
 jobs:
   deploy:
@@ -45,8 +51,10 @@ jobs:
             echo "changes=false" >> $GITHUB_OUTPUT
             exit 0
           fi
-          git config user.name "${{ github.event.pusher.name }}"
-          git config user.email "${{ github.event.pusher.email }}"
+          git config author.name "${{ inputs.author-name }}"
+          git config author.email "${{ inputs.author-email }}"
+          git config committer.name "GitHub Actions"
+          git config committer.email "noreply@github.com"
           git add --all
           git commit -m "${{ vars.DEPLOYMENT_COMMIT_MESSAGE }}: ${{ github.repository }}@${{ github.sha }}"
           git push

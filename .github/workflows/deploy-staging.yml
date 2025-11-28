@@ -22,4 +22,6 @@ jobs:
     with:
       environment: staging
       artifact-run-id: ${{ github.run_id }}
+      author-name: ${{ github.event.pusher.name }}
+      author-email: ${{ github.event.pusher.email }}
     secrets: inherit

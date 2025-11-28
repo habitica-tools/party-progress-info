@@ -16,4 +16,6 @@ jobs:
     with:
       environment: production
       artifact-run-id: ${{ github.event.workflow_run.id }}
+      author-name: ${{ github.event.workflow_run.actor.login }}
+      author-email: ${{ github.event.workflow_run.actor.id }}+${{ github.event.workflow_run.actor.login }}@users.noreply.github.com
     secrets: inherit
