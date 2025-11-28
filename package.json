@@ -1,6 +1,6 @@
 {
-  "name": "habitica-party-tools",
-  "version": "0.0.3",
+  "name": "habitica-party-progress-info",
+  "version": "0.1.0",
   "license": "MIT",
   "scripts": {
     "lint": "npx eslint .",
