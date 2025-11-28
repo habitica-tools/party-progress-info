@@ -104,23 +104,28 @@ class App extends Component {
               </div>
               <div class="ui message">
                 <div class="header"><i class="address card outline icon"></i>Contact</div>
-                <p>If you have suggestions for improvement for this tool you can always contact me on Habitica, my UserID = d3c5312b-0e53-4cbc-b836-4c2a63e0ff06 with handle @EstGoddess.</p>
-                <p>Log a Ticket on <a href="https://bitbucket.org/DAlgma/habitica-tools">Bitbucket</a></p>
-                <p>Or you can just say hi to me if you like this tool as well :)</p>
-                <p>This tool was originally created by PRoeleert in 2017 and in 2021 he gave it to me to maintain.</p>
-                <p>If you want to support <b>me</b>, then feel free to</p>
-                <p><a href='https://ko-fi.com/J3J66K0NE' target='_blank' rel="noreferrer"><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi3.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a></p>
-                <p>If you want to support <b>the original creator</b> of this page, PRoeleert, then:</p>
-                <p><a href='https://ko-fi.com/J3J0AMLQ' target='_blank' rel="noreferrer"><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi5.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a></p>
+                <p>
+                  If you have questions or improvement suggestions for this tool, please open an issue in the <a href="https://github.com/habitica-tools/party-progress-info/issues">GitHub repository</a>.<br />
+                  Alternatively, you can contact me <i>(@Turac)</i> on Habitica using my User ID <a href="https://habitica.com/profile/b477462a-5bb5-4040-9505-f0b049b4f0bb">b477462a-5bb5-4040-9505-f0b049b4f0bb</a>.</p>
+                <p>This tool was originally created by <i>@PRoeleert</i> in 2017 and in 2021 he gave it to <i>@EstGoddess</i> to maintain. Since 2025, the tool is in my hands.</p>
+                <p>Feel free, to show your appreciation towards the original creator and the previous maintainer:</p>
+                <div class="kofi-container">
+                  <b>@EstGoddess</b>
+                  <a href='https://ko-fi.com/J3J66K0NE' target='_blank' rel="noreferrer">
+                    <img class="kofi-button" src='https://cdn.ko-fi.com/cdn/kofi3.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+                  </a>
+                  <b>@PRoeleert</b>
+                  <a href='https://ko-fi.com/J3J0AMLQ' target='_blank' rel="noreferrer">
+                    <img class="kofi-button" src='https://cdn.ko-fi.com/cdn/kofi3.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+                  </a>
+                </div>
               </div>
               <div class="ui message">
                 <div class="header"><i class="address card outline icon"></i>Privacy Policy</div>
-                <p>I provide this application, for free of use. I am not in the business of selling your personal information to access this app.</p>
-                <p>I may use the following third party services with anonymised data to analyse our usage and performance</p>
-                <p>Third Party Services:
+                <p>This application is provided at no cost and comes with no warranty or assurance of suitability for any particular purpose.</p>
+                <p>It doesn't sell your personal information, but uses the following third party services with anonymised data to analyse usage and performance:
                   <ul>
                     <li><a href="https://privacy.google.com/businesses/compliance">Google Analytics</a></li>
-                    <li><a href="https://surge.sh/tour">Surge.sh</a></li>
                   </ul>
                 </p>
               </div>
@@ -134,7 +139,7 @@ class App extends Component {
           {store.menupage !== "about" &&
             <div class="ui fluid container">
               <div class="ui info ignored message">
-                <i class="help circle icon"></i>Goto the <a href="#" onClick={this.gotoAbout}>Help About Section</a> for info on how to use this Tool.
+                <i class="help circle icon"></i>Go to the <a href="#" onClick={this.gotoAbout}>Help & About section</a> for info on how to use this tool.
               </div>
               <Settings store={store} />
             </div>
