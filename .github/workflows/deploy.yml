@@ -6,6 +6,9 @@ on:
       environment:
         required: true
         type: string
+      artifact-run-id:
+        required: true
+        type: string
 
 jobs:
   deploy:
@@ -24,6 +27,8 @@ jobs:
         with:
           name: dist
           path: ./dist
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ inputs.artifact-run-id }}
       - name: Prepare Deployment
         run: |
           TARGET_PATH=${{ vars.DEPLOYMENT_PATH_PREFIX }}/${{ github.event.repository.name }}
