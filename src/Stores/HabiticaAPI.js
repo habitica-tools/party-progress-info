@@ -1,7 +1,7 @@
 import { observable, action, computed } from "mobx";
 
 const HABITICA_API_URL = 'https://habitica.com/api/v3/';
-const XCLIENT_HEADER = 'd3c5312b-0e53-4cbc-b836-4c2a63e0ff06-HabiticaPartyProgressInfo';
+const XCLIENT_HEADER = 'b477462a-5bb5-4040-9505-f0b049b4f0bb-HabiticaPartyProgressInfo';
 
 class RateLimit {
   limit = null;
