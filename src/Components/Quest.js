@@ -6,7 +6,7 @@ class Quest extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
 
   render() {
-    const { quest, id } = this.props;
+    const { quest } = this.props;
 
     return (
       <div class="item-wrapper">
@@ -19,8 +19,8 @@ class Quest extends Component {
               {quest.selectedcount}
             </span>
           )}
-          <span class={'item-content Quest inventory_quest_scroll_' + id} id={id} onClick={this.showQuestInfo} >
-            <img src={this.imageurl + 'inventory_quest_scroll_' + id + '.png'} alt={id} />
+          <span class={'item-content Quest inventory_quest_scroll_' + quest.id} id={quest.id} onClick={this.showQuestInfo} >
+            <img src={this.imageurl + 'inventory_quest_scroll_' + quest.id + '.png'} alt={quest.id} />
           </span>
         </div>
       </div>

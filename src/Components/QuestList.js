@@ -23,7 +23,7 @@ class QuestList extends Component {
               store.quests.entries().filter(this.categoryFilter)
                 .filter(([_, quest]) => (this.showAll ? quest : quest.users.length > 0))
                 .map(([id, quest]) => (
-                  <Quest quest={quest} id={id} questlist={this} />
+                  <Quest quest={quest} questlist={this} />
                 )),
             )}
           </div>
