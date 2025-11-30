@@ -93,7 +93,7 @@ class HabiticaAPI {
   }
 
   deleteOldCacheEntries() {
-    let keys = [];
+    const keys = [];
     for (let i = 0; i < localStorage.length; i++) {
       keys.push(localStorage.key(i));
     }
@@ -104,17 +104,17 @@ class HabiticaAPI {
     });
     entries = entries
       .map(({key, item}) => {
-        let data = JSON.parse(item);
-        let age = now - data.timestamp;
+        const data = JSON.parse(item);
+        const age = now - data.timestamp;
 
         if (data !== null && (data.duration === undefined || age >= data.duration)) {
           localStorage.removeItem(key);
           return {key: key, age: null};
         }
 
-        let size = new Blob([item]).size;
+        const size = new Blob([item]).size;
         // keep non-credentialed cache entries first
-        let priority = key.indexOf('|') === -1 ? 1 : 0;
+        const priority = key.indexOf('|') === -1 ? 1 : 0;
         return {key: key, age: age, size: size, priority: priority};
       })
       .filter((entry) => {
@@ -123,9 +123,9 @@ class HabiticaAPI {
       .sort((a, b) => b.age - a.age)
       .sort((a, b) => a.priority - b.priority);
 
-    let totalSize = entries.reduce((prev, entry) => prev + entry.size, 0);
+    const totalSize = entries.reduce((prev, entry) => prev + entry.size, 0);
     let sizeReduction = 0;
-    for (let entry of entries) {
+    for (const entry of entries) {
       // stop when under 4MB
       if (totalSize - sizeReduction <= 4 * 1024 * 1024) break;
 
@@ -136,9 +136,9 @@ class HabiticaAPI {
 
   cachedFetch(url, requiresCredentials = false, cacheDuration = null) {
     if (cacheDuration !== null) {
-      let cachedItem = localStorage.getItem(this.cacheKey(url, requiresCredentials));
+      const cachedItem = localStorage.getItem(this.cacheKey(url, requiresCredentials));
       if (cachedItem !== null) {
-        let cachedData = JSON.parse(cachedItem);
+        const cachedData = JSON.parse(cachedItem);
 
         if ((Date.now() - cachedData.timestamp) < cacheDuration) {
           return Promise.resolve(cachedData.data);
@@ -149,7 +149,7 @@ class HabiticaAPI {
       }
     }
 
-    let promise = this.fetch(url, requiresCredentials)
+    const promise = this.fetch(url, requiresCredentials)
       .then(res => res.json());
 
     if (cacheDuration === null) return promise;
@@ -172,7 +172,7 @@ class HabiticaAPI {
   }
 
   fetch(url, requiresCredentials = false) {
-    let headers = {
+    const headers = {
       'x-client': XCLIENT_HEADER
     }
 
@@ -224,13 +224,13 @@ class HabiticaAPI {
     return new Promise((resolve, reject) => {
       window.fetch(url, params)
         .then(res => {
-          let retryAfter = this.rateLimit.update(res.headers);
+          const retryAfter = this.rateLimit.update(res.headers);
 
           if (res.ok) {
             resolve(res);
           }
           else if (res.status === 429 && retriesLeft > 0 && retryAfter !== null) {
-            let retryAfterMS = Math.ceil(retryAfter + 1) * 1000;
+            const retryAfterMS = Math.ceil(retryAfter + 1) * 1000;
 
             setTimeout(() => {
               this.fetch_retry(url, params, retriesLeft - 1).then(resolve, reject);

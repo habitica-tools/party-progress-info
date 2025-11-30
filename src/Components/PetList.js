@@ -20,9 +20,9 @@ class PetList extends Component {
   }
 
   @computed get petCategoriesWithCounts() {
-    let pets = [...this.store.petCategories].map(function (category) {
-      let petdetail = { id: category };
-      let categorypets = [...this.store.pets].filter(([id, pet]) => pet.basetype === category);
+    const pets = [...this.store.petCategories].map(function (category) {
+      const petdetail = { id: category };
+      const categorypets = [...this.store.pets].filter(([id, pet]) => pet.basetype === category);
       petdetail.needed = categorypets.reduce((prevVal, [id, pet]) => prevVal + pet.needed, 0);
       petdetail.count = categorypets.reduce((prevVal, [id, pet]) => prevVal + pet.count, 0);
       petdetail.selectedcount = categorypets.reduce((prevVal, [id, pet]) => prevVal + pet.selectedcount, 0);
@@ -78,7 +78,7 @@ class PetList extends Component {
       return (<div class="ui active centered inline loader"></div>);
     }
     else {
-      let totalpercentage = store.totalCountPetsParty > 0 ? parseFloat(store.totalCountPetsParty / (store.totalCountPets / 100)).toFixed(2) : '0'
+      const totalpercentage = store.totalCountPetsParty > 0 ? parseFloat(store.totalCountPetsParty / (store.totalCountPets / 100)).toFixed(2) : '0'
 
       return (
         <div>

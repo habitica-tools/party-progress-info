@@ -106,7 +106,7 @@ class AppStore {
         const questEggKeys = new Map(Object.entries(json.data.questEggs));
 
         new Map(Object.entries(json.data.eggs)).forEach(function (value, key) {
-          let egg = new EggState(value);
+          const egg = new EggState(value);
           if (questEggKeys.has(key)) questEggs.set(key, egg);
           else baseEggs.set(key, egg);
         }, this);
@@ -136,7 +136,7 @@ class AppStore {
   }
 
   @action loadQueryString() {
-    let queryParty = this.getQueryVariable('party');
+    const queryParty = this.getQueryVariable('party');
     if (queryParty !== null) {
       this.loadParty = true;
       this.addParty();
@@ -195,7 +195,7 @@ class AppStore {
     });
 
     // also remove it from eggs
-    for (let category of this.eggs.categories) {
+    for (const category of this.eggs.categories) {
       this.eggs[category].forEach(function (egg) {
         egg.removeUser(user);
       });
@@ -222,40 +222,40 @@ class AppStore {
   }
 
   @computed get petCategories() {
-    let categories = new Set();
-    let pets = [...this.pets].map(([id, pet]) => pet)
+    const categories = new Set();
+    const pets = [...this.pets].map(([id, pet]) => pet)
 
-    for (let pet of pets) {
+    for (const pet of pets) {
       categories.add(pet.basetype);
     }
     return categories;
   }
 
   @computed get basepetCategories() {
-    let categories = new Set();
-    let pets = [...this.basepets].map(([id, pet]) => pet)
+    const categories = new Set();
+    const pets = [...this.basepets].map(([id, pet]) => pet)
 
-    for (let pet of pets) {
+    for (const pet of pets) {
       categories.add(pet.basetype);
     }
     return categories;
   }
 
   @computed get premiumpetCategories() {
-    let categories = new Set();
-    let pets = [...this.premiumpets].map(([id, pet]) => pet)
+    const categories = new Set();
+    const pets = [...this.premiumpets].map(([id, pet]) => pet)
 
-    for (let pet of pets) {
+    for (const pet of pets) {
       categories.add(pet.basetype);
     }
     return categories;
   }
 
   @computed get premiumhatchingpotionCategories() {
-    let categories = new Set();
-    let potions = [...this.premiumhatchingpotions].map(([id, potion]) => potion)
+    const categories = new Set();
+    const potions = [...this.premiumhatchingpotions].map(([id, potion]) => potion)
 
-    for (let potion of potions) {
+    for (const potion of potions) {
       categories.add(potion.id);
     }
     return categories;
@@ -389,9 +389,9 @@ class AppStore {
   }
 
   setQueryVariable = function () {
-    let userQueryString = this.userQueryString;
+    const userQueryString = this.userQueryString;
 
-    let searchParams = [];
+    const searchParams = [];
     if (this.loadParty) searchParams.push('party=true');
     if (userQueryString !== '') searchParams.push('users=' + this.userQueryString);
 
@@ -399,7 +399,7 @@ class AppStore {
   }
 
   getQueryVariable = function (variable) {
-    let urlSearchParams = new URLSearchParams(window.location.search);
+    const urlSearchParams = new URLSearchParams(window.location.search);
     return urlSearchParams.get(variable);
   }
 

@@ -19,8 +19,8 @@ class BackgroundList extends Component {
   }
 
   @computed get backgroundsWithCounts() {
-    let backgrounds = [...this.store.backgrounds].map(function (background) {
-      let backgroundDetail = background[1];
+    const backgrounds = [...this.store.backgrounds].map(function (background) {
+      const backgroundDetail = background[1];
       return backgroundDetail;
     }, this);
 

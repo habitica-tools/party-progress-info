@@ -25,9 +25,9 @@ class PremiumPetList extends Component {
       quest.data.category === 'timeTravelers' && quest.data.drop.items[0].type === 'hatchingPotions'
     ).map(x => x[1].data.drop.items[0].key));
 
-    let pets = [...this.store.premiumhatchingpotionCategories].map(function (category) {
-      let petdetail = { id: category };
-      let categorypets = [...this.store.premiumpets].filter(([id, pet]) => pet.potiontype === category);
+    const pets = [...this.store.premiumhatchingpotionCategories].map(function (category) {
+      const petdetail = { id: category };
+      const categorypets = [...this.store.premiumpets].filter(([id, pet]) => pet.potiontype === category);
       petdetail.needed = categorypets.reduce((prevVal, [id, pet]) => prevVal + pet.needed, 0);
       petdetail.count = categorypets.reduce((prevVal, [id, pet]) => prevVal + pet.count, 0);
       petdetail.selectedcount = categorypets.reduce((prevVal, [id, pet]) => prevVal + pet.selectedcount, 0);
@@ -84,7 +84,7 @@ class PremiumPetList extends Component {
       return (<div class="ui active centered inline loader"></div>);
     }
     else {
-      let totalpercentage = store.totalCountPremiumPetsParty > 0 ? parseFloat(store.totalCountPremiumPetsParty / (store.totalCountPremiumPets / 100)).toFixed(2) : '0'
+      const totalpercentage = store.totalCountPremiumPetsParty > 0 ? parseFloat(store.totalCountPremiumPetsParty / (store.totalCountPremiumPets / 100)).toFixed(2) : '0'
 
       return (
         <div>

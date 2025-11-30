@@ -24,6 +24,12 @@ export default defineConfig([
             '@stylistic/eol-last': ['warn', 'never'],
             '@stylistic/jsx-quotes': ['warn', 'prefer-double'],
             '@stylistic/quotes': ['warn', 'single', { 'avoidEscape': true }],
+
+            'prefer-const': ['warn', {
+                'destructuring': 'any',
+                'ignoreReadBeforeAssign': true,
+            }],
+
             'sort-imports': ['warn', {
                 'allowSeparatedGroups': true,
             }],

@@ -19,8 +19,8 @@ class PremiumHatchingPotionList extends Component {
   }
 
   @computed get potionsWithCounts() {
-    let potions = [...this.store.premiumhatchingpotions].map(function (potioninfo) {
-      let potiondetail = potioninfo;
+    const potions = [...this.store.premiumhatchingpotions].map(function (potioninfo) {
+      const potiondetail = potioninfo;
       potiondetail.count = [...this.store.premiumhatchingpotions].filter(([id, potion]) => potion.id === potioninfo[0]).reduce((prevVal, [id, potion]) => prevVal + potion.count, 0);
       return potiondetail;
     }, this).filter(potion => potion.count > 0);

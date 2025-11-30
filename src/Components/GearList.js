@@ -20,8 +20,8 @@ class GearList extends Component {
   }
 
   @computed get gearWithCounts() {
-    let gear = [...this.store.gear].map(function (gearinfo) {
-      let geardetail = gearinfo[1];
+    const gear = [...this.store.gear].map(function (gearinfo) {
+      const geardetail = gearinfo[1];
       return geardetail;
     }, this).filter(geari => geari.count > 0);
 

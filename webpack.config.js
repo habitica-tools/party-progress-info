@@ -1,7 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-let config = {
+const config = {
     // input
     entry: ['./src'],
 

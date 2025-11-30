@@ -34,8 +34,8 @@ class User extends Component {
       );
     }
     else {
-      let mp = user.data.stats.mp / (user.data.stats.maxMP / 100) > 100 ? 100 : user.data.stats.mp / (user.data.stats.maxMP / 100);
-      let hp = user.data.stats.hp / (user.data.stats.maxHealth / 100) > 100 ? 100 : user.data.stats.hp / (user.data.stats.maxHealth / 100);
+      const mp = user.data.stats.mp / (user.data.stats.maxMP / 100) > 100 ? 100 : user.data.stats.mp / (user.data.stats.maxMP / 100);
+      const hp = user.data.stats.hp / (user.data.stats.maxHealth / 100) > 100 ? 100 : user.data.stats.hp / (user.data.stats.maxHealth / 100);
       return (
         <div class={this.isSelectedUser() ? 'card blue' : 'card'}>
           <div class="content">
