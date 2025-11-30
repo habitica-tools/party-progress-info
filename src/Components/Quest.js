@@ -28,7 +28,7 @@ class Quest extends Component {
   }
 
   showQuestInfo = (e) => {
-    this.props.questlist.showInfo(this.props.quest);
+    this.props.questList.showInfo(this.props.quest);
   }
 }
 
