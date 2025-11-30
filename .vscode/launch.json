@@ -13,8 +13,8 @@
             "webRoot": "${workspaceRoot}/src",
             "sourceMaps": true,
             "sourceMapPathOverrides": {
-                "webpack://habitica-party-tools/./src/*": "${workspaceRoot}/src/*",
-                "webpack://habitica-party-tools/./node_modules/*": "${workspaceRoot}/node_modules/*"
+                "webpack://habitica-party-progress-info/./src/*": "${workspaceRoot}/src/*",
+                "webpack://habitica-party-progress-info/./node_modules/*": "${workspaceRoot}/node_modules/*",
             },
             "trace": true
         }
