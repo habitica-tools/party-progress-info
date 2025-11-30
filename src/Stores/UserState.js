@@ -114,7 +114,7 @@ class UserState {
         this.loading = false;
         //go over quests
         if (json.data.items.quests !== undefined) {
-          var quests = new Map(Object.entries(json.data.items.quests));
+          let quests = new Map(Object.entries(json.data.items.quests));
           quests.forEach(function (value, key) {
             if (value > 0)
               this.store.quests.get(key).addUser(this);
@@ -122,24 +122,24 @@ class UserState {
         }
         //go over questpets / base pets / premium pets
         if (json.data.items.pets !== undefined) {
-          var pets = new Map(Object.entries(json.data.items.pets));
+          let pets = new Map(Object.entries(json.data.items.pets));
           pets.forEach(function (value, key) {
             if (key !== null && key !== undefined) { //TODO: redundant?
-              var pet = this.store.pets.get(key);
+              let pet = this.store.pets.get(key);
               if (pet !== undefined) {
                 pet.addUser(this);
                 if (value > 0) {
                   pet.addUserWithPet(this);
                 }
               }
-              var basepet = this.store.basepets.get(key);
+              let basepet = this.store.basepets.get(key);
               if (basepet !== undefined) {
                 basepet.addUser(this);
                 if (value > 0) {
                   basepet.addUserWithPet(this);
                 }
               }
-              var premiumpet = this.store.premiumpets.get(key);
+              let premiumpet = this.store.premiumpets.get(key);
               if (premiumpet !== undefined) {
                 premiumpet.addUser(this);
                 if (value > 0) {
@@ -149,16 +149,16 @@ class UserState {
             }
           }, this);
           if (json.data.items.mounts !== undefined) {
-            var mounts = new Map(Object.entries(json.data.items.mounts));
+            let mounts = new Map(Object.entries(json.data.items.mounts));
             mounts.forEach(function (value, key) {
               if (key !== null && key !== undefined && value !== null && value === true) {
-                var pet = this.store.pets.get(key);
+                let pet = this.store.pets.get(key);
                 if (pet !== undefined)
                   pet.addUserWithMount(this);
-                var basepet = this.store.basepets.get(key);
+                let basepet = this.store.basepets.get(key);
                 if (basepet !== undefined)
                   basepet.addUserWithMount(this);
-                var premiumpet = this.store.premiumpets.get(key);
+                let premiumpet = this.store.premiumpets.get(key);
                 if (premiumpet !== undefined)
                   premiumpet.addUserWithMount(this);
               }
@@ -168,7 +168,7 @@ class UserState {
 
         //go over eggs
         if (json.data.items.eggs !== undefined) {
-          var eggs = new Map(Object.entries(json.data.items.eggs));
+          let eggs = new Map(Object.entries(json.data.items.eggs));
           eggs.forEach(function (value, key) {
             if (value > 0 && key !== null && key !== undefined) {
               for (let category of this.store.eggs.categories) {
@@ -184,10 +184,11 @@ class UserState {
 
         //go over hatching potions
         if (json.data.items.hatchingPotions !== undefined) {
-          var potions = new Map(Object.entries(json.data.items.hatchingPotions));
+          let potions = new Map(Object.entries(json.data.items.hatchingPotions));
           potions.forEach(function (value, key) {
+            let potion;
             if (key !== null && key !== undefined)
-              var potion = this.store.premiumhatchingpotions.get(key);
+              potion = this.store.premiumhatchingpotions.get(key);
             if (potion !== undefined)
               if (value > 0) {
                 potion.addUser(this);
@@ -197,10 +198,12 @@ class UserState {
 
         //go over gear
         if (json.data.items.gear !== undefined) {
-          var gear = new Map(Object.entries(json.data.items.gear.owned));
+          let gear = new Map(Object.entries(json.data.items.gear.owned));
           gear.forEach(function (value, key) {
-            if (key !== null && key !== undefined)
-              var gear = this.store.gear.get(key);
+            let gear;
+            if (key !== null && key !== undefined) {
+              gear = this.store.gear.get(key);
+            }
             if (gear !== undefined)
               if (value > 0) {
                 gear.addUser(this);

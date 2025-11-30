@@ -48,7 +48,6 @@ export default defineConfig([
             'react/self-closing-comp': ['off'],
             'react/no-did-mount-set-state': ['off'],
             'react/jsx-key': ['off'],
-            'no-var': ['off'],
             'prefer-template': ['off'],
             'prefer-arrow-callback': ['off'],
             'no-else-return': ['off'],

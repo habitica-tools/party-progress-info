@@ -13,7 +13,7 @@ class HatchingPotionState {
   }
 
   @computed get count() {
-    var count = 0;
+    let count = 0;
     this.users.forEach(function (value, index, array) {
       if (value.data.items.hatchingPotions[this.id] !== undefined) {
         count = count + value.data.items.hatchingPotions[this.id]
@@ -34,7 +34,7 @@ class HatchingPotionState {
   }
 
   @computed get selectedcount() {
-    var count = 0;
+    let count = 0;
     count = this.users.filter(u => u.isInfoUser)
       .reduce((prevVal, user) => prevVal + (user.data.items.hatchingPotions[this.id] !== undefined ? user.data.items.hatchingPotions[this.id] : 0), count);
     return count;

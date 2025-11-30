@@ -31,7 +31,7 @@ class PetState {
   }
 
   @computed get needed() {
-    var count = 0;
+    let count = 0;
     count = this.store.countValidUsers() * 2;
     this.users.forEach(function (value, index, array) {
       if (value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
@@ -45,7 +45,7 @@ class PetState {
   }
 
   @computed get petsNeeded() {
-    var count = 0;
+    let count = 0;
     count = this.store.countValidUsers();
     this.users.forEach(function (value, index, array) {
       if (value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
@@ -56,7 +56,7 @@ class PetState {
   }
 
   @computed get mountsNeeded() {
-    var count = 0;
+    let count = 0;
     count = this.store.countValidUsers();
     this.users.forEach(function (value, index, array) {
       if (value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
@@ -67,7 +67,7 @@ class PetState {
   }
 
   @computed get count() {
-    var count = 0;
+    let count = 0;
     this.users.forEach(function (value, index, array) {
       if (value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
         count = count + 1;
@@ -80,7 +80,7 @@ class PetState {
   }
 
   @computed get petCount() {
-    var count = 0;
+    let count = 0;
     this.users.forEach(function (value, index, array) {
       if (value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
         count = count + 1;
@@ -90,7 +90,7 @@ class PetState {
   }
 
   @computed get mountCount() {
-    var count = 0;
+    let count = 0;
     this.users.forEach(function (value, index, array) {
       if (value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
         count = count + 1;

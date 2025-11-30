@@ -136,13 +136,13 @@ class AppStore {
   }
 
   @action loadQueryString() {
-    var queryParty = this.getQueryVariable('party');
+    let queryParty = this.getQueryVariable('party');
     if (queryParty !== null) {
       this.loadParty = true;
       this.addParty();
     }
 
-    var queryStringUsers = this.getQueryVariable('users');
+    let queryStringUsers = this.getQueryVariable('users');
     if (queryStringUsers !== null) {
       queryStringUsers = decodeURIComponent(queryStringUsers);
       queryStringUsers.split('|').forEach(function (val, index) {
@@ -222,40 +222,40 @@ class AppStore {
   }
 
   @computed get petCategories() {
-    var categories = new Set();
-    var pets = [...this.pets].map(([id, pet]) => pet)
+    let categories = new Set();
+    let pets = [...this.pets].map(([id, pet]) => pet)
 
-    for (var pet of pets) {
+    for (let pet of pets) {
       categories.add(pet.basetype);
     }
     return categories;
   }
 
   @computed get basepetCategories() {
-    var categories = new Set();
-    var pets = [...this.basepets].map(([id, pet]) => pet)
+    let categories = new Set();
+    let pets = [...this.basepets].map(([id, pet]) => pet)
 
-    for (var pet of pets) {
+    for (let pet of pets) {
       categories.add(pet.basetype);
     }
     return categories;
   }
 
   @computed get premiumpetCategories() {
-    var categories = new Set();
-    var pets = [...this.premiumpets].map(([id, pet]) => pet)
+    let categories = new Set();
+    let pets = [...this.premiumpets].map(([id, pet]) => pet)
 
-    for (var pet of pets) {
+    for (let pet of pets) {
       categories.add(pet.basetype);
     }
     return categories;
   }
 
   @computed get premiumhatchingpotionCategories() {
-    var categories = new Set();
-    var potions = [...this.premiumhatchingpotions].map(([id, potion]) => potion)
+    let categories = new Set();
+    let potions = [...this.premiumhatchingpotions].map(([id, potion]) => potion)
 
-    for (var potion of potions) {
+    for (let potion of potions) {
       categories.add(potion.id);
     }
     return categories;
@@ -399,7 +399,7 @@ class AppStore {
   }
 
   getQueryVariable = function (variable) {
-    var urlSearchParams = new URLSearchParams(window.location.search);
+    let urlSearchParams = new URLSearchParams(window.location.search);
     return urlSearchParams.get(variable);
   }
 
