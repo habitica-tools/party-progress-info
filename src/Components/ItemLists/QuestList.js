@@ -5,6 +5,13 @@ class QuestList extends ItemList {
   static type = 'quest';
   static ItemClass = Quest;
 
+  static sortOptions = {
+    default: 'Default',
+    least: 'Shortage',
+    most: 'Most',
+    alphabetical: 'A-Z',
+  }
+
   get items() {
     return this.props.store.quests.entries().filter(this.categoryFilter);
   }

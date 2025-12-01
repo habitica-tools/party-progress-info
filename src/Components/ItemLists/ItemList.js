@@ -20,6 +20,20 @@ function sort(array, key) {
         return 0;
       });
       break;
+    case 'set':
+      array.sort((a, b) => {
+        if (a.data.set < b.data.set) return -1;
+        if (a.data.set > b.data.set) return 1;
+        return 0;
+      });
+      break;
+    case 'type':
+      array.sort((a, b) => {
+        if (a.data.type < b.data.type) return -1;
+        if (a.data.type > b.data.type) return 1;
+        return 0;
+      });
+      break;
     default:
   }
 
@@ -34,6 +48,15 @@ class ItemList extends Component {
 
   static type = null;
   static ItemClass = null;
+
+  static sortOptions = {
+    default: 'Default',
+    least: 'Shortage',
+    most: 'Most',
+    alphabetical: 'A-Z',
+    set: 'Set',
+    type: 'Type',
+  }
 
   static defaultProps = {
     sortable: true,
@@ -62,14 +85,15 @@ class ItemList extends Component {
           <div class="twelve wide column">
             <h4 class="ui header">{category} {this.constructor.type}s</h4><br />
           </div>
-          { sortable && (
+          {sortable && (
             <div class="four wide column">
               <span class="dropdown-label">Sort By: </span>
               <select class="ui dropdown" value={this.sortKey} onChange={this.onSortKeyChanged}>
-                <option value="default">Default</option>
-                <option value="least">Shortage</option>
-                <option value="most">Most</option>
-                <option value="alphabetical">A-Z</option>
+                {Object.entries(this.constructor.sortOptions)
+                  .map(([key, label]) => (
+                    <option value={key}>{label}</option>
+                  ))
+                }
               </select>
             </div>
           )}

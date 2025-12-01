@@ -115,7 +115,7 @@ class AppStore {
 
         const gear = new Map();
         new Map(Object.entries(json.data.gear.flat)).forEach((value, key) => {
-          gear.set(key, new GearState(key, value, this));
+          gear.set(key, new GearState(value));
         }, this);
         this.gear.merge(gear);
 

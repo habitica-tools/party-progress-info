@@ -7,7 +7,8 @@ import Settings from './Settings';
 import BackgroundList from './BackgroundList';
 import BasePetList from './BasePetList';
 import EggList from './ItemLists/EggList';
-import GearList from './GearList';
+import GearLeaderboard from './GearLeaderboard';
+import GearList from './ItemLists/GearList';
 import PetList from './PetList';
 import PremiumHatchingPotionList from './PremiumHatchingPotionList';
 import PremiumPetList from './PremiumPetList';
@@ -202,6 +203,11 @@ class App extends Component {
           }
           {store.menupage === 'gear' &&
             <div class="ui fluid container">
+              <GearLeaderboard store={store} />
+              <div class="ui basic segment" />
+              <div class="ui horizontal divider header">
+                <h4>Equipment in the Party</h4>
+              </div>
               <GearList store={store} />
             </div>
           }
