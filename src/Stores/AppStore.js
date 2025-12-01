@@ -73,55 +73,56 @@ class AppStore {
     this.api.getContent()
       .then(action((json) => {
         const quests = new Map();
-        new Map(Object.entries(json.data.quests)).forEach((value, key) => {
+        Object.entries(json.data.quests).forEach(([key, value]) => {
           quests.set(key, new QuestState(value));
-        }, this);
+        });
         this.quests.merge(quests);
 
         const pets = new Map();
-        new Map(Object.entries(json.data.questPets)).forEach((value, key) => {
+        Object.entries(json.data.questPets).forEach(([key, value]) => {
           pets.set(key, new PetState(key, this));
         }, this);
         this.pets.merge(pets);
 
         const basepets = new Map();
-        new Map(Object.entries(json.data.pets)).forEach((value, key) => {
+        Object.entries(json.data.pets).forEach(([key, value]) => {
           basepets.set(key, new PetState(key, this));
         }, this);
         this.basepets.merge(basepets);
 
         const premiumpets = new Map();
-        new Map(Object.entries(json.data.premiumPets)).forEach((value, key) => {
+        Object.entries(json.data.premiumPets).forEach(([key, value]) => {
           premiumpets.set(key, new PetState(key, this));
         }, this);
         this.premiumpets.merge(premiumpets);
 
         const premiumhatchingpotions = new Map();
-        new Map(Object.entries(json.data.premiumHatchingPotions)).forEach((value, key) => {
+        Object.entries(json.data.premiumHatchingPotions).forEach(([key, value]) => {
           premiumhatchingpotions.set(key, new PotionState(value));
-        }, this);
+        });
         this.premiumhatchingpotions.merge(premiumhatchingpotions);
 
         const baseEggs = new Map();
         const questEggs = new Map();
-        const questEggKeys = new Map(Object.entries(json.data.questEggs));
+        const questEggKeys = Object.keys(json.data.questEggs);
 
-        new Map(Object.entries(json.data.eggs)).forEach((value, key) => {
+        Object.entries(json.data.eggs).forEach(([key, value]) => {
           const egg = new EggState(value);
-          if (questEggKeys.has(key)) questEggs.set(key, egg);
+          if (questEggKeys.includes(key)) questEggs.set(key, egg);
           else baseEggs.set(key, egg);
-        }, this);
+        });
+
         this.eggs.base.merge(baseEggs);
         this.eggs.quest.merge(questEggs);
 
         const gear = new Map();
-        new Map(Object.entries(json.data.gear.flat)).forEach((value, key) => {
+        Object.entries(json.data.gear.flat).forEach(([key, value]) => {
           gear.set(key, new GearState(value));
-        }, this);
+        });
         this.gear.merge(gear);
 
         const backgrounds = new Map();
-        new Map(Object.entries(json.data.backgroundsFlat)).forEach((value, key) => {
+        Object.entries(json.data.backgroundsFlat).forEach(([key, value]) => {
           backgrounds.set(key, new BackgroundState(key, value, this));
         }, this);
         this.backgrounds.merge(backgrounds);
