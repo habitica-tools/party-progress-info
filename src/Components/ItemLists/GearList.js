@@ -1,5 +1,6 @@
-import Gear from '../Items/Gear';
 import ItemList from './ItemList';
+
+import Gear from '../Items/Gear';
 
 class GearList extends ItemList {
   static type = 'Gear';

@@ -1,11 +1,12 @@
 import { action, computed, observable } from 'mobx';
 
+import HabiticaAPI from './HabiticaAPI';
+
 import BackgroundState from './BackgroundState';
 import EggState from './EggState';
 import GearState from './GearState';
-import HabiticaAPI from './HabiticaAPI';
-import HatchingPotionState from './HatchingPotionState';
 import PetState from './PetState';
+import PotionState from './PotionState';
 import QuestState from './QuestState';
 import UserState from './UserState';
 
@@ -97,7 +98,7 @@ class AppStore {
 
         const premiumhatchingpotions = new Map();
         new Map(Object.entries(json.data.premiumHatchingPotions)).forEach((value, key) => {
-          premiumhatchingpotions.set(key, new HatchingPotionState(key, value, this));
+          premiumhatchingpotions.set(key, new PotionState(value));
         }, this);
         this.premiumhatchingpotions.merge(premiumhatchingpotions);
 

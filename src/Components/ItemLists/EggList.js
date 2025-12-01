@@ -1,5 +1,6 @@
-import Egg from '../Items/Egg';
 import ItemList from './ItemList';
+
+import Egg from '../Items/Egg';
 
 class EggList extends ItemList {
   static type = 'egg';

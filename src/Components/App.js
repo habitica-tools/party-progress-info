@@ -10,7 +10,7 @@ import EggList from './ItemLists/EggList';
 import GearLeaderboard from './GearLeaderboard';
 import GearList from './ItemLists/GearList';
 import PetList from './PetList';
-import PremiumHatchingPotionList from './PremiumHatchingPotionList';
+import PotionList from './ItemLists/PotionList';
 import PremiumPetList from './PremiumPetList';
 import QuestList from './ItemLists/QuestList';
 
@@ -184,7 +184,7 @@ class App extends Component {
                 <h4>Non Used Magic Hatching Potions</h4>
               </div>
               <div class="ui basic segment" />
-              <PremiumHatchingPotionList store={store} />
+              <PotionList store={store} />
             </div>
           }
           {store.menupage === 'basepets' &&
