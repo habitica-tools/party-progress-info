@@ -212,8 +212,12 @@ class App extends Component {
               </div>
               <div class="ui basic segment" />
               <div class="ui two column stackable grid">
-                <QuestList store={store} category="unlockable" />
-                <QuestList store={store} category="gold" />
+                <div class="ui column">
+                  <QuestList store={store} category="unlockable" sortable={false} />
+                </div>
+                <div class="ui column">
+                  <QuestList store={store} category="gold" sortable={false} />
+                </div>
               </div>
             </div>
           }
