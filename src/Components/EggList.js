@@ -63,7 +63,7 @@ class EggList extends Component {
           </div>
         </div>
         <div class="items">
-          {eggs.map((egg) => <Egg egg={egg} eggList={this} />)}
+          {eggs.map((egg) => <Egg item={egg} itemList={this} />)}
         </div>
         {
           this.partyOnly ? (
