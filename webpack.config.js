@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('node:path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
@@ -8,7 +8,7 @@ const config = {
     // output
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: 'bundle.js'
+        filename: 'bundle.js',
     },
 
     // transformations
@@ -17,9 +17,9 @@ const config = {
             {
                 test: /\.jsx?/i,
                 loader: 'babel-loader',
-                exclude: /node_modules/
-            }
-        ]
+                exclude: /node_modules/,
+            },
+        ],
     },
 
     // resolves
@@ -27,23 +27,23 @@ const config = {
         alias: {
             'react': 'preact/compat',
             'react-dom/test-utils': 'preact/test-utils',
-            'react-dom': 'preact/compat',     // Must be below test-utils
-            'react/jsx-runtime': 'preact/jsx-runtime'
+            'react-dom': 'preact/compat', // Must be below test-utils
+            'react/jsx-runtime': 'preact/jsx-runtime',
         },
     },
 
     // plugins
     plugins: [new HtmlWebpackPlugin({
         template: './src/index.html',
-        favicon: './src/favicon.ico'
+        favicon: './src/favicon.ico',
     })],
 
     // server
     devServer: {
         static: path.join(__dirname, 'src'),
         compress: true,
-        historyApiFallback: true
-    }
+        historyApiFallback: true,
+    },
 }
 
 module.exports = (_, argv) => {
