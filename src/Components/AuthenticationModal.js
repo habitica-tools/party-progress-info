@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 
 @observer
 class AuthenticationModal extends Component {
-
   constructor() {
     super();
     this.state = { userId: '', key: '' }
@@ -79,6 +78,5 @@ class AuthenticationModal extends Component {
     this.setState({ userId: '', key: '' });
   }
 }
-
 
 export default AuthenticationModal;

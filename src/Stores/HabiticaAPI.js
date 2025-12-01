@@ -1,3 +1,7 @@
+/* eslint-disable max-classes-per-file */
+/* eslint-disable no-bitwise */
+/* eslint n/no-unsupported-features/node-builtins: ['error', {'ignores': ['localStorage']}] */
+
 import { action, computed, observable } from 'mobx';
 
 const HABITICA_API_URL = 'https://habitica.com/api/v3/';
@@ -41,6 +45,7 @@ class HabiticaAPI {
 
   apiTokenCheckSum = '';
 
+  // eslint-disable-next-line class-methods-use-this
   isValidToken(token) {
     return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(token);
   }
@@ -80,7 +85,7 @@ class HabiticaAPI {
 
   calculateApiTokenCheckSum() {
     let chk = 0x12345678;
-    for (let i = 0; i < this.apiToken.length; i++) {
+    for (let i = 0; i < this.apiToken.length; i += 1) {
       chk += this.apiToken.charCodeAt(i);
       chk = (chk << 5) | (chk >>> 27);
     }
@@ -92,46 +97,45 @@ class HabiticaAPI {
     return url;
   }
 
-  deleteOldCacheEntries() {
+  static deleteOldCacheEntries() {
     const keys = [];
-    for (let i = 0; i < localStorage.length; i++) {
+    for (let i = 0; i < localStorage.length; i += 1) {
       keys.push(localStorage.key(i));
     }
 
     const now = Date.now();
-    let entries = keys.map(key => {
-      return {key: key, item: localStorage.getItem(key)};
-    });
+    let entries = keys.map((key) => ({ key: key, item: localStorage.getItem(key) }));
     entries = entries
-      .map(({key, item}) => {
+      .map(({ key, item }) => {
         const data = JSON.parse(item);
         const age = now - data.timestamp;
 
         if (data !== null && (data.duration === undefined || age >= data.duration)) {
           localStorage.removeItem(key);
-          return {key: key, age: null};
+          return { key: key, age: null };
         }
 
-        const size = new Blob([item]).size;
+        const { size } = new Blob([item]);
         // keep non-credentialed cache entries first
         const priority = key.indexOf('|') === -1 ? 1 : 0;
-        return {key: key, age: age, size: size, priority: priority};
+        return {
+          key, age, size, priority,
+        };
       })
-      .filter((entry) => {
-        return entry.age !== null;
-      })
+      .filter((entry) => entry.age !== null)
       .sort((a, b) => b.age - a.age)
       .sort((a, b) => a.priority - b.priority);
 
     const totalSize = entries.reduce((prev, entry) => prev + entry.size, 0);
     let sizeReduction = 0;
-    for (const entry of entries) {
+    entries.every((entry) => {
       // stop when under 4MB
-      if (totalSize - sizeReduction <= 4 * 1024 * 1024) break;
+      if (totalSize - sizeReduction <= 4 * 1024 * 1024) return false;
 
       localStorage.removeItem(entry.key);
       sizeReduction += entry.size;
-    }
+      return true;
+    });
   }
 
   cachedFetch(url, requiresCredentials = false, cacheDuration = null) {
@@ -150,22 +154,23 @@ class HabiticaAPI {
     }
 
     const promise = this.fetch(url, requiresCredentials)
-      .then(res => res.json());
+      .then((res) => res.json());
 
     if (cacheDuration === null) return promise;
 
-    return promise.then(json => {
+    return promise.then((json) => {
       try {
         localStorage.setItem(
           this.cacheKey(url, requiresCredentials),
           JSON.stringify({
             timestamp: Date.now(),
             duration: cacheDuration,
-            data: json
-          })
+            data: json,
+          }),
         );
-      } catch (e) {
-        if (e instanceof QuotaExceededError) this.deleteOldCacheEntries();
+      }
+      catch (e) {
+        if (e instanceof QuotaExceededError) HabiticaAPI.deleteOldCacheEntries();
       }
       return json;
     });
@@ -173,7 +178,7 @@ class HabiticaAPI {
 
   fetch(url, requiresCredentials = false) {
     const headers = {
-      'x-client': XCLIENT_HEADER
+      'x-client': XCLIENT_HEADER,
     }
 
     if (!requiresCredentials) {
@@ -187,18 +192,18 @@ class HabiticaAPI {
       return new Promise((resolve, reject) => {
         HabiticaAPI.fetch_retry(url, { headers: headers })
           .then(
-            action(res => {
+            action((res) => {
               this.credentialsValid = true;
               resolve(res);
-            })
+            }),
           )
           .catch(
-            action(res => {
+            action((res) => {
               if (typeof res.status !== 'undefined' && res.status === 401) {
                 this.credentialsValid = false;
               }
               reject(res);
-            })
+            }),
           );
       });
     }
@@ -214,8 +219,8 @@ class HabiticaAPI {
           ok: false,
           status: 401,
           statusText: '',
-          url: url
-        })
+          url: url,
+        }),
       );
     }
   }
@@ -223,7 +228,7 @@ class HabiticaAPI {
   static fetch_retry(url, params, retriesLeft) {
     return new Promise((resolve, reject) => {
       window.fetch(url, params)
-        .then(res => {
+        .then((res) => {
           const retryAfter = this.rateLimit.update(res.headers);
 
           if (res.ok) {
@@ -240,7 +245,7 @@ class HabiticaAPI {
             reject(res);
           }
         })
-        .catch(error => {
+        .catch((error) => {
           throw error;
         });
     });

@@ -2,10 +2,9 @@ import { Component } from 'preact';
 import { observer } from 'mobx-react';
 
 @observer
-class Quest extends Component {
-  //TODO Better userrenderer errorprone
+class QuestInfo extends Component {
   render() {
-    const quest = this.props.quest;
+    const { quest } = this.props;
 
     return (
       <div class="ui mini modal active">
@@ -15,7 +14,7 @@ class Quest extends Component {
           </button>
         </div>
         <div class="content">
-          {quest.users.slice().sort(function (a, b) {
+          {quest.users.slice().sort((a, b) => {
             if (a.data.items.quests[quest.id] > b.data.items.quests[quest.id]) {
               return -1;
             }
@@ -23,11 +22,11 @@ class Quest extends Component {
               return 1;
             }
             return 0;
-          }).map(quser =>
+          }).map((quser) => (
             <div key={quser.id}>
               {quser.data.profile.name + ' has ' + quser.data.items.quests[quest.id]}
             </div>
-          )}
+          ))}
         </div>
       </div>
     );
@@ -38,5 +37,4 @@ class Quest extends Component {
   }
 }
 
-
-export default Quest;
+export default QuestInfo;

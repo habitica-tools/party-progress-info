@@ -6,12 +6,11 @@ import User from './User';
 
 @observer
 class Settings extends Component {
-
   render() {
-    const store = this.props.store;
+    const { store } = this.props;
 
     return (
-      store.loadingobjects ? <div class="ui active centered inline loader"></div> :
+      store.loadingobjects ? <div class="ui active centered inline loader"></div> : (
         <div>
           <SettingsInput store={store} /><br />
           <div class="ui fluid container">
@@ -22,21 +21,20 @@ class Settings extends Component {
                 </span>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span data-tooltip="Total pending damage" style="color:#646464"><i class="bomb icon"></i>
-                  {store.users.map(u => u.loading || u.invalid ? 0 : u.damage).reduce((a, b) => a + b, 0)}
+                  {store.users.map((u) => (u.loading || u.invalid ? 0 : u.damage)).reduce((a, b) => a + b, 0)}
                 </span>
               </h5>
             </div>
           </div>
           <br />
           <div class="ui cards">
-            {store.users.map(u => <User user={u} />)}
+            {store.users.map((u) => <User user={u} />)}
           </div>
           <br />
         </div>
+      )
     );
   }
-
 }
-
 
 export default Settings;

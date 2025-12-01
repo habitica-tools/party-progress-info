@@ -19,15 +19,15 @@ class PremiumHatchingPotionList extends Component {
   }
 
   @computed get potionsWithCounts() {
-    const potions = [...this.store.premiumhatchingpotions].map(function (potioninfo) {
+    const potions = [...this.store.premiumhatchingpotions].map((potioninfo) => {
       const potiondetail = potioninfo;
       potiondetail.count = [...this.store.premiumhatchingpotions].filter(([id, potion]) => potion.id === potioninfo[0]).reduce((prevVal, [id, potion]) => prevVal + potion.count, 0);
       return potiondetail;
-    }, this).filter(potion => potion.count > 0);
+    }, this).filter((potion) => potion.count > 0);
 
     switch (this.sortKey) {
       case '1':
-        potions.sort(function (a, b) {
+        potions.sort((a, b) => {
           if (a.count < b.count) {
             return -1;
           }
@@ -38,7 +38,7 @@ class PremiumHatchingPotionList extends Component {
         })
         break;
       case '2':
-        potions.sort(function (a, b) {
+        potions.sort((a, b) => {
           if (a.count > b.count) {
             return -1;
           }
@@ -55,9 +55,8 @@ class PremiumHatchingPotionList extends Component {
     return potions;
   }
 
-
   render() {
-    const store = this.props.store;
+    const { store } = this.props;
 
     if (store.loadingobjects) {
       return (<div class="ui active centered inline loader"></div>);
@@ -81,19 +80,18 @@ class PremiumHatchingPotionList extends Component {
             </div>
             <div class="item-rows">
               <div class="items">
-                {[...this.potionsWithCounts].map(potion =>
+                {[...this.potionsWithCounts].map((potion) => (
                   <div>
                     <div class="item-wrapper">
                       <div class="item" data-tooltip={potion[0]}>
                         <span class="badge badge-pill badge-item badge-info badge-count">
                           {potion.count}
                         </span>
-                        {potion[1].selectedcount >= 1 ?
+                        {potion[1].selectedcount < 1 ? '' : (
                           <span class="badge badge-pill badge-item badge-blue">
                             {potion[1].selectedcount}
                           </span>
-                          : ''
-                        }
+                        )}
                         <span class={potion[0] === this.potionInfo ? 'selectableInventory item-content HatchingPotion Pet_HatchingPotion_' + potion[0] + '' : 'item-content Egg Pet_Egg_' + potion[0] + ''} onClick={this.showPotionInfo.bind(this, potion[0])}>
                           <img src={this.imageurl + 'Pet_HatchingPotion_' + potion[0] + '.png'} alt={potion[0]} />
                         </span>
@@ -101,14 +99,14 @@ class PremiumHatchingPotionList extends Component {
                       <span class="pettxt">{potion[0]}</span>
                     </div>
                   </div>
-                )}
+                ))}
               </div>
             </div>
           </div>
           <div class="column">
-            {this.potionInfo === null ? <br /> :
+            {this.potionInfo === null ? <br /> : (
               <HatchingPotionInfo category={this.potionInfo} store={store} potionlist={this} />
-            }
+            )}
           </div>
         </div>
       );
@@ -135,7 +133,6 @@ class PremiumHatchingPotionList extends Component {
   @action sortPotions = (e) => {
     this.sortKey = e.target.value;
   }
-
-};
+}
 
 export default PremiumHatchingPotionList;

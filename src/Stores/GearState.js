@@ -32,8 +32,6 @@ class GearState {
     }
     catch (e) { }
   }
-
-
 }
 
 export default GearState;

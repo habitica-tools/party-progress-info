@@ -6,7 +6,7 @@ class Mount extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
 
   render() {
-    const mount = this.props.mount;
+    const { mount } = this.props;
 
     return (
       <div class="item-wrapper">
@@ -26,8 +26,6 @@ class Mount extends Component {
       </div>
     );
   }
-
 }
-
 
 export default Mount;

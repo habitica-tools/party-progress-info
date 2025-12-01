@@ -6,6 +6,27 @@ import { observer } from 'mobx-react';
 import Egg from './Egg';
 import EggInfo from './EggInfo';
 
+function sort(array, key) {
+  switch (key) {
+    case 'least':
+      array.sort((a, b) => a.count - b.count);
+      break;
+    case 'most':
+      array.sort((a, b) => b.count - a.count);
+      break;
+    case 'alphabetical':
+      array.sort((a, b) => {
+        if (a.id < b.id) return -1;
+        if (a.id > b.id) return 1;
+        return 0;
+      });
+      break;
+    default:
+  }
+
+  return array;
+}
+
 @observer
 class EggList extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
@@ -13,36 +34,17 @@ class EggList extends Component {
   @observable accessor sortKey = 'most';
   @observable accessor partyOnly = true;
 
-  sort(array, key) {
-    switch (key) {
-      case 'least':
-        array.sort((a, b) => a.count - b.count);
-        break;
-      case 'most':
-        array.sort((a, b) => b.count - a.count);
-        break;
-      case 'alphabetical':
-        array.sort((a, b) => {
-          if (a.id < b.id) return -1;
-          if (a.id > b.id) return 1;
-          return 0;
-        });
-    }
-
-    return array;
-  }
-
   render() {
-    const store = this.props.store;
+    const { store } = this.props;
 
     if (store.loadingobjects) {
       return (<div class="ui active centered inline loader"></div>);
     }
     else {
       let eggs = [...store.eggs[this.props.category]].map(([_, egg]) => egg);
-      if (this.partyOnly) eggs = eggs.filter(egg => egg.count > 0);
+      if (this.partyOnly) eggs = eggs.filter((egg) => egg.count > 0);
 
-      eggs = this.sort(eggs, this.sortKey);
+      eggs = sort(eggs, this.sortKey);
 
       return (
         <div class="ui fluid container">
@@ -61,15 +63,19 @@ class EggList extends Component {
             </div>
           </div>
           <div class="items">
-            {eggs.map(egg => <Egg egg={egg} eggList={this} />)}
+            {eggs.map((egg) => <Egg egg={egg} eggList={this} />)}
           </div>
           {
-            this.partyOnly
-              ? <button class="ui blue button" onClick={this.showAll}><i class="unhide icon"></i>Show All</button>
-              : <button class="ui olive button" onClick={this.showPartyOnly}><i class="hide icon"></i>Party Only</button>
+            this.partyOnly ? (
+              <button class="ui blue button" onClick={this.showAll}><i class="unhide icon"></i>Show All</button>
+            ) : (
+              <button class="ui olive button" onClick={this.showPartyOnly}><i class="hide icon"></i>Party Only</button>
+            )
           }
           <div>
-            {this.info === null ? <br /> : <EggInfo egg={this.info} store={store} eggList={this} />}
+            {this.info === null ? <br /> : (
+              <EggInfo egg={this.info} store={store} eggList={this} />
+            )}
           </div>
         </div>
       );
@@ -100,6 +106,6 @@ class EggList extends Component {
   @action hideInfo() {
     this.info = null;
   }
-};
+}
 
 export default EggList;

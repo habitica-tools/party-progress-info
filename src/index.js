@@ -9,9 +9,9 @@ const store = new AppStore();
 
 render(
   <App store={store} />,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
-window.onpopstate = function (event) {
+window.onpopstate = (event) => {
   store.loadQueryString();
 }

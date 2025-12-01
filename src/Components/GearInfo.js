@@ -4,13 +4,12 @@ import { observer } from 'mobx-react';
 @observer
 class GearInfo extends Component {
   render() {
-    const store = this.props.store;
-    const category = this.props.category;
+    const { store, category } = this.props;
 
     return (
       <div>
         {[...store.gear].filter(([id, gear]) => gear.id === category)
-          .map(([id, gear]) =>
+          .map(([id, gear]) => (
             <div class="ui mini modal active">
               <div class="header">{gear.data.text}
                 <button class="ui icon right floated button" onClick={this.Close}>
@@ -18,19 +17,18 @@ class GearInfo extends Component {
                 </button>
               </div>
               <div class="content">
-                {gear.users.map(user => user.data.profile.name).join(', ')}
+                {gear.users.map((user) => user.data.profile.name).join(', ')}
               </div>
             </div>
-          )}
+          ))
+        }
       </div>
     );
-
   }
 
   Close = (e) => {
     this.props.gearlist.hideGearInfo();
   }
 }
-
 
 export default GearInfo;

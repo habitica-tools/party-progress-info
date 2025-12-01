@@ -20,14 +20,14 @@ class GearList extends Component {
   }
 
   @computed get gearWithCounts() {
-    const gear = [...this.store.gear].map(function (gearinfo) {
+    const gear = [...this.store.gear].map((gearinfo) => {
       const geardetail = gearinfo[1];
       return geardetail;
-    }, this).filter(geari => geari.count > 0);
+    }, this).filter((geari) => geari.count > 0);
 
     switch (this.sortKey) {
       case '1':
-        gear.sort(function (a, b) {
+        gear.sort((a, b) => {
           if (a.count < b.count) {
             return -1;
           }
@@ -38,7 +38,7 @@ class GearList extends Component {
         })
         break;
       case '2':
-        gear.sort(function (a, b) {
+        gear.sort((a, b) => {
           if (a.count > b.count) {
             return -1;
           }
@@ -49,7 +49,7 @@ class GearList extends Component {
         })
         break;
       case '3':
-        gear.sort(function (a, b) {
+        gear.sort((a, b) => {
           if (a.id < b.id) {
             return -1;
           }
@@ -60,7 +60,7 @@ class GearList extends Component {
         })
         break;
       case '4':
-        gear.sort(function (a, b) {
+        gear.sort((a, b) => {
           if (a.data.set < b.data.set) {
             return -1;
           }
@@ -71,7 +71,7 @@ class GearList extends Component {
         })
         break;
       case '5':
-        gear.sort(function (a, b) {
+        gear.sort((a, b) => {
           if (a.data.type < b.data.type) {
             return -1;
           }
@@ -89,9 +89,8 @@ class GearList extends Component {
     return gear;
   }
 
-
   render() {
-    const store = this.props.store;
+    const { store } = this.props;
 
     if (store.loadingobjects) {
       return (<div class="ui active centered inline loader"></div>);
@@ -113,38 +112,38 @@ class GearList extends Component {
               </thead>
               <tbody>
                 {this.showleaderboard === 'top3' &&
-                  store.top3gearleaderboard.map((user, index) =>
-
-                    user.data.profile !== undefined ?
+                  store.top3gearleaderboard.map((user, index) => (
+                    user.data.profile !== undefined ? (
                       <tr key={user.id}>
                         <td>{index + 1}</td>
                         <td>{user.data.profile.name}</td>
                         <td>{user.totalGearCount}</td>
                       </tr>
-                      :
+                    ) : (
                       <tr key={user.id}>
                         <td>{index + 1}</td>
                         <td>{user.id}</td>
                         <td>{user.totalGearCount}</td>
                       </tr>
-                  )
+                    )
+                  ))
                 }
                 {this.showleaderboard === 'all' &&
-                  store.gearleaderboard.map((user, index) =>
-
-                    user.data.profile !== undefined ?
+                  store.gearleaderboard.map((user, index) => (
+                    user.data.profile !== undefined ? (
                       <tr key={user.id}>
                         <td>{index + 1}</td>
                         <td>{user.data.profile.name}</td>
                         <td>{user.totalGearCount}</td>
                       </tr>
-                      :
+                    ) : (
                       <tr key={user.id}>
                         <td>{index + 1}</td>
                         <td>{user.id}</td>
                         <td>{user.totalGearCount}</td>
                       </tr>
-                  )
+                    )
+                  ))
                 }
               </tbody>
             </table>
@@ -174,31 +173,32 @@ class GearList extends Component {
             </div>
             <div class="item-rows">
               <div class="items">
-                {[...this.gearWithCounts].map(gear =>
+                {[...this.gearWithCounts].map((gear) => (
                   <div>
                     <div class="item-wrapper">
                       <div class="item" data-tooltip={gear.data.text}>
                         <span class="badge badge-pill badge-item badge-info badge-count">
                           {gear.count}
                         </span>
-                        {gear.selectedcount >= 1 ?
+                        {gear.selectedcount < 1 ? '' : (
                           <span class="badge badge-pill badge-item badge-blue">
                             {gear.selectedcount}
-                          </span> : ''}
+                          </span>
+                        )}
                         <span class={gear.id === this.gearinfo ? 'selectableInventory item-content Gear' : 'item-content Gear'} onClick={this.showGearInfo.bind(this, gear.id)}>
                           <img src={this.imageurl + 'shop_' + gear.id + '.png'} alt={'shop_' + gear.id} />
                         </span>
                       </div>
                     </div>
                   </div>
-                )}
+                ))}
               </div>
             </div>
           </div>
           <div class="column">
-            {this.gearInfo === null ? <br /> :
+            {this.gearInfo === null ? <br /> : (
               <GearInfo category={this.gearInfo} store={store} gearlist={this} />
-            }
+            )}
           </div>
         </div>
       );
@@ -233,7 +233,6 @@ class GearList extends Component {
   @action handleLeaderboardTop3Only = (e) => {
     this.showleaderboard = 'top3';
   }
-
-};
+}
 
 export default GearList;

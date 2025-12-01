@@ -8,7 +8,7 @@ class SettingsInput extends Component {
   @observable accessor input = '';
 
   render() {
-    const store = this.props.store;
+    const { store } = this.props;
 
     return (
       <div class="ui fluid action input">
@@ -58,6 +58,5 @@ class SettingsInput extends Component {
     this.input = '';
   }
 }
-
 
 export default SettingsInput;

@@ -7,8 +7,7 @@ import Pet from './Pet';
 @observer
 class PremiumPetInfo extends Component {
   render() {
-    const store = this.props.store;
-    const category = this.props.category;
+    const { store, category } = this.props;
 
     return (
       <div class="ui fluid">
@@ -27,20 +26,20 @@ class PremiumPetInfo extends Component {
           </thead>
           <tbody>
             {[...store.premiumpets].filter(([id, pet]) => pet.potiontype === category)
-              .map(([id, pet]) =>
+              .map(([id, pet]) => (
                 <tr>
                   <td><Pet pet={pet} /></td>
-                  <td>{pet.usersWithPet.map(user => user.data.profile.name).join(', ')}</td>
+                  <td>{pet.usersWithPet.map((user) => user.data.profile.name).join(', ')}</td>
                   <td><Mount mount={pet} /></td>
-                  <td>{pet.usersWithMount.map(user => user.data.profile.name).join(', ')}</td>
+                  <td>{pet.usersWithMount.map((user) => user.data.profile.name).join(', ')}</td>
                 </tr>
-              )}
+              ))
+            }
           </tbody>
         </table>
       </div>
     );
   }
 }
-
 
 export default PremiumPetInfo;

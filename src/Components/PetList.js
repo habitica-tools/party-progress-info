@@ -20,7 +20,7 @@ class PetList extends Component {
   }
 
   @computed get petCategoriesWithCounts() {
-    const pets = [...this.store.petCategories].map(function (category) {
+    const pets = [...this.store.petCategories].map((category) => {
       const petdetail = { id: category };
       const categorypets = [...this.store.pets].filter(([id, pet]) => pet.basetype === category);
       petdetail.needed = categorypets.reduce((prevVal, [id, pet]) => prevVal + pet.needed, 0);
@@ -31,7 +31,7 @@ class PetList extends Component {
 
     switch (this.sortKey) {
       case '1':
-        pets.sort(function (a, b) {
+        pets.sort((a, b) => {
           if (a.count < b.count) {
             return -1;
           }
@@ -42,7 +42,7 @@ class PetList extends Component {
         })
         break;
       case '2':
-        pets.sort(function (a, b) {
+        pets.sort((a, b) => {
           if (a.count > b.count) {
             return -1;
           }
@@ -53,7 +53,7 @@ class PetList extends Component {
         })
         break;
       case '3':
-        pets.sort(function (a, b) {
+        pets.sort((a, b) => {
           if (a.id < b.id) {
             return -1;
           }
@@ -70,9 +70,8 @@ class PetList extends Component {
     return pets;
   }
 
-
   render() {
-    const store = this.props.store;
+    const { store } = this.props;
 
     if (store.loadingobjects) {
       return (<div class="ui active centered inline loader"></div>);
@@ -137,7 +136,7 @@ class PetList extends Component {
           <div class="ui basic segment"></div>
           <div class="item-rows">
             <div class="items">
-              {[...this.petCategoriesWithCounts].map(category =>
+              {[...this.petCategoriesWithCounts].map((category) => (
                 <div>
                   <div class="item-wrapper">
                     <div class="item">
@@ -147,10 +146,11 @@ class PetList extends Component {
                       <span class="badge badge-pill badge-item badge-count">
                         {category.count}
                       </span>
-                      {category.selectedcount >= 1 ?
+                      {category.selectedcount < 1 ? '' : (
                         <span class="badge badge-pill badge-item badge-blue">
                           {category.selectedcount}
-                        </span> : ''}
+                        </span>
+                      )}
                       <span class={category.id === this.petInfo ? 'selectableInventory item-content Pet Pet-' + category.id + '-Base ' : 'item-content Pet Pet-' + category.id + '-Base '} onClick={this.showPetInfo.bind(this, category.id)}>
                         <img src={this.imageurl + 'Pet-' + category.id + '-Base.png'} alt={category.id} />
                       </span>
@@ -158,13 +158,13 @@ class PetList extends Component {
                     <span class="pettxt">{category.id}</span>
                   </div>
                 </div>
-              )}
+              ))}
             </div>
           </div>
           <div class="column">
-            {this.petInfo === null ? <br /> :
+            {this.petInfo === null ? <br /> : (
               <PetInfo category={this.petInfo} store={store} />
-            }
+            )}
           </div>
           <div class="column">
             <div class="ui horizontal divider header">
@@ -181,42 +181,42 @@ class PetList extends Component {
               </thead>
               <tbody>
                 {this.showleaderboard === 'top3' &&
-                  store.top3petleaderboard.filter(u => !u.invalid).map((user, index) =>
-
-                    user.data.profile !== undefined ?
+                  store.top3petleaderboard.filter((u) => !u.invalid).map((user, index) => (
+                    user.data.profile !== undefined ? (
                       <tr key={user.id}>
                         <td>{index + 1}</td>
                         <td>{user.data.profile.name}</td>
                         <td>{user.totalPetCount}</td>
                         <td>{store.totalCountPetsParty > 0 ? parseFloat(user.totalPetCount / (store.totalCountPets / 100)).toFixed(2) + '%' : '0%'}</td>
                       </tr>
-                      :
+                    ) : (
                       <tr key={user.id}>
                         <td>{index + 1}</td>
                         <td>{user.id}</td>
                         <td>{user.totalPetCount}</td>
                         <td>{store.totalCountPetsParty > 0 ? parseFloat(user.totalPetCount / (store.totalCountPets / 100)).toFixed(2) + '%' : '0%'}</td>
                       </tr>
-                  )
+                    )
+                  ))
                 }
                 {this.showleaderboard === 'all' &&
-                  store.petleaderboard.filter(u => !u.invalid).map((user, index) =>
-
-                    user.data.profile !== undefined ?
+                  store.petleaderboard.filter((u) => !u.invalid).map((user, index) => (
+                    user.data.profile !== undefined ? (
                       <tr key={user.id}>
                         <td>{index + 1}</td>
                         <td>{user.data.profile.name}</td>
                         <td>{user.totalPetCount}</td>
                         <td>{store.totalCountPetsParty > 0 ? parseFloat(user.totalPetCount / (store.totalCountPets / 100)).toFixed(2) + '%' : '0%'}</td>
                       </tr>
-                      :
+                    ) : (
                       <tr key={user.id}>
                         <td>{index + 1}</td>
                         <td>{user.id}</td>
                         <td>{user.totalPetCount}</td>
                         <td>{store.totalCountPetsParty > 0 ? parseFloat(user.totalPetCount / (store.totalCountPets / 100)).toFixed(2) + '%' : '0%'}</td>
                       </tr>
-                  )
+                    )
+                  ))
                 }
               </tbody>
             </table>
@@ -256,7 +256,6 @@ class PetList extends Component {
   @action handleLeaderboardTop3Only = (e) => {
     this.showleaderboard = 'top3';
   }
-
-};
+}
 
 export default PetList;

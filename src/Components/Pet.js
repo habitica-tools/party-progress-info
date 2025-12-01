@@ -6,7 +6,7 @@ class Pet extends Component {
   imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
 
   render() {
-    const pet = this.props.pet;
+    const { pet } = this.props;
 
     return (
       <div class="item-wrapper">
@@ -25,8 +25,6 @@ class Pet extends Component {
       </div>
     );
   }
-
 }
-
 
 export default Pet;

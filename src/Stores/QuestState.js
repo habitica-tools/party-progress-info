@@ -23,23 +23,22 @@ class QuestState {
     catch (e) { }
   }
 
-  //computeds
+  // computeds
   @computed get count() {
     let count = 0;
-    this.users.forEach(function (value, index, array) {
-      count = count + value.data.items.quests[this.id];
+    this.users.forEach((value, index, array) => {
+      count += value.data.items.quests[this.id];
     }, this);
     return count;
   }
 
   @computed get selectedcount() {
     let count = 0;
-    this.users.filter(user => user.isInfoUser).forEach(function (value, index, array) {
-      count = count + value.data.items.quests[this.id];
+    this.users.filter((user) => user.isInfoUser).forEach((value, index, array) => {
+      count += value.data.items.quests[this.id];
     }, this);
     return count;
   }
-
 }
 
 export default QuestState;

@@ -26,7 +26,6 @@ class BackgroundState {
     }
     catch (e) { }
   }
-
 }
 
 export default BackgroundState;

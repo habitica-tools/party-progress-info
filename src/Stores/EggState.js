@@ -33,7 +33,7 @@ class EggState {
   }
 
   @computed get selectedCount() {
-    return this.usersCount(this.users.filter(user => user.isInfoUser));
+    return this.usersCount(this.users.filter((user) => user.isInfoUser));
   }
 }
 

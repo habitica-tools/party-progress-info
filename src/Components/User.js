@@ -3,9 +3,8 @@ import { observer } from 'mobx-react';
 
 @observer
 class User extends Component {
-
   render() {
-    const user = this.props.user;
+    const { user } = this.props;
 
     if (user.loading) {
       return (
@@ -41,7 +40,7 @@ class User extends Component {
           <div class="content">
             <div class="header">{user.data.profile.name}</div>
             <div class="meta">
-              Lvl {user.data.stats.lvl} <span class="label label-info">{this.parseUserClass(user.data.stats.class)}</span>
+              Lvl {user.data.stats.lvl} <span class="label label-info">{User.parseUserClass(user.data.stats.class)}</span>
               <span data-tooltip="Gold" style="color:#b58105"><i class="dollar icon"></i>{parseInt(user.data.stats.gp)}</span>
               <span data-tooltip="Pending damage"><i class="bomb icon"></i>{user.damage}</span>
             </div>
@@ -82,11 +81,9 @@ class User extends Component {
     }
   }
 
-  parseUserClass(klass) {
-    return klass === 'wizard' ? 'mage' : klass;
+  static parseUserClass(userClass) {
+    return userClass === 'wizard' ? 'mage' : userClass;
   }
-
 }
-
 
 export default User;

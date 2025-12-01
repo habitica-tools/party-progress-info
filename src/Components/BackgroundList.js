@@ -19,14 +19,14 @@ class BackgroundList extends Component {
   }
 
   @computed get backgroundsWithCounts() {
-    const backgrounds = [...this.store.backgrounds].map(function (background) {
+    const backgrounds = [...this.store.backgrounds].map((background) => {
       const backgroundDetail = background[1];
       return backgroundDetail;
     }, this);
 
     switch (this.sortKey) {
       case '1':
-        backgrounds.sort(function (a, b) {
+        backgrounds.sort((a, b) => {
           if (a.count < b.count) {
             return -1;
           }
@@ -37,7 +37,7 @@ class BackgroundList extends Component {
         })
         break;
       case '2':
-        backgrounds.sort(function (a, b) {
+        backgrounds.sort((a, b) => {
           if (a.count > b.count) {
             return -1;
           }
@@ -48,7 +48,7 @@ class BackgroundList extends Component {
         })
         break;
       case '3':
-        backgrounds.sort(function (a, b) {
+        backgrounds.sort((a, b) => {
           if (a.id < b.id) {
             return -1;
           }
@@ -59,7 +59,7 @@ class BackgroundList extends Component {
         })
         break;
       case '4':
-        backgrounds.sort(function (a, b) {
+        backgrounds.sort((a, b) => {
           if (a.data.set < b.data.set) {
             return -1;
           }
@@ -76,9 +76,8 @@ class BackgroundList extends Component {
     return backgrounds;
   }
 
-
   render() {
-    const store = this.props.store;
+    const { store } = this.props;
 
     if (store.loadingobjects) {
       return (<div class="ui active centered inline loader"></div>);
@@ -104,7 +103,7 @@ class BackgroundList extends Component {
             </div>
             <div class="item-rows">
               <div class="items backgrounds">
-                {[...this.backgroundsWithCounts].map(background =>
+                {[...this.backgroundsWithCounts].map((background) => (
                   <div>
                     <div class="item-wrapper">
                       <div class="item">
@@ -117,14 +116,14 @@ class BackgroundList extends Component {
                       </div>
                     </div>
                   </div>
-                )}
+                ))}
               </div>
             </div>
           </div>
           <div class="column">
-            {this.backgroundInfo === null ? <br /> :
+            {this.backgroundInfo === null ? <br /> : (
               <BackgroundInfo category={this.backgroundInfo} store={store} backgroundlist={this} />
-            }
+            )}
           </div>
         </div>
       );
@@ -151,7 +150,6 @@ class BackgroundList extends Component {
   @action sortBackground = (e) => {
     this.sortKey = e.target.value;
   }
-
-};
+}
 
 export default BackgroundList;

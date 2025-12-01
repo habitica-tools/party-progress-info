@@ -20,12 +20,12 @@ class PremiumPetList extends Component {
   }
 
   @computed get petCategoriesWithCounts() {
-    const fromQuest = Array.from(this.store.quests.entries().filter(([id, quest]) =>
+    const fromQuest = Array.from(this.store.quests.entries().filter(([id, quest]) => (
       quest.data.category === 'hatchingPotion' ||
-      quest.data.category === 'timeTravelers' && quest.data.drop.items[0].type === 'hatchingPotions'
-    ).map(x => x[1].data.drop.items[0].key));
+      (quest.data.category === 'timeTravelers' && quest.data.drop.items[0].type === 'hatchingPotions')
+    )).map((x) => x[1].data.drop.items[0].key));
 
-    const pets = [...this.store.premiumhatchingpotionCategories].map(function (category) {
+    const pets = [...this.store.premiumhatchingpotionCategories].map((category) => {
       const petdetail = { id: category };
       const categorypets = [...this.store.premiumpets].filter(([id, pet]) => pet.potiontype === category);
       petdetail.needed = categorypets.reduce((prevVal, [id, pet]) => prevVal + pet.needed, 0);
@@ -37,7 +37,7 @@ class PremiumPetList extends Component {
 
     switch (this.sortKey) {
       case '1':
-        pets.sort(function (a, b) {
+        pets.sort((a, b) => {
           if (a.count < b.count) {
             return -1;
           }
@@ -48,7 +48,7 @@ class PremiumPetList extends Component {
         })
         break;
       case '2':
-        pets.sort(function (a, b) {
+        pets.sort((a, b) => {
           if (a.count > b.count) {
             return -1;
           }
@@ -59,7 +59,7 @@ class PremiumPetList extends Component {
         })
         break;
       case '3':
-        pets.sort(function (a, b) {
+        pets.sort((a, b) => {
           if (a.id < b.id) {
             return -1;
           }
@@ -76,9 +76,8 @@ class PremiumPetList extends Component {
     return pets;
   }
 
-
   render() {
-    const store = this.props.store;
+    const { store } = this.props;
 
     if (store.loadingobjects) {
       return (<div class="ui active centered inline loader"></div>);
@@ -145,7 +144,7 @@ class PremiumPetList extends Component {
           </div>
           <div class="item-rows">
             <div class="items">
-              {[...this.petCategoriesWithCounts.filter(p => p.quest)].map(category =>
+              {[...this.petCategoriesWithCounts.filter((p) => p.quest)].map((category) => (
                 <div>
                   <div class="item-wrapper">
                     <div class="item">
@@ -155,10 +154,11 @@ class PremiumPetList extends Component {
                       <span class="badge badge-pill badge-item badge-count">
                         {category.count}
                       </span>
-                      {category.selectedcount >= 1 ?
+                      {category.selectedcount < 1 ? '' : (
                         <span class="badge badge-pill badge-item badge-blue">
                           {category.selectedcount}
-                        </span> : ''}
+                        </span>
+                      )}
                       <span class={category.id === this.petInfo ? 'selectableInventory item-content Pet Pet-' + category.id + '-Base ' : 'item-content Pet Pet-' + category.id + '-Base '} onClick={this.showPetInfo.bind(this, category.id)}>
                         <img src={this.imageurl + 'Pet-Wolf-' + category.id + '.png'} alt={category.id} />
                       </span>
@@ -166,7 +166,7 @@ class PremiumPetList extends Component {
                     <span class="pettxt">{category.id}</span>
                   </div>
                 </div>
-              )}
+              ))}
             </div>
           </div>
           <div class="ui horizontal divider header">
@@ -174,7 +174,7 @@ class PremiumPetList extends Component {
           </div>
           <div class="item-rows">
             <div class="items">
-              {[...this.petCategoriesWithCounts.filter(p => !p.quest)].map(category =>
+              {[...this.petCategoriesWithCounts.filter((p) => !p.quest)].map((category) => (
                 <div>
                   <div class="item-wrapper">
                     <div class="item">
@@ -184,10 +184,11 @@ class PremiumPetList extends Component {
                       <span class="badge badge-pill badge-item badge-count">
                         {category.count}
                       </span>
-                      {category.selectedcount >= 1 ?
+                      {category.selectedcount < 1 ? '' : (
                         <span class="badge badge-pill badge-item badge-blue">
                           {category.selectedcount}
-                        </span> : ''}
+                        </span>
+                      )}
                       <span class={category.id === this.petInfo ? 'selectableInventory item-content Pet Pet-' + category.id + '-Base ' : 'item-content Pet Pet-' + category.id + '-Base '} onClick={this.showPetInfo.bind(this, category.id)}>
                         <img src={this.imageurl + 'Pet-Wolf-' + category.id + '.png'} alt={category.id} />
                       </span>
@@ -195,13 +196,13 @@ class PremiumPetList extends Component {
                     <span class="pettxt">{category.id}</span>
                   </div>
                 </div>
-              )}
+              ))}
             </div>
           </div>
           <div class="column">
-            {this.petInfo === null ? <br /> :
+            {this.petInfo === null ? <br /> : (
               <PremiumPetInfo category={this.petInfo} store={store} />
-            }
+            )}
           </div>
           <div class="column">
             <div class="ui horizontal divider header">
@@ -218,42 +219,42 @@ class PremiumPetList extends Component {
               </thead>
               <tbody>
                 {this.showleaderboard === 'top3' &&
-                  store.top3premiumpetleaderboard.map((user, index) =>
-
-                    user.data.profile !== undefined ?
+                  store.top3premiumpetleaderboard.map((user, index) => (
+                    user.data.profile !== undefined ? (
                       <tr key={user.id}>
                         <td>{index + 1}</td>
                         <td>{user.data.profile.name}</td>
                         <td>{user.totalPremiumPetCount}</td>
                         <td>{store.totalCountPremiumPetsParty > 0 ? parseFloat(user.totalPremiumPetCount / (store.totalCountPremiumPets / 100)).toFixed(2) + '%' : '0%'}</td>
                       </tr>
-                      :
+                    ) : (
                       <tr key={user.id}>
                         <td>{index + 1}</td>
                         <td>{user.id}</td>
                         <td>{user.totalPremiumPetCount}</td>
                         <td>{store.totalCountPremiumPetsParty > 0 ? parseFloat(user.totalPremiumPetCount / (store.totalCountPremiumPets / 100)).toFixed(2) + '%' : '0%'}</td>
                       </tr>
-                  )
+                    )
+                  ))
                 }
                 {this.showleaderboard === 'all' &&
-                  store.premiumpetleaderboard.map((user, index) =>
-
-                    user.data.profile !== undefined ?
+                  store.premiumpetleaderboard.map((user, index) => (
+                    user.data.profile !== undefined ? (
                       <tr key={user.id}>
                         <td>{index + 1}</td>
                         <td>{user.data.profile.name}</td>
                         <td>{user.totalPremiumPetCount}</td>
                         <td>{store.totalCountPremiumPetsParty > 0 ? parseFloat(user.totalPremiumPetCount / (store.totalCountPremiumPets / 100)).toFixed(2) + '%' : '0%'}</td>
                       </tr>
-                      :
+                    ) : (
                       <tr key={user.id}>
                         <td>{index + 1}</td>
                         <td>{user.id}</td>
                         <td>{user.totalPremiumPetCount}</td>
                         <td>{store.totalCountPremiumPetsParty > 0 ? parseFloat(user.totalPremiumPetCount / (store.totalCountPremiumPets / 100)).toFixed(2) + '%' : '0%'}</td>
                       </tr>
-                  )
+                    )
+                  ))
                 }
               </tbody>
             </table>
@@ -293,7 +294,6 @@ class PremiumPetList extends Component {
   @action handleLeaderboardTop3Only = (e) => {
     this.showleaderboard = 'top3';
   }
-
-};
+}
 
 export default PremiumPetList;
