@@ -14,9 +14,9 @@ class Quest extends Component {
           <span class="badge badge-pill badge-item badge-count">
             {quest.count}
           </span>
-          {quest.selectedcount < 1 ? '' : (
+          {quest.selectedCount < 1 ? '' : (
             <span class="badge badge-pill badge-item badge-blue">
-              {quest.selectedcount}
+              {quest.selectedCount}
             </span>
           )}
           <span class={'item-content Quest inventory_quest_scroll_' + quest.id} id={quest.id} onClick={this.showQuestInfo} >

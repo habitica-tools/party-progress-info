@@ -1,15 +1,15 @@
 import { action, computed, observable } from 'mobx';
 
 class QuestState {
-  store = null;
-  id = null;
   @observable accessor data = {};
   @observable accessor users = [];
 
-  constructor(key, quest, store) {
-    this.id = key;
-    this.data = quest;
-    this.store = store;
+  constructor(data) {
+    this.data = data;
+  }
+
+  get id() {
+    return this.data.key;
   }
 
   @action addUser(user) {
@@ -17,27 +17,23 @@ class QuestState {
   }
 
   @action removeUser(user) {
-    try {
-      this.users.remove(user);
-    }
-    catch (e) { }
+    this.users.remove(user);
   }
 
-  // computeds
+  userCount(user) {
+    return (user.data.items.quests[this.id] !== undefined ? user.data.items.quests[this.id] : 0);
+  }
+
+  usersCount(users) {
+    return users.reduce((value, user) => value + this.userCount(user), 0);
+  }
+
   @computed get count() {
-    let count = 0;
-    this.users.forEach((value, index, array) => {
-      count += value.data.items.quests[this.id];
-    }, this);
-    return count;
+    return this.usersCount(this.users);
   }
 
-  @computed get selectedcount() {
-    let count = 0;
-    this.users.filter((user) => user.isInfoUser).forEach((value, index, array) => {
-      count += value.data.items.quests[this.id];
-    }, this);
-    return count;
+  @computed get selectedCount() {
+    return this.usersCount(this.users.filter((user) => user.isInfoUser));
   }
 }
 
