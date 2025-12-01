@@ -1,4 +1,4 @@
-import Egg from './Egg';
+import Egg from '../Items/Egg';
 import ItemList from './ItemList';
 
 class EggList extends ItemList {
