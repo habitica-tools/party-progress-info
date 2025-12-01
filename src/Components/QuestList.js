@@ -3,8 +3,8 @@ import { Component } from 'preact';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
+import ItemInfo from './ItemInfo';
 import Quest from './Quest';
-import QuestInfo from './QuestInfo';
 
 @observer
 class QuestList extends Component {
@@ -34,7 +34,7 @@ class QuestList extends Component {
           )}
           <div>
             {this.questInfo === null ? <br /> : (
-              <QuestInfo quest={this.questInfo} store={store} questlist={this} />
+              <ItemInfo item={this.questInfo} itemList={this} />
             )}
           </div>
         </div>

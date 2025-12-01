@@ -4,7 +4,7 @@ import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
 import Egg from './Egg';
-import EggInfo from './EggInfo';
+import ItemInfo from './ItemInfo';
 
 function sort(array, key) {
   switch (key) {
@@ -74,7 +74,7 @@ class EggList extends Component {
         }
         <div>
           {this.info === null ? <br /> : (
-            <EggInfo egg={this.info} store={store} eggList={this} />
+            <ItemInfo item={this.info} itemList={this} />
           )}
         </div>
       </div>
