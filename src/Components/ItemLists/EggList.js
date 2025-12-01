@@ -3,7 +3,6 @@ import ItemList from './ItemList';
 import Egg from '../Items/Egg';
 
 class EggList extends ItemList {
-  static type = 'egg';
   static ItemClass = Egg;
 
   static sortOptions = {

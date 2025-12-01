@@ -40,13 +40,23 @@ function sort(array, key) {
   return array;
 }
 
+function beautifyCategory(category) {
+  const string = category.replace(/([A-Z])/g, ' $1').trim();
+
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 @observer
 class ItemList extends Component {
   @observable accessor infoItem = null;
   @observable accessor sortKey = 'most';
   @observable accessor partyOnly = true;
 
-  static type = null;
+  static defaultProps = {
+    category: '',
+    sortable: true,
+  }
+
   static ItemClass = null;
 
   static sortOptions = {
@@ -58,8 +68,8 @@ class ItemList extends Component {
     type: 'Type',
   }
 
-  static defaultProps = {
-    sortable: true,
+  static get itemType() {
+    return this.ItemClass.name;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -83,7 +93,8 @@ class ItemList extends Component {
       <div class="ui fluid container">
         <div class="ui stackable grid">
           <div class="twelve wide column">
-            <h4 class="ui header">{category} {this.constructor.type}s</h4><br />
+            <h4 class="ui header">{beautifyCategory(category)} {this.constructor.itemType + 's'}</h4>
+            <br />
           </div>
           {sortable && (
             <div class="four wide column">

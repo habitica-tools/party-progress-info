@@ -3,7 +3,6 @@ import ItemList from './ItemList';
 import Gear from '../Items/Gear';
 
 class GearList extends ItemList {
-  static type = 'Gear';
   static ItemClass = Gear;
 
   static sortOptions = {
@@ -17,6 +16,10 @@ class GearList extends ItemList {
     super(props);
 
     this.sortKey = 'default';
+  }
+
+  static get itemType() {
+    return 'Equipment';
   }
 
   get items() {

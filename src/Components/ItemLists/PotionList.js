@@ -13,7 +13,7 @@ class PotionList extends ItemList {
   }
 
   static get itemType() {
-    return 'HatchingPotion';
+    return 'Hatching Potion';
   }
 
   get items() {
