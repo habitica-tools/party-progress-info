@@ -2,23 +2,23 @@ import { Component } from 'preact';
 import { observer } from 'mobx-react';
 
 @observer
-class EggInfo extends Component {
+class ItemInfo extends Component {
   render() {
-    const { egg } = this.props;
+    const { item } = this.props;
 
     return (
       <div class="ui mini modal active">
-        <div class="header">{egg.id}
+        <div class="header">{item.tooltip}
           <button class="ui icon right floated button" onClick={this.close}>
             <i class="close icon" />
           </button>
         </div>
         <div class="content">
-          {egg.users.slice()
-            .sort((userA, userB) => egg.userCount(userB) - egg.userCount(userA))
+          {item.users.slice()
+            .sort((userA, userB) => item.userCount(userB) - item.userCount(userA))
             .map((user) => (
               <div key={user.id}>
-                {user.data.profile.name + ' has ' + egg.userCount(user)}
+                {user.data.profile.name + ' has ' + item.userCount(user)}
               </div>
             ))
           }
@@ -28,8 +28,8 @@ class EggInfo extends Component {
   }
 
   close = () => {
-    this.props.eggList.hideInfo();
+    this.props.itemList.hideInfo();
   }
 }
 
-export default EggInfo;
+export default ItemInfo;

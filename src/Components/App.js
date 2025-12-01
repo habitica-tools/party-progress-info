@@ -6,12 +6,12 @@ import Settings from './Settings';
 
 import BackgroundList from './BackgroundList';
 import BasePetList from './BasePetList';
-import EggList from './EggList';
+import EggList from './ItemLists/EggList';
 import GearList from './GearList';
 import PetList from './PetList';
 import PremiumHatchingPotionList from './PremiumHatchingPotionList';
 import PremiumPetList from './PremiumPetList';
-import QuestList from './QuestList';
+import QuestList from './ItemLists/QuestList';
 
 @observer
 class App extends Component {
@@ -212,8 +212,12 @@ class App extends Component {
               </div>
               <div class="ui basic segment" />
               <div class="ui two column stackable grid">
-                <QuestList store={store} category="unlockable" />
-                <QuestList store={store} category="gold" />
+                <div class="ui column">
+                  <QuestList store={store} category="unlockable" sortable={false} />
+                </div>
+                <div class="ui column">
+                  <QuestList store={store} category="gold" sortable={false} />
+                </div>
               </div>
             </div>
           }

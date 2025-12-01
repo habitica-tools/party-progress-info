@@ -1,43 +1,14 @@
-import { action, computed, observable } from 'mobx';
+import ItemState from './ItemState';
 
-class QuestState {
-  store = null;
-  id = null;
-  @observable accessor data = {};
-  @observable accessor users = [];
+class QuestState extends ItemState {
+  static type = 'Quest';
 
-  constructor(key, quest, store) {
-    this.id = key;
-    this.data = quest;
-    this.store = store;
+  static userItems(user) {
+    return user.data.items.quests;
   }
 
-  @action addUser(user) {
-    this.users.push(user);
-  }
-
-  @action removeUser(user) {
-    try {
-      this.users.remove(user);
-    }
-    catch (e) { }
-  }
-
-  // computeds
-  @computed get count() {
-    let count = 0;
-    this.users.forEach((value, index, array) => {
-      count += value.data.items.quests[this.id];
-    }, this);
-    return count;
-  }
-
-  @computed get selectedcount() {
-    let count = 0;
-    this.users.filter((user) => user.isInfoUser).forEach((value, index, array) => {
-      count += value.data.items.quests[this.id];
-    }, this);
-    return count;
+  get tooltip() {
+    return this.data.text;
   }
 }
 
