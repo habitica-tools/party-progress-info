@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 class Item extends Component {
   static imageURL = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
   static imageFilenameBase = null;
-  static showIdBelowItem = true;
+  static showItemCaption = true;
 
   render() {
     const { item } = this.props;
@@ -25,8 +25,8 @@ class Item extends Component {
             <img src={Item.imageURL + this.constructor.imageFilenameBase + item.id + '.png'} alt={item.id} />
           </span>
         </div>
-        {this.constructor.showIdBelowItem &&
-          <span>{item.id}</span>
+        {this.constructor.showItemCaption &&
+          <span>{item.tooltip}</span>
         }
       </div>
     );

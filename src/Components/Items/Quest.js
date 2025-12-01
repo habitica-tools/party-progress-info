@@ -2,7 +2,7 @@ import Item from './Item';
 
 class Quest extends Item {
   static imageFilenameBase = 'inventory_quest_scroll_';
-  static showIdBelowItem = false;
+  static showItemCaption = false;
 }
 
 export default Quest;

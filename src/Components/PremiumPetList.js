@@ -25,7 +25,7 @@ class PremiumPetList extends Component {
       (quest.data.category === 'timeTravelers' && quest.data.drop.items[0].type === 'hatchingPotions')
     )).map((x) => x[1].data.drop.items[0].key));
 
-    const pets = [...this.store.premiumhatchingpotionCategories].map((category) => {
+    const pets = [...this.store.potions.premium.keys()].map((category) => {
       const petdetail = { id: category };
       const categorypets = [...this.store.premiumpets].filter(([id, pet]) => pet.potiontype === category);
       petdetail.needed = categorypets.reduce((prevVal, [id, pet]) => prevVal + pet.needed, 0);

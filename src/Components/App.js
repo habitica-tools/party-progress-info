@@ -7,9 +7,10 @@ import Settings from './Settings';
 import BackgroundList from './BackgroundList';
 import BasePetList from './BasePetList';
 import EggList from './ItemLists/EggList';
-import GearList from './GearList';
+import GearLeaderboard from './GearLeaderboard';
+import GearList from './ItemLists/GearList';
 import PetList from './PetList';
-import PremiumHatchingPotionList from './PremiumHatchingPotionList';
+import PotionList from './ItemLists/PotionList';
 import PremiumPetList from './PremiumPetList';
 import QuestList from './ItemLists/QuestList';
 
@@ -183,7 +184,7 @@ class App extends Component {
                 <h4>Non Used Magic Hatching Potions</h4>
               </div>
               <div class="ui basic segment" />
-              <PremiumHatchingPotionList store={store} />
+              <PotionList store={store} category="premium" />
             </div>
           }
           {store.menupage === 'basepets' &&
@@ -198,10 +199,21 @@ class App extends Component {
               </div>
               <div class="ui basic segment" />
               <EggList store={store} category="base" />
+              <div class="ui basic segment" />
+              <div class="ui horizontal divider header">
+                <h4>Non Used Base Hatching Potions</h4>
+              </div>
+              <div class="ui basic segment" />
+              <PotionList store={store} category="base" />
             </div>
           }
           {store.menupage === 'gear' &&
             <div class="ui fluid container">
+              <GearLeaderboard store={store} />
+              <div class="ui basic segment" />
+              <div class="ui horizontal divider header">
+                <h4>Equipment in the Party</h4>
+              </div>
               <GearList store={store} />
             </div>
           }

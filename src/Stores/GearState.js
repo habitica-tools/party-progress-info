@@ -1,36 +1,14 @@
-import { action, computed, observable } from 'mobx';
+import ItemState from './ItemState';
 
-class GearState {
-  store = null;
-  id = null;
-  @observable accessor data = {};
-  @observable accessor users = [];
+class GearState extends ItemState {
+  static type = 'Gear';
 
-  constructor(key, gear, store) {
-    this.id = key;
-    this.data = gear
-    this.store = store;
+  get tooltip() {
+    return this.data.text;
   }
 
-  @computed get count() {
-    return this.users.length;
-  }
-
-  @computed get selectedcount() {
-    let count = 0;
-    count = this.users.reduce((prevVal, user) => prevVal + (user.isInfoUser ? 1 : 0), count);
-    return count;
-  }
-
-  @action addUser(user) {
-    this.users.push(user);
-  }
-
-  @action removeUser(user) {
-    try {
-      this.users.remove(user);
-    }
-    catch (e) { }
+  userCount(user) {
+    return (this.users.includes(user) ? 1 : 0);
   }
 }
 

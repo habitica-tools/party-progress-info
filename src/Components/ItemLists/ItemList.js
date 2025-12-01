@@ -20,10 +20,30 @@ function sort(array, key) {
         return 0;
       });
       break;
+    case 'set':
+      array.sort((a, b) => {
+        if (a.data.set < b.data.set) return -1;
+        if (a.data.set > b.data.set) return 1;
+        return 0;
+      });
+      break;
+    case 'type':
+      array.sort((a, b) => {
+        if (a.data.type < b.data.type) return -1;
+        if (a.data.type > b.data.type) return 1;
+        return 0;
+      });
+      break;
     default:
   }
 
   return array;
+}
+
+function beautifyCategory(category) {
+  const string = category.replace(/([A-Z])/g, ' $1').trim();
+
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 @observer
@@ -32,11 +52,24 @@ class ItemList extends Component {
   @observable accessor sortKey = 'most';
   @observable accessor partyOnly = true;
 
-  static type = null;
+  static defaultProps = {
+    category: '',
+    sortable: true,
+  }
+
   static ItemClass = null;
 
-  static defaultProps = {
-    sortable: true,
+  static sortOptions = {
+    default: 'Default',
+    least: 'Shortage',
+    most: 'Most',
+    alphabetical: 'A-Z',
+    set: 'Set',
+    type: 'Type',
+  }
+
+  static get itemType() {
+    return this.ItemClass.name;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -60,16 +93,18 @@ class ItemList extends Component {
       <div class="ui fluid container">
         <div class="ui stackable grid">
           <div class="twelve wide column">
-            <h4 class="ui header">{category} {this.constructor.type}s</h4><br />
+            <h4 class="ui header">{beautifyCategory(category)} {this.constructor.itemType + 's'}</h4>
+            <br />
           </div>
-          { sortable && (
+          {sortable && (
             <div class="four wide column">
               <span class="dropdown-label">Sort By: </span>
               <select class="ui dropdown" value={this.sortKey} onChange={this.onSortKeyChanged}>
-                <option value="default">Default</option>
-                <option value="least">Shortage</option>
-                <option value="most">Most</option>
-                <option value="alphabetical">A-Z</option>
+                {Object.entries(this.constructor.sortOptions)
+                  .map(([key, label]) => (
+                    <option value={key}>{label}</option>
+                  ))
+                }
               </select>
             </div>
           )}

@@ -1,11 +1,12 @@
 import { action, computed, observable } from 'mobx';
 
+import HabiticaAPI from './HabiticaAPI';
+
 import BackgroundState from './BackgroundState';
 import EggState from './EggState';
 import GearState from './GearState';
-import HabiticaAPI from './HabiticaAPI';
-import HatchingPotionState from './HatchingPotionState';
 import PetState from './PetState';
+import PotionState from './PotionState';
 import QuestState from './QuestState';
 import UserState from './UserState';
 
@@ -16,7 +17,6 @@ class AppStore {
   pets = observable.map(new Map());
   basepets = observable.map(new Map());
   premiumpets = observable.map(new Map());
-  premiumhatchingpotions = observable.map(new Map());
   gear = observable.map(new Map());
   backgrounds = observable.map(new Map());
 
@@ -24,6 +24,13 @@ class AppStore {
     categories: ['base', 'quest'],
     base: observable.map(new Map()),
     quest: observable.map(new Map()),
+  };
+
+  @observable accessor potions = {
+    categories: ['base', 'premium', 'wacky'],
+    base: observable.map(new Map()),
+    premium: observable.map(new Map()),
+    wacky: observable.map(new Map()),
   };
 
   @observable accessor users = [];
@@ -72,55 +79,75 @@ class AppStore {
     this.api.getContent()
       .then(action((json) => {
         const quests = new Map();
-        new Map(Object.entries(json.data.quests)).forEach((value, key) => {
+        Object.entries(json.data.quests).forEach(([key, value]) => {
           quests.set(key, new QuestState(value));
-        }, this);
+        });
         this.quests.merge(quests);
 
         const pets = new Map();
-        new Map(Object.entries(json.data.questPets)).forEach((value, key) => {
+        Object.entries(json.data.questPets).forEach(([key, value]) => {
           pets.set(key, new PetState(key, this));
         }, this);
         this.pets.merge(pets);
 
         const basepets = new Map();
-        new Map(Object.entries(json.data.pets)).forEach((value, key) => {
+        Object.entries(json.data.pets).forEach(([key, value]) => {
           basepets.set(key, new PetState(key, this));
         }, this);
         this.basepets.merge(basepets);
 
         const premiumpets = new Map();
-        new Map(Object.entries(json.data.premiumPets)).forEach((value, key) => {
+        Object.entries(json.data.premiumPets).forEach(([key, value]) => {
           premiumpets.set(key, new PetState(key, this));
         }, this);
         this.premiumpets.merge(premiumpets);
 
-        const premiumhatchingpotions = new Map();
-        new Map(Object.entries(json.data.premiumHatchingPotions)).forEach((value, key) => {
-          premiumhatchingpotions.set(key, new HatchingPotionState(key, value, this));
-        }, this);
-        this.premiumhatchingpotions.merge(premiumhatchingpotions);
-
         const baseEggs = new Map();
         const questEggs = new Map();
-        const questEggKeys = new Map(Object.entries(json.data.questEggs));
+        const questEggKeys = Object.keys(json.data.questEggs);
 
-        new Map(Object.entries(json.data.eggs)).forEach((value, key) => {
+        Object.entries(json.data.eggs).forEach(([key, value]) => {
           const egg = new EggState(value);
-          if (questEggKeys.has(key)) questEggs.set(key, egg);
+          if (questEggKeys.includes(key)) questEggs.set(key, egg);
           else baseEggs.set(key, egg);
-        }, this);
+        });
+
         this.eggs.base.merge(baseEggs);
         this.eggs.quest.merge(questEggs);
 
-        const gear = new Map();
-        new Map(Object.entries(json.data.gear.flat)).forEach((value, key) => {
-          gear.set(key, new GearState(key, value, this));
+        const basePotions = new Map();
+        const premiumPotions = new Map();
+        const wackyPotions = new Map();
+        const premiumPotionKeys = Object.keys(json.data.premiumHatchingPotions);
+        const wackyPotionKeys = Object.keys(json.data.wackyHatchingPotions);
+
+        Object.entries(json.data.hatchingPotions).forEach(([key, value]) => {
+          const potion = new PotionState(value);
+          if (premiumPotionKeys.includes(key)) premiumPotions.set(key, potion);
+          else if (wackyPotionKeys.includes(key)) wackyPotions.set(key, potion);
+          else basePotions.set(key, potion);
         }, this);
+
+        // apply a small adjustment to the Glow-in-the-Dark potion name
+        premiumPotions.get('Glow').data.text = 'Glow';
+
+        this.potions.base.merge(basePotions);
+        this.potions.premium.merge(premiumPotions);
+        this.potions.wacky.merge(wackyPotions);
+
+        const gear = new Map();
+        Object.entries(json.data.gear.flat).forEach(([key, value]) => {
+          gear.set(key, new GearState(value));
+        });
+
+        // remove gear without an image (i.e. all the base gear)
+        const baseGearKeys = ['armor_base_0', 'back_base_0', 'body_base_0', 'eyewear_base_0', 'headAccessory_base_0', 'head_base_0', 'shield_base_0', 'weapon_base_0'];
+        baseGearKeys.forEach((key) => gear.delete(key));
+
         this.gear.merge(gear);
 
         const backgrounds = new Map();
-        new Map(Object.entries(json.data.backgroundsFlat)).forEach((value, key) => {
+        Object.entries(json.data.backgroundsFlat).forEach(([key, value]) => {
           backgrounds.set(key, new BackgroundState(key, value, this));
         }, this);
         this.backgrounds.merge(backgrounds);
@@ -248,16 +275,6 @@ class AppStore {
 
     pets.forEach((pet) => {
       categories.add(pet.basetype);
-    });
-    return categories;
-  }
-
-  @computed get premiumhatchingpotionCategories() {
-    const categories = new Set();
-    const potions = [...this.premiumhatchingpotions].map(([id, potion]) => potion)
-
-    potions.forEach((potion) => {
-      categories.add(potion.id);
     });
     return categories;
   }
