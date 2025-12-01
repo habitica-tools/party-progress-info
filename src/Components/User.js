@@ -1,68 +1,68 @@
-import { h, render, Component } from 'preact';
+import { Component } from 'preact';
 import { observer } from 'mobx-react';
 
 @observer
 class User extends Component {
-
   render() {
-    const user = this.props.user;
+    const { user } = this.props;
 
     if (user.loading) {
       return (
         <div class="card">
           <div class="content">
-            <div class="ui active centered loader"></div>
+            <div class="ui active centered loader" />
           </div>
         </div>
       );
     }
-    else if (user.invalid) {
+
+    if (user.invalid) {
       return (
         <div class="card">
           <div class="content">
             <div class="center aligned header">
-              <i class="user times icon"></i>
+              <i class="user times icon" />
             </div>
             <div class="description">
               {user.data.customMessage}
             </div>
           </div>
           <div class="extra content">
-            <a class="right floated" onClick={this.removeUser}><i class="trash icon"></i>Remove</a>
+            <a class="right floated" onClick={this.removeUser}><i class="trash icon" />Remove</a>
           </div>
         </div>
       );
     }
-    else {
-      let mp = user.data.stats.mp / (user.data.stats.maxMP / 100) > 100 ? 100 : user.data.stats.mp / (user.data.stats.maxMP / 100);
-      let hp = user.data.stats.hp / (user.data.stats.maxHealth / 100) > 100 ? 100 : user.data.stats.hp / (user.data.stats.maxHealth / 100);
-      return (
-        <div class={this.isSelectedUser() ? 'card blue' : 'card'}>
-          <div class="content">
-            <div class="header">{user.data.profile.name}</div>
-            <div class="meta">
-              Lvl {user.data.stats.lvl} <span class="label label-info">{this.parseUserClass(user.data.stats.class)}</span>
-              <span data-tooltip="Gold" style="color:#b58105"><i class="dollar icon"></i>{parseInt(user.data.stats.gp)}</span>
-              <span data-tooltip="Pending damage"><i class="bomb icon"></i>{user.damage}</span>
-            </div>
-            <div class="description">
-              <div class="progress-container">
-                <div class="progress">
-                  <div class="progress-bar bg-health" style={"transition-duration: 300ms; width:" + hp + "%;"}></div>
-                </div>
-                <div class="progress">
-                  <div class="progress-bar bg-mana" style={"transition-duration: 300ms; width:" + mp + "%;"}></div>
-                </div>
+
+    const mp = user.data.stats.mp / (user.data.stats.maxMP / 100) > 100 ? 100 : user.data.stats.mp / (user.data.stats.maxMP / 100);
+    const hp = user.data.stats.hp / (user.data.stats.maxHealth / 100) > 100 ? 100 : user.data.stats.hp / (user.data.stats.maxHealth / 100);
+
+    return (
+      <div class={this.isSelectedUser() ? 'card blue' : 'card'}>
+        <div class="content">
+          <div class="header">{user.data.profile.name}</div>
+          <div class="meta">
+            Lvl {user.data.stats.lvl} <span class="label label-info">{User.parseUserClass(user.data.stats.class)}</span>
+            <span data-tooltip="Gold" style="color:#b58105"><i class="dollar icon" />{parseInt(user.data.stats.gp)}</span>
+            <span data-tooltip="Pending damage"><i class="bomb icon" />{user.damage}</span>
+          </div>
+          <div class="description">
+            <div class="progress-container">
+              <div class="progress">
+                <div class="progress-bar bg-health" style={'transition-duration: 300ms; width:' + hp + '%;'} />
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-mana" style={'transition-duration: 300ms; width:' + mp + '%;'} />
               </div>
             </div>
           </div>
-          <div class="extra content">
-            <a class="left floated" onClick={this.selectUser}><i class="info icon"></i>{this.isSelectedUser() ? 'Deselect' : 'Select'}</a>
-            <a class="right floated" onClick={this.removeUser}><i class="trash icon"></i>Remove</a>
-          </div>
         </div>
-      );
-    }
+        <div class="extra content">
+          <a class="left floated" onClick={this.selectUser}><i class="info icon" />{this.isSelectedUser() ? 'Deselect' : 'Select'}</a>
+          <a class="right floated" onClick={this.removeUser}><i class="trash icon" />Remove</a>
+        </div>
+      </div>
+    );
   }
 
   isSelectedUser() {
@@ -82,11 +82,9 @@ class User extends Component {
     }
   }
 
-  parseUserClass(klass) {
-    return klass === "wizard" ? "mage" : klass;
+  static parseUserClass(userClass) {
+    return userClass === 'wizard' ? 'mage' : userClass;
   }
-
 }
-
 
 export default User;

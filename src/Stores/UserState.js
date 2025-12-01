@@ -1,4 +1,4 @@
-import { observable, computed, action } from 'mobx';
+import { action, computed, observable } from 'mobx';
 
 class UserState {
   @observable accessor loading = true;
@@ -30,14 +30,14 @@ class UserState {
   @computed get totalPetCount() {
     let count = 0;
     if (!this.loading) {
-      [...this.store.pets].map(pet => pet[1])
-        .filter(pet => pet.users.includes(this) ? pet : null)
-        .forEach(function (pet) {
+      [...this.store.pets].map((pet) => pet[1])
+        .filter((pet) => (pet.users.includes(this) ? pet : null))
+        .forEach((pet) => {
           if (this.data.items.pets !== undefined && this.data.items.pets[pet.id] > 0) {
-            count = count + 1;
+            count += 1;
           }
           if (this.data.items.mounts !== undefined && this.data.items.mounts[pet.id] > 0) {
-            count = count + 1;
+            count += 1;
           }
         }, this)
     }
@@ -47,14 +47,14 @@ class UserState {
   @computed get totalBasePetCount() {
     let count = 0;
     if (!this.loading) {
-      [...this.store.basepets].map(pet => pet[1])
-        .filter(pet => pet.users.includes(this) ? pet : null)
-        .forEach(function (pet) {
+      [...this.store.basepets].map((pet) => pet[1])
+        .filter((pet) => (pet.users.includes(this) ? pet : null))
+        .forEach((pet) => {
           if (this.data.items.pets !== undefined && this.data.items.pets[pet.id] > 0) {
-            count = count + 1;
+            count += 1;
           }
           if (this.data.items.mounts !== undefined && this.data.items.mounts[pet.id] > 0) {
-            count = count + 1;
+            count += 1;
           }
         }, this)
     }
@@ -64,14 +64,14 @@ class UserState {
   @computed get totalPremiumPetCount() {
     let count = 0;
     if (!this.loading) {
-      [...this.store.premiumpets].map(pet => pet[1])
-        .filter(pet => pet.users.includes(this) ? pet : null)
-        .forEach(function (pet) {
+      [...this.store.premiumpets].map((pet) => pet[1])
+        .filter((pet) => (pet.users.includes(this) ? pet : null))
+        .forEach((pet) => {
           if (this.data.items.pets !== undefined && this.data.items.pets[pet.id] > 0) {
-            count = count + 1;
+            count += 1;
           }
           if (this.data.items.mounts !== undefined && this.data.items.mounts[pet.id] > 0) {
-            count = count + 1;
+            count += 1;
           }
         }, this)
     }
@@ -81,11 +81,11 @@ class UserState {
   @computed get totalGearCount() {
     let count = 0;
     if (!this.loading) {
-      [...this.store.gear].map(gear => gear[1])
-        .filter(gear => gear.users.includes(this) ? gear : null)
-        .forEach(function (gear) {
+      [...this.store.gear].map((gear) => gear[1])
+        .filter((gear) => (gear.users.includes(this) ? gear : null))
+        .forEach((gear) => {
           if (this.data.items.gear.owned[gear.id] !== undefined) {
-            count = count + 1;
+            count += 1;
           }
         }, this)
     }
@@ -96,50 +96,49 @@ class UserState {
     if (!this.store.api.isValidToken(userid)) {
       this.loading = false;
       this.invalid = true;
-      this.data.customMessage = "\"" + userid + "\" is not a valid User ID";
+      this.data.customMessage = '"' + userid + '" is not a valid User ID';
       return;
     }
 
     if (!this.store.api.hasValidCredentials) {
       this.loading = false;
       this.invalid = true;
-      this.data.customMessage = "Valid authentication required to fetch user data";
+      this.data.customMessage = 'Valid authentication required to fetch user data';
       return;
     }
 
     this.loading = true;
     this.store.api.getUser(userid)
-      .then(action(json => {
+      .then(action((json) => {
         this.data = json.data;
         this.loading = false;
-        //go over quests
+        // go over quests
         if (json.data.items.quests !== undefined) {
-          var quests = new Map(Object.entries(json.data.items.quests));
-          quests.forEach(function (value, key) {
-            if (value > 0)
-              this.store.quests.get(key).addUser(this);
+          const quests = new Map(Object.entries(json.data.items.quests));
+          quests.forEach((value, key) => {
+            if (value > 0) this.store.quests.get(key).addUser(this);
           }, this);
         }
-        //go over questpets / base pets / premium pets
+        // go over questpets / base pets / premium pets
         if (json.data.items.pets !== undefined) {
-          var pets = new Map(Object.entries(json.data.items.pets));
-          pets.forEach(function (value, key) {
-            if (key !== null && key !== undefined) { //TODO: redundant?
-              var pet = this.store.pets.get(key);
+          const pets = new Map(Object.entries(json.data.items.pets));
+          pets.forEach((value, key) => {
+            if (key !== null && key !== undefined) { // TODO: redundant?
+              const pet = this.store.pets.get(key);
               if (pet !== undefined) {
                 pet.addUser(this);
                 if (value > 0) {
                   pet.addUserWithPet(this);
                 }
               }
-              var basepet = this.store.basepets.get(key);
+              const basepet = this.store.basepets.get(key);
               if (basepet !== undefined) {
                 basepet.addUser(this);
                 if (value > 0) {
                   basepet.addUserWithPet(this);
                 }
               }
-              var premiumpet = this.store.premiumpets.get(key);
+              const premiumpet = this.store.premiumpets.get(key);
               if (premiumpet !== undefined) {
                 premiumpet.addUser(this);
                 if (value > 0) {
@@ -149,66 +148,68 @@ class UserState {
             }
           }, this);
           if (json.data.items.mounts !== undefined) {
-            var mounts = new Map(Object.entries(json.data.items.mounts));
-            mounts.forEach(function (value, key) {
+            const mounts = new Map(Object.entries(json.data.items.mounts));
+            mounts.forEach((value, key) => {
               if (key !== null && key !== undefined && value !== null && value === true) {
-                var pet = this.store.pets.get(key);
-                if (pet !== undefined)
-                  pet.addUserWithMount(this);
-                var basepet = this.store.basepets.get(key);
-                if (basepet !== undefined)
-                  basepet.addUserWithMount(this);
-                var premiumpet = this.store.premiumpets.get(key);
-                if (premiumpet !== undefined)
-                  premiumpet.addUserWithMount(this);
+                const pet = this.store.pets.get(key);
+                if (pet !== undefined) pet.addUserWithMount(this);
+                const basepet = this.store.basepets.get(key);
+                if (basepet !== undefined) basepet.addUserWithMount(this);
+                const premiumpet = this.store.premiumpets.get(key);
+                if (premiumpet !== undefined) premiumpet.addUserWithMount(this);
               }
             }, this);
           }
         }
 
-        //go over eggs
+        // go over eggs
         if (json.data.items.eggs !== undefined) {
-          var eggs = new Map(Object.entries(json.data.items.eggs));
-          eggs.forEach(function (value, key) {
+          const eggs = new Map(Object.entries(json.data.items.eggs));
+          eggs.forEach((value, key) => {
             if (value > 0 && key !== null && key !== undefined) {
-              for (let category of this.store.eggs.categories) {
-                let egg = this.store.eggs[category].get(key);
+              this.store.eggs.categories.every((category) => {
+                const egg = this.store.eggs[category].get(key);
                 if (egg !== undefined) {
                   egg.addUser(this);
-                  break;
+                  return false;
                 }
+                return true;
+              })
+            }
+          }, this);
+        }
+
+        // go over hatching potions
+        if (json.data.items.hatchingPotions !== undefined) {
+          const potions = new Map(Object.entries(json.data.items.hatchingPotions));
+          potions.forEach((value, key) => {
+            let potion;
+            if (key !== null && key !== undefined) potion = this.store.premiumhatchingpotions.get(key);
+            if (potion !== undefined) {
+              if (value > 0) {
+                potion.addUser(this);
               }
             }
           }, this);
         }
 
-        //go over hatching potions
-        if (json.data.items.hatchingPotions !== undefined) {
-          var potions = new Map(Object.entries(json.data.items.hatchingPotions));
-          potions.forEach(function (value, key) {
-            if (key !== null && key !== undefined)
-              var potion = this.store.premiumhatchingpotions.get(key);
-            if (potion !== undefined)
-              if (value > 0) {
-                potion.addUser(this);
-              }
-          }, this);
-        }
-
-        //go over gear
+        // go over gear
         if (json.data.items.gear !== undefined) {
-          var gear = new Map(Object.entries(json.data.items.gear.owned));
-          gear.forEach(function (value, key) {
-            if (key !== null && key !== undefined)
-              var gear = this.store.gear.get(key);
-            if (gear !== undefined)
+          const gear = new Map(Object.entries(json.data.items.gear.owned));
+          gear.forEach((value, key) => {
+            let gear;
+            if (key !== null && key !== undefined) {
+              gear = this.store.gear.get(key);
+            }
+            if (gear !== undefined) {
               if (value > 0) {
                 gear.addUser(this);
               }
+            }
           }, this);
         }
 
-        //go over backgrounds
+        // go over backgrounds
         /*
         if(json.data.items.backgrounds !== undefined){
             var backgrounds = new Map(Object.entries(json.data.items.backgrounds.owned));
@@ -223,27 +224,27 @@ class UserState {
         }
         */
       }))
-      .catch(action(res => {
+      .catch(action((res) => {
         if (res.status === undefined) {
           throw res;
         }
 
         // 400: invalid userid
         if (res.status === 400) {
-          this.data.customMessage = "\"" + userid + "\" is not a valid User ID";
+          this.data.customMessage = '"' + userid + '" is not a valid User ID';
         }
         // 401: invalid credentials
         else if (res.status === 401) {
-          this.data.customMessage = "Invalid API credentials";
+          this.data.customMessage = 'Invalid API credentials';
         }
         // 404: userid not found
         else if (res.status === 404) {
-          this.data.customMessage = "User ID \"" + userid + "\" not found";
+          this.data.customMessage = 'User ID "' + userid + '" not found';
         }
 
         res.json()
-          .then(action(json => {
-            if (!Object.prototype.hasOwnProperty.call(this.data, "customMessage")) {
+          .then(action((json) => {
+            if (!Object.hasOwn(this.data, 'customMessage')) {
               this.data = json;
               this.data.customMessage = JSON.stringify(json);
             }

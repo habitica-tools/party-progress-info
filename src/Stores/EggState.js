@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx';
+import { action, computed, observable } from 'mobx';
 
 class EggState {
   @observable accessor data = {};
@@ -33,7 +33,7 @@ class EggState {
   }
 
   @computed get selectedCount() {
-    return this.usersCount(this.users.filter(user => user.isInfoUser));
+    return this.usersCount(this.users.filter((user) => user.isInfoUser));
   }
 }
 

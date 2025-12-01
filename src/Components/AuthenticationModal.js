@@ -1,17 +1,12 @@
-import { h, render, Component } from 'preact';
+import { Component } from 'preact';
+import { action } from 'mobx';
 import { observer } from 'mobx-react';
-import { observable, action } from 'mobx';
 
 @observer
 class AuthenticationModal extends Component {
-
   constructor() {
     super();
-    this.state = { userId: "", key: "" }
-  }
-
-  componentDidMount() {
-    this.setState({ userId: this.props.userId });
+    this.state = { userId: '', key: '' }
   }
 
   render() {
@@ -39,10 +34,10 @@ class AuthenticationModal extends Component {
           <p />
           <div
             onClick={this.addAuth}
-            class={"ui blue button" + (this.userAndKeyAreValid ? "" : " disabled")}
-          ><i class="users icon"></i> Authenticate</div>
+            class={'ui blue button' + (this.userAndKeyAreValid ? '' : ' disabled')}
+          ><i class="users icon" /> Authenticate</div>
           <div style="white-space: pre-line;" class="ui icon right floated button" data-bs-html="true" data-tooltip="Habitica API does not allow fetching user info without authentication any more.&#xa;You can find your User ID and API Token in Habitica.com -> User -> Settings -> Site Data.&#xa;Your credentials are not saved, this modal will pop up again after site refresh." data-position="right center">
-            <i class="info icon"></i>
+            <i class="info icon" />
           </div>
         </div>
       </div>
@@ -65,7 +60,7 @@ class AuthenticationModal extends Component {
   }
 
   @action onKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       this.addAuth();
     }
   }
@@ -76,9 +71,8 @@ class AuthenticationModal extends Component {
     this.props.store.reloadUsers();
     this.props.store.addUser(this.state.userId);
 
-    this.setState({ userId: "", key: "" });
+    this.setState({ userId: '', key: '' });
   }
 }
-
 
 export default AuthenticationModal;

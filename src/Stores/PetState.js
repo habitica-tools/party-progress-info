@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx';
+import { action, computed, observable } from 'mobx';
 
 class PetState {
   id = null;
@@ -13,104 +13,102 @@ class PetState {
   }
 
   @computed get basetype() {
-    if (this.id !== null) {
-      return this.id.slice(0, this.id.indexOf('-'));
+    if (this.id === null) {
+      return '';
     }
-    else {
-      return "";
-    }
+
+    return this.id.slice(0, this.id.indexOf('-'));
   }
 
   @computed get potiontype() {
-    if (this.id !== null) {
-      return this.id.slice(this.id.indexOf('-') + 1);
+    if (this.id === null) {
+      return '';
     }
-    else {
-      return "";
-    }
+
+    return this.id.slice(this.id.indexOf('-') + 1);
   }
 
   @computed get needed() {
-    var count = 0;
+    let count = 0;
     count = this.store.countValidUsers() * 2;
-    this.users.forEach(function (value, index, array) {
+    this.users.forEach((value, index, array) => {
       if (value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
-        count = count - 1;
+        count -= 1;
       }
       if (value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
-        count = count - 1;
+        count -= 1;
       }
     }, this);
     return count;
   }
 
   @computed get petsNeeded() {
-    var count = 0;
+    let count = 0;
     count = this.store.countValidUsers();
-    this.users.forEach(function (value, index, array) {
+    this.users.forEach((value, index, array) => {
       if (value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
-        count = count - 1;
+        count -= 1;
       }
     }, this);
     return count;
   }
 
   @computed get mountsNeeded() {
-    var count = 0;
+    let count = 0;
     count = this.store.countValidUsers();
-    this.users.forEach(function (value, index, array) {
+    this.users.forEach((value, index, array) => {
       if (value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
-        count = count - 1;
+        count -= 1;
       }
     }, this);
     return count;
   }
 
   @computed get count() {
-    var count = 0;
-    this.users.forEach(function (value, index, array) {
+    let count = 0;
+    this.users.forEach((value, index, array) => {
       if (value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
-        count = count + 1;
+        count += 1;
       }
       if (value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
-        count = count + 1;
+        count += 1;
       }
     }, this);
     return count;
   }
 
   @computed get petCount() {
-    var count = 0;
-    this.users.forEach(function (value, index, array) {
+    let count = 0;
+    this.users.forEach((value, index, array) => {
       if (value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
-        count = count + 1;
+        count += 1;
       }
     }, this);
     return count;
   }
 
   @computed get mountCount() {
-    var count = 0;
-    this.users.forEach(function (value, index, array) {
+    let count = 0;
+    this.users.forEach((value, index, array) => {
       if (value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
-        count = count + 1;
+        count += 1;
       }
     }, this);
     return count;
   }
 
-  //get usercount
+  // get usercount
 
-  //get selectedcount
+  // get selectedcount
   @computed get selectedcount() {
     let count = 0;
 
-    this.users.filter(user => user.isInfoUser).forEach(function (value, index, array) {
+    this.users.filter((user) => user.isInfoUser).forEach((value, index, array) => {
       if (value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
-        count = count + 1;
+        count += 1;
       }
       if (value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
-        count = count + 1;
+        count += 1;
       }
     }, this)
 
@@ -149,7 +147,6 @@ class PetState {
     }
     catch (e) { }
   }
-
 }
 
 export default PetState;

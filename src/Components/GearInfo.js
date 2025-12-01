@@ -1,36 +1,34 @@
-import { h, render, Component } from 'preact';
+import { Component } from 'preact';
 import { observer } from 'mobx-react';
 
 @observer
 class GearInfo extends Component {
   render() {
-    const store = this.props.store;
-    const category = this.props.category;
+    const { store, category } = this.props;
 
     return (
       <div>
         {[...store.gear].filter(([id, gear]) => gear.id === category)
-          .map(([id, gear]) =>
+          .map(([id, gear]) => (
             <div class="ui mini modal active">
               <div class="header">{gear.data.text}
                 <button class="ui icon right floated button" onClick={this.Close}>
-                  <i class="close icon"></i>
+                  <i class="close icon" />
                 </button>
               </div>
               <div class="content">
-                {gear.users.map(user => user.data.profile.name).join(', ')}
+                {gear.users.map((user) => user.data.profile.name).join(', ')}
               </div>
             </div>
-          )}
+          ))
+        }
       </div>
     );
-
   }
 
   Close = (e) => {
     this.props.gearlist.hideGearInfo();
   }
 }
-
 
 export default GearInfo;

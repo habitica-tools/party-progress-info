@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx';
+import { action, computed, observable } from 'mobx';
 
 class HatchingPotionState {
   id = null;
@@ -13,10 +13,10 @@ class HatchingPotionState {
   }
 
   @computed get count() {
-    var count = 0;
-    this.users.forEach(function (value, index, array) {
+    let count = 0;
+    this.users.forEach((value, index, array) => {
       if (value.data.items.hatchingPotions[this.id] !== undefined) {
-        count = count + value.data.items.hatchingPotions[this.id]
+        count += value.data.items.hatchingPotions[this.id]
       }
     }, this);
     return count;
@@ -34,8 +34,8 @@ class HatchingPotionState {
   }
 
   @computed get selectedcount() {
-    var count = 0;
-    count = this.users.filter(u => u.isInfoUser)
+    let count = 0;
+    count = this.users.filter((u) => u.isInfoUser)
       .reduce((prevVal, user) => prevVal + (user.data.items.hatchingPotions[this.id] !== undefined ? user.data.items.hatchingPotions[this.id] : 0), count);
     return count;
   }

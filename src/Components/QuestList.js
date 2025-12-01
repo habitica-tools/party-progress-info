@@ -1,6 +1,8 @@
-import { h, render, Component } from 'preact';
+import { Component } from 'preact';
+
+import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { observable, action } from 'mobx';
+
 import Quest from './Quest';
 import QuestInfo from './QuestInfo';
 
@@ -10,26 +12,33 @@ class QuestList extends Component {
   @observable accessor questInfo = null;
 
   render() {
-    const store = this.props.store;
-    const category = this.props.category;
+    const { store, category } = this.props;
 
     return (
-      store.loadingobjects ? <div class="ui active centered inline loader"></div> :
+      store.loadingobjects ? <div class="ui active centered inline loader" /> : (
         <div class="column">
           <h4 class="ui header">{category} quests</h4>
           <div class="items">
-            {Array.from(store.quests.entries().filter(this.categoryFilter)
-              .filter(([_, quest]) => this.showAll ? quest : quest.users.length > 0).map(([id, quest]) =>
-                <Quest quest={quest} id={id} questlist={this} />
-              ))}
+            {Array.from(
+              store.quests.entries().filter(this.categoryFilter)
+                .filter(([_, quest]) => (this.showAll ? quest : quest.users.length > 0))
+                .map(([id, quest]) => (
+                  <Quest quest={quest} id={id} questlist={this} />
+                )),
+            )}
           </div>
-          {this.showAll
-            ? <button class="ui olive button" onClick={this.handlePartyOnly}><i class="hide icon"></i>Party Only</button>
-            : <button class="ui blue button" onClick={this.handleShowAll}><i class="unhide icon"></i>Show All</button>}
+          {this.showAll ? (
+            <button class="ui olive button" onClick={this.handlePartyOnly}><i class="hide icon" />Party Only</button>
+          ) : (
+            <button class="ui blue button" onClick={this.handleShowAll}><i class="unhide icon" />Show All</button>
+          )}
           <div>
-            {this.questInfo === null ? <br /> : <QuestInfo quest={this.questInfo} store={store} questlist={this} />}
+            {this.questInfo === null ? <br /> : (
+              <QuestInfo quest={this.questInfo} store={store} questlist={this} />
+            )}
           </div>
         </div>
+      )
     );
   }
 
@@ -38,10 +47,10 @@ class QuestList extends Component {
       return true;
     }
 
-    if (quest.data.category === "timeTravelers") {
+    if (quest.data.category === 'timeTravelers') {
       return (
-        (this.props.category == "pet" && quest.data.drop.items[0].type === "eggs")
-        || (this.props.category == "hatchingPotion" && quest.data.drop.items[0].type === "hatchingPotions")
+        (this.props.category === 'pet' && quest.data.drop.items[0].type === 'eggs')
+        || (this.props.category === 'hatchingPotion' && quest.data.drop.items[0].type === 'hatchingPotions')
       );
     }
 
@@ -68,6 +77,6 @@ class QuestList extends Component {
   @action hideInfo() {
     this.questInfo = null;
   }
-};
+}
 
 export default QuestList;

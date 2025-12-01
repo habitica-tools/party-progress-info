@@ -1,13 +1,14 @@
-import { h, render, Component } from 'preact';
-import { observable, action } from 'mobx';
+import { Component } from 'preact';
+
+import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
 @observer
 class SettingsInput extends Component {
-  @observable accessor input = "";
+  @observable accessor input = '';
 
   render() {
-    const store = this.props.store;
+    const { store } = this.props;
 
     return (
       <div class="ui fluid action input">
@@ -21,14 +22,14 @@ class SettingsInput extends Component {
           onKeyDown={(this.inputIsValid ? this.onKeyDown : null)}
         />
         <div
-          class={"ui blue button" + (this.inputIsValid ? "" : " disabled")}
+          class={'ui blue button' + (this.inputIsValid ? '' : ' disabled')}
           onClick={this.addUser}
-        ><i class="user icon"></i> Add</div>
+        ><i class="user icon" /> Add</div>
         &nbsp;
         <div
-          class={"ui blue button" + (store.api.hasValidCredentials ? "" : " disabled")}
+          class={'ui blue button' + (store.api.hasValidCredentials ? '' : ' disabled')}
           onClick={this.addParty}
-        ><i class="users icon"></i> Add Party</div>
+        ><i class="users icon" /> Add Party</div>
       </div>
     );
   }
@@ -42,21 +43,20 @@ class SettingsInput extends Component {
   }
 
   @action onKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       this.addUser();
     }
   }
 
   @action addUser = () => {
     this.props.store.addUser(this.input);
-    this.input = "";
+    this.input = '';
   }
 
   @action addParty = () => {
     this.props.store.addParty();
-    this.input = "";
+    this.input = '';
   }
 }
-
 
 export default SettingsInput;

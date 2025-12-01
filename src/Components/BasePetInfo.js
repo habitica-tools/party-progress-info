@@ -1,13 +1,13 @@
-import { h, render, Component } from 'preact';
+import { Component } from 'preact';
 import { observer } from 'mobx-react';
-import Pet from './Pet';
+
 import Mount from './Mount';
+import Pet from './Pet';
 
 @observer
 class BasePetInfo extends Component {
   render() {
-    const store = this.props.store;
-    const category = this.props.category;
+    const { store, category } = this.props;
 
     return (
       <div class="ui fluid">
@@ -26,20 +26,20 @@ class BasePetInfo extends Component {
           </thead>
           <tbody>
             {[...store.basepets].filter(([id, pet]) => pet.basetype === category)
-              .map(([id, pet]) =>
+              .map(([id, pet]) => (
                 <tr>
                   <td><Pet pet={pet} /></td>
-                  <td>{pet.usersWithPet.map(user => user.data.profile.name).join(', ')}</td>
+                  <td>{pet.usersWithPet.map((user) => user.data.profile.name).join(', ')}</td>
                   <td><Mount mount={pet} /></td>
-                  <td>{pet.usersWithMount.map(user => user.data.profile.name).join(', ')}</td>
+                  <td>{pet.usersWithMount.map((user) => user.data.profile.name).join(', ')}</td>
                 </tr>
-              )}
+              ))
+            }
           </tbody>
         </table>
       </div>
     );
   }
 }
-
 
 export default BasePetInfo;

@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx';
+import { action, computed, observable } from 'mobx';
 
 class BackgroundState {
   store = null;
@@ -26,7 +26,6 @@ class BackgroundState {
     }
     catch (e) { }
   }
-
 }
 
 export default BackgroundState;

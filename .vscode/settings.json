@@ -1,4 +1,7 @@
 {
-  "files.autoSave": "onFocusChange",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "files.autoSave": "onFocusChange",
 }

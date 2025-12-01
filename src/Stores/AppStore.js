@@ -1,12 +1,13 @@
-import { observable, action, computed, autorun } from 'mobx';
-import UserState from "./UserState";
-import QuestState from "./QuestState";
-import PetState from "./PetState";
-import EggState from "./EggState";
-import HatchingPotionState from "./HatchingPotionState";
-import GearState from "./GearState";
-import BackgroundState from "./BackgroundState";
+import { action, computed, observable } from 'mobx';
+
+import BackgroundState from './BackgroundState';
+import EggState from './EggState';
+import GearState from './GearState';
 import HabiticaAPI from './HabiticaAPI';
+import HatchingPotionState from './HatchingPotionState';
+import PetState from './PetState';
+import QuestState from './QuestState';
+import UserState from './UserState';
 
 class AppStore {
   @observable accessor loadingobjects = true;
@@ -22,43 +23,43 @@ class AppStore {
   @observable accessor eggs = {
     categories: ['base', 'quest'],
     base: observable.map(new Map()),
-    quest: observable.map(new Map())
+    quest: observable.map(new Map()),
   };
 
   @observable accessor users = [];
   @observable accessor infoUser = [];
 
   loadParty = false;
-  @observable accessor menupage = "petsquesteggs";
+  @observable accessor menupage = 'petsquesteggs';
 
   api = undefined;
 
   @action gotoPetsQuestEggs() {
-    this.menupage = "petsquesteggs";
+    this.menupage = 'petsquesteggs';
   }
 
   @action gotoBasePets() {
-    this.menupage = "basepets";
+    this.menupage = 'basepets';
   }
 
   @action gotoPremiumPets() {
-    this.menupage = "premiumpets";
+    this.menupage = 'premiumpets';
   }
 
   @action gotoOtherQuests() {
-    this.menupage = "otherquests";
+    this.menupage = 'otherquests';
   }
 
   @action gotoGear() {
-    this.menupage = "gear";
+    this.menupage = 'gear';
   }
 
   @action gotoBackgrounds() {
-    this.menupage = "backgrounds";
+    this.menupage = 'backgrounds';
   }
 
   @action gotoAbout() {
-    this.menupage = "about";
+    this.menupage = 'about';
   }
 
   constructor() {
@@ -69,33 +70,33 @@ class AppStore {
 
   @action fetchCommonObjects() {
     this.api.getContent()
-      .then(action(json => {
+      .then(action((json) => {
         const quests = new Map();
-        new Map(Object.entries(json.data.quests)).forEach(function (value, key) {
+        new Map(Object.entries(json.data.quests)).forEach((value, key) => {
           quests.set(key, new QuestState(key, value, this));
         }, this);
         this.quests.merge(quests);
 
         const pets = new Map();
-        new Map(Object.entries(json.data.questPets)).forEach(function (value, key) {
+        new Map(Object.entries(json.data.questPets)).forEach((value, key) => {
           pets.set(key, new PetState(key, this));
         }, this);
         this.pets.merge(pets);
 
         const basepets = new Map();
-        new Map(Object.entries(json.data.pets)).forEach(function (value, key) {
+        new Map(Object.entries(json.data.pets)).forEach((value, key) => {
           basepets.set(key, new PetState(key, this));
         }, this);
         this.basepets.merge(basepets);
 
         const premiumpets = new Map();
-        new Map(Object.entries(json.data.premiumPets)).forEach(function (value, key) {
+        new Map(Object.entries(json.data.premiumPets)).forEach((value, key) => {
           premiumpets.set(key, new PetState(key, this));
         }, this);
         this.premiumpets.merge(premiumpets);
 
         const premiumhatchingpotions = new Map();
-        new Map(Object.entries(json.data.premiumHatchingPotions)).forEach(function (value, key) {
+        new Map(Object.entries(json.data.premiumHatchingPotions)).forEach((value, key) => {
           premiumhatchingpotions.set(key, new HatchingPotionState(key, value, this));
         }, this);
         this.premiumhatchingpotions.merge(premiumhatchingpotions);
@@ -104,8 +105,8 @@ class AppStore {
         const questEggs = new Map();
         const questEggKeys = new Map(Object.entries(json.data.questEggs));
 
-        new Map(Object.entries(json.data.eggs)).forEach(function (value, key) {
-          let egg = new EggState(value);
+        new Map(Object.entries(json.data.eggs)).forEach((value, key) => {
+          const egg = new EggState(value);
           if (questEggKeys.has(key)) questEggs.set(key, egg);
           else baseEggs.set(key, egg);
         }, this);
@@ -113,13 +114,13 @@ class AppStore {
         this.eggs.quest.merge(questEggs);
 
         const gear = new Map();
-        new Map(Object.entries(json.data.gear.flat)).forEach(function (value, key) {
+        new Map(Object.entries(json.data.gear.flat)).forEach((value, key) => {
           gear.set(key, new GearState(key, value, this));
         }, this);
         this.gear.merge(gear);
 
         const backgrounds = new Map();
-        new Map(Object.entries(json.data.backgroundsFlat)).forEach(function (value, key) {
+        new Map(Object.entries(json.data.backgroundsFlat)).forEach((value, key) => {
           backgrounds.set(key, new BackgroundState(key, value, this));
         }, this);
         this.backgrounds.merge(backgrounds);
@@ -135,16 +136,16 @@ class AppStore {
   }
 
   @action loadQueryString() {
-    var queryParty = this.getQueryVariable("party");
+    const queryParty = AppStore.getQueryVariable('party');
     if (queryParty !== null) {
       this.loadParty = true;
       this.addParty();
     }
 
-    var queryStringUsers = this.getQueryVariable("users");
+    let queryStringUsers = AppStore.getQueryVariable('users');
     if (queryStringUsers !== null) {
       queryStringUsers = decodeURIComponent(queryStringUsers);
-      queryStringUsers.split('|').forEach(function (val, index) {
+      queryStringUsers.split('|').forEach((val, index) => {
         this.addUser(val);
       }, this)
     }
@@ -159,49 +160,50 @@ class AppStore {
 
   @action async addParty() {
     this.api.getPartyMembers()
-      .then(json => json.data.map(member => member._id))
-      .then(members => {
+      // eslint-disable-next-line no-underscore-dangle
+      .then((json) => json.data.map((member) => member._id))
+      .then((members) => {
         this.loadParty = false;
-        members.forEach(user => this.addUser(user));
+        members.forEach((user) => this.addUser(user));
       })
-      .catch(err => {});
+      .catch((err) => {});
   }
 
   userExists(userid) {
-    return this.users.map(u => u.id).filter(u => u === userid).length > 0;
+    return this.users.map((u) => u.id).filter((u) => u === userid).length > 0;
   }
 
   @action removeUser(user) {
     this.users.remove(user);
 
     // also remove it from quests
-    this.quests.forEach(function (value, key, map) {
+    this.quests.forEach((value, key, map) => {
       value.removeUser(user);
     });
 
     // also remove it from pets
-    this.pets.forEach(function (value, key, map) {
+    this.pets.forEach((value, key, map) => {
       value.removeUser(user);
     });
-    this.basepets.forEach(function (value, key, map) {
+    this.basepets.forEach((value, key, map) => {
       value.removeUser(user);
     });
-    this.premiumpets.forEach(function (value, key, map) {
+    this.premiumpets.forEach((value, key, map) => {
       value.removeUser(user);
     });
-    this.premiumhatchingpotions.forEach(function (value, key, map) {
+    this.premiumhatchingpotions.forEach((value, key, map) => {
       value.removeUser(user);
     });
 
     // also remove it from eggs
-    for (let category of this.eggs.categories) {
-      this.eggs[category].forEach(function (egg) {
+    this.eggs.categories.forEach((category) => {
+      this.eggs[category].forEach((egg) => {
         egg.removeUser(user);
       });
-    }
+    });
 
     // also remove it from gear
-    this.gear.forEach(function (value, key, map) {
+    this.gear.forEach((value, key, map) => {
       value.removeUser(user);
     });
 
@@ -221,42 +223,42 @@ class AppStore {
   }
 
   @computed get petCategories() {
-    var categories = new Set();
-    var pets = [...this.pets].map(([id, pet]) => pet)
+    const categories = new Set();
+    const pets = [...this.pets].map(([id, pet]) => pet)
 
-    for (var pet of pets) {
+    pets.forEach((pet) => {
       categories.add(pet.basetype);
-    }
+    });
     return categories;
   }
 
   @computed get basepetCategories() {
-    var categories = new Set();
-    var pets = [...this.basepets].map(([id, pet]) => pet)
+    const categories = new Set();
+    const pets = [...this.basepets].map(([id, pet]) => pet)
 
-    for (var pet of pets) {
+    pets.forEach((pet) => {
       categories.add(pet.basetype);
-    }
+    });
     return categories;
   }
 
   @computed get premiumpetCategories() {
-    var categories = new Set();
-    var pets = [...this.premiumpets].map(([id, pet]) => pet)
+    const categories = new Set();
+    const pets = [...this.premiumpets].map(([id, pet]) => pet)
 
-    for (var pet of pets) {
+    pets.forEach((pet) => {
       categories.add(pet.basetype);
-    }
+    });
     return categories;
   }
 
   @computed get premiumhatchingpotionCategories() {
-    var categories = new Set();
-    var potions = [...this.premiumhatchingpotions].map(([id, potion]) => potion)
+    const categories = new Set();
+    const potions = [...this.premiumhatchingpotions].map(([id, potion]) => potion)
 
-    for (var potion of potions) {
+    potions.forEach((potion) => {
       categories.add(potion.id);
-    }
+    });
     return categories;
   }
 
@@ -303,105 +305,87 @@ class AppStore {
   }
 
   @computed get gearleaderboard() {
-    return this.users.slice().sort(function (a, b) {
+    return this.users.slice().sort((a, b) => {
       if (a.totalGearCount > b.totalGearCount) {
         return -1;
       }
       if (a.totalGearCount < b.totalGearCount) {
         return 1;
       }
+      return 0;
     });
   }
 
   @computed get top3gearleaderboard() {
-    if (this.gearleaderboard.length >= 2) {
-      return this.gearleaderboard.slice(0, 3);
-    }
-    else {
-      return this.gearleaderboard;
-    }
+    return this.gearleaderboard.slice(0, 3);
   }
 
   @computed get petleaderboard() {
-    return this.users.slice().sort(function (a, b) {
+    return this.users.slice().sort((a, b) => {
       if (a.totalPetCount > b.totalPetCount) {
         return -1;
       }
       if (a.totalPetCount < b.totalPetCount) {
         return 1;
       }
+      return 0;
     });
   }
 
   @computed get top3petleaderboard() {
-    if (this.petleaderboard.length >= 2) {
-      return this.petleaderboard.slice(0, 3);
-    }
-    else {
-      return this.petleaderboard;
-    }
+    return this.petleaderboard.slice(0, 3);
   }
 
   @computed get basepetleaderboard() {
-    return this.users.slice().sort(function (a, b) {
+    return this.users.slice().sort((a, b) => {
       if (a.totalBasePetCount > b.totalBasePetCount) {
         return -1;
       }
       if (a.totalBasePetCount < b.totalBasePetCount) {
         return 1;
       }
+      return 0;
     });
   }
 
   @computed get top3basepetleaderboard() {
-    if (this.basepetleaderboard.length >= 2) {
-      return this.basepetleaderboard.slice(0, 3);
-    }
-    else {
-      return this.basepetleaderboard;
-    }
+    return this.basepetleaderboard.slice(0, 3);
   }
 
-
   @computed get premiumpetleaderboard() {
-    return this.users.slice().sort(function (a, b) {
+    return this.users.slice().sort((a, b) => {
       if (a.totalPremiumPetCount > b.totalPremiumPetCount) {
         return -1;
       }
       if (a.totalPremiumPetCount < b.totalPremiumPetCount) {
         return 1;
       }
+      return 0;
     });
   }
 
   @computed get top3premiumpetleaderboard() {
-    if (this.premiumpetleaderboard.length >= 2) {
-      return this.premiumpetleaderboard.slice(0, 3);
-    }
-    else {
-      return this.premiumpetleaderboard;
-    }
+    return this.premiumpetleaderboard.slice(0, 3);
   }
 
   @computed get userQueryString() {
-    return this.users.map(user => user.id).join("|");
+    return this.users.map((user) => user.id).join('|');
   }
 
-  setQueryVariable = function () {
-    let userQueryString = this.userQueryString;
+  setQueryVariable = () => {
+    const { userQueryString } = this;
 
-    let searchParams = [];
-    if (this.loadParty) searchParams.push("party=true");
-    if (userQueryString !== "") searchParams.push("users=" + this.userQueryString);
+    const searchParams = [];
+    if (this.loadParty) searchParams.push('party=true');
+    if (userQueryString !== '') searchParams.push('users=' + this.userQueryString);
 
-    history.pushState(userQueryString, "", "?" + searchParams.join("&"));
+    window.history.pushState(userQueryString, '', '?' + searchParams.join('&'));
   }
 
-  getQueryVariable = function (variable) {
-    var urlSearchParams = new URLSearchParams(window.location.search);
+  static getQueryVariable = (variable) => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
     return urlSearchParams.get(variable);
   }
-
 }
 
 export default AppStore;
