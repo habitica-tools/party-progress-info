@@ -93,7 +93,7 @@ class GearList extends Component {
     const { store } = this.props;
 
     if (store.loadingobjects) {
-      return (<div class="ui active centered inline loader"></div>);
+      return (<div class="ui active centered inline loader" />);
     }
 
     return (
@@ -148,10 +148,10 @@ class GearList extends Component {
             </tbody>
           </table>
           {this.showleaderboard === 'top3' &&
-              <button class="ui blue button" onClick={this.handleLeaderboardShowAll}><i class="unhide icon"></i>Show All</button>
+              <button class="ui blue button" onClick={this.handleLeaderboardShowAll}><i class="unhide icon" />Show All</button>
           }
           {this.showleaderboard === 'all' &&
-              <button class="ui olive button" onClick={this.handleLeaderboardTop3Only}><i class="hide icon"></i>Top 3 Only</button>
+              <button class="ui olive button" onClick={this.handleLeaderboardTop3Only}><i class="hide icon" />Top 3 Only</button>
           }
         </div>
         <div class="column stable">

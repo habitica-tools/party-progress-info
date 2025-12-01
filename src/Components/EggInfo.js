@@ -10,7 +10,7 @@ class EggInfo extends Component {
       <div class="ui mini modal active">
         <div class="header">{egg.id}
           <button class="ui icon right floated button" onClick={this.close}>
-            <i class="close icon"></i>
+            <i class="close icon" />
           </button>
         </div>
         <div class="content">

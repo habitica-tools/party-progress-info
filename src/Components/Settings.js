@@ -10,17 +10,17 @@ class Settings extends Component {
     const { store } = this.props;
 
     return (
-      store.loadingobjects ? <div class="ui active centered inline loader"></div> : (
+      store.loadingobjects ? <div class="ui active centered inline loader" /> : (
         <div>
           <SettingsInput store={store} /><br />
           <div class="ui fluid container">
             <div class="ui horizontal divider header">
               <h5>
-                <span data-tooltip="Users" style="color:#0082E2"><i class="user icon"></i>
+                <span data-tooltip="Users" style="color:#0082E2"><i class="user icon" />
                   {store.users.length}
                 </span>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span data-tooltip="Total pending damage" style="color:#646464"><i class="bomb icon"></i>
+                <span data-tooltip="Total pending damage" style="color:#646464"><i class="bomb icon" />
                   {store.users.map((u) => (u.loading || u.invalid ? 0 : u.damage)).reduce((a, b) => a + b, 0)}
                 </span>
               </h5>

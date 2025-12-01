@@ -57,8 +57,6 @@ export default defineConfig([
             'react/jsx-no-bind': ['warn', { 'allowBind': true }],
 
             // disable rules that conflict with the current code style
-            'react/self-closing-comp': ['off'],
-            'react/no-did-mount-set-state': ['off'],
             'react/jsx-key': ['off'],
 
             'prefer-template': ['off'],

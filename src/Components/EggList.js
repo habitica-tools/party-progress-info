@@ -38,7 +38,7 @@ class EggList extends Component {
     const { store } = this.props;
 
     if (store.loadingobjects) {
-      return (<div class="ui active centered inline loader"></div>);
+      return (<div class="ui active centered inline loader" />);
     }
 
     let eggs = [...store.eggs[this.props.category]].map(([_, egg]) => egg);
@@ -67,9 +67,9 @@ class EggList extends Component {
         </div>
         {
           this.partyOnly ? (
-            <button class="ui blue button" onClick={this.showAll}><i class="unhide icon"></i>Show All</button>
+            <button class="ui blue button" onClick={this.showAll}><i class="unhide icon" />Show All</button>
           ) : (
-            <button class="ui olive button" onClick={this.showPartyOnly}><i class="hide icon"></i>Party Only</button>
+            <button class="ui olive button" onClick={this.showPartyOnly}><i class="hide icon" />Party Only</button>
           )
         }
         <div>

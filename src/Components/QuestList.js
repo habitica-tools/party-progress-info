@@ -15,7 +15,7 @@ class QuestList extends Component {
     const { store, category } = this.props;
 
     return (
-      store.loadingobjects ? <div class="ui active centered inline loader"></div> : (
+      store.loadingobjects ? <div class="ui active centered inline loader" /> : (
         <div class="column">
           <h4 class="ui header">{category} quests</h4>
           <div class="items">
@@ -28,9 +28,9 @@ class QuestList extends Component {
             )}
           </div>
           {this.showAll ? (
-            <button class="ui olive button" onClick={this.handlePartyOnly}><i class="hide icon"></i>Party Only</button>
+            <button class="ui olive button" onClick={this.handlePartyOnly}><i class="hide icon" />Party Only</button>
           ) : (
-            <button class="ui blue button" onClick={this.handleShowAll}><i class="unhide icon"></i>Show All</button>
+            <button class="ui blue button" onClick={this.handleShowAll}><i class="unhide icon" />Show All</button>
           )}
           <div>
             {this.questInfo === null ? <br /> : (

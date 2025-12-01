@@ -80,7 +80,7 @@ class BackgroundList extends Component {
     const { store } = this.props;
 
     if (store.loadingobjects) {
-      return (<div class="ui active centered inline loader"></div>);
+      return (<div class="ui active centered inline loader" />);
     }
 
     return (

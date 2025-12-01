@@ -80,7 +80,7 @@ class PremiumPetList extends Component {
     const { store } = this.props;
 
     if (store.loadingobjects) {
-      return (<div class="ui active centered inline loader"></div>);
+      return (<div class="ui active centered inline loader" />);
     }
 
     const totalpercentage = store.totalCountPremiumPetsParty > 0 ? parseFloat(store.totalCountPremiumPetsParty / (store.totalCountPremiumPets / 100)).toFixed(2) : '0'
@@ -91,7 +91,7 @@ class PremiumPetList extends Component {
           <div class="twelve wide column">
             <div class="progress-container-big">
               <div class="progress">
-                <div class="progress-bar bg-experience" style={'transition-duration: 300ms; width:' + totalpercentage + '%;'}></div>
+                <div class="progress-bar bg-experience" style={'transition-duration: 300ms; width:' + totalpercentage + '%;'} />
               </div>
             </div>
           </div>
@@ -259,10 +259,10 @@ class PremiumPetList extends Component {
             </tbody>
           </table>
           {this.showleaderboard === 'top3' &&
-            <button class="ui blue button" onClick={this.handleLeaderboardShowAll}><i class="unhide icon"></i>Show All</button>
+            <button class="ui blue button" onClick={this.handleLeaderboardShowAll}><i class="unhide icon" />Show All</button>
           }
           {this.showleaderboard === 'all' &&
-            <button class="ui olive button" onClick={this.handleLeaderboardTop3Only}><i class="hide icon"></i>Top 3 Only</button>
+            <button class="ui olive button" onClick={this.handleLeaderboardTop3Only}><i class="hide icon" />Top 3 Only</button>
           }
         </div>
       </div>

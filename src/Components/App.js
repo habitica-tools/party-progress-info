@@ -79,9 +79,9 @@ class App extends Component {
             <div class="ui fluid container">
               <div class="ui info message">
 
-                <div class="header"><i class="help circle icon"></i>Help</div>
+                <div class="header"><i class="help circle icon" />Help</div>
                 <p>With this tool you can see the number of pets still needed for a party/user and which quests are in the inventory. This tool will also give you an overview of equipment and backgrounds.</p>
-                <p></p>
+                <p />
 
                 <h3>Adding users one by one</h3>
                 <p>To get started fill in your own + your party members' Habitica User ID's on the form on the other pages</p>
@@ -108,7 +108,7 @@ class App extends Component {
                 <p>This will automatically read your party members and transfer you back to this tool, (it could take a couple of seconds).</p>
               </div>
               <div class="ui message">
-                <div class="header"><i class="address card outline icon"></i>Contact</div>
+                <div class="header"><i class="address card outline icon" />Contact</div>
                 <p>
                   If you have questions or improvement suggestions for this tool, please open an issue in the <a href="https://github.com/habitica-tools/party-progress-info/issues">GitHub repository</a>.<br />
                   Alternatively, you can contact me <i>(@Turac)</i> on Habitica using my User ID <a href="https://habitica.com/profile/b477462a-5bb5-4040-9505-f0b049b4f0bb">b477462a-5bb5-4040-9505-f0b049b4f0bb</a>.</p>
@@ -126,7 +126,7 @@ class App extends Component {
                 </div>
               </div>
               <div class="ui message">
-                <div class="header"><i class="address card outline icon"></i>Privacy Policy</div>
+                <div class="header"><i class="address card outline icon" />Privacy Policy</div>
                 <p>This application is provided at no cost and comes with no warranty or assurance of suitability for any particular purpose.</p>
                 <p>It doesn't sell your personal information, but uses the following third party services with anonymised data to analyse usage and performance:
                   <ul>
@@ -144,7 +144,7 @@ class App extends Component {
           {store.menupage !== 'about' &&
             <div class="ui fluid container">
               <div class="ui info ignored message">
-                <i class="help circle icon"></i>Go to the <a href="#" onClick={this.gotoAbout}>Help & About section</a> for info on how to use this tool.
+                <i class="help circle icon" />Go to the <a href="#" onClick={this.gotoAbout}>Help & About section</a> for info on how to use this tool.
               </div>
               <Settings store={store} />
             </div>
@@ -155,7 +155,7 @@ class App extends Component {
                 <h4>Wanted Quest Pets</h4>
               </div>
               <PetList store={store} />
-              <div class="ui basic segment"></div>
+              <div class="ui basic segment" />
               <div class="ui horizontal divider header">
                 <h4>Pet Quests Available in the Party</h4>
               </div>
@@ -163,7 +163,7 @@ class App extends Component {
               <div class="ui horizontal divider header">
                 <h4>Non Hatched Quest Eggs</h4>
               </div>
-              <div class="ui basic segment"></div>
+              <div class="ui basic segment" />
               <EggList store={store} category="quest" />
             </div>
           }
@@ -173,16 +173,16 @@ class App extends Component {
                 <h4>Wanted Magic Potion Pets</h4>
               </div>
               <PremiumPetList store={store} />
-              <div class="ui basic segment"></div>
+              <div class="ui basic segment" />
               <div class="ui horizontal divider header">
                 <h4>Magic Hatching Potion Quests Available in the Party</h4>
               </div>
               <QuestList store={store} category="hatchingPotion" />
-              <div class="ui basic segment"></div>
+              <div class="ui basic segment" />
               <div class="ui horizontal divider header">
                 <h4>Non Used Magic Hatching Potions</h4>
               </div>
-              <div class="ui basic segment"></div>
+              <div class="ui basic segment" />
               <PremiumHatchingPotionList store={store} />
             </div>
           }
@@ -192,11 +192,11 @@ class App extends Component {
                 <h4>Wanted Standard Pets</h4>
               </div>
               <BasePetList store={store} />
-              <div class="ui basic segment"></div>
+              <div class="ui basic segment" />
               <div class="ui horizontal divider header">
                 <h4>Non Hatched Standard Pet Eggs</h4>
               </div>
-              <div class="ui basic segment"></div>
+              <div class="ui basic segment" />
               <EggList store={store} category="base" />
             </div>
           }
@@ -210,7 +210,7 @@ class App extends Component {
               <div class="ui horizontal divider header">
                 <h4>Other Quests Available in Party</h4>
               </div>
-              <div class="ui basic segment"></div>
+              <div class="ui basic segment" />
               <div class="ui two column stackable grid">
                 <QuestList store={store} category="unlockable" />
                 <QuestList store={store} category="gold" />
@@ -219,12 +219,12 @@ class App extends Component {
           }
           {store.menupage === 'backgrounds' &&
             <div class="ui fluid container">
-              <div class="ui basic segment"></div>
+              <div class="ui basic segment" />
               <div class="ui horizontal divider header">
                 <h4>Background Collection</h4>
               </div>
               <div class="ui negative message">
-                <i class="warning sign icon"></i>
+                <i class="warning sign icon" />
                 <p>Unfortunately the Backgrounds a player owns is not public information.</p>
                 <p>When this changes in the future (hopefully), I'll offcourse show this data as well.</p>
                 <p>In the mean time you can vote on the <a href="https://trello.com/c/cMeJ3uKO/408-profile-v2-change-profile-sub-tab-to-public-profile-and-show-everything-public">feature request</a></p>
@@ -239,7 +239,7 @@ class App extends Component {
               <div class="three wide column">
                 <h4 class="ui inverted header">Code</h4>
                 <div class="ui inverted link list">
-                  <a class="item" href="https://github.com/habitica-tools/party-progress-info"><i class="github square icon"></i>GitHub Repository</a>
+                  <a class="item" href="https://github.com/habitica-tools/party-progress-info"><i class="github square icon" />GitHub Repository</a>
                 </div>
               </div>
               <div class="three wide column">

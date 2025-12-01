@@ -24,12 +24,12 @@ class SettingsInput extends Component {
         <div
           class={'ui blue button' + (this.inputIsValid ? '' : ' disabled')}
           onClick={this.addUser}
-        ><i class="user icon"></i> Add</div>
+        ><i class="user icon" /> Add</div>
         &nbsp;
         <div
           class={'ui blue button' + (store.api.hasValidCredentials ? '' : ' disabled')}
           onClick={this.addParty}
-        ><i class="users icon"></i> Add Party</div>
+        ><i class="users icon" /> Add Party</div>
       </div>
     );
   }
