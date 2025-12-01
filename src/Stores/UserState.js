@@ -180,12 +180,15 @@ class UserState {
         // go over hatching potions
         if (json.data.items.hatchingPotions !== undefined) {
           Object.entries(json.data.items.hatchingPotions).forEach(([key, value]) => {
-            let potion;
-            if (key !== null && key !== undefined) potion = this.store.premiumhatchingpotions.get(key);
-            if (potion !== undefined) {
-              if (value > 0) {
-                potion.addUser(this);
-              }
+            if (value > 0 && key !== null && key !== undefined) {
+              this.store.potions.categories.every((category) => {
+                const potion = this.store.potions[category].get(key);
+                if (potion !== undefined) {
+                  potion.addUser(this);
+                  return false;
+                }
+                return true;
+              })
             }
           }, this);
         }

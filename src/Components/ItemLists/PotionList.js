@@ -17,7 +17,7 @@ class PotionList extends ItemList {
   }
 
   get items() {
-    return this.props.store.premiumhatchingpotions;
+    return this.props.store.potions[this.props.category];
   }
 }
 

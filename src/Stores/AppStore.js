@@ -17,7 +17,6 @@ class AppStore {
   pets = observable.map(new Map());
   basepets = observable.map(new Map());
   premiumpets = observable.map(new Map());
-  premiumhatchingpotions = observable.map(new Map());
   gear = observable.map(new Map());
   backgrounds = observable.map(new Map());
 
@@ -25,6 +24,13 @@ class AppStore {
     categories: ['base', 'quest'],
     base: observable.map(new Map()),
     quest: observable.map(new Map()),
+  };
+
+  @observable accessor potions = {
+    categories: ['base', 'premium', 'wacky'],
+    base: observable.map(new Map()),
+    premium: observable.map(new Map()),
+    wacky: observable.map(new Map()),
   };
 
   @observable accessor users = [];
@@ -96,12 +102,6 @@ class AppStore {
         }, this);
         this.premiumpets.merge(premiumpets);
 
-        const premiumhatchingpotions = new Map();
-        Object.entries(json.data.premiumHatchingPotions).forEach(([key, value]) => {
-          premiumhatchingpotions.set(key, new PotionState(value));
-        });
-        this.premiumhatchingpotions.merge(premiumhatchingpotions);
-
         const baseEggs = new Map();
         const questEggs = new Map();
         const questEggKeys = Object.keys(json.data.questEggs);
@@ -114,6 +114,23 @@ class AppStore {
 
         this.eggs.base.merge(baseEggs);
         this.eggs.quest.merge(questEggs);
+
+        const basePotions = new Map();
+        const premiumPotions = new Map();
+        const wackyPotions = new Map();
+        const premiumPotionKeys = Object.keys(json.data.premiumHatchingPotions);
+        const wackyPotionKeys = Object.keys(json.data.wackyHatchingPotions);
+
+        Object.entries(json.data.hatchingPotions).forEach(([key, value]) => {
+          const potion = new PotionState(value);
+          if (premiumPotionKeys.includes(key)) premiumPotions.set(key, potion);
+          else if (wackyPotionKeys.includes(key)) wackyPotions.set(key, potion);
+          else basePotions.set(key, potion);
+        }, this);
+
+        this.potions.base.merge(basePotions);
+        this.potions.premium.merge(premiumPotions);
+        this.potions.wacky.merge(wackyPotions);
 
         const gear = new Map();
         Object.entries(json.data.gear.flat).forEach(([key, value]) => {
@@ -250,16 +267,6 @@ class AppStore {
 
     pets.forEach((pet) => {
       categories.add(pet.basetype);
-    });
-    return categories;
-  }
-
-  @computed get premiumhatchingpotionCategories() {
-    const categories = new Set();
-    const potions = [...this.premiumhatchingpotions].map(([id, potion]) => potion)
-
-    potions.forEach((potion) => {
-      categories.add(potion.id);
     });
     return categories;
   }

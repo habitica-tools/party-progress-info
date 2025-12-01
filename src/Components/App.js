@@ -184,7 +184,7 @@ class App extends Component {
                 <h4>Non Used Magic Hatching Potions</h4>
               </div>
               <div class="ui basic segment" />
-              <PotionList store={store} />
+              <PotionList store={store} category="premium" />
             </div>
           }
           {store.menupage === 'basepets' &&
@@ -199,6 +199,12 @@ class App extends Component {
               </div>
               <div class="ui basic segment" />
               <EggList store={store} category="base" />
+              <div class="ui basic segment" />
+              <div class="ui horizontal divider header">
+                <h4>Non Used Base Hatching Potions</h4>
+              </div>
+              <div class="ui basic segment" />
+              <PotionList store={store} category="base" />
             </div>
           }
           {store.menupage === 'gear' &&
