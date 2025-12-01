@@ -128,6 +128,9 @@ class AppStore {
           else basePotions.set(key, potion);
         }, this);
 
+        // apply a small adjustment to the Glow-in-the-Dark potion name
+        premiumPotions.get('Glow').data.text = 'Glow';
+
         this.potions.base.merge(basePotions);
         this.potions.premium.merge(premiumPotions);
         this.potions.wacky.merge(wackyPotions);
@@ -136,6 +139,11 @@ class AppStore {
         Object.entries(json.data.gear.flat).forEach(([key, value]) => {
           gear.set(key, new GearState(value));
         });
+
+        // remove gear without an image (i.e. all the base gear)
+        const baseGearKeys = ['armor_base_0', 'back_base_0', 'body_base_0', 'eyewear_base_0', 'headAccessory_base_0', 'head_base_0', 'shield_base_0', 'weapon_base_0'];
+        baseGearKeys.forEach((key) => gear.delete(key));
+
         this.gear.merge(gear);
 
         const backgrounds = new Map();
