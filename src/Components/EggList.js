@@ -40,46 +40,45 @@ class EggList extends Component {
     if (store.loadingobjects) {
       return (<div class="ui active centered inline loader"></div>);
     }
-    else {
-      let eggs = [...store.eggs[this.props.category]].map(([_, egg]) => egg);
-      if (this.partyOnly) eggs = eggs.filter((egg) => egg.count > 0);
 
-      eggs = sort(eggs, this.sortKey);
+    let eggs = [...store.eggs[this.props.category]].map(([_, egg]) => egg);
+    if (this.partyOnly) eggs = eggs.filter((egg) => egg.count > 0);
 
-      return (
-        <div class="ui fluid container">
-          <div class="ui stackable grid">
-            <div class="twelve wide column">
-              <h4 class="ui header">{this.props.category} eggs</h4><br />
-            </div>
-            <div class="four wide column">
-              <span class="dropdown-label">Sort By: </span>
-              <select class="ui dropdown" value={this.sortKey} onChange={this.onSortKeyChanged}>
-                <option value="default">Default</option>
-                <option value="least">Shortage</option>
-                <option value="most">Most</option>
-                <option value="alphabetical">A-Z</option>
-              </select>
-            </div>
+    eggs = sort(eggs, this.sortKey);
+
+    return (
+      <div class="ui fluid container">
+        <div class="ui stackable grid">
+          <div class="twelve wide column">
+            <h4 class="ui header">{this.props.category} eggs</h4><br />
           </div>
-          <div class="items">
-            {eggs.map((egg) => <Egg egg={egg} eggList={this} />)}
-          </div>
-          {
-            this.partyOnly ? (
-              <button class="ui blue button" onClick={this.showAll}><i class="unhide icon"></i>Show All</button>
-            ) : (
-              <button class="ui olive button" onClick={this.showPartyOnly}><i class="hide icon"></i>Party Only</button>
-            )
-          }
-          <div>
-            {this.info === null ? <br /> : (
-              <EggInfo egg={this.info} store={store} eggList={this} />
-            )}
+          <div class="four wide column">
+            <span class="dropdown-label">Sort By: </span>
+            <select class="ui dropdown" value={this.sortKey} onChange={this.onSortKeyChanged}>
+              <option value="default">Default</option>
+              <option value="least">Shortage</option>
+              <option value="most">Most</option>
+              <option value="alphabetical">A-Z</option>
+            </select>
           </div>
         </div>
-      );
-    }
+        <div class="items">
+          {eggs.map((egg) => <Egg egg={egg} eggList={this} />)}
+        </div>
+        {
+          this.partyOnly ? (
+            <button class="ui blue button" onClick={this.showAll}><i class="unhide icon"></i>Show All</button>
+          ) : (
+            <button class="ui olive button" onClick={this.showPartyOnly}><i class="hide icon"></i>Party Only</button>
+          )
+        }
+        <div>
+          {this.info === null ? <br /> : (
+            <EggInfo egg={this.info} store={store} eggList={this} />
+          )}
+        </div>
+      </div>
+    );
   }
 
   @action onSortKeyChanged = (e) => {

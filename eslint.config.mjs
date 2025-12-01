@@ -35,10 +35,12 @@ export default defineConfig([
             '@stylistic/semi': ['off'],
 
             // additional style rules
+            'radix': ['warn', 'as-needed'],
             'sort-imports': ['warn', {
                 'allowSeparatedGroups': true,
             }],
 
+            '@stylistic/indent': ['warn', 2],
             '@stylistic/jsx-quotes': ['error', 'prefer-double'],
         },
     },
@@ -52,18 +54,14 @@ export default defineConfig([
     {
         files: ['./src/**/*.js'],
         rules: {
-            '@stylistic/indent': ['warn', 2],
-
-            'radix': ['warn', 'as-needed'],
             'react/jsx-no-bind': ['warn', { 'allowBind': true }],
 
             // disable rules that conflict with the current code style
             'react/self-closing-comp': ['off'],
             'react/no-did-mount-set-state': ['off'],
             'react/jsx-key': ['off'],
+
             'prefer-template': ['off'],
-            'prefer-arrow-callback': ['off'],
-            'no-else-return': ['off'],
             'no-unused-vars': ['off'],
         },
     },

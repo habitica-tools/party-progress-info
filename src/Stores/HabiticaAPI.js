@@ -147,9 +147,8 @@ class HabiticaAPI {
         if ((Date.now() - cachedData.timestamp) < cacheDuration) {
           return Promise.resolve(cachedData.data);
         }
-        else {
-          localStorage.removeItem(url);
-        }
+
+        localStorage.removeItem(url);
       }
     }
 
@@ -207,22 +206,21 @@ class HabiticaAPI {
           );
       });
     }
-    else {
-      // immediately reject if credentials are known to be invalid
-      return Promise.reject(
-        Response.json({
-          success: false,
-          error: 'invalid_credentials',
-          message: 'There is no account that uses those credentials.',
-        }, {
-          bodyUsed: false,
-          ok: false,
-          status: 401,
-          statusText: '',
-          url: url,
-        }),
-      );
-    }
+
+    // immediately reject if credentials are known to be invalid
+    return Promise.reject(
+      Response.json({
+        success: false,
+        error: 'invalid_credentials',
+        message: 'There is no account that uses those credentials.',
+      }, {
+        bodyUsed: false,
+        ok: false,
+        status: 401,
+        statusText: '',
+        url: url,
+      }),
+    );
   }
 
   static fetch_retry(url, params, retriesLeft) {

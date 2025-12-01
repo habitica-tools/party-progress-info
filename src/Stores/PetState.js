@@ -13,21 +13,19 @@ class PetState {
   }
 
   @computed get basetype() {
-    if (this.id !== null) {
-      return this.id.slice(0, this.id.indexOf('-'));
-    }
-    else {
+    if (this.id === null) {
       return '';
     }
+
+    return this.id.slice(0, this.id.indexOf('-'));
   }
 
   @computed get potiontype() {
-    if (this.id !== null) {
-      return this.id.slice(this.id.indexOf('-') + 1);
-    }
-    else {
+    if (this.id === null) {
       return '';
     }
+
+    return this.id.slice(this.id.indexOf('-') + 1);
   }
 
   @computed get needed() {

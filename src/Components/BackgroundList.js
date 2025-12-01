@@ -82,52 +82,51 @@ class BackgroundList extends Component {
     if (store.loadingobjects) {
       return (<div class="ui active centered inline loader"></div>);
     }
-    else {
-      return (
-        <div class="ui fluid container">
-          <div class="column stable">
-            <div class="ui stackable grid">
-              <div class="twelve wide column">
-                &nbsp;<br /><br />
-              </div>
-              <div class="four wide column">
-                <span class="dropdown-label">Sort By: </span>
-                <select class="ui dropdown" value={this.sortKey} onChange={this.sortBackground}>
-                  <option value="">Default</option>
-                  <option value="1">Shortage</option>
-                  <option value="2">Most</option>
-                  <option value="3">A-Z</option>
-                  <option value="4">Set</option>
-                </select>
-              </div>
+
+    return (
+      <div class="ui fluid container">
+        <div class="column stable">
+          <div class="ui stackable grid">
+            <div class="twelve wide column">
+              &nbsp;<br /><br />
             </div>
-            <div class="item-rows">
-              <div class="items backgrounds">
-                {[...this.backgroundsWithCounts].map((background) => (
-                  <div>
-                    <div class="item-wrapper">
-                      <div class="item">
-                        <span class="badge badge-pill badge-item badge-info badge-count">
-                          {background.count}
-                        </span>
-                        <span class={background.id === this.backgroundInfo ? 'selectableInventory item-content Background' : 'item-content Background'} onClick={this.showBackgroundInfo.bind(this, background.id)}>
-                          <img src={this.imageurl + 'background_' + background.id + '.png'} alt={'shop_' + background.id} />
-                        </span>
-                      </div>
+            <div class="four wide column">
+              <span class="dropdown-label">Sort By: </span>
+              <select class="ui dropdown" value={this.sortKey} onChange={this.sortBackground}>
+                <option value="">Default</option>
+                <option value="1">Shortage</option>
+                <option value="2">Most</option>
+                <option value="3">A-Z</option>
+                <option value="4">Set</option>
+              </select>
+            </div>
+          </div>
+          <div class="item-rows">
+            <div class="items backgrounds">
+              {[...this.backgroundsWithCounts].map((background) => (
+                <div>
+                  <div class="item-wrapper">
+                    <div class="item">
+                      <span class="badge badge-pill badge-item badge-info badge-count">
+                        {background.count}
+                      </span>
+                      <span class={background.id === this.backgroundInfo ? 'selectableInventory item-content Background' : 'item-content Background'} onClick={this.showBackgroundInfo.bind(this, background.id)}>
+                        <img src={this.imageurl + 'background_' + background.id + '.png'} alt={'shop_' + background.id} />
+                      </span>
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
-          <div class="column">
-            {this.backgroundInfo === null ? <br /> : (
-              <BackgroundInfo category={this.backgroundInfo} store={store} backgroundlist={this} />
-            )}
-          </div>
         </div>
-      );
-    }
+        <div class="column">
+          {this.backgroundInfo === null ? <br /> : (
+            <BackgroundInfo category={this.backgroundInfo} store={store} backgroundlist={this} />
+          )}
+        </div>
+      </div>
+    );
   }
 
   @action setBackgroundInfo(category) {

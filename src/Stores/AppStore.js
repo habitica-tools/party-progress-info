@@ -317,12 +317,7 @@ class AppStore {
   }
 
   @computed get top3gearleaderboard() {
-    if (this.gearleaderboard.length >= 2) {
-      return this.gearleaderboard.slice(0, 3);
-    }
-    else {
-      return this.gearleaderboard;
-    }
+    return this.gearleaderboard.slice(0, 3);
   }
 
   @computed get petleaderboard() {
@@ -338,12 +333,7 @@ class AppStore {
   }
 
   @computed get top3petleaderboard() {
-    if (this.petleaderboard.length >= 2) {
-      return this.petleaderboard.slice(0, 3);
-    }
-    else {
-      return this.petleaderboard;
-    }
+    return this.petleaderboard.slice(0, 3);
   }
 
   @computed get basepetleaderboard() {
@@ -359,12 +349,7 @@ class AppStore {
   }
 
   @computed get top3basepetleaderboard() {
-    if (this.basepetleaderboard.length >= 2) {
-      return this.basepetleaderboard.slice(0, 3);
-    }
-    else {
-      return this.basepetleaderboard;
-    }
+    return this.basepetleaderboard.slice(0, 3);
   }
 
   @computed get premiumpetleaderboard() {
@@ -380,12 +365,7 @@ class AppStore {
   }
 
   @computed get top3premiumpetleaderboard() {
-    if (this.premiumpetleaderboard.length >= 2) {
-      return this.premiumpetleaderboard.slice(0, 3);
-    }
-    else {
-      return this.premiumpetleaderboard;
-    }
+    return this.premiumpetleaderboard.slice(0, 3);
   }
 
   @computed get userQueryString() {
