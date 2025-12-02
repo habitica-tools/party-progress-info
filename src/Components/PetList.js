@@ -22,7 +22,7 @@ class PetList extends Component {
   @computed get petCategoriesWithCounts() {
     const pets = [...this.store.petCategories].map((category) => {
       const petdetail = { id: category };
-      const categorypets = [...this.store.pets].filter(([id, pet]) => pet.basetype === category);
+      const categorypets = [...this.store.questpets].filter(([id, pet]) => pet.basetype === category);
       petdetail.needed = categorypets.reduce((prevVal, [id, pet]) => prevVal + pet.needed, 0);
       petdetail.count = categorypets.reduce((prevVal, [id, pet]) => prevVal + pet.count, 0);
       petdetail.selectedcount = categorypets.reduce((prevVal, [id, pet]) => prevVal + pet.selectedcount, 0);

@@ -30,7 +30,7 @@ class UserState {
   @computed get totalPetCount() {
     let count = 0;
     if (!this.loading) {
-      [...this.store.pets].map((pet) => pet[1])
+      [...this.store.questpets].map((pet) => pet[1])
         .filter((pet) => (pet.users.includes(this) ? pet : null))
         .forEach((pet) => {
           if (this.data.items.pets !== undefined && this.data.items.pets[pet.id] > 0) {
@@ -129,7 +129,7 @@ class UserState {
         if (json.data.items.pets !== undefined) {
           Object.entries(json.data.items.pets).forEach(([key, value]) => {
             if (key !== null && key !== undefined) { // TODO: redundant?
-              const pet = this.store.pets.get(key);
+              const pet = this.store.questpets.get(key);
               if (pet !== undefined) {
                 pet.addUser(this);
                 if (value > 0) {
@@ -155,7 +155,7 @@ class UserState {
           if (json.data.items.mounts !== undefined) {
             Object.entries(json.data.items.mounts).forEach(([key, value]) => {
               if (key !== null && key !== undefined && value !== null && value === true) {
-                const pet = this.store.pets.get(key);
+                const pet = this.store.questpets.get(key);
                 if (pet !== undefined) pet.addUserWithMount(this);
                 const basepet = this.store.basepets.get(key);
                 if (basepet !== undefined) basepet.addUserWithMount(this);

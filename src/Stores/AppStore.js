@@ -2,7 +2,7 @@ import { action, computed, observable } from 'mobx';
 
 import HabiticaAPI from './HabiticaAPI';
 
-import PetState from './PetState';
+import OldPetState from './PetState';
 import UserState from './UserState';
 
 import BackgroundState from './States/BackgroundState';
@@ -15,7 +15,7 @@ class AppStore {
   @observable accessor loadingObjects = true;
 
   quests = observable.map(new Map());
-  pets = observable.map(new Map());
+  questpets = observable.map(new Map());
   basepets = observable.map(new Map());
   premiumpets = observable.map(new Map());
   gear = observable.map(new Map());
@@ -115,21 +115,21 @@ class AppStore {
 
         this.backgrounds.merge(createStateMapFromList(json.data.backgroundsFlat, BackgroundState));
 
-        const pets = new Map();
+        const questpets = new Map();
         Object.entries(json.data.questPets).forEach(([key, value]) => {
-          pets.set(key, new PetState(key, this));
+          questpets.set(key, new OldPetState(key, this));
         }, this);
-        this.pets.merge(pets);
+        this.questpets.merge(questpets);
 
         const basepets = new Map();
         Object.entries(json.data.pets).forEach(([key, value]) => {
-          basepets.set(key, new PetState(key, this));
+          basepets.set(key, new OldPetState(key, this));
         }, this);
         this.basepets.merge(basepets);
 
         const premiumpets = new Map();
         Object.entries(json.data.premiumPets).forEach(([key, value]) => {
-          premiumpets.set(key, new PetState(key, this));
+          premiumpets.set(key, new OldPetState(key, this));
         }, this);
         this.premiumpets.merge(premiumpets);
 
@@ -194,7 +194,7 @@ class AppStore {
     removeUserFromMap(this.quests, user);
 
     // also remove it from pets
-    removeUserFromMap(this.pets, user);
+    removeUserFromMap(this.questpets, user);
     removeUserFromMap(this.basepets, user);
     removeUserFromMap(this.premiumpets, user);
 
@@ -231,7 +231,7 @@ class AppStore {
 
   @computed get petCategories() {
     const categories = new Set();
-    const pets = [...this.pets].map(([id, pet]) => pet)
+    const pets = [...this.questpets].map(([id, pet]) => pet)
 
     pets.forEach((pet) => {
       categories.add(pet.basetype);
@@ -260,17 +260,17 @@ class AppStore {
   }
 
   @computed get totalNeededPetsParty() {
-    return [...this.pets].map(([id, pet]) => pet)
+    return [...this.questpets].map(([id, pet]) => pet)
       .reduce((prevVal, pet) => prevVal + pet.needed, 0);
   }
 
   @computed get totalCountPetsParty() {
-    return [...this.pets].map(([id, pet]) => pet)
+    return [...this.questpets].map(([id, pet]) => pet)
       .reduce((prevVal, pet) => prevVal + pet.count, 0);
   }
 
   @computed get totalCountPets() {
-    return ([...this.pets].length * 2) * this.countValidUsers();
+    return ([...this.questpets].length * 2) * this.countValidUsers();
   }
 
   @computed get totalNeededBasePetsParty() {
