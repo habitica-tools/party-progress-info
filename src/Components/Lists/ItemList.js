@@ -41,7 +41,7 @@ function sort(array, key) {
 }
 
 function beautifyCategory(category) {
-  const string = category.replace(/([A-Z])/g, ' $1').trim();
+  const string = category.replace('drop', 'base').replace(/([A-Z])/g, ' $1').trim();
 
   return string.charAt(0).toUpperCase() + string.slice(1);
 }

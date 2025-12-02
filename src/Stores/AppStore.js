@@ -21,15 +21,15 @@ class AppStore {
   gear = observable.map(new Map());
   backgrounds = observable.map(new Map());
 
-  @observable accessor eggs = {
-    categories: ['base', 'quest'],
-    base: observable.map(new Map()),
+  eggs = {
+    categories: ['drop', 'quest'],
+    drop: observable.map(new Map()),
     quest: observable.map(new Map()),
   };
 
-  @observable accessor potions = {
-    categories: ['base', 'premium', 'wacky'],
-    base: observable.map(new Map()),
+  potions = {
+    categories: ['drop', 'premium', 'wacky'],
+    drop: observable.map(new Map()),
     premium: observable.map(new Map()),
     wacky: observable.map(new Map()),
   };
@@ -88,11 +88,32 @@ class AppStore {
   @action fetchCommonObjects() {
     this.api.getContent()
       .then(action((json) => {
-        const quests = new Map();
-        Object.entries(json.data.quests).forEach(([key, value]) => {
-          quests.set(key, new QuestState(value));
-        });
-        this.quests.merge(quests);
+        const createStateMapFromList = (list, StateClass) => {
+          const map = new Map();
+          Object.entries(list).forEach(([key, value]) => {
+            map.set(key, new StateClass(value));
+          });
+          return map;
+        }
+
+        this.quests.merge(createStateMapFromList(json.data.quests, QuestState));
+
+        this.eggs.drop.merge(createStateMapFromList(json.data.dropEggs, EggState));
+        this.eggs.quest.merge(createStateMapFromList(json.data.questEggs, EggState));
+
+        this.potions.drop.merge(createStateMapFromList(json.data.dropHatchingPotions, PotionState));
+        this.potions.premium.merge(createStateMapFromList(json.data.premiumHatchingPotions, PotionState));
+        this.potions.wacky.merge(createStateMapFromList(json.data.wackyHatchingPotions, PotionState));
+        // apply a small adjustment to the Glow-in-the-Dark potion name
+        this.potions.premium.get('Glow').data.text = 'Glow';
+
+        const gear = createStateMapFromList(json.data.gear.flat, GearState);
+        // remove gear without an image (i.e. all the base gear)
+        const baseGearKeys = ['armor_base_0', 'back_base_0', 'body_base_0', 'eyewear_base_0', 'headAccessory_base_0', 'head_base_0', 'shield_base_0', 'weapon_base_0'];
+        baseGearKeys.forEach((key) => gear.delete(key));
+        this.gear.merge(gear);
+
+        this.backgrounds.merge(createStateMapFromList(json.data.backgroundsFlat, BackgroundState));
 
         const pets = new Map();
         Object.entries(json.data.questPets).forEach(([key, value]) => {
@@ -111,56 +132,6 @@ class AppStore {
           premiumpets.set(key, new PetState(key, this));
         }, this);
         this.premiumpets.merge(premiumpets);
-
-        const baseEggs = new Map();
-        const questEggs = new Map();
-        const questEggKeys = Object.keys(json.data.questEggs);
-
-        Object.entries(json.data.eggs).forEach(([key, value]) => {
-          const egg = new EggState(value);
-          if (questEggKeys.includes(key)) questEggs.set(key, egg);
-          else baseEggs.set(key, egg);
-        });
-
-        this.eggs.base.merge(baseEggs);
-        this.eggs.quest.merge(questEggs);
-
-        const basePotions = new Map();
-        const premiumPotions = new Map();
-        const wackyPotions = new Map();
-        const premiumPotionKeys = Object.keys(json.data.premiumHatchingPotions);
-        const wackyPotionKeys = Object.keys(json.data.wackyHatchingPotions);
-
-        Object.entries(json.data.hatchingPotions).forEach(([key, value]) => {
-          const potion = new PotionState(value);
-          if (premiumPotionKeys.includes(key)) premiumPotions.set(key, potion);
-          else if (wackyPotionKeys.includes(key)) wackyPotions.set(key, potion);
-          else basePotions.set(key, potion);
-        }, this);
-
-        // apply a small adjustment to the Glow-in-the-Dark potion name
-        premiumPotions.get('Glow').data.text = 'Glow';
-
-        this.potions.base.merge(basePotions);
-        this.potions.premium.merge(premiumPotions);
-        this.potions.wacky.merge(wackyPotions);
-
-        const gear = new Map();
-        Object.entries(json.data.gear.flat).forEach(([key, value]) => {
-          gear.set(key, new GearState(value));
-        });
-
-        // remove gear without an image (i.e. all the base gear)
-        const baseGearKeys = ['armor_base_0', 'back_base_0', 'body_base_0', 'eyewear_base_0', 'headAccessory_base_0', 'head_base_0', 'shield_base_0', 'weapon_base_0'];
-        baseGearKeys.forEach((key) => gear.delete(key));
-
-        this.gear.merge(gear);
-
-        const backgrounds = new Map();
-        Object.entries(json.data.backgroundsFlat).forEach(([key, value]) => {
-          backgrounds.set(key, new BackgroundState(key, value, this));
-        }, this);
-        this.backgrounds.merge(backgrounds);
 
         this.loadingObjects = false;
         this.reloadUsers();
@@ -213,40 +184,35 @@ class AppStore {
   @action removeUser(user) {
     this.users.remove(user);
 
+    const removeUserFromMap = (map, user) => {
+      map.forEach((value) => {
+        value.removeUser(user);
+      });
+    }
+
     // also remove it from quests
-    this.quests.forEach((value, key, map) => {
-      value.removeUser(user);
-    });
+    removeUserFromMap(this.quests, user);
 
     // also remove it from pets
-    this.pets.forEach((value, key, map) => {
-      value.removeUser(user);
-    });
-    this.basepets.forEach((value, key, map) => {
-      value.removeUser(user);
-    });
-    this.premiumpets.forEach((value, key, map) => {
-      value.removeUser(user);
-    });
+    removeUserFromMap(this.pets, user);
+    removeUserFromMap(this.basepets, user);
+    removeUserFromMap(this.premiumpets, user);
 
     // also remove it from eggs
     this.eggs.categories.forEach((category) => {
-      this.eggs[category].forEach((egg) => {
-        egg.removeUser(user);
-      });
+      removeUserFromMap(this.eggs[category], user);
     });
 
     // also remove it from potions
     this.potions.categories.forEach((category) => {
-      this.potions[category].forEach((potion) => {
-        potion.removeUser(user);
-      });
+      removeUserFromMap(this.potions[category], user);
     });
 
     // also remove it from gear
-    this.gear.forEach((value, key, map) => {
-      value.removeUser(user);
-    });
+    removeUserFromMap(this.gear, user);
+
+    // also remove it from backgrounds
+    // removeUserFromMap(this.backgrounds, user);
 
     this.setQueryVariable();
   }
