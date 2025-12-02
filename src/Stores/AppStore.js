@@ -218,14 +218,18 @@ class AppStore {
     this.premiumpets.forEach((value, key, map) => {
       value.removeUser(user);
     });
-    this.premiumhatchingpotions.forEach((value, key, map) => {
-      value.removeUser(user);
-    });
 
     // also remove it from eggs
     this.eggs.categories.forEach((category) => {
       this.eggs[category].forEach((egg) => {
         egg.removeUser(user);
+      });
+    });
+
+    // also remove it from potions
+    this.potions.categories.forEach((category) => {
+      this.potions[category].forEach((potion) => {
+        potion.removeUser(user);
       });
     });
 
