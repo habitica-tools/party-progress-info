@@ -1,7 +1,7 @@
 import { action, computed, observable } from 'mobx';
 
 class ItemState {
-  @observable accessor data = {};
+  data = {};
   @observable accessor users = [];
 
   static userItems(user) {
@@ -12,8 +12,12 @@ class ItemState {
     this.data = data;
   }
 
-  get id() {
+  get key() {
     return this.data.key;
+  }
+
+  get imageKey() {
+    return this.key;
   }
 
   get tooltip() {
@@ -29,7 +33,7 @@ class ItemState {
   }
 
   userCount(user) {
-    return (this.constructor.userItems(user)[this.id] !== undefined ? this.constructor.userItems(user)[this.id] : 0);
+    return (this.constructor.userItems(user)[this.key] !== undefined ? this.constructor.userItems(user)[this.key] : 0);
   }
 
   usersCount(users) {

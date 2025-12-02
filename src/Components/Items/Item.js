@@ -27,12 +27,12 @@ class Item extends Component {
               {item.selectedCount}
             </span>
           )}
-          <span class={'item-content ' + item.constructor.type + ' ' + this.constructor.imageFilenameBase + item.id} onClick={this.showItemInfo}>
-            <img src={Item.imageURL + this.constructor.imageFilenameBase + item.id + '.png'} alt={item.id} />
+          <span class={'item-content ' + this.constructor.type + ' ' + this.constructor.imageFilenameBase + item.imageKey} onClick={this.showItemInfo}>
+            <img src={Item.imageURL + this.constructor.imageFilenameBase + item.imageKey + '.png'} alt={item.key} />
           </span>
         </div>
         {this.constructor.showItemCaption &&
-          <span>{beautifyCaption(item.id)}</span>
+          <span>{beautifyCaption(item.key)}</span>
         }
       </div>
     );

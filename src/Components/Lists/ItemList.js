@@ -15,8 +15,8 @@ function sort(array, key) {
       break;
     case 'alphabetical':
       array.sort((a, b) => {
-        if (a.id < b.id) return -1;
-        if (a.id > b.id) return 1;
+        if (a.key < b.key) return -1;
+        if (a.key > b.key) return 1;
         return 0;
       });
       break;
