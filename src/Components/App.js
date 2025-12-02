@@ -6,13 +6,14 @@ import Settings from './Settings';
 
 import BackgroundList from './BackgroundList';
 import BasePetList from './BasePetList';
-import EggList from './ItemLists/EggList';
 import GearLeaderboard from './GearLeaderboard';
-import GearList from './ItemLists/GearList';
 import PetList from './PetList';
-import PotionList from './ItemLists/PotionList';
 import PremiumPetList from './PremiumPetList';
-import QuestList from './ItemLists/QuestList';
+
+import EggList from './Lists/EggList';
+import GearList from './Lists/GearList';
+import PotionList from './Lists/PotionList';
+import QuestList from './Lists/QuestList';
 
 @observer
 class App extends Component {
