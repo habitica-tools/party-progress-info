@@ -6,8 +6,11 @@ import OldPetState from './PetState';
 import UserState from './UserState';
 
 import BackgroundState from './States/BackgroundState';
+import CombinedPetState from './States/CombinedPetState';
 import EggState from './States/EggState';
 import GearState from './States/GearState';
+import MountState from './States/MountState';
+import PetState from './States/PetState';
 import PotionState from './States/PotionState';
 import QuestState from './States/QuestState';
 
@@ -20,6 +23,15 @@ class AppStore {
   premiumpets = observable.map(new Map());
   gear = observable.map(new Map());
   backgrounds = observable.map(new Map());
+
+  pets = {
+    categories: ['drop', 'quest', 'premium', 'wacky', 'special'],
+    drop: observable.map(new Map()),
+    quest: observable.map(new Map()),
+    premium: observable.map(new Map()),
+    wacky: observable.map(new Map()),
+    special: observable.map(new Map()),
+  }
 
   eggs = {
     categories: ['drop', 'quest'],
@@ -133,6 +145,74 @@ class AppStore {
         }, this);
         this.premiumpets.merge(premiumpets);
 
+        const createCombinedPetStates = (type, outerList, innerList, innerItemKey, innerItemIsPotion) => {
+          const innerItem = innerList.get(innerItemKey);
+
+          const mapToOuter = (outer, inner) => outer;
+          const mapToInner = (outer, inner) => inner;
+
+          const eggFn = innerItemIsPotion ? mapToOuter : mapToInner;
+          const potionFn = innerItemIsPotion ? mapToInner : mapToOuter;
+
+          const dataGenerator = (outer, inner) => {
+            const egg = eggFn(outer, inner);
+            const potion = potionFn(outer, inner);
+
+            return {
+              key: egg.key + '-' + potion.key,
+              egg: egg,
+              potion: potion,
+              text: egg.tooltip + ' ' + potion.tooltip,
+              type: type,
+            }
+          };
+
+          const map = new Map();
+          outerList.forEach((outer) => {
+            const data = dataGenerator(outer, innerItem);
+            const state = new CombinedPetState(
+              Object.assign(data, { key: outer.key, imageKey: data.key }),
+            );
+            innerList.forEach((inner) => {
+              const data = dataGenerator(outer, inner);
+              state.petStates.set(data.key, new PetState(data));
+              state.mountStates.set(data.key, new MountState(
+                Object.assign(data, { text: eggFn(outer, inner).data.mountText + ' ' + potionFn(outer, inner).tooltip }),
+              ));
+            });
+            map.set(state.key, state);
+          });
+          return map;
+        };
+
+        this.pets.drop.merge(createCombinedPetStates('drop', this.eggs.drop, this.potions.drop, 'Base', true));
+        this.pets.quest.merge(createCombinedPetStates('quest', this.eggs.quest, this.potions.drop, 'Base', true));
+        this.pets.premium.merge(createCombinedPetStates('premium', this.potions.premium, this.eggs.drop, 'Wolf', false));
+        this.pets.wacky.merge(createCombinedPetStates('wacky', this.potions.wacky, this.eggs.drop, 'Wolf', false));
+
+        const specialPetDummyData = {
+          egg: null, eggData: null, potion: null, potionData: null,
+        };
+
+        const specialPets = new Map();
+        Object.keys(json.data.specialPets).forEach((key) => {
+          const petData = Object.assign(json.data.petInfo[key], specialPetDummyData);
+
+          const state = new CombinedPetState(
+            Object.assign(petData, { imageKey: petData.key }),
+          );
+          state.petStates.set(key, new PetState(petData));
+
+          if (key in json.data.specialMounts) {
+            state.mountStates.set(key, new MountState(
+              Object.assign(json.data.mountInfo[key], specialPetDummyData),
+            ));
+          }
+
+          specialPets.set(key, state);
+        });
+        this.pets.special.merge(specialPets);
+
         this.loadingObjects = false;
         this.reloadUsers();
       }))
@@ -210,6 +290,11 @@ class AppStore {
 
     // also remove it from gear
     removeUserFromMap(this.gear, user);
+
+    // also remove it from pets
+    this.pets.categories.forEach((category) => {
+      removeUserFromMap(this.pets[category], user);
+    });
 
     // also remove it from backgrounds
     // removeUserFromMap(this.backgrounds, user);
