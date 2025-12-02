@@ -25,7 +25,7 @@ class PetInfo extends Component {
             </tr>
           </thead>
           <tbody>
-            {[...store.pets].filter(([id, pet]) => pet.basetype === category)
+            {[...store.questpets].filter(([id, pet]) => pet.basetype === category)
               .map(([id, pet]) => (
                 <tr>
                   <td><Pet pet={pet} /></td>
