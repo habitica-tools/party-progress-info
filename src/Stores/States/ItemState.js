@@ -17,7 +17,7 @@ class ItemState {
   }
 
   get tooltip() {
-    return this.id;
+    return this.data.text;
   }
 
   @action addUser(user) {

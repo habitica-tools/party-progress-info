@@ -1,6 +1,10 @@
 import { Component } from 'preact';
 import { observer } from 'mobx-react';
 
+function beautifyCaption(caption) {
+  return caption.replace(/([A-Z])/g, ' $1').trim();
+}
+
 @observer
 class Item extends Component {
   static imageURL = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
@@ -28,7 +32,7 @@ class Item extends Component {
           </span>
         </div>
         {this.constructor.showItemCaption &&
-          <span>{item.tooltip}</span>
+          <span>{beautifyCaption(item.id)}</span>
         }
       </div>
     );

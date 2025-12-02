@@ -4,10 +4,6 @@ class QuestState extends ItemState {
   static userItems(user) {
     return user.data.items.quests;
   }
-
-  get tooltip() {
-    return this.data.text;
-  }
 }
 
 export default QuestState;
