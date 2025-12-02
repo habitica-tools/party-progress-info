@@ -4,6 +4,8 @@ import { observer } from 'mobx-react';
 @observer
 class Item extends Component {
   static imageURL = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
+
+  static type = null;
   static imageFilenameBase = null;
   static showItemCaption = true;
 

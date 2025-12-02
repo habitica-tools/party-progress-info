@@ -4,8 +4,6 @@ class ItemState {
   @observable accessor data = {};
   @observable accessor users = [];
 
-  static type = null;
-
   static userItems(user) {
     throw new Error('NotImplementedError: subclasses must implement userItems');
   }
