@@ -17,6 +17,11 @@ class PotionList extends ItemList {
   }
 
   get items() {
+    const { category } = this.props;
+    if (!category || !(category in this.props.store.potions)) {
+      throw new Error('PotionList: category "' + category + '" is invalid');
+    }
+
     return this.props.store.potions[this.props.category];
   }
 }
