@@ -1,4 +1,5 @@
 const path = require('node:path');
+const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
@@ -33,10 +34,16 @@ const config = {
     },
 
     // plugins
-    plugins: [new HtmlWebpackPlugin({
-        template: './src/index.html',
-        favicon: './src/favicon.ico',
-    })],
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            favicon: './src/favicon.ico',
+        }),
+        new Dotenv({
+            path: './.env',
+            systemvars: true,
+        }),
+    ],
 
     // server
     devServer: {

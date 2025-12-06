@@ -73,6 +73,15 @@ class AppStore {
     this.api = new HabiticaAPI();
 
     this.fetchCommonObjects();
+
+    // load credentials from environment variables if available
+    const userId = process.env.HABITICA_USER_ID;
+    const apiToken = process.env.HABITICA_API_TOKEN;
+    if (userId !== undefined && apiToken !== undefined) {
+      this.api.setCredentials(userId, apiToken);
+      this.loadQueryString();
+      this.addUser(userId);
+    }
   }
 
   @action fetchCommonObjects() {
@@ -153,7 +162,7 @@ class AppStore {
         this.backgrounds.merge(backgrounds);
 
         this.loadingobjects = false;
-        this.loadQueryString();
+        this.reloadUsers();
       }))
   }
 
