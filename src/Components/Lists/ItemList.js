@@ -84,7 +84,12 @@ class ItemList extends Component {
       return (<div class="ui active centered inline loader" />);
     }
 
-    let items = [...this.items].map(([_, item]) => item);
+    let { items } = this;
+    if (items === undefined) {
+      throw new Error('ItemList: items is undefined');
+    }
+
+    items = [...items].map(([_, item]) => item);
     if (this.partyOnly) items = items.filter((item) => item.count > 0);
 
     items = sort(items, this.sortKey);
