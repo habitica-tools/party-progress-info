@@ -13,6 +13,11 @@ class Item extends Component {
   static imageFilenameBase = null;
   static showItemCaption = true;
 
+  // eslint-disable-next-line class-methods-use-this
+  get imageFilenameExtension() {
+    return '.png';
+  }
+
   render() {
     const { item } = this.props;
 
@@ -28,7 +33,7 @@ class Item extends Component {
             </span>
           )}
           <span class={'item-content ' + this.constructor.type + ' ' + this.constructor.imageFilenameBase + item.imageKey} onClick={this.showItemInfo}>
-            <img src={Item.imageURL + this.constructor.imageFilenameBase + item.imageKey + '.png'} alt={item.key} />
+            <img src={Item.imageURL + this.constructor.imageFilenameBase + item.imageKey + this.imageFilenameExtension} alt={item.key} />
           </span>
         </div>
         {this.constructor.showItemCaption &&

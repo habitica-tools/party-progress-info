@@ -4,12 +4,12 @@ import { observer } from 'mobx-react';
 import AuthenticationModal from './AuthenticationModal';
 import Settings from './Settings';
 
-import BackgroundList from './BackgroundList';
 import BasePetList from './BasePetList';
 import GearLeaderboard from './GearLeaderboard';
 import PetList from './PetList';
 import PremiumPetList from './PremiumPetList';
 
+import BackgroundList from './Lists/BackgroundList';
 import EggList from './Lists/EggList';
 import GearList from './Lists/GearList';
 import PotionList from './Lists/PotionList';

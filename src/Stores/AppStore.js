@@ -2,10 +2,10 @@ import { action, computed, observable } from 'mobx';
 
 import HabiticaAPI from './HabiticaAPI';
 
-import BackgroundState from './BackgroundState';
 import PetState from './PetState';
 import UserState from './UserState';
 
+import BackgroundState from './States/BackgroundState';
 import EggState from './States/EggState';
 import GearState from './States/GearState';
 import PotionState from './States/PotionState';
