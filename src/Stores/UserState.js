@@ -118,12 +118,19 @@ class UserState {
         this.data = json.data;
         this.loading = false;
 
+        const addUserToItemMap = (userData, itemMap) => {
+          if (userData !== undefined) {
+            Object.entries(userData).forEach(([key, value]) => {
+              const item = itemMap.get(key);
+              if (item !== undefined && value > 0) {
+                item.addUser(this);
+              }
+            }, this);
+          }
+        };
+
         // go over quests
-        if (json.data.items.quests !== undefined) {
-          Object.entries(json.data.items.quests).forEach(([key, value]) => {
-            if (value > 0) this.store.quests.get(key).addUser(this);
-          }, this);
-        }
+        addUserToItemMap(json.data.items.quests, this.store.flat.quests);
 
         // go over questpets / base pets / premium pets
         if (json.data.items.pets !== undefined) {
@@ -166,67 +173,25 @@ class UserState {
           }
         }
 
+        // go over pets
+        addUserToItemMap(json.data.items.pets, this.store.flat.pets);
+
+        // go over mounts
+        addUserToItemMap(json.data.items.mounts, this.store.flat.mounts);
+
         // go over eggs
-        if (json.data.items.eggs !== undefined) {
-          Object.entries(json.data.items.eggs).forEach(([key, value]) => {
-            if (value > 0 && key !== null && key !== undefined) {
-              this.store.eggs.categories.every((category) => {
-                const egg = this.store.eggs[category].get(key);
-                if (egg !== undefined) {
-                  egg.addUser(this);
-                  return false;
-                }
-                return true;
-              })
-            }
-          }, this);
-        }
+        addUserToItemMap(json.data.items.eggs, this.store.flat.eggs);
 
         // go over hatching potions
-        if (json.data.items.hatchingPotions !== undefined) {
-          Object.entries(json.data.items.hatchingPotions).forEach(([key, value]) => {
-            if (value > 0 && key !== null && key !== undefined) {
-              this.store.potions.categories.every((category) => {
-                const potion = this.store.potions[category].get(key);
-                if (potion !== undefined) {
-                  potion.addUser(this);
-                  return false;
-                }
-                return true;
-              })
-            }
-          }, this);
-        }
+        addUserToItemMap(json.data.items.hatchingPotions, this.store.flat.potions);
 
         // go over gear
         if (json.data.items.gear !== undefined) {
-          Object.entries(json.data.items.gear.owned).forEach(([key, value]) => {
-            let gear;
-            if (key !== null && key !== undefined) {
-              gear = this.store.gear.get(key);
-            }
-            if (gear !== undefined) {
-              if (value > 0) {
-                gear.addUser(this);
-              }
-            }
-          }, this);
+          addUserToItemMap(json.data.items.gear.owned, this.store.flat.gear);
         }
 
         // go over backgrounds
-        /*
-        if(json.data.items.backgrounds !== undefined){
-            var backgrounds = new Map(Object.entries(json.data.items.backgrounds.owned));
-            backgrounds.forEach(function(value, key) {
-                if(key !== null && key !== undefined)
-                    var background = this.store.backgrounds.get(key);
-                    if(background !== undefined)
-                        if(value > 0){
-                            backgrounds.addUser(this);
-                        }
-            },this);
-        }
-        */
+        // not yet available in the API
       }))
       .catch(action((res) => {
         if (res.status === undefined) {
