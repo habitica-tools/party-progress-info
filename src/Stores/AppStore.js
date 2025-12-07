@@ -17,6 +17,16 @@ import QuestState from './States/QuestState';
 class AppStore {
   @observable accessor loadingObjects = true;
 
+  flat = {
+    quests: new Map(),
+    pets: new Map(),
+    mounts: new Map(),
+    eggs: new Map(),
+    potions: new Map(),
+    gear: new Map(),
+    backgrounds: new Map(),
+  }
+
   quests = observable.map(new Map());
   questpets = observable.map(new Map());
   basepets = observable.map(new Map());
@@ -108,14 +118,23 @@ class AppStore {
           return map;
         }
 
-        this.quests.merge(createStateMapFromList(json.data.quests, QuestState));
+        const quests = createStateMapFromList(json.data.quests, QuestState);
+        this.flat.quests = quests;
+        this.quests.merge(quests);
 
-        this.eggs.drop.merge(createStateMapFromList(json.data.dropEggs, EggState));
-        this.eggs.quest.merge(createStateMapFromList(json.data.questEggs, EggState));
+        const dropEggs = createStateMapFromList(json.data.dropEggs, EggState);
+        const questEggs = createStateMapFromList(json.data.questEggs, EggState);
+        this.flat.eggs = new Map([...dropEggs, ...questEggs]);
+        this.eggs.drop.merge(dropEggs);
+        this.eggs.quest.merge(questEggs);
 
-        this.potions.drop.merge(createStateMapFromList(json.data.dropHatchingPotions, PotionState));
-        this.potions.premium.merge(createStateMapFromList(json.data.premiumHatchingPotions, PotionState));
-        this.potions.wacky.merge(createStateMapFromList(json.data.wackyHatchingPotions, PotionState));
+        const dropPotions = createStateMapFromList(json.data.dropHatchingPotions, PotionState);
+        const premiumPotions = createStateMapFromList(json.data.premiumHatchingPotions, PotionState);
+        const wackyPotions = createStateMapFromList(json.data.wackyHatchingPotions, PotionState);
+        this.flat.potions = new Map([...dropPotions, ...premiumPotions, ...wackyPotions]);
+        this.potions.drop.merge(dropPotions);
+        this.potions.premium.merge(premiumPotions);
+        this.potions.wacky.merge(wackyPotions);
         // apply a small adjustment to the Glow-in-the-Dark potion name
         this.potions.premium.get('Glow').data.text = 'Glow';
 
@@ -123,9 +142,12 @@ class AppStore {
         // remove gear without an image (i.e. all the base gear)
         const baseGearKeys = ['armor_base_0', 'back_base_0', 'body_base_0', 'eyewear_base_0', 'headAccessory_base_0', 'head_base_0', 'shield_base_0', 'weapon_base_0'];
         baseGearKeys.forEach((key) => gear.delete(key));
+        this.flat.gear = gear;
         this.gear.merge(gear);
 
-        this.backgrounds.merge(createStateMapFromList(json.data.backgroundsFlat, BackgroundState));
+        const backgrounds = createStateMapFromList(json.data.backgroundsFlat, BackgroundState);
+        this.flat.backgrounds = backgrounds;
+        this.backgrounds.merge(backgrounds);
 
         const questpets = new Map();
         Object.entries(json.data.questPets).forEach(([key, value]) => {
@@ -185,10 +207,10 @@ class AppStore {
           return map;
         };
 
-        this.pets.drop.merge(createCombinedPetStates('drop', this.eggs.drop, this.potions.drop, 'Base', true));
-        this.pets.quest.merge(createCombinedPetStates('quest', this.eggs.quest, this.potions.drop, 'Base', true));
-        this.pets.premium.merge(createCombinedPetStates('premium', this.potions.premium, this.eggs.drop, 'Wolf', false));
-        this.pets.wacky.merge(createCombinedPetStates('wacky', this.potions.wacky, this.eggs.drop, 'Wolf', false));
+        const dropPets = createCombinedPetStates('drop', this.eggs.drop, this.potions.drop, 'Base', true);
+        const questPets = createCombinedPetStates('quest', this.eggs.quest, this.potions.drop, 'Base', true);
+        const premiumPets = createCombinedPetStates('premium', this.potions.premium, this.eggs.drop, 'Wolf', false);
+        const wackyPets = createCombinedPetStates('wacky', this.potions.wacky, this.eggs.drop, 'Wolf', false);
 
         const specialPetDummyData = {
           egg: null, eggData: null, potion: null, potionData: null,
@@ -211,6 +233,26 @@ class AppStore {
 
           specialPets.set(key, state);
         });
+
+        this.flat.pets = new Map([
+          ...Array.from(dropPets.values()).flatMap((combinedState) => Array.from(combinedState.petStates.entries())),
+          ...Array.from(questPets.values()).flatMap((combinedState) => Array.from(combinedState.petStates.entries())),
+          ...Array.from(premiumPets.values()).flatMap((combinedState) => Array.from(combinedState.petStates.entries())),
+          ...Array.from(wackyPets.values()).flatMap((combinedState) => Array.from(combinedState.petStates.entries())),
+          ...Array.from(specialPets.values()).flatMap((combinedState) => Array.from(combinedState.petStates.entries())),
+        ]);
+        this.flat.mounts = new Map([
+          ...Array.from(dropPets.values()).flatMap((combinedState) => Array.from(combinedState.mountStates.entries())),
+          ...Array.from(questPets.values()).flatMap((combinedState) => Array.from(combinedState.mountStates.entries())),
+          ...Array.from(premiumPets.values()).flatMap((combinedState) => Array.from(combinedState.mountStates.entries())),
+          ...Array.from(wackyPets.values()).flatMap((combinedState) => Array.from(combinedState.mountStates.entries())),
+          ...Array.from(specialPets.values()).flatMap((combinedState) => Array.from(combinedState.mountStates.entries())),
+        ]);
+
+        this.pets.drop.merge(dropPets);
+        this.pets.quest.merge(questPets);
+        this.pets.premium.merge(premiumPets);
+        this.pets.wacky.merge(wackyPets);
         this.pets.special.merge(specialPets);
 
         this.loadingObjects = false;
