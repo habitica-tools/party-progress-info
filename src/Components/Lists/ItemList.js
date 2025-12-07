@@ -55,6 +55,7 @@ class ItemList extends Component {
   static defaultProps = {
     category: '',
     sortable: true,
+    filterable: true,
   }
 
   static ItemClass = null;
@@ -78,7 +79,9 @@ class ItemList extends Component {
   }
 
   render() {
-    const { store, category, sortable } = this.props;
+    const {
+      store, category, sortable, filterable,
+    } = this.props;
 
     if (store.loadingObjects) {
       return (<div class="ui active centered inline loader" />);
@@ -117,13 +120,13 @@ class ItemList extends Component {
         <div class="items">
           {items.map((item) => createElement(this.constructor.ItemClass, { item: item, itemList: this }))}
         </div>
-        {
+        {filterable && (
           this.partyOnly ? (
             <button class="ui blue button" onClick={this.showAll}><i class="unhide icon" />Show All</button>
           ) : (
             <button class="ui olive button" onClick={this.showPartyOnly}><i class="hide icon" />Party Only</button>
           )
-        }
+        )}
         <div>
           {this.infoItem === null ? '' : (
             <ItemInfo item={this.infoItem} itemList={this} />
