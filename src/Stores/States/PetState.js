@@ -1,3 +1,5 @@
+import { computed } from 'mobx';
+
 import ItemState from './ItemState';
 
 class PetState extends ItemState {
@@ -11,6 +13,11 @@ class PetState extends ItemState {
 
   userCount(user) {
     return (this.users.includes(user) ? 1 : 0);
+  }
+
+  // Override neededCount to return petsNeeded
+  @computed get neededCount() {
+    return this.store.validUserCount - this.count;
   }
 }
 

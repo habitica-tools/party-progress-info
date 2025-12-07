@@ -24,6 +24,11 @@ class Item extends Component {
     return (
       <div class="item-wrapper">
         <div class="item" data-tooltip={item.tooltip}>
+          {item.neededCount === null ? '' : (
+            <span class="badge badge-pill badge-item badge-count2">
+              {item.neededCount}
+            </span>
+          )}
           <span class="badge badge-pill badge-item badge-info badge-count">
             {item.count}
           </span>

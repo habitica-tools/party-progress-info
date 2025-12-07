@@ -31,6 +31,13 @@ class CombinedPetState extends PetState {
     count += this.mountStates.values().reduce((sum, mountState) => sum + mountState.userCount(user), 0);
     return count;
   }
+
+  @computed get neededCount() {
+    let needed = 0;
+    needed += this.petStates.values().reduce((sum, petState) => sum + petState.neededCount, 0);
+    needed += this.mountStates.values().reduce((sum, mountState) => sum + mountState.neededCount, 0);
+    return needed;
+  }
 }
 
 export default CombinedPetState;
