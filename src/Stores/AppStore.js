@@ -113,8 +113,8 @@ class AppStore {
         const createStateMapFromList = (list, StateClass) => {
           const map = new Map();
           Object.entries(list).forEach(([key, value]) => {
-            map.set(key, new StateClass(value));
-          });
+            map.set(key, new StateClass(value, this));
+          }, this);
           return map;
         }
 
@@ -194,12 +194,14 @@ class AppStore {
             const data = dataGenerator(outer, innerItem);
             const state = new CombinedPetState(
               Object.assign(data, { key: outer.key, imageKey: data.key }),
+              this,
             );
             innerList.forEach((inner) => {
               const data = dataGenerator(outer, inner);
-              state.petStates.set(data.key, new PetState(data));
+              state.petStates.set(data.key, new PetState(data, this));
               state.mountStates.set(data.key, new MountState(
                 Object.assign(data, { text: eggFn(outer, inner).data.mountText + ' ' + potionFn(outer, inner).tooltip }),
+                this,
               ));
             });
             map.set(state.key, state);
@@ -222,12 +224,14 @@ class AppStore {
 
           const state = new CombinedPetState(
             Object.assign(petData, { imageKey: petData.key }),
+            this,
           );
-          state.petStates.set(key, new PetState(petData));
+          state.petStates.set(key, new PetState(petData, this));
 
           if (key in json.data.specialMounts) {
             state.mountStates.set(key, new MountState(
               Object.assign(json.data.mountInfo[key], specialPetDummyData),
+              this,
             ));
           }
 
