@@ -49,6 +49,11 @@ class ItemState {
   @computed get selectedCount() {
     return this.usersCount(this.users.filter((user) => user.isInfoUser));
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  @computed get neededCount() {
+    return null;
+  }
 }
 
 export default ItemState;
