@@ -2,14 +2,16 @@ import { action, computed, observable } from 'mobx';
 
 class ItemState {
   data = {};
+  store = null;
   @observable accessor users = [];
 
   static userItems(user) {
     throw new Error('NotImplementedError: subclasses must implement userItems');
   }
 
-  constructor(data) {
+  constructor(data, store = null) {
     this.data = data;
+    this.store = store;
   }
 
   get key() {
