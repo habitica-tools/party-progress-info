@@ -10,7 +10,7 @@ class Settings extends Component {
     const { store } = this.props;
 
     return (
-      store.loadingobjects ? <div class="ui active centered inline loader" /> : (
+      store.loadingObjects ? <div class="ui active centered inline loader" /> : (
         <div>
           <SettingsInput store={store} /><br />
           <div class="ui fluid container">

@@ -80,7 +80,7 @@ class ItemList extends Component {
   render() {
     const { store, category, sortable } = this.props;
 
-    if (store.loadingobjects) {
+    if (store.loadingObjects) {
       return (<div class="ui active centered inline loader" />);
     }
 

@@ -73,7 +73,7 @@ class PetList extends Component {
   render() {
     const { store } = this.props;
 
-    if (store.loadingobjects) {
+    if (store.loadingObjects) {
       return (<div class="ui active centered inline loader" />);
     }
 

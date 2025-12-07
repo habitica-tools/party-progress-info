@@ -11,7 +11,7 @@ import QuestState from './QuestState';
 import UserState from './UserState';
 
 class AppStore {
-  @observable accessor loadingobjects = true;
+  @observable accessor loadingObjects = true;
 
   quests = observable.map(new Map());
   pets = observable.map(new Map());
@@ -161,7 +161,7 @@ class AppStore {
         }, this);
         this.backgrounds.merge(backgrounds);
 
-        this.loadingobjects = false;
+        this.loadingObjects = false;
         this.reloadUsers();
       }))
   }

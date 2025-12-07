@@ -93,7 +93,7 @@ class UserState {
   }
 
   @action addUser(userid) {
-    if (this.store.loadingobjects) {
+    if (this.store.loadingObjects) {
       this.loading = true;
       return;
     }
