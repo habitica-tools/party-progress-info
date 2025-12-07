@@ -30,7 +30,7 @@ class PetState {
 
   @computed get needed() {
     let count = 0;
-    count = this.store.countValidUsers() * 2;
+    count = this.store.validUserCount * 2;
     this.users.forEach((value, index, array) => {
       if (value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
         count -= 1;
@@ -44,7 +44,7 @@ class PetState {
 
   @computed get petsNeeded() {
     let count = 0;
-    count = this.store.countValidUsers();
+    count = this.store.validUserCount;
     this.users.forEach((value, index, array) => {
       if (value.data.items.pets !== undefined && value.data.items.pets[this.id] > 0) {
         count -= 1;
@@ -55,7 +55,7 @@ class PetState {
 
   @computed get mountsNeeded() {
     let count = 0;
-    count = this.store.countValidUsers();
+    count = this.store.validUserCount;
     this.users.forEach((value, index, array) => {
       if (value.data.items.mounts !== undefined && value.data.items.mounts[this.id] > 0) {
         count -= 1;
