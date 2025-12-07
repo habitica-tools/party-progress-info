@@ -93,6 +93,11 @@ class UserState {
   }
 
   @action addUser(userid) {
+    if (this.store.loadingObjects) {
+      this.loading = true;
+      return;
+    }
+
     if (!this.store.api.isValidToken(userid)) {
       this.loading = false;
       this.invalid = true;

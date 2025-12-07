@@ -4,15 +4,16 @@ import { observer } from 'mobx-react';
 import AuthenticationModal from './AuthenticationModal';
 import Settings from './Settings';
 
-import BackgroundList from './BackgroundList';
 import BasePetList from './BasePetList';
-import EggList from './ItemLists/EggList';
 import GearLeaderboard from './GearLeaderboard';
-import GearList from './ItemLists/GearList';
 import PetList from './PetList';
-import PotionList from './ItemLists/PotionList';
 import PremiumPetList from './PremiumPetList';
-import QuestList from './ItemLists/QuestList';
+
+import BackgroundList from './Lists/BackgroundList';
+import EggList from './Lists/EggList';
+import GearList from './Lists/GearList';
+import PotionList from './Lists/PotionList';
+import QuestList from './Lists/QuestList';
 
 @observer
 class App extends Component {
@@ -198,13 +199,13 @@ class App extends Component {
                 <h4>Non Hatched Standard Pet Eggs</h4>
               </div>
               <div class="ui basic segment" />
-              <EggList store={store} category="base" />
+              <EggList store={store} category="drop" />
               <div class="ui basic segment" />
               <div class="ui horizontal divider header">
                 <h4>Non Used Base Hatching Potions</h4>
               </div>
               <div class="ui basic segment" />
-              <PotionList store={store} category="base" />
+              <PotionList store={store} category="drop" />
             </div>
           }
           {store.menupage === 'gear' &&

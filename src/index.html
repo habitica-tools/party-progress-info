@@ -85,6 +85,70 @@
       color: #2fb33a !important;
     }
 
+    .badge {
+      font-size: 12px;
+      font-weight: bold;
+      line-height: 1.33;
+      box-shadow: 0 1px 1px 0 rgba(26, 24, 29, 0.12);
+      z-index: 99;
+    }
+
+    .badge-pill {
+      border-radius: 100px;
+    }
+
+    .items>div {
+      display: inline-block;
+      margin-right: 20px;
+    }
+
+    .items>div:last-of-type {
+      margin-right: 0px;
+    }
+
+    .item-wrapper {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .main .item {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      border-radius: 2px;
+      background: #FFFFFF;
+      box-shadow: 0 2px 2px 0 rgba(26, 24, 29, 0.15), 0 1px 4px 0 rgba(26, 24, 29, 0.1);
+      border: 1px solid transparent;
+    }
+
+    .main .item:hover {
+      box-shadow: 0 3px 3px 0 rgba(107, 47, 119, 0.15), 0 1px 4px 0 rgba(103, 11, 241, 0.781);
+    }
+
+    .main .item:active {
+      border: 2px solid transparent;
+    }
+
+    .main .item:has(.Background) {
+      width: 143px;
+      height: 149px;
+    }
+
+    .main .item:has(.Background):active {
+      border: 1px solid transparent;
+    }
+
+    .item .item-content {
+      margin: auto;
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+
     .item .item-content.Pet {
       top: -14px;
       left: 5px;
@@ -119,69 +183,8 @@
     }
 
     .item .item-content.Background {
-      height: 140px;
-    }
-
-    .badge {
-      font-size: 12px;
-      font-weight: bold;
-      line-height: 1.33;
-      box-shadow: 0 1px 1px 0 rgba(26, 24, 29, 0.12);
-      z-index: 99;
-    }
-
-    .badge-pill {
-      border-radius: 100px;
-    }
-
-    .items>div {
-      display: inline-block;
-      margin-right: 20px;
-    }
-
-    .items>div:last-of-type {
-      margin-right: 0px;
-    }
-
-    .item-wrapper {
-      position: relative;
-      display: inline-block;
-      margin-bottom: 12px;
-    }
-
-    .main .item:hover {
-      box-shadow: 0 3px 3px 0 rgba(107, 47, 119, 0.15), 0 1px 4px 0 rgba(103, 11, 241, 0.781);
-      border: 2px solid transparent;
-    }
-
-    .main .item {
-      position: relative;
-      width: 90px;
-      height: 90px;
-      border-radius: 2px;
-      background: #FFFFFF;
-      box-shadow: 0 2px 2px 0 rgba(26, 24, 29, 0.15), 0 1px 4px 0 rgba(26, 24, 29, 0.1);
-      border: 1px solid transparent;
-    }
-
-    .backgrounds .item {
-      width: 144px;
-      height: 156px;
-    }
-
-    .main .item:hover {
-      box-shadow: 0 3px 3px 0 rgba(107, 47, 119, 0.15), 0 1px 4px 0 rgba(103, 11, 241, 0.781);
-      border: 2px solid transparent;
-    }
-
-    .item .item-content {
-      margin: auto;
-      display: block;
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
+      margin: 0;
+      height: 141px;
     }
 
     .pettxt {

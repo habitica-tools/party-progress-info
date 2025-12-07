@@ -15,8 +15,8 @@ function sort(array, key) {
       break;
     case 'alphabetical':
       array.sort((a, b) => {
-        if (a.id < b.id) return -1;
-        if (a.id > b.id) return 1;
+        if (a.key < b.key) return -1;
+        if (a.key > b.key) return 1;
         return 0;
       });
       break;
@@ -41,7 +41,7 @@ function sort(array, key) {
 }
 
 function beautifyCategory(category) {
-  const string = category.replace(/([A-Z])/g, ' $1').trim();
+  const string = category.replace('drop', 'base').replace(/([A-Z])/g, ' $1').trim();
 
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -80,7 +80,7 @@ class ItemList extends Component {
   render() {
     const { store, category, sortable } = this.props;
 
-    if (store.loadingobjects) {
+    if (store.loadingObjects) {
       return (<div class="ui active centered inline loader" />);
     }
 

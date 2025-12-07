@@ -1,11 +1,22 @@
 import { Component } from 'preact';
 import { observer } from 'mobx-react';
 
+function beautifyCaption(caption) {
+  return caption.replace(/([A-Z])/g, ' $1').trim();
+}
+
 @observer
 class Item extends Component {
   static imageURL = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
+
+  static type = null;
   static imageFilenameBase = null;
   static showItemCaption = true;
+
+  // eslint-disable-next-line class-methods-use-this
+  get imageFilenameExtension() {
+    return '.png';
+  }
 
   render() {
     const { item } = this.props;
@@ -21,12 +32,12 @@ class Item extends Component {
               {item.selectedCount}
             </span>
           )}
-          <span class={'item-content ' + item.constructor.type + ' ' + this.constructor.imageFilenameBase + item.id} onClick={this.showItemInfo}>
-            <img src={Item.imageURL + this.constructor.imageFilenameBase + item.id + '.png'} alt={item.id} />
+          <span class={'item-content ' + this.constructor.type + ' ' + this.constructor.imageFilenameBase + item.imageKey} onClick={this.showItemInfo}>
+            <img src={Item.imageURL + this.constructor.imageFilenameBase + item.imageKey + this.imageFilenameExtension} alt={item.key} />
           </span>
         </div>
         {this.constructor.showItemCaption &&
-          <span>{item.tooltip}</span>
+          <span>{beautifyCaption(item.key)}</span>
         }
       </div>
     );
