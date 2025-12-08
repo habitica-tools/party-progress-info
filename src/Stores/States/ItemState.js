@@ -26,6 +26,10 @@ class ItemState {
     return this.data.text;
   }
 
+  get caption() {
+    return this.key;
+  }
+
   @action addUser(user) {
     this.users.push(user);
   }

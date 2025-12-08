@@ -46,7 +46,7 @@ class Item extends Component {
           </span>
         </div>
         {this.constructor.showItemCaption &&
-          <span>{beautifyCaption(item.key)}</span>
+          <span>{beautifyCaption(item.caption)}</span>
         }
       </div>
     );
