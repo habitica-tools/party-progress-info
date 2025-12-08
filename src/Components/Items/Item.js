@@ -13,6 +13,10 @@ class Item extends Component {
   static imageFilenameBase = null;
   static showItemCaption = true;
 
+  static defaultProps = {
+    itemList: null,
+  }
+
   // eslint-disable-next-line class-methods-use-this
   get imageFilenameExtension() {
     return '.png';
@@ -49,7 +53,10 @@ class Item extends Component {
   }
 
   showItemInfo = () => {
-    this.props.itemList.showInfo(this.props.item);
+    const { itemList } = this.props;
+    if (itemList !== null) {
+      this.props.itemList.showInfo(this.props.item);
+    }
   }
 }
 
