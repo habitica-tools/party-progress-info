@@ -3,12 +3,20 @@ import { computed } from 'mobx';
 import ItemState from './ItemState';
 
 class PetState extends ItemState {
-  get eggKey() {
+  get egg() {
     return this.data.egg;
   }
 
-  get potionKey() {
+  get potion() {
     return this.data.potion;
+  }
+
+  get tooltip() {
+    return this.potion.tooltip + ' ' + this.egg.tooltip;
+  }
+
+  get caption() {
+    return this.tooltip;
   }
 
   userCount(user) {
