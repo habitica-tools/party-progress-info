@@ -4975,6 +4975,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.29.0"
     "@babel/plugin-proposal-decorators": "npm:^7.29.0"
+    "@babel/plugin-syntax-class-properties": "npm:^7.12.13"
     "@babel/plugin-transform-class-properties": "npm:^7.28.6"
     "@babel/plugin-transform-object-assign": "npm:^7.27.1"
     "@babel/plugin-transform-object-rest-spread": "npm:^7.28.6"
