@@ -794,7 +794,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-transform-class-properties@npm:^7, @babel/plugin-transform-class-properties@npm:^7.29.7":
+"@babel/plugin-transform-class-properties@npm:^7.29.7":
   version: 7.29.7
   resolution: "@babel/plugin-transform-class-properties@npm:7.29.7"
   dependencies:
@@ -803,6 +803,18 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.0.0-0
   checksum: 10c0/c370700423439aa9f0c1f8c4b97f2ef7c2dc46a1b04ec3b10e83e6bae5e4e2159f56d8e4376c9d669b3cf827650cc3740170a36e3924e3e9970d27fd85f4e48a
+  languageName: node
+  linkType: hard
+
+"@babel/plugin-transform-class-properties@npm:^8":
+  version: 8.0.1
+  resolution: "@babel/plugin-transform-class-properties@npm:8.0.1"
+  dependencies:
+    "@babel/helper-create-class-features-plugin": "npm:^8.0.1"
+    "@babel/helper-plugin-utils": "npm:^8.0.1"
+  peerDependencies:
+    "@babel/core": ^8.0.0
+  checksum: 10c0/cbb877d4a6b293a2b4e13c25c443955f5840eff05f86c5d7e65986f9b84d6725d68855098277775b065b0c3f8c976fa5a8b238c57680003d3f1c48d5872825a1
   languageName: node
   linkType: hard
 
@@ -5238,7 +5250,7 @@ __metadata:
     "@babel/core": "npm:^7"
     "@babel/plugin-proposal-decorators": "npm:^8"
     "@babel/plugin-syntax-class-properties": "npm:^7.12.13"
-    "@babel/plugin-transform-class-properties": "npm:^7"
+    "@babel/plugin-transform-class-properties": "npm:^8"
     "@babel/plugin-transform-object-assign": "npm:^7"
     "@babel/plugin-transform-object-rest-spread": "npm:^7"
     "@babel/preset-env": "npm:^7"
