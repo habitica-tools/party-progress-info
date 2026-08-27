@@ -41,15 +41,21 @@ class Item extends Component {
               {item.selectedCount}
             </span>
           )}
-          <span class={'item-content ' + this.constructor.type + ' ' + this.constructor.imageFilenameBase + item.imageKey} onClick={this.showItemInfo}>
-            <img src={Item.imageURL + this.constructor.imageFilenameBase + item.imageKey + this.imageFilenameExtension} alt={item.key} />
-          </span>
+          { this.renderItemContent(item) }
         </div>
         {this.constructor.showItemCaption &&
           <span>{beautifyCaption(item.caption)}</span>
         }
       </div>
     );
+  }
+
+  renderItemContent(item) {
+    return (
+      <span class={'item-content ' + this.constructor.type + ' ' + this.constructor.imageFilenameBase + item.imageKey} onClick={this.showItemInfo}>
+        <img src={Item.imageURL + this.constructor.imageFilenameBase + item.imageKey + this.imageFilenameExtension} alt={item.key} />
+      </span>
+    )
   }
 
   showItemInfo = () => {
