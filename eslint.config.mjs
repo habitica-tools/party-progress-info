@@ -12,8 +12,12 @@ export default defineConfig([
         files: ['./**/*.*(m)js'],
         languageOptions: {
             parserOptions: {
+                ecmaFeatures: {
+                    jsx: true,
+                },
                 babelOptions: {
                     plugins: [
+                        '@babel/plugin-syntax-jsx',
                         ['@babel/plugin-syntax-decorators', { version: '2023-11' }],
                     ],
                 },
