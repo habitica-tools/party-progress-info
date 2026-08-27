@@ -1,73 +1,18 @@
 import { Component } from 'preact';
 
-import { action, computed, observable } from 'mobx';
+import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-import PetInfo from './PetInfo';
+import CombinedPetList from './Lists/CombinedPetList';
 
 @observer
 class PetList extends Component {
-  imageurl = 'https://habitica-assets.s3.amazonaws.com/mobileApp/images/';
-  @observable accessor showAll = false;
-  @observable accessor petInfo = null;
-  @observable accessor sortKey = '1';
   @observable accessor showleaderboard = 'top3';
   store = null;
 
   constructor(props) {
     super(props);
     this.store = this.props.store;
-  }
-
-  @computed get petCategoriesWithCounts() {
-    const pets = [...this.store.petCategories].map((category) => {
-      const petdetail = { id: category };
-      const categorypets = [...this.store.questpets].filter(([id, pet]) => pet.basetype === category);
-      petdetail.needed = categorypets.reduce((prevVal, [id, pet]) => prevVal + pet.needed, 0);
-      petdetail.count = categorypets.reduce((prevVal, [id, pet]) => prevVal + pet.count, 0);
-      petdetail.selectedcount = categorypets.reduce((prevVal, [id, pet]) => prevVal + pet.selectedcount, 0);
-      return petdetail;
-    }, this);
-
-    switch (this.sortKey) {
-      case '1':
-        pets.sort((a, b) => {
-          if (a.count < b.count) {
-            return -1;
-          }
-          if (a.count > b.count) {
-            return 1;
-          }
-          return 0;
-        })
-        break;
-      case '2':
-        pets.sort((a, b) => {
-          if (a.count > b.count) {
-            return -1;
-          }
-          if (a.count < b.count) {
-            return 1;
-          }
-          return 0;
-        })
-        break;
-      case '3':
-        pets.sort((a, b) => {
-          if (a.id < b.id) {
-            return -1;
-          }
-          if (a.id > b.id) {
-            return 1;
-          }
-          return 0;
-        })
-        break;
-      default:
-        break;
-    }
-
-    return pets;
   }
 
   render() {
@@ -81,22 +26,11 @@ class PetList extends Component {
 
     return (
       <div>
-        <div class="ui stackable grid">
-          <div class="twelve wide column">
-            <div class="progress-container-big">
-              <div class="progress">
-                <div class="progress-bar bg-experience" style={'transition-duration: 300ms; width:' + totalpercentage + '%;'} />
-              </div>
+        <div class="column">
+          <div class="progress-container-big">
+            <div class="progress">
+              <div class="progress-bar bg-experience" style={'transition-duration: 300ms; width:' + totalpercentage + '%;'} />
             </div>
-          </div>
-          <div class="four wide column">
-            <span class="dropdown-label">Sort By: </span>
-            <select class="ui dropdown" value={this.sortKey} onChange={this.sortPets}>
-              <option value="">Default</option>
-              <option value="1">Shortage</option>
-              <option value="2">Most</option>
-              <option value="3">A-Z</option>
-            </select>
           </div>
         </div>
         <div class="ui four statistics">
@@ -133,39 +67,7 @@ class PetList extends Component {
             </div>
           </div>
         </div>
-        <div class="ui basic segment" />
-        <div class="item-rows">
-          <div class="items">
-            {[...this.petCategoriesWithCounts].map((category) => (
-              <div>
-                <div class="item-wrapper">
-                  <div class="item">
-                    <span class="badge badge-pill badge-item badge-count2">
-                      {category.needed}
-                    </span>
-                    <span class="badge badge-pill badge-item badge-count">
-                      {category.count}
-                    </span>
-                    {category.selectedcount < 1 ? '' : (
-                      <span class="badge badge-pill badge-item badge-blue">
-                        {category.selectedcount}
-                      </span>
-                    )}
-                    <span class={category.id === this.petInfo ? 'selectableInventory item-content Pet Pet-' + category.id + '-Base ' : 'item-content Pet Pet-' + category.id + '-Base '} onClick={this.showPetInfo.bind(this, category.id)}>
-                      <img src={this.imageurl + 'Pet-' + category.id + '-Base.png'} alt={category.id} />
-                    </span>
-                  </div>
-                  <span class="pettxt">{category.id}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div class="column">
-          {this.petInfo === null ? <br /> : (
-            <PetInfo category={this.petInfo} store={store} />
-          )}
-        </div>
+        <CombinedPetList store={store} category="quest" filterable={false} />
         <div class="column">
           <div class="ui horizontal divider header">
             <h4>Quest Pet Leaderboard</h4>
@@ -229,23 +131,6 @@ class PetList extends Component {
         </div>
       </div>
     );
-  }
-
-  @action setPetInfo(category) {
-    if (this.petInfo === category) {
-      this.petInfo = null;
-    }
-    else {
-      this.petInfo = category;
-    }
-  }
-
-  showPetInfo = (e) => {
-    this.setPetInfo(e);
-  }
-
-  @action sortPets = (e) => {
-    this.sortKey = e.target.value;
   }
 
   @action handleLeaderboardShowAll = (e) => {
