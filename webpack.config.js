@@ -45,6 +45,11 @@ const config = {
         }),
     ],
 
+    performance: {
+        maxAssetSize: 350 * 1024,
+        maxEntrypointSize: 350 * 1024,
+    },
+
     // server
     devServer: {
         static: path.join(__dirname, 'src'),
