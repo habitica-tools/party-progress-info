@@ -668,6 +668,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/plugin-syntax-decorators@npm:^7":
+  version: 7.29.7
+  resolution: "@babel/plugin-syntax-decorators@npm:7.29.7"
+  dependencies:
+    "@babel/helper-plugin-utils": "npm:^7.29.7"
+  peerDependencies:
+    "@babel/core": ^7.0.0-0
+  checksum: 10c0/5a5644ecd899345a92788c2d3a832541a09ab1558accbde396036920d76405b8cb7b073eb01fad468181719962cc0dfdf8377c4744fc4ceb042432e03f64e13e
+  languageName: node
+  linkType: hard
+
 "@babel/plugin-syntax-decorators@npm:^8.0.1":
   version: 8.0.1
   resolution: "@babel/plugin-syntax-decorators@npm:8.0.1"
@@ -5250,6 +5261,7 @@ __metadata:
     "@babel/core": "npm:^7"
     "@babel/plugin-proposal-decorators": "npm:^8"
     "@babel/plugin-syntax-class-properties": "npm:^7.12.13"
+    "@babel/plugin-syntax-decorators": "npm:^7"
     "@babel/plugin-transform-class-properties": "npm:^8"
     "@babel/plugin-transform-object-assign": "npm:^7"
     "@babel/plugin-transform-object-rest-spread": "npm:^7"

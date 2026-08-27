@@ -10,6 +10,15 @@ export default defineConfig([
     },
     {
         files: ['./**/*.*(m)js'],
+        languageOptions: {
+            parserOptions: {
+                babelOptions: {
+                    plugins: [
+                        ['@babel/plugin-syntax-decorators', { version: '2023-11' }],
+                    ],
+                },
+            },
+        },
         rules: {
             // adjustments to the AirBnB code style
             'object-shorthand': ['error', 'consistent'],
