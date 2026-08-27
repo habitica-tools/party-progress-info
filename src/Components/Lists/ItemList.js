@@ -3,7 +3,7 @@ import { Component, createElement } from 'preact';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-import ItemInfo from '../ItemInfo';
+import ItemInfo from '../Details/ItemInfo';
 
 function sort(array, key) {
   switch (key) {
@@ -127,11 +127,17 @@ class ItemList extends Component {
             <button class="ui olive button" onClick={this.showPartyOnly}><i class="hide icon" />Party Only</button>
           )
         )}
-        <div>
-          {this.infoItem === null ? '' : (
-            <ItemInfo item={this.infoItem} itemList={this} />
-          )}
-        </div>
+        { this.renderItemInfo() }
+      </div>
+    );
+  }
+
+  renderItemInfo() {
+    return (
+      <div>
+        {this.infoItem === null ? '' : (
+          <ItemInfo item={this.infoItem} itemList={this} />
+        )}
       </div>
     );
   }
