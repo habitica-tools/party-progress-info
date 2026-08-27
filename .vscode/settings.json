@@ -4,4 +4,14 @@
   },
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "files.autoSave": "onFocusChange",
+  "chat.tools.terminal.autoApprove": {
+    "yarn install": true,
+    "yarn lint": true,
+    "yarn build": true,
+    "git add": true,
+    "git commit": true,
+    "git diff": true,
+    "git status": true,
+    "git show": true,
+  },
 }
