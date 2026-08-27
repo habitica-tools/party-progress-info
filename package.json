@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7",
-    "@babel/plugin-proposal-decorators": "^7",
+    "@babel/plugin-proposal-decorators": "^8",
     "@babel/plugin-syntax-class-properties": "^7.12.13",
     "@babel/plugin-transform-class-properties": "^7",
     "@babel/plugin-transform-object-assign": "^7",
