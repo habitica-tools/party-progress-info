@@ -390,11 +390,6 @@ class AppStore {
     return categories;
   }
 
-  @computed get totalNeededPetsParty() {
-    return [...this.questpets].map(([id, pet]) => pet)
-      .reduce((prevVal, pet) => prevVal + pet.needed, 0);
-  }
-
   @computed get totalCountPetsParty() {
     return [...this.questpets].map(([id, pet]) => pet)
       .reduce((prevVal, pet) => prevVal + pet.count, 0);
