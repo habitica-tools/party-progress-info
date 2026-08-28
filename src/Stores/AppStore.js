@@ -27,7 +27,6 @@ class AppStore {
   }
 
   quests = observable.map(new Map());
-  premiumpets = observable.map(new Map());
   gear = observable.map(new Map());
   backgrounds = observable.map(new Map());
 
@@ -314,9 +313,6 @@ class AppStore {
 
     // also remove it from quests
     removeUserFromMap(this.quests, user);
-
-    // also remove it from pets
-    removeUserFromMap(this.premiumpets, user);
 
     // also remove it from eggs
     this.eggs.categories.forEach((category) => {
