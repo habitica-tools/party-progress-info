@@ -15,7 +15,7 @@ import QuestList from './Lists/QuestList';
 import GearLeaderboard from './Leaderboards/GearLeaderboard';
 import PetLeaderboard from './Leaderboards/PetLeaderboard';
 
-import PetProgressBar from './PetProgressBar';
+import PetProgressBar from './ProgressBars/PetProgressBar';
 
 @observer
 class App extends Component {
