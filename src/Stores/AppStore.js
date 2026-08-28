@@ -354,22 +354,6 @@ class AppStore {
     return this.users.reduce((sum, user) => sum + (user.loading || user.invalid ? 0 : 1), 0);
   }
 
-  @computed get gearleaderboard() {
-    return this.users.slice().sort((a, b) => {
-      if (a.totalGearCount > b.totalGearCount) {
-        return -1;
-      }
-      if (a.totalGearCount < b.totalGearCount) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-
-  @computed get top3gearleaderboard() {
-    return this.gearleaderboard.slice(0, 3);
-  }
-
   @computed get userQueryString() {
     return this.users.map((user) => user.id).join('|');
   }

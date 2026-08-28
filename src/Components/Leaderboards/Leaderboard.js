@@ -4,40 +4,43 @@ import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
 @observer
-class PetLeaderBoard extends Component {
+class Leaderboard extends Component {
   @observable accessor podiumOnly = true;
 
-  get pets() {
-    const { store, category } = this.props;
+  static defaultProps = {
+    showPercentage: true,
+  }
 
-    if (!category || !(category in store.pets)) {
-      throw new Error('PetProgressBar: category "' + category + '" is invalid');
-    }
+  static get itemType() {
+    throw new Error('NotImplementedError: subclasses must implement itemType');
+  }
 
-    return store.pets[category];
+  // eslint-disable-next-line class-methods-use-this
+  get items() {
+    throw new Error('NotImplementedError: subclasses must implement items');
   }
 
   get count() {
-    const { pets } = this;
+    const { items } = this;
 
-    return pets.values().reduce((sum, pet) => sum + pet.count, 0);
+    return items.values().reduce((sum, item) => sum + item.count, 0);
   }
 
   get neededCount() {
-    const { pets } = this;
+    const { items } = this;
 
-    return pets.values().reduce((sum, pet) => sum + pet.neededCount, 0);
+    return items.values().reduce((sum, item) => sum + item.neededCount, 0);
   }
 
   get usersWithCounts() {
-    const { pets } = this;
+    const { items } = this;
     const { store } = this.props;
 
     const users = store.users.filter((user) => !user.loading && !user.invalid)
 
     let usersWithCounts = []
     users.forEach((user) => {
-      const count = pets.values().reduce((sum, pet) => sum + pet.userCount(user), 0)
+      const count = items.values().reduce((sum, item) => sum + item.userCount(user), 0)
       usersWithCounts.push({ id: user.id, name: user.data.profile.name, count: count });
     });
 
@@ -51,7 +54,11 @@ class PetLeaderBoard extends Component {
   }
 
   render() {
-    const { count, neededCount, usersWithCounts } = this;
+    const {
+      podiumOnly, count, neededCount, usersWithCounts,
+    } = this;
+    const { itemType } = this.constructor;
+    const { showPercentage } = this.props;
 
     const totalCount = count + neededCount;
 
@@ -62,8 +69,10 @@ class PetLeaderBoard extends Component {
             <tr>
               <th>Rank</th>
               <th>User</th>
-              <th>Pet Count</th>
-              <th>Percentage</th>
+              <th>{itemType} Count</th>
+              {showPercentage && (
+                <th>Percentage</th>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -73,20 +82,22 @@ class PetLeaderBoard extends Component {
                   <td>{index + 1}</td>
                   <td>{user.name}</td>
                   <td>{user.count}</td>
-                  <td>{
-                    totalCount > 0 ? (
-                      parseFloat((user.count / totalCount) * usersWithCounts.length * 100).toFixed(2) + ' %'
-                    ) : '0.00 %'
-                  }</td>
+                  {showPercentage && (
+                    <td>{
+                      totalCount > 0 ? (
+                        parseFloat((user.count / totalCount) * usersWithCounts.length * 100).toFixed(2) + ' %'
+                      ) : '0.00 %'
+                    }</td>
+                  )}
                 </tr>
               ))
             }
           </tbody>
         </table>
-        {this.podiumOnly &&
+        {podiumOnly &&
           <button class="ui blue button" onClick={this.showAll}><i class="unhide icon" />Show All</button>
         }
-        {!this.podiumOnly &&
+        {!podiumOnly &&
           <button class="ui olive button" onClick={this.showPodiumOnly}><i class="hide icon" />Podium Only</button>
         }
       </div>
@@ -102,4 +113,4 @@ class PetLeaderBoard extends Component {
   }
 }
 
-export default PetLeaderBoard;
+export default Leaderboard;

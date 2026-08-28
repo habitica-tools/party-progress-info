@@ -4,8 +4,6 @@ import { observer } from 'mobx-react';
 import AuthenticationModal from './AuthenticationModal';
 import Settings from './Settings';
 
-import GearLeaderboard from './GearLeaderboard';
-
 import BackgroundList from './Lists/BackgroundList';
 import CombinedPetList from './Lists/CombinedPetList';
 import EggList from './Lists/EggList';
@@ -14,7 +12,9 @@ import PotionList from './Lists/PotionList';
 import PremiumPetList from './Lists/PremiumPetList';
 import QuestList from './Lists/QuestList';
 
-import PetLeaderBoard from './PetLeaderBoard';
+import GearLeaderboard from './Leaderboards/GearLeaderboard';
+import PetLeaderboard from './Leaderboards/PetLeaderboard';
+
 import PetProgressBar from './PetProgressBar';
 
 @observer
@@ -161,7 +161,7 @@ class App extends Component {
               <PetProgressBar store={store} category="quest" />
               <CombinedPetList store={store} category="quest" filterable={false} />
               <div class="ui basic segment" />
-              <PetLeaderBoard store={store} category="quest" />
+              <PetLeaderboard store={store} category="quest" />
               <div class="ui horizontal divider header">
                 <h4>Pet Quests Available in the Party</h4>
               </div>
@@ -190,7 +190,7 @@ class App extends Component {
               <div class="ui horizontal divider header">
                 <h4>Magic Potion Pet Leaderboard</h4>
               </div>
-              <PetLeaderBoard store={store} category="premium" />
+              <PetLeaderboard store={store} category="premium" />
               <div class="ui basic segment" />
               <div class="ui horizontal divider header">
                 <h4>Magic Hatching Potion Quests Available in the Party</h4>
@@ -210,7 +210,7 @@ class App extends Component {
               <PetProgressBar store={store} category="drop" />
               <CombinedPetList store={store} category="drop" filterable={false} />
               <div class="ui basic segment" />
-              <PetLeaderBoard store={store} category="drop" />
+              <PetLeaderboard store={store} category="drop" />
               <div class="ui horizontal divider header">
                 <h4>Non Hatched Standard Pet Eggs</h4>
               </div>
