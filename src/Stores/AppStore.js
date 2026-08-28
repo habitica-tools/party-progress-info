@@ -78,6 +78,11 @@ class AppStore {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  clearCache() {
+    HabiticaAPI.clearCache()
+  }
+
   @action fetchCommonObjects() {
     this.api.getContent()
       .then(action((json) => {

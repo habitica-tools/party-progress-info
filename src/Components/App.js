@@ -47,6 +47,11 @@ class App extends Component {
     this.props.store.setPage('about');
   }
 
+  clearCache = () => {
+    this.props.store.clearCache();
+    window.location.reload();
+  }
+
   render() {
     const { store } = this.props;
 
@@ -128,6 +133,13 @@ class App extends Component {
                     <img class="kofi-button" src="https://cdn.ko-fi.com/cdn/kofi3.png?v=3" border="0" alt="Buy Me a Coffee at ko-fi.com" />
                   </a>
                 </div>
+              </div>
+              <div class="ui message">
+                <div class="header"><i class="settings icon" />Maintenance</div>
+                <p>
+                  To reduce the load on Habitica servers, the tool caches all requests locally on your computer.<br />
+                  If you run into issues with information not being up-to-date or the tool not working correctly, clearing the cache might help: <a href="#" onClick={this.clearCache}>Clear cache</a>
+                </p>
               </div>
             </div>
           }
