@@ -390,20 +390,6 @@ class AppStore {
     return categories;
   }
 
-  @computed get totalNeededBasePetsParty() {
-    return [...this.basepets].map(([id, pet]) => pet)
-      .reduce((prevVal, pet) => prevVal + pet.needed, 0);
-  }
-
-  @computed get totalCountBasePetsParty() {
-    return [...this.basepets].map(([id, pet]) => pet)
-      .reduce((prevVal, pet) => prevVal + pet.count, 0);
-  }
-
-  @computed get totalCountBasePets() {
-    return ([...this.basepets].length * 2) * this.validUserCount;
-  }
-
   @computed get totalNeededPremiumPetsParty() {
     return [...this.premiumpets].map(([id, pet]) => pet)
       .reduce((prevVal, pet) => prevVal + pet.needed, 0);
