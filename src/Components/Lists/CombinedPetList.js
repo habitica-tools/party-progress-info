@@ -1,6 +1,6 @@
 import ItemList from './ItemList';
 
-import CombinedPetDetail from '../Details/CombinedPetDetail';
+import CombinedPetInfo from '../Infos/CombinedPetInfo';
 import Pet from '../Items/Pet';
 
 class CombinedPetList extends ItemList {
@@ -11,6 +11,11 @@ class CombinedPetList extends ItemList {
     least: 'Shortage',
     most: 'Most',
     alphabetical: 'A-Z',
+  }
+
+  constructor(props) {
+    super(props);
+    this.sortKey = 'least';
   }
 
   get items() {
@@ -27,7 +32,7 @@ class CombinedPetList extends ItemList {
     return (
       <div class="column">
         {this.infoItem === null ? '' : (
-          <CombinedPetDetail item={this.infoItem} />
+          <CombinedPetInfo item={this.infoItem} />
         )}
       </div>
     );
