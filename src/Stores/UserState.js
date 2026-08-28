@@ -27,23 +27,6 @@ class UserState {
     return 0;
   }
 
-  @computed get totalPremiumPetCount() {
-    let count = 0;
-    if (!this.loading) {
-      [...this.store.premiumpets].map((pet) => pet[1])
-        .filter((pet) => (pet.users.includes(this) ? pet : null))
-        .forEach((pet) => {
-          if (this.data.items.pets !== undefined && this.data.items.pets[pet.id] > 0) {
-            count += 1;
-          }
-          if (this.data.items.mounts !== undefined && this.data.items.mounts[pet.id] > 0) {
-            count += 1;
-          }
-        }, this)
-    }
-    return count;
-  }
-
   @computed get totalGearCount() {
     let count = 0;
     if (!this.loading) {
@@ -97,29 +80,6 @@ class UserState {
 
         // go over quests
         addUserToItemMap(json.data.items.quests, this.store.flat.quests);
-
-        // go over premium pets
-        if (json.data.items.pets !== undefined) {
-          Object.entries(json.data.items.pets).forEach(([key, value]) => {
-            if (key !== null && key !== undefined) { // TODO: redundant?
-              const premiumpet = this.store.premiumpets.get(key);
-              if (premiumpet !== undefined) {
-                premiumpet.addUser(this);
-                if (value > 0) {
-                  premiumpet.addUserWithPet(this);
-                }
-              }
-            }
-          }, this);
-          if (json.data.items.mounts !== undefined) {
-            Object.entries(json.data.items.mounts).forEach(([key, value]) => {
-              if (key !== null && key !== undefined && value !== null && value === true) {
-                const premiumpet = this.store.premiumpets.get(key);
-                if (premiumpet !== undefined) premiumpet.addUserWithMount(this);
-              }
-            }, this);
-          }
-        }
 
         // go over pets
         addUserToItemMap(json.data.items.pets, this.store.flat.pets);

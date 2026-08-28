@@ -147,12 +147,6 @@ class AppStore {
         this.flat.backgrounds = backgrounds;
         this.backgrounds.merge(backgrounds);
 
-        const premiumpets = new Map();
-        Object.entries(json.data.premiumPets).forEach(([key, value]) => {
-          premiumpets.set(key, new OldPetState(key, this));
-        }, this);
-        this.premiumpets.merge(premiumpets);
-
         const createCombinedPetStates = (type, outerList, innerList, innerItemKey, innerItemIsPotion) => {
           const innerItem = innerList.get(innerItemKey);
 
@@ -271,6 +265,23 @@ class AppStore {
     }
   }
 
+  filteredQuests(category) {
+    return this.quests.entries().filter(([_, quest]) => {
+      if (quest.data.category === category) {
+        return true;
+      }
+
+      if (quest.data.category === 'timeTravelers') {
+        return (
+          (category === 'pet' && quest.data.drop.items[0].type === 'eggs')
+          || (category === 'hatchingPotion' && quest.data.drop.items[0].type === 'hatchingPotions')
+        );
+      }
+
+      return false;
+    })
+  }
+
   @action addUser(userid) {
     if (userid !== '' && !this.userExists(userid)) {
       this.users.push(new UserState(this, userid));
@@ -344,20 +355,6 @@ class AppStore {
     return this.users.reduce((sum, user) => sum + (user.loading || user.invalid ? 0 : 1), 0);
   }
 
-  @computed get totalNeededPremiumPetsParty() {
-    return [...this.premiumpets].map(([id, pet]) => pet)
-      .reduce((prevVal, pet) => prevVal + pet.needed, 0);
-  }
-
-  @computed get totalCountPremiumPetsParty() {
-    return [...this.premiumpets].map(([id, pet]) => pet)
-      .reduce((prevVal, pet) => prevVal + pet.count, 0);
-  }
-
-  @computed get totalCountPremiumPets() {
-    return ([...this.premiumpets].length * 2) * this.validUserCount;
-  }
-
   @computed get gearleaderboard() {
     return this.users.slice().sort((a, b) => {
       if (a.totalGearCount > b.totalGearCount) {
@@ -372,22 +369,6 @@ class AppStore {
 
   @computed get top3gearleaderboard() {
     return this.gearleaderboard.slice(0, 3);
-  }
-
-  @computed get premiumpetleaderboard() {
-    return this.users.slice().sort((a, b) => {
-      if (a.totalPremiumPetCount > b.totalPremiumPetCount) {
-        return -1;
-      }
-      if (a.totalPremiumPetCount < b.totalPremiumPetCount) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-
-  @computed get top3premiumpetleaderboard() {
-    return this.premiumpetleaderboard.slice(0, 3);
   }
 
   @computed get userQueryString() {
