@@ -93,7 +93,7 @@ class ItemList extends Component {
     }
 
     items = [...items].map(([_, item]) => item);
-    if (this.partyOnly) items = items.filter((item) => item.count > 0);
+    if (filterable && this.partyOnly) items = items.filter((item) => item.count > 0);
 
     items = sort(items, this.sortKey);
 

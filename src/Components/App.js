@@ -5,13 +5,13 @@ import AuthenticationModal from './AuthenticationModal';
 import Settings from './Settings';
 
 import GearLeaderboard from './GearLeaderboard';
-import PremiumPetList from './PremiumPetList';
 
 import BackgroundList from './Lists/BackgroundList';
 import CombinedPetList from './Lists/CombinedPetList';
 import EggList from './Lists/EggList';
 import GearList from './Lists/GearList';
 import PotionList from './Lists/PotionList';
+import PremiumPetList from './Lists/PremiumPetList';
 import QuestList from './Lists/QuestList';
 
 import PetLeaderBoard from './PetLeaderBoard';
@@ -178,7 +178,21 @@ class App extends Component {
               <div class="ui horizontal divider header">
                 <h4>Wanted Magic Potion Pets</h4>
               </div>
-              <PremiumPetList store={store} />
+              <PetProgressBar store={store} category="premium" />
+              <div class="ui horizontal divider header">
+                <h5>Obtainable from Quests</h5>
+              </div>
+              <PremiumPetList store={store} category="premium" filterable={false} questObtainable={true} />
+              <div class="ui horizontal divider header">
+                <h5>Others</h5>
+              </div>
+              <PremiumPetList store={store} category="premium" filterable={false} questObtainable={false} />
+              <div class="column">
+                <div class="ui horizontal divider header">
+                  <h4>Magic Potion Pet Leaderboard</h4>
+                </div>
+                <PetLeaderBoard store={store} category="premium" />
+              </div>
               <div class="ui basic segment" />
               <div class="ui horizontal divider header">
                 <h4>Magic Hatching Potion Quests Available in the Party</h4>
