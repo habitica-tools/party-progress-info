@@ -390,15 +390,6 @@ class AppStore {
     return categories;
   }
 
-  @computed get totalCountPetsParty() {
-    return [...this.questpets].map(([id, pet]) => pet)
-      .reduce((prevVal, pet) => prevVal + pet.count, 0);
-  }
-
-  @computed get totalCountPets() {
-    return ([...this.questpets].length * 2) * this.validUserCount;
-  }
-
   @computed get totalNeededBasePetsParty() {
     return [...this.basepets].map(([id, pet]) => pet)
       .reduce((prevVal, pet) => prevVal + pet.needed, 0);
@@ -441,22 +432,6 @@ class AppStore {
 
   @computed get top3gearleaderboard() {
     return this.gearleaderboard.slice(0, 3);
-  }
-
-  @computed get petleaderboard() {
-    return this.users.slice().sort((a, b) => {
-      if (a.totalPetCount > b.totalPetCount) {
-        return -1;
-      }
-      if (a.totalPetCount < b.totalPetCount) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-
-  @computed get top3petleaderboard() {
-    return this.petleaderboard.slice(0, 3);
   }
 
   @computed get basepetleaderboard() {

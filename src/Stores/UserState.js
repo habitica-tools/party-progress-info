@@ -27,23 +27,6 @@ class UserState {
     return 0;
   }
 
-  @computed get totalPetCount() {
-    let count = 0;
-    if (!this.loading) {
-      [...this.store.questpets].map((pet) => pet[1])
-        .filter((pet) => (pet.users.includes(this) ? pet : null))
-        .forEach((pet) => {
-          if (this.data.items.pets !== undefined && this.data.items.pets[pet.id] > 0) {
-            count += 1;
-          }
-          if (this.data.items.mounts !== undefined && this.data.items.mounts[pet.id] > 0) {
-            count += 1;
-          }
-        }, this)
-    }
-    return count;
-  }
-
   @computed get totalBasePetCount() {
     let count = 0;
     if (!this.loading) {
