@@ -56,6 +56,7 @@ class ItemList extends Component {
     category: '',
     sortable: true,
     filterable: true,
+    showHeader: false,
   }
 
   static ItemClass = null;
@@ -80,7 +81,7 @@ class ItemList extends Component {
 
   render() {
     const {
-      store, category, sortable, filterable,
+      store, category, sortable, filterable, showHeader,
     } = this.props;
 
     if (store.loadingObjects) {
@@ -101,7 +102,13 @@ class ItemList extends Component {
       <div class="ui fluid container">
         <div class="ui stackable grid">
           <div class="twelve wide column">
-            <h4 class="ui header">{beautifyCategory(category)} {this.constructor.itemType + 's'}</h4>
+            {showHeader ? (
+              <h4 class="ui header">{beautifyCategory(category)} {this.constructor.itemType + 's'}</h4>
+            ) : (
+              <div>
+                <br /><br />
+              </div>
+            )}
             <br />
           </div>
           {sortable && (

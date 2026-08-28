@@ -6,10 +6,6 @@ import Pet from '../Items/Pet';
 class PremiumPetList extends CombinedPetList {
   static ItemClass = Pet;
 
-  static defaultProps = {
-    questObtainable: null,
-  }
-
   constructor(props) {
     if (!('category' in props) || props.category !== 'premium') {
       throw new Error('PremiumPetList: category must be "premium"');
