@@ -21,7 +21,7 @@ class Settings extends Component {
                 </span>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span data-tooltip="Total pending damage" style="color:#646464"><i class="bomb icon" />
-                  {store.users.map((u) => (u.loading || u.invalid ? 0 : u.damage)).reduce((a, b) => a + b, 0)}
+                  {store.validUsers.reduce((sum, user) => sum + user.damage, 0)}
                 </span>
               </h5>
             </div>

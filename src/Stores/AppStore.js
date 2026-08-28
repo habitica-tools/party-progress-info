@@ -350,8 +350,12 @@ class AppStore {
     this.infoUser.remove(user);
   }
 
+  @computed get validUsers() {
+    return this.users.filter((user) => !(user.loading || user.invalid));
+  }
+
   @computed get validUserCount() {
-    return this.users.reduce((sum, user) => sum + (user.loading || user.invalid ? 0 : 1), 0);
+    return this.validUsers.length;
   }
 
   @computed get userQueryString() {

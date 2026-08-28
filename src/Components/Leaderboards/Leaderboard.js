@@ -36,7 +36,7 @@ class Leaderboard extends Component {
     const { items } = this;
     const { store } = this.props;
 
-    const users = store.users.filter((user) => !user.loading && !user.invalid)
+    const users = store.validUsers;
 
     let usersWithCounts = []
     users.forEach((user) => {
@@ -58,7 +58,7 @@ class Leaderboard extends Component {
       podiumOnly, count, neededCount, usersWithCounts,
     } = this;
     const { itemType } = this.constructor;
-    const { showPercentage } = this.props;
+    const { store, showPercentage } = this.props;
 
     const totalCount = count + neededCount;
 
@@ -85,7 +85,7 @@ class Leaderboard extends Component {
                   {showPercentage && (
                     <td>{
                       totalCount > 0 ? (
-                        parseFloat((user.count / totalCount) * usersWithCounts.length * 100).toFixed(2) + ' %'
+                        parseFloat((user.count / totalCount) * store.validUserCount * 100).toFixed(2) + ' %'
                       ) : '0.00 %'
                     }</td>
                   )}
