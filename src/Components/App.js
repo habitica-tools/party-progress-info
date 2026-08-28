@@ -2,7 +2,7 @@ import { Component } from 'preact';
 import { observer } from 'mobx-react';
 
 import AuthenticationModal from './AuthenticationModal';
-import Settings from './Settings';
+import UserList from './Users/UserList';
 
 import BackgroundList from './Lists/BackgroundList';
 import CombinedPetList from './Lists/CombinedPetList';
@@ -150,7 +150,7 @@ class App extends Component {
               <div class="ui info ignored message">
                 <i class="help circle icon" />Go to the <a href="#" onClick={this.setPageAbout}>Help & About</a> section for info on how to use this tool.
               </div>
-              <Settings store={store} />
+              <UserList store={store} />
             </div>
           }
           {store.currentPage === 'questPets' &&

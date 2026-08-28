@@ -4,7 +4,7 @@ import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
 @observer
-class SettingsInput extends Component {
+class UserInput extends Component {
   @observable accessor input = '';
 
   render() {
@@ -24,12 +24,16 @@ class SettingsInput extends Component {
         <div
           class={'ui blue button' + (this.inputIsValid ? '' : ' disabled')}
           onClick={this.addUser}
-        ><i class="user icon" /> Add</div>
+        >
+          <i class="user icon" /> Add
+        </div>
         &nbsp;
         <div
           class={'ui blue button' + (store.api.hasValidCredentials ? '' : ' disabled')}
           onClick={this.addParty}
-        ><i class="users icon" /> Add Party</div>
+        >
+          <i class="users icon" /> Add Party
+        </div>
       </div>
     );
   }
@@ -59,4 +63,4 @@ class SettingsInput extends Component {
   }
 }
 
-export default SettingsInput;
+export default UserInput;
