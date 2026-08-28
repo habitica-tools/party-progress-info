@@ -129,15 +129,6 @@ class App extends Component {
                   </a>
                 </div>
               </div>
-              <div class="ui message">
-                <div class="header"><i class="address card outline icon" />Privacy Policy</div>
-                <p>This application is provided at no cost and comes with no warranty or assurance of suitability for any particular purpose.</p>
-                <p>It doesn't sell your personal information, but uses the following third party services with anonymised data to analyse usage and performance:
-                  <ul>
-                    <li><a href="https://privacy.google.com/businesses/compliance">Google Analytics</a></li>
-                  </ul>
-                </p>
-              </div>
             </div>
           }
           {store.currentPage !== 'about' && !store.api.hasValidCredentials &&
