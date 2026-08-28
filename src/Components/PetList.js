@@ -4,6 +4,7 @@ import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
 import CombinedPetList from './Lists/CombinedPetList';
+import PetProgressBar from './PetProgressBar';
 
 @observer
 class PetList extends Component {
@@ -22,51 +23,9 @@ class PetList extends Component {
       return (<div class="ui active centered inline loader" />);
     }
 
-    const totalpercentage = store.totalCountPetsParty > 0 ? parseFloat(store.totalCountPetsParty / (store.totalCountPets / 100)).toFixed(2) : '0'
-
     return (
       <div>
-        <div class="column">
-          <div class="progress-container-big">
-            <div class="progress">
-              <div class="progress-bar bg-experience" style={'transition-duration: 300ms; width:' + totalpercentage + '%;'} />
-            </div>
-          </div>
-        </div>
-        <div class="ui four statistics">
-          <div class="ui tiny statistic">
-            <div class="value got">
-              {totalpercentage + ' %'}
-            </div>
-            <div class="label">
-              Pets Collected %
-            </div>
-          </div>
-          <div class="ui tiny statistic">
-            <div class="value got">
-              {store.totalCountPetsParty}
-            </div>
-            <div class="label">
-              Pets in Party
-            </div>
-          </div>
-          <div class="ui tiny statistic">
-            <div class="value wanted">
-              {store.totalNeededPetsParty}
-            </div>
-            <div class="label">
-              Pets Wanted
-            </div>
-          </div>
-          <div class="ui tiny statistic">
-            <div class="value">
-              {store.totalCountPets}
-            </div>
-            <div class="label">
-              Total Pets
-            </div>
-          </div>
-        </div>
+        <PetProgressBar store={store} category="quest" />
         <CombinedPetList store={store} category="quest" filterable={false} />
         <div class="column">
           <div class="ui horizontal divider header">
