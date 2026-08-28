@@ -160,8 +160,8 @@ class App extends Component {
               </div>
               <PetProgressBar store={store} category="quest" />
               <CombinedPetList store={store} category="quest" filterable={false} />
-              <PetLeaderBoard store={store} category="quest" />
               <div class="ui basic segment" />
+              <PetLeaderBoard store={store} category="quest" />
               <div class="ui horizontal divider header">
                 <h4>Pet Quests Available in the Party</h4>
               </div>
@@ -169,7 +169,6 @@ class App extends Component {
               <div class="ui horizontal divider header">
                 <h4>Non Hatched Quest Eggs</h4>
               </div>
-              <div class="ui basic segment" />
               <EggList store={store} category="quest" />
             </div>
           }
@@ -187,22 +186,19 @@ class App extends Component {
                 <h5>Others</h5>
               </div>
               <PremiumPetList store={store} category="premium" filterable={false} questObtainable={false} />
-              <div class="column">
-                <div class="ui horizontal divider header">
-                  <h4>Magic Potion Pet Leaderboard</h4>
-                </div>
-                <PetLeaderBoard store={store} category="premium" />
+              <div class="ui basic segment" />
+              <div class="ui horizontal divider header">
+                <h4>Magic Potion Pet Leaderboard</h4>
               </div>
+              <PetLeaderBoard store={store} category="premium" />
               <div class="ui basic segment" />
               <div class="ui horizontal divider header">
                 <h4>Magic Hatching Potion Quests Available in the Party</h4>
               </div>
               <QuestList store={store} category="hatchingPotion" />
-              <div class="ui basic segment" />
               <div class="ui horizontal divider header">
                 <h4>Non Used Magic Hatching Potions</h4>
               </div>
-              <div class="ui basic segment" />
               <PotionList store={store} category="premium" />
             </div>
           }
@@ -213,25 +209,21 @@ class App extends Component {
               </div>
               <PetProgressBar store={store} category="drop" />
               <CombinedPetList store={store} category="drop" filterable={false} />
-              <PetLeaderBoard store={store} category="drop" />
               <div class="ui basic segment" />
+              <PetLeaderBoard store={store} category="drop" />
               <div class="ui horizontal divider header">
                 <h4>Non Hatched Standard Pet Eggs</h4>
               </div>
-              <div class="ui basic segment" />
               <EggList store={store} category="drop" />
-              <div class="ui basic segment" />
               <div class="ui horizontal divider header">
                 <h4>Non Used Base Hatching Potions</h4>
               </div>
-              <div class="ui basic segment" />
               <PotionList store={store} category="drop" />
             </div>
           }
           {store.menupage === 'gear' &&
             <div class="ui fluid container">
               <GearLeaderboard store={store} />
-              <div class="ui basic segment" />
               <div class="ui horizontal divider header">
                 <h4>Equipment in the Party</h4>
               </div>
@@ -243,13 +235,12 @@ class App extends Component {
               <div class="ui horizontal divider header">
                 <h4>Other Quests Available in Party</h4>
               </div>
-              <div class="ui basic segment" />
               <div class="ui two column stackable grid">
                 <div class="ui column">
-                  <QuestList store={store} category="unlockable" sortable={false} />
+                  <QuestList store={store} category="unlockable" sortable={false} showHeader={true} />
                 </div>
                 <div class="ui column">
-                  <QuestList store={store} category="gold" sortable={false} />
+                  <QuestList store={store} category="gold" sortable={false} showHeader={true} />
                 </div>
               </div>
             </div>
