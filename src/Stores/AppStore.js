@@ -14,7 +14,11 @@ import PotionState from './States/PotionState';
 import QuestState from './States/QuestState';
 
 class AppStore {
+  @observable accessor currentPage = 'questPets';
   @observable accessor loadingObjects = true;
+
+  @observable accessor users = [];
+  @observable accessor infoUser = [];
 
   flat = {
     quests: new Map(),
@@ -52,40 +56,11 @@ class AppStore {
     wacky: observable.map(new Map()),
   };
 
-  @observable accessor users = [];
-  @observable accessor infoUser = [];
-
-  loadParty = false;
-  @observable accessor menupage = 'petsquesteggs';
-
   api = undefined;
+  loadParty = false;
 
-  @action gotoPetsQuestEggs() {
-    this.menupage = 'petsquesteggs';
-  }
-
-  @action gotoBasePets() {
-    this.menupage = 'basepets';
-  }
-
-  @action gotoPremiumPets() {
-    this.menupage = 'premiumpets';
-  }
-
-  @action gotoOtherQuests() {
-    this.menupage = 'otherquests';
-  }
-
-  @action gotoGear() {
-    this.menupage = 'gear';
-  }
-
-  @action gotoBackgrounds() {
-    this.menupage = 'backgrounds';
-  }
-
-  @action gotoAbout() {
-    this.menupage = 'about';
+  @action setPage(page) {
+    this.currentPage = page;
   }
 
   constructor() {

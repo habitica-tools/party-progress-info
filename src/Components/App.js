@@ -19,32 +19,32 @@ import PetProgressBar from './ProgressBars/PetProgressBar';
 
 @observer
 class App extends Component {
-  gotoPetsQuestEggs = () => {
-    this.props.store.gotoPetsQuestEggs();
+  setPageQuestPets = () => {
+    this.props.store.setPage('questPets');
   }
 
-  gotoBasePets = () => {
-    this.props.store.gotoBasePets();
+  setPageDropPets = () => {
+    this.props.store.setPage('dropPets');
   }
 
-  gotoPremiumPets = () => {
-    this.props.store.gotoPremiumPets();
+  setPagePremiumPets = () => {
+    this.props.store.setPage('premiumPets');
   }
 
-  gotoOtherQuests = () => {
-    this.props.store.gotoOtherQuests();
+  setPageGear = () => {
+    this.props.store.setPage('gear');
   }
 
-  gotoGear = () => {
-    this.props.store.gotoGear();
+  setPageOtherQuests = () => {
+    this.props.store.setPage('otherQuests');
   }
 
-  gotoBackgrounds = () => {
-    this.props.store.gotoBackgrounds();
+  setPageBackgrounds = () => {
+    this.props.store.setPage('backgrounds');
   }
 
-  gotoAbout = () => {
-    this.props.store.gotoAbout();
+  setPageAbout = () => {
+    this.props.store.setPage('about');
   }
 
   render() {
@@ -56,30 +56,30 @@ class App extends Component {
           <a href="#" class="item header" onClick={this.gotoPetsQuestEggs}>
             Habitica Party Progress Info
           </a>
-          <a class={store.menupage === 'petsquesteggs' ? 'item active' : 'item'} onClick={this.gotoPetsQuestEggs}>
+          <a class={store.currentPage === 'questPets' ? 'item active' : 'item'} onClick={this.setPageQuestPets}>
             Quest Pets
           </a>
-          <a class={store.menupage === 'premiumpets' ? 'item active' : 'item'} onClick={this.gotoPremiumPets}>
+          <a class={store.currentPage === 'premiumPets' ? 'item active' : 'item'} onClick={this.setPagePremiumPets}>
             Magic Potion Pets
           </a>
-          <a class={store.menupage === 'basepets' ? 'item active' : 'item'} onClick={this.gotoBasePets}>
+          <a class={store.currentPage === 'dropPets' ? 'item active' : 'item'} onClick={this.setPageDropPets}>
             Standard Pets
           </a>
-          <a class={store.menupage === 'gear' ? 'item active' : 'item'} onClick={this.gotoGear}>
+          <a class={store.currentPage === 'gear' ? 'item active' : 'item'} onClick={this.setPageGear}>
             Equipment
           </a>
-          <a class={store.menupage === 'otherquests' ? 'item active' : 'item'} onClick={this.gotoOtherQuests}>
+          <a class={store.currentPage === 'otherQuests' ? 'item active' : 'item'} onClick={this.setPageOtherQuests}>
             Other Quests
           </a>
-          <a class={store.menupage === 'backgrounds' ? 'item active' : 'item'} onClick={this.gotoBackgrounds}>
+          <a class={store.currentPage === 'backgrounds' ? 'item active' : 'item'} onClick={this.setPageBackgrounds}>
             Backgrounds
           </a>
-          <a class={store.menupage === 'about' ? 'item active' : 'item'} onClick={this.gotoAbout}>
+          <a class={store.currentPage === 'about' ? 'item active' : 'item'} onClick={this.setPageAbout}>
             Help &amp; About
           </a>
         </div>
         <div class="ui main container">
-          {store.menupage === 'about' &&
+          {store.currentPage === 'about' &&
             <div class="ui fluid container">
               <div class="ui info message">
 
@@ -140,20 +140,20 @@ class App extends Component {
               </div>
             </div>
           }
-          {store.menupage !== 'about' && !store.api.hasValidCredentials &&
+          {store.currentPage !== 'about' && !store.api.hasValidCredentials &&
             <div class="ui fluid action input">
               <AuthenticationModal store={store} parent={this} />
             </div>
           }
-          {store.menupage !== 'about' &&
+          {store.currentPage !== 'about' &&
             <div class="ui fluid container">
               <div class="ui info ignored message">
-                <i class="help circle icon" />Go to the <a href="#" onClick={this.gotoAbout}>Help & About section</a> for info on how to use this tool.
+                <i class="help circle icon" />Go to the <a href="#" onClick={this.setPageAbout}>Help & About</a> section for info on how to use this tool.
               </div>
               <Settings store={store} />
             </div>
           }
-          {store.menupage === 'petsquesteggs' &&
+          {store.currentPage === 'questPets' &&
             <div class="ui fluid container">
               <div class="ui horizontal divider header">
                 <h4>Wanted Quest Pets</h4>
@@ -163,16 +163,16 @@ class App extends Component {
               <div class="ui basic segment" />
               <PetLeaderboard store={store} category="quest" />
               <div class="ui horizontal divider header">
-                <h4>Pet Quests Available in the Party</h4>
+                <h4>Pet Quests available in the Party</h4>
               </div>
               <QuestList store={store} category="pet" />
               <div class="ui horizontal divider header">
-                <h4>Non Hatched Quest Eggs</h4>
+                <h4>Unhatched Quest Eggs</h4>
               </div>
               <EggList store={store} category="quest" />
             </div>
           }
-          {store.menupage === 'premiumpets' &&
+          {store.currentPage === 'premiumPets' &&
             <div class="ui fluid container">
               <div class="ui horizontal divider header">
                 <h4>Wanted Magic Potion Pets</h4>
@@ -193,16 +193,16 @@ class App extends Component {
               <PetLeaderboard store={store} category="premium" />
               <div class="ui basic segment" />
               <div class="ui horizontal divider header">
-                <h4>Magic Hatching Potion Quests Available in the Party</h4>
+                <h4>Magic Hatching Potion Quests available in the Party</h4>
               </div>
               <QuestList store={store} category="hatchingPotion" />
               <div class="ui horizontal divider header">
-                <h4>Non Used Magic Hatching Potions</h4>
+                <h4>Unused Magic Hatching Potions</h4>
               </div>
               <PotionList store={store} category="premium" />
             </div>
           }
-          {store.menupage === 'basepets' &&
+          {store.currentPage === 'dropPets' &&
             <div class="ui fluid container">
               <div class="ui horizontal divider header">
                 <h4>Wanted Standard Pets</h4>
@@ -212,28 +212,28 @@ class App extends Component {
               <div class="ui basic segment" />
               <PetLeaderboard store={store} category="drop" />
               <div class="ui horizontal divider header">
-                <h4>Non Hatched Standard Pet Eggs</h4>
+                <h4>Unhatched Standard Pet Eggs</h4>
               </div>
               <EggList store={store} category="drop" />
               <div class="ui horizontal divider header">
-                <h4>Non Used Base Hatching Potions</h4>
+                <h4>Unused Base Hatching Potions</h4>
               </div>
               <PotionList store={store} category="drop" />
             </div>
           }
-          {store.menupage === 'gear' &&
+          {store.currentPage === 'gear' &&
             <div class="ui fluid container">
-              <GearLeaderboard store={store} />
               <div class="ui horizontal divider header">
                 <h4>Equipment in the Party</h4>
               </div>
+              <GearLeaderboard store={store} />
               <GearList store={store} />
             </div>
           }
-          {store.menupage === 'otherquests' &&
+          {store.currentPage === 'otherQuests' &&
             <div class="ui fluid container">
               <div class="ui horizontal divider header">
-                <h4>Other Quests Available in Party</h4>
+                <h4>Other Quests available in the Party</h4>
               </div>
               <div class="ui two column stackable grid">
                 <div class="ui column">
@@ -245,7 +245,7 @@ class App extends Component {
               </div>
             </div>
           }
-          {store.menupage === 'backgrounds' &&
+          {store.currentPage === 'backgrounds' &&
             <div class="ui fluid container">
               <div class="ui basic segment" />
               <div class="ui horizontal divider header">
