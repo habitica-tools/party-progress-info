@@ -28,8 +28,6 @@ class AppStore {
   }
 
   quests = observable.map(new Map());
-  questpets = observable.map(new Map());
-  basepets = observable.map(new Map());
   premiumpets = observable.map(new Map());
   gear = observable.map(new Map());
   backgrounds = observable.map(new Map());
@@ -148,18 +146,6 @@ class AppStore {
         const backgrounds = createStateMapFromList(json.data.backgroundsFlat, BackgroundState);
         this.flat.backgrounds = backgrounds;
         this.backgrounds.merge(backgrounds);
-
-        const questpets = new Map();
-        Object.entries(json.data.questPets).forEach(([key, value]) => {
-          questpets.set(key, new OldPetState(key, this));
-        }, this);
-        this.questpets.merge(questpets);
-
-        const basepets = new Map();
-        Object.entries(json.data.pets).forEach(([key, value]) => {
-          basepets.set(key, new OldPetState(key, this));
-        }, this);
-        this.basepets.merge(basepets);
 
         const premiumpets = new Map();
         Object.entries(json.data.premiumPets).forEach(([key, value]) => {
@@ -320,8 +306,6 @@ class AppStore {
     removeUserFromMap(this.quests, user);
 
     // also remove it from pets
-    removeUserFromMap(this.questpets, user);
-    removeUserFromMap(this.basepets, user);
     removeUserFromMap(this.premiumpets, user);
 
     // also remove it from eggs
@@ -360,36 +344,6 @@ class AppStore {
     return this.users.reduce((sum, user) => sum + (user.loading || user.invalid ? 0 : 1), 0);
   }
 
-  @computed get petCategories() {
-    const categories = new Set();
-    const pets = [...this.questpets].map(([id, pet]) => pet)
-
-    pets.forEach((pet) => {
-      categories.add(pet.basetype);
-    });
-    return categories;
-  }
-
-  @computed get basepetCategories() {
-    const categories = new Set();
-    const pets = [...this.basepets].map(([id, pet]) => pet)
-
-    pets.forEach((pet) => {
-      categories.add(pet.basetype);
-    });
-    return categories;
-  }
-
-  @computed get premiumpetCategories() {
-    const categories = new Set();
-    const pets = [...this.premiumpets].map(([id, pet]) => pet)
-
-    pets.forEach((pet) => {
-      categories.add(pet.basetype);
-    });
-    return categories;
-  }
-
   @computed get totalNeededPremiumPetsParty() {
     return [...this.premiumpets].map(([id, pet]) => pet)
       .reduce((prevVal, pet) => prevVal + pet.needed, 0);
@@ -418,22 +372,6 @@ class AppStore {
 
   @computed get top3gearleaderboard() {
     return this.gearleaderboard.slice(0, 3);
-  }
-
-  @computed get basepetleaderboard() {
-    return this.users.slice().sort((a, b) => {
-      if (a.totalBasePetCount > b.totalBasePetCount) {
-        return -1;
-      }
-      if (a.totalBasePetCount < b.totalBasePetCount) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-
-  @computed get top3basepetleaderboard() {
-    return this.basepetleaderboard.slice(0, 3);
   }
 
   @computed get premiumpetleaderboard() {

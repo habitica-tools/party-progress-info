@@ -98,24 +98,10 @@ class UserState {
         // go over quests
         addUserToItemMap(json.data.items.quests, this.store.flat.quests);
 
-        // go over questpets / base pets / premium pets
+        // go over premium pets
         if (json.data.items.pets !== undefined) {
           Object.entries(json.data.items.pets).forEach(([key, value]) => {
             if (key !== null && key !== undefined) { // TODO: redundant?
-              const pet = this.store.questpets.get(key);
-              if (pet !== undefined) {
-                pet.addUser(this);
-                if (value > 0) {
-                  pet.addUserWithPet(this);
-                }
-              }
-              const basepet = this.store.basepets.get(key);
-              if (basepet !== undefined) {
-                basepet.addUser(this);
-                if (value > 0) {
-                  basepet.addUserWithPet(this);
-                }
-              }
               const premiumpet = this.store.premiumpets.get(key);
               if (premiumpet !== undefined) {
                 premiumpet.addUser(this);
@@ -128,10 +114,6 @@ class UserState {
           if (json.data.items.mounts !== undefined) {
             Object.entries(json.data.items.mounts).forEach(([key, value]) => {
               if (key !== null && key !== undefined && value !== null && value === true) {
-                const pet = this.store.questpets.get(key);
-                if (pet !== undefined) pet.addUserWithMount(this);
-                const basepet = this.store.basepets.get(key);
-                if (basepet !== undefined) basepet.addUserWithMount(this);
                 const premiumpet = this.store.premiumpets.get(key);
                 if (premiumpet !== undefined) premiumpet.addUserWithMount(this);
               }
