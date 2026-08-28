@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import AuthenticationModal from './AuthenticationModal';
 import Settings from './Settings';
 
-import BasePetList from './BasePetList';
 import GearLeaderboard from './GearLeaderboard';
 import PremiumPetList from './PremiumPetList';
 
@@ -198,7 +197,9 @@ class App extends Component {
               <div class="ui horizontal divider header">
                 <h4>Wanted Standard Pets</h4>
               </div>
-              <BasePetList store={store} />
+              <PetProgressBar store={store} category="drop" />
+              <CombinedPetList store={store} category="drop" filterable={false} />
+              <PetLeaderBoard store={store} category="drop" />
               <div class="ui basic segment" />
               <div class="ui horizontal divider header">
                 <h4>Non Hatched Standard Pet Eggs</h4>
