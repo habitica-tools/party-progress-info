@@ -6,14 +6,17 @@ import Settings from './Settings';
 
 import BasePetList from './BasePetList';
 import GearLeaderboard from './GearLeaderboard';
-import PetList from './PetList';
 import PremiumPetList from './PremiumPetList';
 
 import BackgroundList from './Lists/BackgroundList';
+import CombinedPetList from './Lists/CombinedPetList';
 import EggList from './Lists/EggList';
 import GearList from './Lists/GearList';
 import PotionList from './Lists/PotionList';
 import QuestList from './Lists/QuestList';
+
+import PetLeaderBoard from './PetLeaderBoard';
+import PetProgressBar from './PetProgressBar';
 
 @observer
 class App extends Component {
@@ -156,7 +159,9 @@ class App extends Component {
               <div class="ui horizontal divider header">
                 <h4>Wanted Quest Pets</h4>
               </div>
-              <PetList store={store} />
+              <PetProgressBar store={store} category="quest" />
+              <CombinedPetList store={store} category="quest" filterable={false} />
+              <PetLeaderBoard store={store} category="quest" />
               <div class="ui basic segment" />
               <div class="ui horizontal divider header">
                 <h4>Pet Quests Available in the Party</h4>
