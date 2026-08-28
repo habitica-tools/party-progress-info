@@ -5,7 +5,7 @@ import Mount from '../Items/Mount';
 import Pet from '../Items/Pet';
 
 @observer
-class CombinedPetDetail extends Component {
+class CombinedPetInfo extends Component {
   render() {
     const { item } = this.props;
 
@@ -52,4 +52,4 @@ class CombinedPetDetail extends Component {
   }
 }
 
-export default CombinedPetDetail;
+export default CombinedPetInfo;

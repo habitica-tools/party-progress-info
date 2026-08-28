@@ -3,7 +3,7 @@ import { Component, createElement } from 'preact';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-import ItemInfo from '../Details/ItemInfo';
+import ItemInfo from '../Infos/ItemInfo';
 
 function sort(array, key) {
   switch (key) {
