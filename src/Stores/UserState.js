@@ -27,20 +27,6 @@ class UserState {
     return 0;
   }
 
-  @computed get totalGearCount() {
-    let count = 0;
-    if (!this.loading) {
-      [...this.store.gear].map((gear) => gear[1])
-        .filter((gear) => (gear.users.includes(this) ? gear : null))
-        .forEach((gear) => {
-          if (this.data.items.gear.owned[gear.id] !== undefined) {
-            count += 1;
-          }
-        }, this)
-    }
-    return count;
-  }
-
   @action addUser(userid) {
     if (this.store.loadingObjects) {
       this.loading = true;

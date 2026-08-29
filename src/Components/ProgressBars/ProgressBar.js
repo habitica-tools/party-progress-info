@@ -3,30 +3,30 @@ import { Component } from 'preact';
 import { observer } from 'mobx-react';
 
 @observer
-class PetProgressBar extends Component {
-  get pets() {
-    const { store, category } = this.props;
+class ProgressBar extends Component {
+  static get itemType() {
+    throw new Error('NotImplementedError: subclasses must implement itemType');
+  }
 
-    if (!category || !(category in store.pets)) {
-      throw new Error('PetProgressBar: category "' + category + '" is invalid');
-    }
-
-    return store.pets[category];
+  // eslint-disable-next-line class-methods-use-this
+  get items() {
+    throw new Error('NotImplementedError: subclasses must implement items');
   }
 
   get count() {
-    const { pets } = this;
+    const { items } = this;
 
-    return pets.values().reduce((sum, pet) => sum + pet.count, 0);
+    return items.values().reduce((sum, item) => sum + item.count, 0);
   }
 
   get neededCount() {
-    const { pets } = this;
+    const { items } = this;
 
-    return pets.values().reduce((sum, pet) => sum + pet.neededCount, 0);
+    return items.values().reduce((sum, item) => sum + item.neededCount, 0);
   }
 
   render() {
+    const { itemType } = this.constructor;
     const { count, neededCount } = this;
 
     const totalCount = count + neededCount;
@@ -47,7 +47,7 @@ class PetProgressBar extends Component {
               {percentage + ' %'}
             </div>
             <div class="label">
-              Pets Collected %
+              {itemType}s Collected %
             </div>
           </div>
           <div class="ui tiny statistic">
@@ -55,7 +55,7 @@ class PetProgressBar extends Component {
               {count}
             </div>
             <div class="label">
-              Pets in Party
+              {itemType}s in Party
             </div>
           </div>
           <div class="ui tiny statistic">
@@ -63,7 +63,7 @@ class PetProgressBar extends Component {
               {neededCount}
             </div>
             <div class="label">
-              Pets Wanted
+              {itemType}s Wanted
             </div>
           </div>
           <div class="ui tiny statistic">
@@ -71,7 +71,7 @@ class PetProgressBar extends Component {
               {totalCount}
             </div>
             <div class="label">
-              Total Pets
+              Total {itemType}s
             </div>
           </div>
         </div>
@@ -80,4 +80,4 @@ class PetProgressBar extends Component {
   }
 }
 
-export default PetProgressBar;
+export default ProgressBar;

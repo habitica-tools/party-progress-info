@@ -27,7 +27,6 @@ class AppStore {
   }
 
   quests = observable.map(new Map());
-  premiumpets = observable.map(new Map());
   gear = observable.map(new Map());
   backgrounds = observable.map(new Map());
 
@@ -315,9 +314,6 @@ class AppStore {
     // also remove it from quests
     removeUserFromMap(this.quests, user);
 
-    // also remove it from pets
-    removeUserFromMap(this.premiumpets, user);
-
     // also remove it from eggs
     this.eggs.categories.forEach((category) => {
       removeUserFromMap(this.eggs[category], user);
@@ -350,24 +346,12 @@ class AppStore {
     this.infoUser.remove(user);
   }
 
+  @computed get validUsers() {
+    return this.users.filter((user) => !(user.loading || user.invalid));
+  }
+
   @computed get validUserCount() {
-    return this.users.reduce((sum, user) => sum + (user.loading || user.invalid ? 0 : 1), 0);
-  }
-
-  @computed get gearleaderboard() {
-    return this.users.slice().sort((a, b) => {
-      if (a.totalGearCount > b.totalGearCount) {
-        return -1;
-      }
-      if (a.totalGearCount < b.totalGearCount) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-
-  @computed get top3gearleaderboard() {
-    return this.gearleaderboard.slice(0, 3);
+    return this.validUsers.length;
   }
 
   @computed get userQueryString() {
