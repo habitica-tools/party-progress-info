@@ -41,7 +41,7 @@ class HabiticaAPI {
   maxRetries = 3;
   @observable accessor userId = null;
   @observable accessor apiToken = null;
-  @observable accessor credentialsValid = true;
+  @observable accessor credentialsValid = false;
 
   apiTokenCheckSum = '';
 
@@ -191,7 +191,7 @@ class HabiticaAPI {
       return HabiticaAPI.fetch_retry(url, { headers: headers });
     }
 
-    if (this.credentialsValid) {
+    if (this.hasValidCredentials) {
       headers['x-api-user'] = this.userId;
       headers['x-api-key'] = this.apiToken;
 

@@ -237,8 +237,8 @@ class AppStore {
     let queryStringUsers = AppStore.getQueryVariable('users');
     if (queryStringUsers !== null) {
       queryStringUsers = decodeURIComponent(queryStringUsers);
-      queryStringUsers.split('|').forEach((val, index) => {
-        this.addUser(val);
+      queryStringUsers.split('|').forEach((userid, _) => {
+        this.addUser(userid);
       }, this)
     }
   }
@@ -275,7 +275,13 @@ class AppStore {
         this.loadParty = false;
         members.forEach((user) => this.addUser(user));
       })
-      .catch((err) => {});
+      .catch((err) => {
+        if (err.status === 404) {
+          // user has no party
+          this.loadParty = false;
+          this.setQueryVariable();
+        }
+      });
   }
 
   userExists(userid) {
