@@ -1,18 +1,20 @@
 import { Component } from 'preact';
 import { observer } from 'mobx-react';
 
-import SettingsInput from './SettingsInput';
 import User from './User';
+import UserInput from './UserInput';
 
 @observer
-class Settings extends Component {
+class UserList extends Component {
   render() {
     const { store } = this.props;
 
     return (
-      store.loadingObjects ? <div class="ui active centered inline loader" /> : (
+      store.loadingObjects ? (
+        <div class="ui active centered inline loader" />
+      ) : (
         <div>
-          <SettingsInput store={store} /><br />
+          <UserInput store={store} /><br />
           <div class="ui fluid container">
             <div class="ui horizontal divider header">
               <h5>
@@ -37,4 +39,4 @@ class Settings extends Component {
   }
 }
 
-export default Settings;
+export default UserList;

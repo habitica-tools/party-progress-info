@@ -41,7 +41,7 @@ class HabiticaAPI {
   maxRetries = 3;
   @observable accessor userId = null;
   @observable accessor apiToken = null;
-  @observable accessor credentialsValid = true;
+  @observable accessor credentialsValid = false;
 
   apiTokenCheckSum = '';
 
@@ -76,7 +76,10 @@ class HabiticaAPI {
   }
 
   getUser(userid) {
-    return this.cachedFetch(HABITICA_API_URL + 'members/' + userid, true, 5 * 60 * 1000);
+    const cacheUserData = process.env.CACHE_USER_DATA;
+    const cacheDuration = (cacheUserData !== 'false' ? 5 * 60 * 1000 : null)
+
+    return this.cachedFetch(HABITICA_API_URL + 'members/' + userid, true, cacheDuration);
   }
 
   getPartyMembers() {
@@ -95,6 +98,10 @@ class HabiticaAPI {
   cacheKey(url, requiresCredentials) {
     if (requiresCredentials) return [url, this.userId, this.apiTokenCheckSum].join('|');
     return url;
+  }
+
+  static clearCache() {
+    localStorage.clear()
   }
 
   static deleteOldCacheEntries() {
@@ -184,7 +191,7 @@ class HabiticaAPI {
       return HabiticaAPI.fetch_retry(url, { headers: headers });
     }
 
-    if (this.credentialsValid) {
+    if (this.hasValidCredentials) {
       headers['x-api-user'] = this.userId;
       headers['x-api-key'] = this.apiToken;
 

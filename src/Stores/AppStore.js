@@ -14,7 +14,11 @@ import PotionState from './States/PotionState';
 import QuestState from './States/QuestState';
 
 class AppStore {
+  @observable accessor currentPage = 'questPets';
   @observable accessor loadingObjects = true;
+
+  @observable accessor users = [];
+  @observable accessor infoUser = [];
 
   flat = {
     quests: new Map(),
@@ -52,40 +56,11 @@ class AppStore {
     wacky: observable.map(new Map()),
   };
 
-  @observable accessor users = [];
-  @observable accessor infoUser = [];
-
-  loadParty = false;
-  @observable accessor menupage = 'petsquesteggs';
-
   api = undefined;
+  loadParty = false;
 
-  @action gotoPetsQuestEggs() {
-    this.menupage = 'petsquesteggs';
-  }
-
-  @action gotoBasePets() {
-    this.menupage = 'basepets';
-  }
-
-  @action gotoPremiumPets() {
-    this.menupage = 'premiumpets';
-  }
-
-  @action gotoOtherQuests() {
-    this.menupage = 'otherquests';
-  }
-
-  @action gotoGear() {
-    this.menupage = 'gear';
-  }
-
-  @action gotoBackgrounds() {
-    this.menupage = 'backgrounds';
-  }
-
-  @action gotoAbout() {
-    this.menupage = 'about';
+  @action setPage(page) {
+    this.currentPage = page;
   }
 
   constructor() {
@@ -101,6 +76,11 @@ class AppStore {
       this.loadQueryString();
       this.addUser(userId);
     }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  clearCache() {
+    HabiticaAPI.clearCache()
   }
 
   @action fetchCommonObjects() {
@@ -257,8 +237,8 @@ class AppStore {
     let queryStringUsers = AppStore.getQueryVariable('users');
     if (queryStringUsers !== null) {
       queryStringUsers = decodeURIComponent(queryStringUsers);
-      queryStringUsers.split('|').forEach((val, index) => {
-        this.addUser(val);
+      queryStringUsers.split('|').forEach((userid, _) => {
+        this.addUser(userid);
       }, this)
     }
   }
@@ -295,7 +275,13 @@ class AppStore {
         this.loadParty = false;
         members.forEach((user) => this.addUser(user));
       })
-      .catch((err) => {});
+      .catch((err) => {
+        if (err.status === 404) {
+          // user has no party
+          this.loadParty = false;
+          this.setQueryVariable();
+        }
+      });
   }
 
   userExists(userid) {
