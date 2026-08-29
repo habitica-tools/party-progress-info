@@ -2,14 +2,16 @@ import { action, computed, observable } from 'mobx';
 
 class ItemState {
   data = {};
+  store = null;
   @observable accessor users = [];
 
   static userItems(user) {
     throw new Error('NotImplementedError: subclasses must implement userItems');
   }
 
-  constructor(data) {
+  constructor(data, store = null) {
     this.data = data;
+    this.store = store;
   }
 
   get key() {
@@ -22,6 +24,10 @@ class ItemState {
 
   get tooltip() {
     return this.data.text;
+  }
+
+  get caption() {
+    return this.key;
   }
 
   @action addUser(user) {
@@ -46,6 +52,11 @@ class ItemState {
 
   @computed get selectedCount() {
     return this.usersCount(this.users.filter((user) => user.isInfoUser));
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  @computed get neededCount() {
+    return null;
   }
 }
 

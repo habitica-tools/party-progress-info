@@ -13,6 +13,10 @@ class Item extends Component {
   static imageFilenameBase = null;
   static showItemCaption = true;
 
+  static defaultProps = {
+    itemList: null,
+  }
+
   // eslint-disable-next-line class-methods-use-this
   get imageFilenameExtension() {
     return '.png';
@@ -24,6 +28,11 @@ class Item extends Component {
     return (
       <div class="item-wrapper">
         <div class="item" data-tooltip={item.tooltip}>
+          {item.neededCount === null ? '' : (
+            <span class="badge badge-pill badge-item badge-count2">
+              {item.neededCount}
+            </span>
+          )}
           <span class="badge badge-pill badge-item badge-info badge-count">
             {item.count}
           </span>
@@ -32,19 +41,28 @@ class Item extends Component {
               {item.selectedCount}
             </span>
           )}
-          <span class={'item-content ' + this.constructor.type + ' ' + this.constructor.imageFilenameBase + item.imageKey} onClick={this.showItemInfo}>
-            <img src={Item.imageURL + this.constructor.imageFilenameBase + item.imageKey + this.imageFilenameExtension} alt={item.key} />
-          </span>
+          { this.renderItemContent(item) }
         </div>
         {this.constructor.showItemCaption &&
-          <span>{beautifyCaption(item.key)}</span>
+          <span>{beautifyCaption(item.caption)}</span>
         }
       </div>
     );
   }
 
+  renderItemContent(item) {
+    return (
+      <span class={'item-content ' + this.constructor.type + ' ' + this.constructor.imageFilenameBase + item.imageKey} onClick={this.showItemInfo}>
+        <img src={Item.imageURL + this.constructor.imageFilenameBase + item.imageKey + this.imageFilenameExtension} alt={item.key} />
+      </span>
+    )
+  }
+
   showItemInfo = () => {
-    this.props.itemList.showInfo(this.props.item);
+    const { itemList } = this.props;
+    if (itemList !== null) {
+      this.props.itemList.showInfo(this.props.item);
+    }
   }
 }
 

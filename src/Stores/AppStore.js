@@ -2,24 +2,43 @@ import { action, computed, observable } from 'mobx';
 
 import HabiticaAPI from './HabiticaAPI';
 
-import PetState from './PetState';
 import UserState from './UserState';
 
 import BackgroundState from './States/BackgroundState';
+import CombinedPetState from './States/CombinedPetState';
 import EggState from './States/EggState';
 import GearState from './States/GearState';
+import MountState from './States/MountState';
+import PetState from './States/PetState';
 import PotionState from './States/PotionState';
 import QuestState from './States/QuestState';
 
 class AppStore {
   @observable accessor loadingObjects = true;
 
+  flat = {
+    quests: new Map(),
+    pets: new Map(),
+    mounts: new Map(),
+    eggs: new Map(),
+    potions: new Map(),
+    gear: new Map(),
+    backgrounds: new Map(),
+  }
+
   quests = observable.map(new Map());
-  pets = observable.map(new Map());
-  basepets = observable.map(new Map());
   premiumpets = observable.map(new Map());
   gear = observable.map(new Map());
   backgrounds = observable.map(new Map());
+
+  pets = {
+    categories: ['drop', 'quest', 'premium', 'wacky', 'special'],
+    drop: observable.map(new Map()),
+    quest: observable.map(new Map()),
+    premium: observable.map(new Map()),
+    wacky: observable.map(new Map()),
+    special: observable.map(new Map()),
+  }
 
   eggs = {
     categories: ['drop', 'quest'],
@@ -91,19 +110,28 @@ class AppStore {
         const createStateMapFromList = (list, StateClass) => {
           const map = new Map();
           Object.entries(list).forEach(([key, value]) => {
-            map.set(key, new StateClass(value));
-          });
+            map.set(key, new StateClass(value, this));
+          }, this);
           return map;
         }
 
-        this.quests.merge(createStateMapFromList(json.data.quests, QuestState));
+        const quests = createStateMapFromList(json.data.quests, QuestState);
+        this.flat.quests = quests;
+        this.quests.merge(quests);
 
-        this.eggs.drop.merge(createStateMapFromList(json.data.dropEggs, EggState));
-        this.eggs.quest.merge(createStateMapFromList(json.data.questEggs, EggState));
+        const dropEggs = createStateMapFromList(json.data.dropEggs, EggState);
+        const questEggs = createStateMapFromList(json.data.questEggs, EggState);
+        this.flat.eggs = new Map([...dropEggs, ...questEggs]);
+        this.eggs.drop.merge(dropEggs);
+        this.eggs.quest.merge(questEggs);
 
-        this.potions.drop.merge(createStateMapFromList(json.data.dropHatchingPotions, PotionState));
-        this.potions.premium.merge(createStateMapFromList(json.data.premiumHatchingPotions, PotionState));
-        this.potions.wacky.merge(createStateMapFromList(json.data.wackyHatchingPotions, PotionState));
+        const dropPotions = createStateMapFromList(json.data.dropHatchingPotions, PotionState);
+        const premiumPotions = createStateMapFromList(json.data.premiumHatchingPotions, PotionState);
+        const wackyPotions = createStateMapFromList(json.data.wackyHatchingPotions, PotionState);
+        this.flat.potions = new Map([...dropPotions, ...premiumPotions, ...wackyPotions]);
+        this.potions.drop.merge(dropPotions);
+        this.potions.premium.merge(premiumPotions);
+        this.potions.wacky.merge(wackyPotions);
         // apply a small adjustment to the Glow-in-the-Dark potion name
         this.potions.premium.get('Glow').data.text = 'Glow';
 
@@ -111,27 +139,104 @@ class AppStore {
         // remove gear without an image (i.e. all the base gear)
         const baseGearKeys = ['armor_base_0', 'back_base_0', 'body_base_0', 'eyewear_base_0', 'headAccessory_base_0', 'head_base_0', 'shield_base_0', 'weapon_base_0'];
         baseGearKeys.forEach((key) => gear.delete(key));
+        this.flat.gear = gear;
         this.gear.merge(gear);
 
-        this.backgrounds.merge(createStateMapFromList(json.data.backgroundsFlat, BackgroundState));
+        const backgrounds = createStateMapFromList(json.data.backgroundsFlat, BackgroundState);
+        this.flat.backgrounds = backgrounds;
+        this.backgrounds.merge(backgrounds);
 
-        const pets = new Map();
-        Object.entries(json.data.questPets).forEach(([key, value]) => {
-          pets.set(key, new PetState(key, this));
-        }, this);
-        this.pets.merge(pets);
+        const createCombinedPetStates = (type, outerList, innerList, innerItemKey, innerItemIsPotion) => {
+          const innerItem = innerList.get(innerItemKey);
 
-        const basepets = new Map();
-        Object.entries(json.data.pets).forEach(([key, value]) => {
-          basepets.set(key, new PetState(key, this));
-        }, this);
-        this.basepets.merge(basepets);
+          const mapToOuter = (outer, inner) => outer;
+          const mapToInner = (outer, inner) => inner;
 
-        const premiumpets = new Map();
-        Object.entries(json.data.premiumPets).forEach(([key, value]) => {
-          premiumpets.set(key, new PetState(key, this));
-        }, this);
-        this.premiumpets.merge(premiumpets);
+          const eggFn = innerItemIsPotion ? mapToOuter : mapToInner;
+          const potionFn = innerItemIsPotion ? mapToInner : mapToOuter;
+
+          const dataGenerator = (outer, inner) => {
+            const egg = eggFn(outer, inner);
+            const potion = potionFn(outer, inner);
+
+            return {
+              key: egg.key + '-' + potion.key,
+              egg: egg,
+              potion: potion,
+              text: egg.tooltip + ' ' + potion.tooltip,
+              type: type,
+            }
+          };
+
+          const map = new Map();
+          outerList.forEach((outer) => {
+            const data = dataGenerator(outer, innerItem);
+            const state = new CombinedPetState(
+              Object.assign(data, { key: outer.key, imageKey: data.key }),
+              this,
+            );
+            innerList.forEach((inner) => {
+              const data = dataGenerator(outer, inner);
+              state.petStates.set(data.key, new PetState(data, this));
+              state.mountStates.set(data.key, new MountState(
+                Object.assign(data, { text: eggFn(outer, inner).data.mountText + ' ' + potionFn(outer, inner).tooltip }),
+                this,
+              ));
+            });
+            map.set(state.key, state);
+          });
+          return map;
+        };
+
+        const dropPets = createCombinedPetStates('drop', this.eggs.drop, this.potions.drop, 'Base', true);
+        const questPets = createCombinedPetStates('quest', this.eggs.quest, this.potions.drop, 'Base', true);
+        const premiumPets = createCombinedPetStates('premium', this.potions.premium, this.eggs.drop, 'Wolf', false);
+        const wackyPets = createCombinedPetStates('wacky', this.potions.wacky, this.eggs.drop, 'Wolf', false);
+
+        const specialPetDummyData = {
+          egg: null, eggData: null, potion: null, potionData: null,
+        };
+
+        const specialPets = new Map();
+        Object.keys(json.data.specialPets).forEach((key) => {
+          const petData = Object.assign(json.data.petInfo[key], specialPetDummyData);
+
+          const state = new CombinedPetState(
+            Object.assign(petData, { imageKey: petData.key }),
+            this,
+          );
+          state.petStates.set(key, new PetState(petData, this));
+
+          if (key in json.data.specialMounts) {
+            state.mountStates.set(key, new MountState(
+              Object.assign(json.data.mountInfo[key], specialPetDummyData),
+              this,
+            ));
+          }
+
+          specialPets.set(key, state);
+        });
+
+        this.flat.pets = new Map([
+          ...Array.from(dropPets.values()).flatMap((combinedState) => Array.from(combinedState.petStates.entries())),
+          ...Array.from(questPets.values()).flatMap((combinedState) => Array.from(combinedState.petStates.entries())),
+          ...Array.from(premiumPets.values()).flatMap((combinedState) => Array.from(combinedState.petStates.entries())),
+          ...Array.from(wackyPets.values()).flatMap((combinedState) => Array.from(combinedState.petStates.entries())),
+          ...Array.from(specialPets.values()).flatMap((combinedState) => Array.from(combinedState.petStates.entries())),
+        ]);
+        this.flat.mounts = new Map([
+          ...Array.from(dropPets.values()).flatMap((combinedState) => Array.from(combinedState.mountStates.entries())),
+          ...Array.from(questPets.values()).flatMap((combinedState) => Array.from(combinedState.mountStates.entries())),
+          ...Array.from(premiumPets.values()).flatMap((combinedState) => Array.from(combinedState.mountStates.entries())),
+          ...Array.from(wackyPets.values()).flatMap((combinedState) => Array.from(combinedState.mountStates.entries())),
+          ...Array.from(specialPets.values()).flatMap((combinedState) => Array.from(combinedState.mountStates.entries())),
+        ]);
+
+        this.pets.drop.merge(dropPets);
+        this.pets.quest.merge(questPets);
+        this.pets.premium.merge(premiumPets);
+        this.pets.wacky.merge(wackyPets);
+        this.pets.special.merge(specialPets);
 
         this.loadingObjects = false;
         this.reloadUsers();
@@ -157,6 +262,23 @@ class AppStore {
         this.addUser(val);
       }, this)
     }
+  }
+
+  filteredQuests(category) {
+    return this.quests.entries().filter(([_, quest]) => {
+      if (quest.data.category === category) {
+        return true;
+      }
+
+      if (quest.data.category === 'timeTravelers') {
+        return (
+          (category === 'pet' && quest.data.drop.items[0].type === 'eggs')
+          || (category === 'hatchingPotion' && quest.data.drop.items[0].type === 'hatchingPotions')
+        );
+      }
+
+      return false;
+    })
   }
 
   @action addUser(userid) {
@@ -194,8 +316,6 @@ class AppStore {
     removeUserFromMap(this.quests, user);
 
     // also remove it from pets
-    removeUserFromMap(this.pets, user);
-    removeUserFromMap(this.basepets, user);
     removeUserFromMap(this.premiumpets, user);
 
     // also remove it from eggs
@@ -211,6 +331,11 @@ class AppStore {
     // also remove it from gear
     removeUserFromMap(this.gear, user);
 
+    // also remove it from pets
+    this.pets.categories.forEach((category) => {
+      removeUserFromMap(this.pets[category], user);
+    });
+
     // also remove it from backgrounds
     // removeUserFromMap(this.backgrounds, user);
 
@@ -225,80 +350,8 @@ class AppStore {
     this.infoUser.remove(user);
   }
 
-  countValidUsers() {
-    return this.users.reduce((prevVal, u) => prevVal + (u.loading || u.invalid ? 0 : 1), 0);
-  }
-
-  @computed get petCategories() {
-    const categories = new Set();
-    const pets = [...this.pets].map(([id, pet]) => pet)
-
-    pets.forEach((pet) => {
-      categories.add(pet.basetype);
-    });
-    return categories;
-  }
-
-  @computed get basepetCategories() {
-    const categories = new Set();
-    const pets = [...this.basepets].map(([id, pet]) => pet)
-
-    pets.forEach((pet) => {
-      categories.add(pet.basetype);
-    });
-    return categories;
-  }
-
-  @computed get premiumpetCategories() {
-    const categories = new Set();
-    const pets = [...this.premiumpets].map(([id, pet]) => pet)
-
-    pets.forEach((pet) => {
-      categories.add(pet.basetype);
-    });
-    return categories;
-  }
-
-  @computed get totalNeededPetsParty() {
-    return [...this.pets].map(([id, pet]) => pet)
-      .reduce((prevVal, pet) => prevVal + pet.needed, 0);
-  }
-
-  @computed get totalCountPetsParty() {
-    return [...this.pets].map(([id, pet]) => pet)
-      .reduce((prevVal, pet) => prevVal + pet.count, 0);
-  }
-
-  @computed get totalCountPets() {
-    return ([...this.pets].length * 2) * this.countValidUsers();
-  }
-
-  @computed get totalNeededBasePetsParty() {
-    return [...this.basepets].map(([id, pet]) => pet)
-      .reduce((prevVal, pet) => prevVal + pet.needed, 0);
-  }
-
-  @computed get totalCountBasePetsParty() {
-    return [...this.basepets].map(([id, pet]) => pet)
-      .reduce((prevVal, pet) => prevVal + pet.count, 0);
-  }
-
-  @computed get totalCountBasePets() {
-    return ([...this.basepets].length * 2) * this.countValidUsers();
-  }
-
-  @computed get totalNeededPremiumPetsParty() {
-    return [...this.premiumpets].map(([id, pet]) => pet)
-      .reduce((prevVal, pet) => prevVal + pet.needed, 0);
-  }
-
-  @computed get totalCountPremiumPetsParty() {
-    return [...this.premiumpets].map(([id, pet]) => pet)
-      .reduce((prevVal, pet) => prevVal + pet.count, 0);
-  }
-
-  @computed get totalCountPremiumPets() {
-    return ([...this.premiumpets].length * 2) * this.countValidUsers();
+  @computed get validUserCount() {
+    return this.users.reduce((sum, user) => sum + (user.loading || user.invalid ? 0 : 1), 0);
   }
 
   @computed get gearleaderboard() {
@@ -315,54 +368,6 @@ class AppStore {
 
   @computed get top3gearleaderboard() {
     return this.gearleaderboard.slice(0, 3);
-  }
-
-  @computed get petleaderboard() {
-    return this.users.slice().sort((a, b) => {
-      if (a.totalPetCount > b.totalPetCount) {
-        return -1;
-      }
-      if (a.totalPetCount < b.totalPetCount) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-
-  @computed get top3petleaderboard() {
-    return this.petleaderboard.slice(0, 3);
-  }
-
-  @computed get basepetleaderboard() {
-    return this.users.slice().sort((a, b) => {
-      if (a.totalBasePetCount > b.totalBasePetCount) {
-        return -1;
-      }
-      if (a.totalBasePetCount < b.totalBasePetCount) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-
-  @computed get top3basepetleaderboard() {
-    return this.basepetleaderboard.slice(0, 3);
-  }
-
-  @computed get premiumpetleaderboard() {
-    return this.users.slice().sort((a, b) => {
-      if (a.totalPremiumPetCount > b.totalPremiumPetCount) {
-        return -1;
-      }
-      if (a.totalPremiumPetCount < b.totalPremiumPetCount) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-
-  @computed get top3premiumpetleaderboard() {
-    return this.premiumpetleaderboard.slice(0, 3);
   }
 
   @computed get userQueryString() {

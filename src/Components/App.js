@@ -4,16 +4,18 @@ import { observer } from 'mobx-react';
 import AuthenticationModal from './AuthenticationModal';
 import Settings from './Settings';
 
-import BasePetList from './BasePetList';
 import GearLeaderboard from './GearLeaderboard';
-import PetList from './PetList';
-import PremiumPetList from './PremiumPetList';
 
 import BackgroundList from './Lists/BackgroundList';
+import CombinedPetList from './Lists/CombinedPetList';
 import EggList from './Lists/EggList';
 import GearList from './Lists/GearList';
 import PotionList from './Lists/PotionList';
+import PremiumPetList from './Lists/PremiumPetList';
 import QuestList from './Lists/QuestList';
+
+import PetLeaderBoard from './PetLeaderBoard';
+import PetProgressBar from './PetProgressBar';
 
 @observer
 class App extends Component {
@@ -156,8 +158,10 @@ class App extends Component {
               <div class="ui horizontal divider header">
                 <h4>Wanted Quest Pets</h4>
               </div>
-              <PetList store={store} />
+              <PetProgressBar store={store} category="quest" />
+              <CombinedPetList store={store} category="quest" filterable={false} />
               <div class="ui basic segment" />
+              <PetLeaderBoard store={store} category="quest" />
               <div class="ui horizontal divider header">
                 <h4>Pet Quests Available in the Party</h4>
               </div>
@@ -165,7 +169,6 @@ class App extends Component {
               <div class="ui horizontal divider header">
                 <h4>Non Hatched Quest Eggs</h4>
               </div>
-              <div class="ui basic segment" />
               <EggList store={store} category="quest" />
             </div>
           }
@@ -174,17 +177,28 @@ class App extends Component {
               <div class="ui horizontal divider header">
                 <h4>Wanted Magic Potion Pets</h4>
               </div>
-              <PremiumPetList store={store} />
+              <PetProgressBar store={store} category="premium" />
+              <div class="ui horizontal divider header">
+                <h5>Obtainable from Quests</h5>
+              </div>
+              <PremiumPetList store={store} category="premium" filterable={false} questObtainable={true} />
+              <div class="ui horizontal divider header">
+                <h5>Others</h5>
+              </div>
+              <PremiumPetList store={store} category="premium" filterable={false} questObtainable={false} />
+              <div class="ui basic segment" />
+              <div class="ui horizontal divider header">
+                <h4>Magic Potion Pet Leaderboard</h4>
+              </div>
+              <PetLeaderBoard store={store} category="premium" />
               <div class="ui basic segment" />
               <div class="ui horizontal divider header">
                 <h4>Magic Hatching Potion Quests Available in the Party</h4>
               </div>
               <QuestList store={store} category="hatchingPotion" />
-              <div class="ui basic segment" />
               <div class="ui horizontal divider header">
                 <h4>Non Used Magic Hatching Potions</h4>
               </div>
-              <div class="ui basic segment" />
               <PotionList store={store} category="premium" />
             </div>
           }
@@ -193,25 +207,23 @@ class App extends Component {
               <div class="ui horizontal divider header">
                 <h4>Wanted Standard Pets</h4>
               </div>
-              <BasePetList store={store} />
+              <PetProgressBar store={store} category="drop" />
+              <CombinedPetList store={store} category="drop" filterable={false} />
               <div class="ui basic segment" />
+              <PetLeaderBoard store={store} category="drop" />
               <div class="ui horizontal divider header">
                 <h4>Non Hatched Standard Pet Eggs</h4>
               </div>
-              <div class="ui basic segment" />
               <EggList store={store} category="drop" />
-              <div class="ui basic segment" />
               <div class="ui horizontal divider header">
                 <h4>Non Used Base Hatching Potions</h4>
               </div>
-              <div class="ui basic segment" />
               <PotionList store={store} category="drop" />
             </div>
           }
           {store.menupage === 'gear' &&
             <div class="ui fluid container">
               <GearLeaderboard store={store} />
-              <div class="ui basic segment" />
               <div class="ui horizontal divider header">
                 <h4>Equipment in the Party</h4>
               </div>
@@ -223,13 +235,12 @@ class App extends Component {
               <div class="ui horizontal divider header">
                 <h4>Other Quests Available in Party</h4>
               </div>
-              <div class="ui basic segment" />
               <div class="ui two column stackable grid">
                 <div class="ui column">
-                  <QuestList store={store} category="unlockable" sortable={false} />
+                  <QuestList store={store} category="unlockable" sortable={false} showHeader={true} />
                 </div>
                 <div class="ui column">
-                  <QuestList store={store} category="gold" sortable={false} />
+                  <QuestList store={store} category="gold" sortable={false} showHeader={true} />
                 </div>
               </div>
             </div>

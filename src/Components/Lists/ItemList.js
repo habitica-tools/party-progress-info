@@ -3,7 +3,7 @@ import { Component, createElement } from 'preact';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-import ItemInfo from '../ItemInfo';
+import ItemInfo from '../Infos/ItemInfo';
 
 function sort(array, key) {
   switch (key) {
@@ -55,6 +55,8 @@ class ItemList extends Component {
   static defaultProps = {
     category: '',
     sortable: true,
+    filterable: true,
+    showHeader: false,
   }
 
   static ItemClass = null;
@@ -78,14 +80,21 @@ class ItemList extends Component {
   }
 
   render() {
-    const { store, category, sortable } = this.props;
+    const {
+      store, category, sortable, filterable, showHeader,
+    } = this.props;
 
     if (store.loadingObjects) {
       return (<div class="ui active centered inline loader" />);
     }
 
-    let items = [...this.items].map(([_, item]) => item);
-    if (this.partyOnly) items = items.filter((item) => item.count > 0);
+    let { items } = this;
+    if (items === undefined) {
+      throw new Error('ItemList: items is undefined');
+    }
+
+    items = [...items].map(([_, item]) => item);
+    if (filterable && this.partyOnly) items = items.filter((item) => item.count > 0);
 
     items = sort(items, this.sortKey);
 
@@ -93,7 +102,13 @@ class ItemList extends Component {
       <div class="ui fluid container">
         <div class="ui stackable grid">
           <div class="twelve wide column">
-            <h4 class="ui header">{beautifyCategory(category)} {this.constructor.itemType + 's'}</h4>
+            {showHeader ? (
+              <h4 class="ui header">{beautifyCategory(category)} {this.constructor.itemType + 's'}</h4>
+            ) : (
+              <div>
+                <br /><br />
+              </div>
+            )}
             <br />
           </div>
           {sortable && (
@@ -112,18 +127,24 @@ class ItemList extends Component {
         <div class="items">
           {items.map((item) => createElement(this.constructor.ItemClass, { item: item, itemList: this }))}
         </div>
-        {
+        {filterable && (
           this.partyOnly ? (
             <button class="ui blue button" onClick={this.showAll}><i class="unhide icon" />Show All</button>
           ) : (
             <button class="ui olive button" onClick={this.showPartyOnly}><i class="hide icon" />Party Only</button>
           )
-        }
-        <div>
-          {this.infoItem === null ? '' : (
-            <ItemInfo item={this.infoItem} itemList={this} />
-          )}
-        </div>
+        )}
+        { this.renderItemInfo() }
+      </div>
+    );
+  }
+
+  renderItemInfo() {
+    return (
+      <div>
+        {this.infoItem === null ? '' : (
+          <ItemInfo item={this.infoItem} itemList={this} />
+        )}
       </div>
     );
   }
