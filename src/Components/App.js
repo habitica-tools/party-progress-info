@@ -96,7 +96,7 @@ class App extends Component {
                 </p>
                 <p />
                 <p>
-                  When you open the tool it will ask you for your authentication - insert your User ID and API Token.<br />
+                  When you open the tool it will ask you for your credentials - insert your User ID and API Token.<br />
                   They can be found in your <a href="https://habitica.com/user/settings/siteData">Habitica profile</a> under <code>User -&gt; Settings -&gt; Site Data</code>.<br />
                   This will automatically add you as one of the users whose pets and inventory are evaluated by the tool.
                 </p>

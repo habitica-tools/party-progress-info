@@ -12,32 +12,47 @@ class AuthenticationModal extends Component {
   render() {
     return (
       <div class="ui mini modal active">
-        <div class="header">Authenticate</div>
+        <div class="header">Credentials for Habitica API</div>
         <div class="content">
-          <label>User ID: </label>
-          <input
-            className="user-id"
-            maxLength={37}
-            autoFocus={true}
-            value={this.state.userId}
-            onChange={this.onUserIdChange}
-          /><p />
-          <label>API Token: </label>
-          <input
-            className="user-key"
-            type="password"
-            maxLength={37}
-            value={this.state.key}
-            onChange={this.onKeyChange}
-            onKeyDown={(this.userAndKeyAreValid ? this.onKeyDown : null)}
-          />
+          <div class="ui stackable grid">
+            <div class="five wide column">
+              <label>User ID </label>
+            </div>
+            <div class="eleven wide column" style="padding-bottom: 0rem;">
+              <input
+                className="user-id"
+                maxLength={37}
+                autoFocus={true}
+                value={this.state.userId}
+                onChange={this.onUserIdChange}
+                style="width:100%;"
+              />
+            </div>
+          </div>
+          <div class="ui stackable grid">
+            <div class="five wide column">
+              <label>API Token </label>
+            </div>
+            <div class="eleven wide column">
+              <input
+                className="api-token"
+                type="password"
+                maxLength={37}
+                value={this.state.key}
+                onChange={this.onKeyChange}
+                onKeyDown={(this.userAndKeyAreValid ? this.onKeyDown : null)}
+                style="width:100%;"
+              />
+            </div>
+          </div>
           <p />
-          <div
-            onClick={this.addAuth}
-            class={'ui blue button' + (this.userAndKeyAreValid ? '' : ' disabled')}
-          ><i class="users icon" /> Authenticate</div>
-          <div style="white-space: pre-line;" class="ui icon right floated button" data-bs-html="true" data-tooltip="Habitica API does not allow fetching user info without authentication any more.&#xa;You can find your User ID and API Token in Habitica.com -> User -> Settings -> Site Data.&#xa;Your credentials are not saved, this modal will pop up again after site refresh." data-position="right center">
-            <i class="info icon" />
+          <div>
+            <div onClick={this.addAuth} class={'ui blue button' + (this.userAndKeyAreValid ? '' : ' disabled')}>
+              <i class="users icon" /> Authenticate
+            </div>
+            <div style="white-space: pre-line;" class="ui icon right floated button" data-bs-html="true" data-tooltip="This tool needs credentials to retrieve user data from the Habitica API.&#xa;They can be found in your Habitica profile under User -> Settings -> Site Data.&#xa;This tool will save your credentials and this dialog will reappear after site refresh." data-position="right center">
+              <i class="info icon" />
+            </div>
           </div>
         </div>
       </div>
