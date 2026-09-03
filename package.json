@@ -8,7 +8,7 @@
     "build": "webpack --mode=production"
   },
   "devDependencies": {
-    "@babel/core": "^7",
+    "@babel/core": "^8",
     "@babel/plugin-proposal-decorators": "^8",
     "@babel/plugin-syntax-class-properties": "^7.12.13",
     "@babel/plugin-syntax-decorators": "^7",
