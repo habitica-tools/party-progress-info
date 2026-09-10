@@ -23,7 +23,7 @@
     "babel-loader": "^10.1.1",
     "dotenv": "^17.4.2",
     "dotenv-webpack": "^9.0.0",
-    "eslint": "^9",
+    "eslint": "^10",
     "eslint-config-airbnb-extended": "^3.2.0",
     "eslint-config-preact": "^2.0.0",
     "eslint-import-resolver-typescript": "^4.4.5",
