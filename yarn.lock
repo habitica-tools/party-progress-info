@@ -5142,7 +5142,7 @@ __metadata:
     preact: "npm:^10.29.8"
     react: "npm:^19.2.8"
     typescript: "npm:^5.9"
-    webpack: "npm:^5.110.0"
+    webpack: "npm:^5.110.3"
     webpack-cli: "npm:^7.2.3"
     webpack-dev-server: "npm:^6.0.0"
   languageName: unknown
@@ -8053,9 +8053,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.110.0":
-  version: 5.110.0
-  resolution: "webpack@npm:5.110.0"
+"webpack@npm:^5.110.3":
+  version: 5.110.3
+  resolution: "webpack@npm:5.110.3"
   dependencies:
     "@types/estree": "npm:^1.0.8"
     "@types/json-schema": "npm:^7.0.15"
@@ -8081,7 +8081,7 @@ __metadata:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 10c0/43d1184b830efff173f31e6b4551e2317bcafc3510a8df19dab5d3817cde3beed8848a9c8c253e0a4d01e049791e876e893d16068255336dfad3a43db02137af
+  checksum: 10c0/e1c86317d2d04d33f670a0ad7095e1a8d410867360c327c2dfb14f589794d8ce9b0619998e6fe66aebcfdac6d2e6c9e6f7085adfc9e44cd7d39855654fe75ed4
   languageName: node
   linkType: hard
 
