@@ -10,10 +10,9 @@
   "devDependencies": {
     "@babel/core": "^8",
     "@babel/plugin-proposal-decorators": "^8",
-    "@babel/plugin-syntax-class-properties": "^7.12.13",
     "@babel/plugin-syntax-decorators": "^8",
     "@babel/plugin-transform-class-properties": "^8",
-    "@babel/plugin-transform-object-assign": "^7",
+    "@babel/plugin-transform-class-static-block": "^8",
     "@babel/plugin-transform-object-rest-spread": "^8",
     "@babel/preset-env": "^8",
     "@babel/preset-react": "^8",
