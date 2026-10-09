@@ -24,7 +24,7 @@ jobs:
       changes: ${{ steps.deploy-to-github-pages.outputs.changes }}
     steps:
       - name: Checkout repository for GitHub Pages
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: ${{ github.repository_owner }}/${{ github.repository_owner }}.github.io
           ssh-key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
