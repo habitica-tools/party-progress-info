@@ -6,7 +6,7 @@
   "plugins": [
     ["@babel/plugin-proposal-decorators", { "version": "2023-11" }],
     "@babel/plugin-transform-class-properties",
-    "@babel/plugin-transform-object-assign",
+    "@babel/plugin-transform-class-static-block",
     "@babel/plugin-transform-object-rest-spread"
   ]
 }
