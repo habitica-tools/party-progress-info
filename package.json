@@ -34,7 +34,7 @@
     "typescript": "^5.9",
     "webpack": "^5.111.1",
     "webpack-cli": "^7.2.3",
-    "webpack-dev-server": "^6.0.0"
+    "webpack-dev-server": "^6.1.0"
   },
   "dependencies": {
     "mobx": "^7.0.3",
