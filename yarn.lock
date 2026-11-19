@@ -5291,7 +5291,7 @@ __metadata:
     eslint-plugin-n: "npm:^18.5.0"
     globals: "npm:^17.13.0"
     html-webpack-plugin: "npm:^5.6.8"
-    mobx: "npm:^7.1.1"
+    mobx: "npm:^7.1.7"
     mobx-react: "npm:^10.0.2"
     preact: "npm:^11.0.0"
     react: "npm:^19.3.0"
@@ -6360,10 +6360,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mobx@npm:^7.1.1":
-  version: 7.1.1
-  resolution: "mobx@npm:7.1.1"
-  checksum: 10c0/9db4cc5b86790347f4c9fb8d4032b64c7083274169a2089ac737a521f46cbcb6b5a6e27d366f09b1e9a5d8b7b6832fa64dafe566d6b3a1f553936a177fefc007
+"mobx@npm:^7.1.7":
+  version: 7.1.7
+  resolution: "mobx@npm:7.1.7"
+  checksum: 10c0/1f2fd16cd6c96aeacedcab517644c00eaec777b28f4c14da05b073003cf6157b0ba029e6af6f31f084c3d4e75ba9120d2681d4b9e873a95c0a6f4671998959e6
   languageName: node
   linkType: hard
 
