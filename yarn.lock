@@ -5292,7 +5292,7 @@ __metadata:
     globals: "npm:^17.13.0"
     html-webpack-plugin: "npm:^5.6.8"
     mobx: "npm:^7.1.7"
-    mobx-react: "npm:^10.0.2"
+    mobx-react: "npm:^10.0.4"
     preact: "npm:^11.0.0"
     react: "npm:^19.3.0"
     typescript: "npm:^5.9"
@@ -6338,25 +6338,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mobx-react-lite@npm:^5.0.3":
-  version: 5.0.3
-  resolution: "mobx-react-lite@npm:5.0.3"
+"mobx-react-lite@npm:^5.1.3":
+  version: 5.1.3
+  resolution: "mobx-react-lite@npm:5.1.3"
   peerDependencies:
     mobx: ^7.0.0
     react: ^18 || ^19
-  checksum: 10c0/e648585b93d5a2ee94e13ebefab3267f1be2c1d60fcca1bbc1fac33e4bf73881e846fbe83d0a33a5cce4adb6726a5f6ac196f035cd0d4d2ce103759b7c356dd1
+  checksum: 10c0/b0551b12e25fabd08564f14588becc259c8befadd6ce809c1f3b77e211e8aac9447352bbf0a0296a73477542386e30e27044cca6e9d6d56cb5d5f003ae21cc6c
   languageName: node
   linkType: hard
 
-"mobx-react@npm:^10.0.2":
-  version: 10.0.2
-  resolution: "mobx-react@npm:10.0.2"
+"mobx-react@npm:^10.0.4":
+  version: 10.0.4
+  resolution: "mobx-react@npm:10.0.4"
   dependencies:
-    mobx-react-lite: "npm:^5.0.3"
+    mobx-react-lite: "npm:^5.1.3"
   peerDependencies:
     mobx: ^7.0.0
     react: ^18 || ^19
-  checksum: 10c0/2c6b300f54530d0a66691a2ccff7f7f19db3fe2044ffa46572ea5c5a9386442344f67872737ece029ff4aef81f03fd0e21d10e94f8fd208dd9d42a4b480124e3
+  checksum: 10c0/86a7a667c31eca70ca0123ef0f09c262dee994b05e0f8110321686a4c4e9f38689ea894a4e74f8a4ead35d1864d827f5aec6c17b26489138ee8de6ff4c6db974
   languageName: node
   linkType: hard
 
